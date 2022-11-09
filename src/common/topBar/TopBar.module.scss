@@ -1,0 +1,68 @@
+@import '../../styles/mixins';
+
+.bar {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 32px;
+  background: inherit;
+
+  @include mobile {
+    padding: 8px 15px;
+  }
+}
+
+.deep,
+.shallow {
+  position: sticky;
+  top: 0;
+}
+
+.shallow {
+  @include mobile {
+    position: static;
+    padding: 20px 15px;
+  }
+}
+
+.childrenInsideBar {
+  flex: 1 1 auto;
+
+  @include mobile {
+    display: none;
+  }
+}
+
+.childrenOutsideBar {
+  display: none;
+
+  @include mobile {
+    display: initial;
+  }
+}
+
+.accountHolder {
+  display: none;
+
+  @include mobile {
+    display: block;
+  }
+}
+
+.bell {
+  margin-left: auto;
+}
+
+.title {
+  position: absolute;
+  left: 50%;
+  color: #f5f5f7;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 28px;
+  transform: translateX(-50%);
+}

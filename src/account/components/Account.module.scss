@@ -1,0 +1,152 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.accountPage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 32px 28px;
+}
+
+.accountLink {
+  text-decoration: none !important;
+}
+
+.account {
+  display: flex;
+  flex-direction: row;
+  cursor: pointer;
+
+  &Text {
+    display: flex;
+    align-items: center;
+    color: #f5f5f7;
+    font-size: 14px;
+    line-height: 16px;
+
+    > *:first-of-type {
+      text-decoration: none;
+    }
+  }
+}
+
+.img {
+  overflow: hidden;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 12px;
+}
+
+.drawerPaper {
+  left: $aside-width;
+  display: flex;
+  width: $aside-width;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 35px;
+  background: #1b222c;
+
+  @include mobile {
+    top: 88px;
+    left: 0;
+    width: 100vw;
+    height: calc(100vh - 144px);
+    padding: 16px;
+  }
+}
+
+.drawerModalRoot {
+  position: relative;
+  z-index: 10 !important;
+}
+
+.drawerBackdrop {
+  background-color: transparent !important;
+}
+
+.accountTitle {
+  color: #f5f5f7;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 28px;
+}
+
+.addressButton {
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.copyIcon {
+  margin-left: 24px;
+
+  @include mobile {
+    margin-left: 4px;
+  }
+}
+
+.accountActionsHolder {
+  width: 100%;
+  margin-top: 54px;
+
+  @include mobile {
+    margin-top: 42px;
+  }
+}
+
+.accountActionText {
+  color: #6b798f;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  line-height: 21px;
+}
+
+.accountAction {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  padding: 8px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+
+  &:not(:last-of-type) {
+    margin-bottom: 24px;
+  }
+
+  &:hover,
+  &:focus {
+    background: #2e353d;
+
+    .accountActionText {
+      @include text-gradient(linear-gradient(90deg, #1768E5 50.44%, #00F0FF 129.31%));
+    }
+  }
+}
+
+.icon {
+  margin-right: 18px;
+
+  @include mobile {
+    margin-left: 4px;
+  }
+}
+
+@include icon-colors('.accountAction');
+
+.supportLink {
+  margin-top: auto;
+  margin-left: auto;
+}
+
+@include icon-colors('.supportLink');
+
+.importAccountInput {
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  visibility: hidden;
+}

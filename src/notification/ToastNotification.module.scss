@@ -1,0 +1,11 @@
+.toast {
+  border: 2px solid #525f6d !important;
+  border-radius: 5px !important;
+  background: #2a3443 !important;
+  box-shadow: 4px 4px 12px rgba(42, 52, 67, 0.8) !important;
+  font-family: Ubuntu,sans-serif !important;
+}
+
+.toastContainer {
+  z-index: 200000 !important;
+}

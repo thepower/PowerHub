@@ -1,0 +1,69 @@
+@import '../../styles/mixins';
+
+.loader {
+  top: calc(50% - 32px);
+  left: calc(50% - 32px);
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  perspective: 800px;
+}
+
+.inner {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  border-radius: 50%;
+}
+
+.inner.one {
+  top: 0;
+  left: 0;
+  border-bottom: 2px solid #2110ea;
+  animation: rotate-one 1s linear infinite;
+}
+
+.inner.two {
+  top: 0;
+  right: 0;
+  border-right: 3px solid #10d0ea;
+  animation: rotate-two 1s linear infinite;
+}
+
+.inner.three {
+  right: 0;
+  bottom: 0;
+  border-top: 3px solid #be10ea;
+  animation: rotate-three 1s linear infinite;
+}
+
+@keyframes rotate-one {
+  0% {
+    transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
+  }
+
+  100% {
+    transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg);
+  }
+}
+
+@keyframes rotate-two {
+  0% {
+    transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
+  }
+
+  100% {
+    transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg);
+  }
+}
+
+@keyframes rotate-three {
+  0% {
+    transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
+  }
+
+  100% {
+    transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);
+  }
+}

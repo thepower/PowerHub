@@ -1,0 +1,36 @@
+@import '../../styles/variables';
+
+.linkBlock {
+  border-radius: $unit * 1.25;
+  color: $blue;
+  border: 2px solid $blue;
+  height: $unit * 48.75;
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  padding: $unit * 4;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-around;
+}
+
+.title {
+  font-size: $unit * 6;
+  font-weight: $bold;
+}
+
+.description {
+  color: $black;
+}
+
+.linkButton {
+  color: #fff;
+  margin-top: $unit * 2.5;
+  text-transform: none;
+  font-size: $unit * 4;
+  border-radius: $unit * 1.25;
+
+  a {
+    text-decoration: none;
+  }
+}

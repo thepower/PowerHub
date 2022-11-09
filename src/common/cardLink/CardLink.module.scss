@@ -1,0 +1,54 @@
+@import 'src/styles/utils';
+
+.card {
+  @include border-gradient($card-gradient);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  backdrop-filter: blur(60px);
+  background: linear-gradient(113.38deg, rgb(44 62 88 / 80%) -6.5%, rgb(27 34 44 / 20%) 106.29%);
+  box-shadow:
+    20px 30px 110px rgb(0 0 0 / 12%),
+    inset 4px 4px 20px rgb(27 34 44 / 20%),
+    inset -4px -4px 20px rgb(27 34 44 / 20%);
+  text-decoration: none;
+
+  &:hover {
+    @include border-gradient($card-hover-gradient);
+
+    .text {
+      @include text-gradient($card-hover-gradient);
+    }
+  }
+
+  &:active {
+    @include border-gradient($card-active-gradient);
+
+    .text {
+      @include text-gradient($card-active-gradient);
+    }
+  }
+
+  &[aria-disabled='true'] {
+    border: 1px solid #79789d;
+    background: #26354d;
+    pointer-events: none;
+
+    .text {
+      color: #79789d;
+    }
+  }
+}
+
+@include icon-colors('.card');
+
+.text {
+  margin-top: 8px;
+  color: #6b798f;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+}

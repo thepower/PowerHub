@@ -1,0 +1,11 @@
+@import 'src/styles/utils';
+
+.template {
+  display: flex;
+  width: 100%;
+  max-width: 656px;
+  min-height: 100vh;
+  flex-direction: column;
+  margin: auto;
+  background: #1b222c;
+}

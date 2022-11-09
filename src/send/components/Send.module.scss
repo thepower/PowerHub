@@ -1,0 +1,143 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.content {
+  display: flex;
+  flex-direction: column;
+  padding: 42px 32px 60px;
+
+  @include mobile {
+    padding: 30px 20px;
+  }
+}
+
+.walletInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  grid-gap: 8px;
+}
+
+.titleBalance {
+  color: #f5f5f7;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.address {
+  color: #6b798f;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.amount {
+  display: flex;
+  align-items: center;
+  color: #f5f5f7;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.totalBalanceIcon {
+  margin-right: 8px;
+}
+
+.divider {
+  margin: 28px 0 40px;
+}
+
+.label {
+  left: 55px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.fields {
+  display: grid;
+  grid-gap: 40px 32px;
+  grid-template-columns: 1fr 1fr;
+
+  > * {
+    grid-column: 1 span;
+  }
+
+  > :last-child {
+    grid-column: 2 span;
+  }
+
+  @include mobile {
+    > * {
+      grid-column: 2 span;
+    }
+  }
+}
+
+.activeBugIcon {
+  path {
+    fill: #e0e40a;
+  }
+}
+
+.button {
+  margin: 76px auto 0;
+}
+
+.result {
+  display: flex;
+  width: 100%;
+  max-width: 496px;
+  flex-direction: column;
+  padding: 20px 24px;
+  border-radius: 5px;
+  margin: 0 auto;
+  background: #252b35;
+  grid-gap: 12px;
+}
+
+.resultKey {
+  margin-bottom: 8px;
+  color: #6b798f;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.resultValue {
+  display: flex;
+  align-items: center;
+  color: #f5f5f7;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 24px;
+}
+
+.commentLabel {
+  margin: 8px 0;
+  color: #6b798f;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+}
+
+.comment {
+  width: 100%;
+  min-height: 120px;
+  padding: 12px 16px;
+  border-radius: 5px;
+  background: #1b222c;
+  color: #f5f5f7;
+  font-size: 16px;
+  line-height: 20px;
+  white-space: pre-line;
+}
+
+.icon {
+  margin-left: 12px;
+}

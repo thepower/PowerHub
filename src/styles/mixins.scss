@@ -1,0 +1,71 @@
+@import 'variables';
+
+@mixin the-power-color {
+  background: $the-power-gradient;
+}
+
+@mixin border-gradient($gradient: $the-power-gradient) {
+  position: relative;
+
+  &::before {
+    position: absolute;
+    padding: 1px;
+    border-radius: 5px;
+    background: $gradient;
+    content: '';
+    inset: 0;
+    mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+  }
+}
+
+@mixin the-power-color-text {
+  @include the-power-color;
+
+  -webkit-text-fill-color: transparent;
+}
+
+@mixin mobile {
+  @media (max-width: $mobile) {
+    @content;
+  }
+}
+
+@mixin text-gradient($gradient) {
+  background: $gradient;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent;
+}
+
+@mixin icon-colors(
+  $class,
+  $defaultColor: #6B798F,
+  $hoverColor: url('#hover'),
+  $activeColor: url('#pressed'),
+  $disabledColor: #79789D,
+) {
+  @each $property in 'stroke', 'fill' {
+    #{$class} :global(.#{$property}) {
+      #{$property}: $defaultColor;
+    }
+
+    #{$class}:hover :global(.#{$property}) {
+      #{$property}: $hoverColor;
+    }
+
+    #{$class}[aria-current='page'] :global(.#{$property}),
+    #{$class}[aria-selected='true'] :global(.#{$property}),
+    #{$class}[aria-pressed='true'] :global(.#{$property}),
+    #{$class}:active :global(.#{$property}) {
+      #{$property}: $activeColor;
+    }
+
+    #{$class}[aria-disabled='true'] :global(.#{$property}),
+    #{$class}:disabled :global(.#{$property}) {
+      #{$property}: $disabledColor;
+    }
+  }
+}

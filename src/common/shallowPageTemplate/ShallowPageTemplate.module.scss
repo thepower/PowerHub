@@ -1,0 +1,56 @@
+@import '../../styles/mixins';
+@import '../../styles/variables';
+
+.template {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+
+  @include mobile {
+    flex-direction: column;
+  }
+}
+
+.aside {
+  z-index: 20;
+  width: $aside-width;
+  background: #1b222c;
+
+  @include mobile {
+    width: 100%;
+    height: auto;
+    order: 2;
+  }
+}
+
+.header {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 32px 48px;
+
+  @include mobile {
+    display: none;
+  }
+}
+
+.logo {
+  @include text-gradient(linear-gradient(298.69deg, #00F0FF -15.4%, #1768E5 100.3%));
+  margin-bottom: 24px;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 34px;
+}
+
+.content {
+  overflow: auto;
+  flex: 1 1 600px;
+  background: #121923;
+
+  @include mobile {
+    width: 100%;
+    flex: 1 1 auto;
+    order: 1;
+  }
+}

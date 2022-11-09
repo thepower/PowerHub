@@ -1,0 +1,70 @@
+@import 'src/styles/utils';
+
+.white .text {
+  color: #f5f5f7;
+}
+
+@include icon-colors('.white', #F5F5F7);
+
+.lilac .text {
+  color: #6b798f;
+}
+
+@include icon-colors('.lilac');
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  background: transparent;
+  cursor: pointer;
+  letter-spacing: -0.2px;
+  text-decoration: none;
+
+  &:hover {
+    .text {
+      @include text-gradient($hover-gradient);
+    }
+  }
+
+  &:active {
+    .text {
+      @include text-gradient($active-gradient);
+    }
+  }
+
+  &:disabled {
+    .text {
+      background: #79789d;
+    }
+  }
+}
+
+.hideTextOnMobile {
+  @include mobile {
+    .text {
+      display: none;
+    }
+  }
+}
+
+.small {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 18px;
+}
+
+.medium {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 23px;
+}
+
+.large {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 28px;
+}
+
+.rotate {
+  transform: rotate(180deg);
+}

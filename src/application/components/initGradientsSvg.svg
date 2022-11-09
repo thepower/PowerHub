@@ -1,0 +1,16 @@
+<svg>
+    <defs>
+        <linearGradient id="default">
+            <stop offset="0.390081" stop-color="#1768E5"/>
+            <stop offset="1" stop-color="#00F0FF"/>
+        </linearGradient>
+        <linearGradient id="hover">
+            <stop stop-color="#1768E5"/>
+            <stop offset="1" stop-color="#00F0FF"/>
+        </linearGradient>
+        <linearGradient id="pressed">
+            <stop offset="0.390081" stop-color="#1768E5"/>
+            <stop offset="1" stop-color="#00F0FF"/>
+        </linearGradient>
+    </defs>
+</svg>

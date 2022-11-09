@@ -1,0 +1,22 @@
+@import 'src/styles/utils';
+
+.copyData {
+  display: flex;
+  align-items: center;
+  background: none;
+  color: #6b798f;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16px;
+
+  &:hover {
+    @include text-gradient(linear-gradient(90deg, #1768E5 0%, #00F0FF 100%));
+  }
+
+  &:active {
+    @include text-gradient(linear-gradient(90deg, rgba(23, 104, 229, 0.8) 50.44%, rgba(0, 240, 255, 0.8) 129.31%));
+  }
+}
+
+@include icon-colors('.copyData');

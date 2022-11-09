@@ -1,0 +1,82 @@
+@import '../../styles/mixins';
+
+.list {
+  display: flex;
+  flex-direction: column;
+  padding: 64px 16px 64px 32px;
+  font-size: 18px;
+  font-weight: 500;
+  gap: 28px;
+  line-height: 21px;
+  list-style: none;
+
+  @include mobile {
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 8px 12px 0;
+    font-size: 10px;
+    gap: 4px;
+    letter-spacing: 0.01em;
+    line-height: 12px;
+  }
+}
+
+.text {
+  color: #6b798f;
+}
+
+.link {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  padding: 8px 14px;
+  border-radius: 5px;
+  text-decoration: none;
+
+  @include mobile {
+    display: flex;
+    width: 56px;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px 2px;
+  }
+
+  &:hover {
+    background: #252b35;
+
+    .text {
+      @include text-gradient(linear-gradient(90deg, #1768E5 0%, #00F0FF 100%));
+    }
+  }
+
+  &[aria-disabled='true'] {
+    background: none;
+    cursor: default;
+    pointer-events: none;
+
+    .text {
+      color: #79789d;
+    }
+  }
+}
+
+.icon {
+  margin-right: 18px;
+
+  @include mobile {
+    margin-right: 0;
+    margin-bottom: 2px;
+  }
+}
+
+.linkActive,
+.linkActive:focus,
+.linkActive:hover {
+  background: #2e353d;
+
+  .text {
+    @include text-gradient(linear-gradient(90deg, #1768E5 50.44%, #00F0FF 129.31%));
+  }
+}
+
+@include icon-colors('.link');

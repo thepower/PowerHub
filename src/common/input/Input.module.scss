@@ -1,0 +1,17 @@
+.passwordAdornment {
+  margin-bottom: -4px !important;
+  cursor: pointer;
+}
+
+.errorMessage {
+  color: #ac2d2d;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16px;
+}
+
+.formControl {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}

@@ -1,0 +1,40 @@
+@import '../../styles/variables';
+
+.page {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: $menu-width;
+  top: $app-bar-height;
+  width: calc(100vw - #{$menu-width});
+  min-height: calc(100vh - #{$app-bar-height});
+  background-color: #fff;
+  padding: $unit * 5;
+
+  @media screen and (max-width: $tablet) {
+    left: 0;
+    width: 100vw;
+  }
+}
+
+.pageContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background: #fff;
+  width: 100%;
+  flex-grow: 1;
+  height: 100%;
+  overflow-y: auto;
+
+  @media screen and (max-width: $tablet) {
+    padding: $unit * 2;
+  }
+}
+
+.pageTitle {
+  margin-bottom: $unit * 4;
+  font-size: $unit * 10.5;
+  color: $blue;
+}

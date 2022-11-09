@@ -1,0 +1,39 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.selectedTab {
+  @include text-gradient($the-power-gradient);
+
+  @media screen and (max-width: $tablet) {
+    width: 60% !important;
+  }
+}
+
+.tab {
+  height: 20px;
+  min-height: unset;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  text-transform: none;
+  font-style: normal;
+  padding-top: 4px;
+
+  @media screen and (max-width: $tablet) {
+    font-size: 14px;
+    line-height: 16px;
+    width: 15%;
+    justify-content: flex-start;
+    margin: 0 4px;
+    min-width: 40px;
+    padding: 4px 0 0;
+  }
+}
+
+.tabsRoot {
+  min-height: unset;
+}
+
+.tabsFlexContainer {
+  margin-bottom: 4px !important;
+}

@@ -1,0 +1,31 @@
+// main
+$unit: 4px;
+$menu-width: 230px;
+$app-bar-height: 50px;
+$mobile: 768px;
+$tablet: 768px;
+$notebook: 1280px;
+$desktop: 1600px;
+$aside-width: 310px;
+
+// font
+$bold: 700;
+
+// timing
+$transition-duration: 300ms;
+
+// colors
+$blue: #2997ff;
+$black: #000;
+$green: #12bab7;
+$red: #c2183f;
+
+$the-power-gradient: linear-gradient(90deg, #1768e5 50.44%, #00f0ff 129.31%);
+$hover-gradient: linear-gradient(90deg, #1768e5 50.44%, #00f0ff 129.31%);
+$active-gradient: linear-gradient(90deg, rgb(23 104 229 / 80%) 50.44%, rgb(0 240 255 / 80%) 129.31%);
+$card-gradient: linear-gradient(102.53deg,
+rgb(226 226 226 / 20%) -7.97%,
+rgb(226 226 226 / 19%) -0.7%,
+rgb(226 226 226 / 5%) 104.73%);
+$card-hover-gradient: linear-gradient(90deg, #1768e5 0%, #00f0ff 100%);
+$card-active-gradient: linear-gradient(90deg, rgb(23 104 229 / 80%) 50.44%, rgb(0 240 255 / 80%) 129.31%);
