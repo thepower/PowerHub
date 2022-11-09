@@ -11,6 +11,7 @@ export interface AccountState {
   walletData: WalletData;
   subChain: Maybe<number>;
   logged: boolean;
+  openedMenu: boolean;
 }
 
 const SLICE_NAME = 'account';
@@ -27,6 +28,7 @@ const initialState: AccountState = {
   },
   subChain: null,
   logged: false,
+  openedMenu: false,
 };
 
 const accountSlice = createSlice({
@@ -43,6 +45,12 @@ const accountSlice = createSlice({
       state.logged = action.payload;
     },
     clearAccountData: () => initialState,
+    toggleOpenedAccountMenu: (state: AccountState) => {
+      state.openedMenu = !state.openedMenu;
+    },
+    closeAccountMenu: (state: AccountState) => {
+      state.openedMenu = false;
+    },
   },
 });
 
@@ -52,6 +60,8 @@ const {
     setWalletData,
     setLoggedToAccount,
     clearAccountData,
+    toggleOpenedAccountMenu,
+    closeAccountMenu,
   },
 } = accountSlice;
 
@@ -64,4 +74,6 @@ export {
   resetAccount,
   clearAccountData,
   exportAccount,
+  toggleOpenedAccountMenu,
+  closeAccountMenu,
 };

@@ -12,6 +12,10 @@
   text-decoration: none !important;
 }
 
+.accountDataHolder {
+  display: flex;
+}
+
 .account {
   display: flex;
   flex-direction: row;
@@ -45,8 +49,10 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  padding: 35px;
+  padding: 35px 24px;
   background: #1b222c;
+  border-left: 2px solid #212831;
+  overflow-x: hidden;
 
   @include mobile {
     top: 88px;
@@ -54,6 +60,9 @@
     width: 100vw;
     height: calc(100vh - 144px);
     padding: 16px;
+    border-width: 2px 0;
+    border-style: solid;
+    border-color: #212831;
   }
 }
 
@@ -72,11 +81,15 @@
   font-style: normal;
   font-weight: 700;
   line-height: 28px;
+  margin-left: 14px;
 }
+
+
 
 .addressButton {
   font-size: 16px;
   line-height: 20px;
+  margin-left: 14px;
 }
 
 .copyIcon {
@@ -88,11 +101,24 @@
 }
 
 .accountActionsHolder {
+  display: flex;
+  flex-direction: column;
+  font-size: 18px;
+  font-weight: 500;
+  gap: 28px;
+  line-height: 21px;
+  list-style: none;
   width: 100%;
-  margin-top: 54px;
+  margin-top: 40px;
 
   @include mobile {
-    margin-top: 42px;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 8px 12px 0;
+    font-size: 10px;
+    gap: 4px;
+    letter-spacing: 0.01em;
+    line-height: 12px;
   }
 }
 
@@ -110,11 +136,24 @@
   align-items: center;
   padding: 8px 14px;
   border-radius: 5px;
-  cursor: pointer;
   text-decoration: none;
+  height: 40px;
+  cursor: pointer;
 
-  &:not(:last-of-type) {
-    margin-bottom: 24px;
+  @include mobile {
+    display: flex;
+    width: 56px;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px 2px;
+  }
+
+  &:hover {
+    background: #252b35;
+
+    .accountActionText {
+      @include text-gradient(linear-gradient(90deg, #1768E5 0%, #00F0FF 100%));
+    }
   }
 
   &:hover,
@@ -127,11 +166,14 @@
   }
 }
 
+
+
 .icon {
   margin-right: 18px;
 
   @include mobile {
-    margin-left: 4px;
+    margin-right: 0;
+    margin-bottom: 2px;
   }
 }
 
