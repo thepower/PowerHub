@@ -38,7 +38,6 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type AccountProps = ConnectedProps<typeof connector> & { className?: string };
 
 interface AccountState {
-  drawerAnchor: 'top' | 'left';
   accountFile: Maybe<File>;
   openedImportAccountModal: boolean;
   openedExportAccountModal: boolean;
@@ -59,36 +58,17 @@ class AccountComponent extends React.PureComponent<AccountProps, AccountState> {
     },
   };
 
-  private mobileWidth = 768;
-
   private importAccountInput: Maybe<HTMLInputElement> = null;
 
   constructor(props: AccountProps) {
     super(props);
     this.state = {
-      drawerAnchor: this.getDrawerAnchor(),
       accountFile: null,
       openedImportAccountModal: false,
       openedExportAccountModal: false,
       openedResetAccountModal: false,
     };
   }
-
-  componentDidMount() {
-    window.addEventListener('resize', this.handleResize);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.handleResize);
-  }
-
-  getDrawerAnchor = () => (
-    window?.innerWidth < this.mobileWidth ? 'top' : 'left'
-  );
-
-  handleResize = () => {
-    this.setState({ drawerAnchor: this.getDrawerAnchor() });
-  };
 
   handleCreateAccount = () => {
     this.props.setShowUnderConstruction(true);
@@ -127,7 +107,6 @@ class AccountComponent extends React.PureComponent<AccountProps, AccountState> {
       accountFile: event?.target?.files?.[0]!,
       openedImportAccountModal: true,
     });
-
 
     this.props.toggleOpenedAccountMenu();
   };
@@ -180,7 +159,6 @@ class AccountComponent extends React.PureComponent<AccountProps, AccountState> {
     } = this.props;
 
     const {
-      drawerAnchor,
       openedImportAccountModal,
       openedExportAccountModal,
       openedResetAccountModal,
@@ -194,7 +172,7 @@ class AccountComponent extends React.PureComponent<AccountProps, AccountState> {
         type="file"
       />
       <Drawer
-        anchor={drawerAnchor}
+        anchor={'left'}
         open={openedMenu}
         onClose={this.toggleAccountMenu}
         elevation={0}

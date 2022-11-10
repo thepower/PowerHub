@@ -1,4 +1,5 @@
 @import '../../styles/mixins';
+@import '../../styles/variables';
 
 .bar {
   position: relative;
@@ -25,7 +26,8 @@
 .shallow {
   @include mobile {
     position: static;
-    padding: 20px 15px;
+    height: $top-bar-mobile;
+    padding: 24px 15px 12px;
   }
 }
 

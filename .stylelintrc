@@ -1,0 +1,25 @@
+{
+  "extends": [
+    "stylelint-config-sass-guidelines",
+    "stylelint-config-idiomatic-order"
+  ],
+  "rules": {
+    "property-no-unknown": [true,
+      {
+        "ignoreProperties": ["text-fill-color"]
+      }
+    ],
+    "selector-no-qualifying-type": null,
+    "no-descending-specificity": null,
+    "selector-class-pattern": null,
+    "order/properties-alphabetical-order": null,
+    "max-nesting-depth": 5,
+    "selector-max-compound-selectors": 5,
+    "selector-pseudo-class-no-unknown": [
+      true,
+      {
+        "ignorePseudoClasses": ["global"]
+      }
+    ]
+  }
+}

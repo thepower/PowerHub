@@ -1,5 +1,7 @@
 @import 'src/styles/utils';
 
+@include icon-colors('.card');
+
 .card {
   @include border-gradient($card-gradient);
 
@@ -15,6 +17,22 @@
     inset 4px 4px 20px rgb(27 34 44 / 20%),
     inset -4px -4px 20px rgb(27 34 44 / 20%);
   text-decoration: none;
+
+  @include mobile {
+    @include border-gradient($card-hover-gradient);
+
+    :global(.fill) {
+      fill: url('#hover');
+    }
+
+    :global(.stroke) {
+      stroke: url('#hover');
+    }
+
+    .text {
+      @include text-gradient($card-hover-gradient);
+    }
+  }
 
   &:hover {
     @include border-gradient($card-hover-gradient);
@@ -42,8 +60,6 @@
     }
   }
 }
-
-@include icon-colors('.card');
 
 .text {
   margin-top: 8px;
