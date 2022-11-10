@@ -15,7 +15,6 @@ export interface AccountState {
 }
 
 const SLICE_NAME = 'account';
-
 const loginToWallet = createAction<LoginToWalletSagaInput>(`${SLICE_NAME}/loginToWallet`);
 const resetAccount = createAction<string>(`${SLICE_NAME}/resetAccount`);
 const exportAccount = createAction<ExportAccountInputType>(`${SLICE_NAME}/exportAccount`);

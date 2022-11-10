@@ -1,0 +1,8 @@
+**/node_modules
+packages/*/build
+packages/*/dist
+packages/*/uploads
+packages/*/dll
+packages/msgpack/*
+packages/jssdk/*
+
