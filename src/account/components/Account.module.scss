@@ -12,6 +12,10 @@
   text-decoration: none !important;
 }
 
+.accountDataHolder {
+  display: flex;
+}
+
 .account {
   display: flex;
   flex-direction: row;
@@ -45,21 +49,28 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  padding: 35px;
+  padding: 35px 24px;
+  border-left: 2px solid #212831;
   background: #1b222c;
+  overflow-x: hidden;
 
   @include mobile {
-    top: 88px;
+    top: $top-bar-mobile;
     left: 0;
     width: 100vw;
-    height: calc(100vh - 144px);
+    height: calc(100vh - $top-bar-mobile);
     padding: 16px;
+    border-top: 2px solid #212831;
   }
 }
 
 .drawerModalRoot {
   position: relative;
-  z-index: 10 !important;
+  z-index: 10;
+
+  @include mobile {
+    z-index: 3000 !important;
+  }
 }
 
 .drawerBackdrop {
@@ -67,16 +78,26 @@
 }
 
 .accountTitle {
+  margin-left: 14px;
   color: #f5f5f7;
   font-size: 24px;
   font-style: normal;
   font-weight: 700;
   line-height: 28px;
+
+  @include mobile {
+    margin-left: 0;
+  }
 }
 
 .addressButton {
+  margin-left: 14px;
   font-size: 16px;
   line-height: 20px;
+
+  @include mobile {
+    margin-left: 0;
+  }
 }
 
 .copyIcon {
@@ -88,11 +109,18 @@
 }
 
 .accountActionsHolder {
+  display: flex;
   width: 100%;
-  margin-top: 54px;
+  flex-direction: column;
+  margin-top: 40px;
+  font-size: 18px;
+  font-weight: 500;
+  gap: 28px;
+  line-height: 21px;
+  list-style: none;
 
   @include mobile {
-    margin-top: 42px;
+    gap: 20px;
   }
 }
 
@@ -107,14 +135,23 @@
 .accountAction {
   display: flex;
   width: 100%;
+  height: 40px;
   align-items: center;
   padding: 8px 14px;
   border-radius: 5px;
   cursor: pointer;
   text-decoration: none;
 
-  &:not(:last-of-type) {
-    margin-bottom: 24px;
+  @include mobile {
+    height: 48px;
+  }
+
+  &:hover {
+    background: #252b35;
+
+    .accountActionText {
+      @include text-gradient(linear-gradient(90deg, #1768E5 0%, #00F0FF 100%));
+    }
   }
 
   &:hover,
@@ -127,11 +164,13 @@
   }
 }
 
+
+
 .icon {
   margin-right: 18px;
 
   @include mobile {
-    margin-left: 4px;
+    margin-bottom: 2px;
   }
 }
 

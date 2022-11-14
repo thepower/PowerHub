@@ -20,6 +20,8 @@
 }
 
 .text {
+  display: flex;
+  align-items: center;
   margin: 0 4px;
   font-size: 18px;
   font-weight: 500;

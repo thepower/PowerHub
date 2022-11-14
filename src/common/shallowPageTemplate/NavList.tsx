@@ -10,6 +10,7 @@ import { NavLink } from 'react-router-dom';
 import { RoutesEnum } from '../../application/typings/routes';
 import styles from './NavList.module.scss';
 import { setShowUnderConstruction } from '../../application/slice/applicationSlice';
+import { closeAccountMenu } from '../../account/slice/accountSlice';
 import { useAppDispatch } from '../../application/store';
 
 const routes = [
@@ -50,6 +51,7 @@ export const NavList = React.memo(() => {
   const handleShowUnderConstruction = React.useCallback((event: MouseEvent) => {
     event.preventDefault();
     dispatch(setShowUnderConstruction(true));
+    dispatch(closeAccountMenu());
   }, [dispatch]);
 
   return <nav>

@@ -19,7 +19,9 @@
   filter: drop-shadow(20px 30px 110px rgb(0 0 0 / 12%));
 
   @include mobile {
+    height: 145px;
     flex-grow: 1;
+    justify-content: space-around;
     padding: 20px 20px 10px 32px;
   }
 }

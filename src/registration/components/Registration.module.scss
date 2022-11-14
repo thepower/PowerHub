@@ -11,6 +11,10 @@
   align-items: center;
   justify-content: center;
   background-color: $black;
+
+  @include mobile {
+    overflow: hidden;
+  }
 }
 
 .registrationPageIcon {
@@ -25,6 +29,10 @@
   height: 100vh;
   background: url('../../common/imgs/RegistraionBackground.png');
   background-size: contain;
+
+  @include mobile {
+    width: 150vw;
+  }
 }
 
 .registrationTitle {
@@ -60,8 +68,10 @@
 }
 
 .buttonsHolder {
+  z-index: 10000;
   display: flex;
   flex-direction: row;
+  margin-top: 60px;
 
   @include mobile {
     flex-direction: column;
@@ -104,6 +114,10 @@
   flex-direction: column;
   align-items: center;
   overflow-y: auto;
+
+  @include mobile {
+    overflow-x: hidden;
+  }
 
   @media screen and (max-width: $notebook) {
     padding: $unit * 6 $unit * 4;
@@ -556,7 +570,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 32px 50px;
+  padding: 32px 50px 44px;
   border-radius: 20px;
   background: #151516;
 
@@ -605,6 +619,24 @@
   font-weight: 700;
   line-height: 24px;
   text-align: center;
+
+  @include mobile {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16px;
+
+    &_short {
+      width: 164px;
+    }
+  }
+}
+
+.loginPagePartLoginDesc {
+  margin-bottom: 32px !important;
+}
+
+.loginButtonHolder {
+  margin-top: 36px;
 }
 
 .loginPageImportButton {

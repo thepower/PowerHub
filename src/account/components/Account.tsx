@@ -10,13 +10,13 @@ import {
 import { CopyButton } from 'common';
 import { connect, ConnectedProps } from 'react-redux';
 import { Drawer } from '@mui/material';
-import { getWalletAddress } from '../selectors/accountSelectors';
+import { getOpenedMenu, getWalletAddress } from '../selectors/accountSelectors';
 import globe from './globe.jpg';
 import { Maybe } from '../../typings/common';
 import { AccountActionsList } from './AccountActionsList';
 import { AccountActionType } from '../typings/accountTypings';
 import { ImportAccountModal } from '../../registration/components/pages/loginRegisterAccount/import/ImportAccountModal';
-import { importAccountFromFile } from '../slice/accountSlice';
+import { importAccountFromFile, toggleOpenedAccountMenu } from '../slice/accountSlice';
 import { ExportAccountModal } from '../../registration/components/pages/backup/ExportAccountModal';
 import { ResetAccountModal } from './ResetAccountModal';
 import { setShowUnderConstruction } from '../../application/slice/applicationSlice';
@@ -25,18 +25,19 @@ import styles from './Account.module.scss';
 
 const mapStateToProps = (state: RootState) => ({
   walletAddress: getWalletAddress(state),
+  openedMenu: getOpenedMenu(state),
 });
+
 const mapDispatchToProps = {
   importAccountFromFile,
   setShowUnderConstruction,
+  toggleOpenedAccountMenu,
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 type AccountProps = ConnectedProps<typeof connector> & { className?: string };
 
 interface AccountState {
-  openedAccountMenu: boolean;
-  drawerAnchor: 'top' | 'left';
   accountFile: Maybe<File>;
   openedImportAccountModal: boolean;
   openedExportAccountModal: boolean;
@@ -57,37 +58,17 @@ class AccountComponent extends React.PureComponent<AccountProps, AccountState> {
     },
   };
 
-  private mobileWidth = 768;
-
   private importAccountInput: Maybe<HTMLInputElement> = null;
 
   constructor(props: AccountProps) {
     super(props);
     this.state = {
-      openedAccountMenu: false,
-      drawerAnchor: this.getDrawerAnchor(),
       accountFile: null,
       openedImportAccountModal: false,
       openedExportAccountModal: false,
       openedResetAccountModal: false,
     };
   }
-
-  componentDidMount() {
-    window.addEventListener('resize', this.handleResize);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.handleResize);
-  }
-
-  getDrawerAnchor = () => (
-    window?.innerWidth < this.mobileWidth ? 'top' : 'left'
-  );
-
-  handleResize = () => {
-    this.setState({ drawerAnchor: this.getDrawerAnchor() });
-  };
 
   handleCreateAccount = () => {
     this.props.setShowUnderConstruction(true);
@@ -125,8 +106,9 @@ class AccountComponent extends React.PureComponent<AccountProps, AccountState> {
     this.setState({
       accountFile: event?.target?.files?.[0]!,
       openedImportAccountModal: true,
-      openedAccountMenu: false,
     });
+
+    this.props.toggleOpenedAccountMenu();
   };
 
   closeExportAccountModal = () => {
@@ -165,19 +147,18 @@ class AccountComponent extends React.PureComponent<AccountProps, AccountState> {
     },
   ];
 
-  openAccountMenu = () => {
-    this.setState({ openedAccountMenu: true });
-  };
-
-  closeAccountMenu = () => {
-    this.setState({ openedAccountMenu: false });
+  toggleAccountMenu = () => {
+    this.props.toggleOpenedAccountMenu();
   };
 
   render() {
-    const { walletAddress, className } = this.props;
     const {
-      openedAccountMenu,
-      drawerAnchor,
+      walletAddress,
+      className,
+      openedMenu,
+    } = this.props;
+
+    const {
       openedImportAccountModal,
       openedExportAccountModal,
       openedResetAccountModal,
@@ -191,9 +172,9 @@ class AccountComponent extends React.PureComponent<AccountProps, AccountState> {
         type="file"
       />
       <Drawer
-        anchor={drawerAnchor}
-        open={openedAccountMenu}
-        onClose={this.closeAccountMenu}
+        anchor={'left'}
+        open={openedMenu}
+        onClose={this.toggleAccountMenu}
         elevation={0}
         ModalProps={this.drawerModalProps}
         classes={this.drawerPaperClasses}
@@ -229,12 +210,14 @@ class AccountComponent extends React.PureComponent<AccountProps, AccountState> {
         open={openedResetAccountModal}
         onClose={this.closeResetAccountModal}
       />
-      <img className={styles.img} src={globe} alt="Avatar" />
       <div
-        className={styles.accountText}
-        onClick={this.openAccountMenu}
+        className={styles.accountDataHolder}
+        onClick={this.toggleAccountMenu}
       >
-        <p>{walletAddress}</p>
+        <img className={styles.img} src={globe} alt="Avatar" />
+        <div className={styles.accountText}>
+          <p>{walletAddress}</p>
+        </div>
       </div>
     </div>;
   }
