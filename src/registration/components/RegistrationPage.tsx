@@ -1,6 +1,4 @@
 import React from 'react';
-import { Button } from '@mui/material';
-import classnames from 'classnames';
 import { push } from 'connected-react-router';
 import { connect, ConnectedProps } from 'react-redux';
 import {
@@ -8,6 +6,7 @@ import {
   BreadcrumbsTypeEnum,
   PELogoWithTitle,
   Wizard,
+  Button,
 } from 'common';
 import { RegistrationTabsEnum } from '../typings/registrationTypes';
 import { QuickGuide } from './pages/QuickGuide';
@@ -69,22 +68,22 @@ class RegistrationPageComponent extends React.PureComponent<RegistrationPageProp
       <div className={styles.registrationDesc}>{'home for everyone and every dapp'}</div>
       <div className={styles.buttonsHolder}>
         <Button
-          className={styles.registrationButton}
-          variant="outlined"
           size="large"
+          variant="filled"
+          className={styles.button}
+          type="button"
           onClick={this.handleProceedToRegistration}
         >
           {'Join to Web3'}
         </Button>
         <Button
-          className={classnames(styles.registrationButton, styles.registrationNextButton_outlined)}
-          variant="outlined"
           size="large"
+          variant="outlined"
+          className={styles.button}
+          type="button"
           onClick={this.handleProceedToLogin}
         >
-          <span className={styles.registrationNextButtonText}>
-            {'Login or import an account'}
-          </span>
+          {'Login or import an account'}
         </Button>
       </div>
     </>

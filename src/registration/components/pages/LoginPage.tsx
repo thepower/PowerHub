@@ -1,10 +1,14 @@
 import React, { ChangeEvent } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import classnames from 'classnames';
-import { Button } from '@mui/material';
 import styles from '../Registration.module.scss';
 import { RegistrationBackground } from '../common/RegistrationBackground';
-import { AttachIcon, OutlinedInput, PELogoWithTitle } from '../../../common';
+import {
+  AttachIcon,
+  OutlinedInput,
+  PELogoWithTitle,
+  Button,
+} from '../../../common';
 import { Maybe } from '../../../typings/common';
 import { importAccountFromFile } from '../../../account/slice/accountSlice';
 import { ImportAccountModal } from './loginRegisterAccount/import/ImportAccountModal';
@@ -133,7 +137,7 @@ class LoginPageComponent extends React.PureComponent<LoginPageProps, LoginPageSt
     <div className={styles.loginPagePartTitle}>
       {'Import account'}
     </div>
-    <div className={styles.loginPagePartDesc}>
+    <div className={classnames(styles.loginPagePartDesc, styles.loginPagePartDesc_short)}>
       {'To import an account, upload the required file'}
     </div>
     <Button
@@ -144,7 +148,7 @@ class LoginPageComponent extends React.PureComponent<LoginPageProps, LoginPageSt
         styles.loginPageImportButton,
       )}
       variant="outlined"
-      size="large"
+      size="medium"
       onClick={this.handleOpenImportFile}
     >
       <AttachIcon />
@@ -167,7 +171,7 @@ class LoginPageComponent extends React.PureComponent<LoginPageProps, LoginPageSt
       <div className={styles.loginPagePartTitle}>
         {'Login to account'}
       </div>
-      <div className={styles.loginPagePartDesc}>
+      <div className={classnames(styles.loginPagePartDesc, styles.loginPagePartLoginDesc)}>
         {'To login, you need enter the address and private key or seed phrase'}
       </div>
       <OutlinedInput
@@ -199,13 +203,14 @@ class LoginPageComponent extends React.PureComponent<LoginPageProps, LoginPageSt
         errorMessage={'oops, passwords didn\'t match, try again'}
         onChange={this.onChangeConfirmedPassword}
       />
-      <div className={styles.registrationButtonsHolder}>
+      <div className={styles.loginButtonHolder}>
         <Button
-          className={styles.registrationNextButton}
-          variant="contained"
-          size="large"
-          onClick={this.loginToAccount}
+          size="medium"
+          variant="filled"
+          className={styles.button}
+          type="button"
           disabled={!address || !seed || passwordsNotEqual || !password || !confirmedPassword}
+          onClick={this.loginToAccount}
         >
           {'Next'}
         </Button>
