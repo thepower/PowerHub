@@ -1,10 +1,9 @@
 import React, { ChangeEvent } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-import classnames from 'classnames';
-import { Button } from '@mui/material';
 import {
   Tabs,
   AttachIcon,
+  Button,
 } from 'common';
 import {
   LoginRegisterAccountTabs,
@@ -103,9 +102,9 @@ class ImportAccountComponent extends React.PureComponent<ImportAccountProps, Imp
             type="file"
           />
           <Button
-            className={classnames(styles.registrationNextButton, styles.registrationNextButton_outlined, styles.importAccountButton)}
+            size="medium"
             variant="outlined"
-            size="large"
+            type="button"
             onClick={this.handleOpenImportFile}
           >
             <AttachIcon />

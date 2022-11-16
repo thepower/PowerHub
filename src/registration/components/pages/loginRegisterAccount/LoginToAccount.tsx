@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-import { Button } from '@mui/material';
-import { OutlinedInput, Tabs } from 'common';
+import { OutlinedInput, Tabs, Button } from 'common';
 import styles from '../../Registration.module.scss';
 import { LoginRegisterAccountTabs, LoginRegisterAccountTabsLabels, RegistrationPageAdditionalProps } from '../../../typings/registrationTypes';
 import { RegistrationBackground } from '../../common/RegistrationBackground';
@@ -143,9 +142,9 @@ class LoginToAccountComponent extends React.PureComponent<LoginToAccountProps, L
       </RegistrationBackground>
       <div className={styles.registrationButtonsHolder}>
         <Button
-          className={styles.registrationNextButton}
-          variant="contained"
-          size="large"
+          size="medium"
+          variant="filled"
+          type="button"
           onClick={this.loginToAccount}
           disabled={!address || !seed || passwordsNotEqual || !password || !confirmedPassword}
         >

@@ -3,15 +3,14 @@ import { connect, ConnectedProps } from 'react-redux';
 import {
   Select,
   MenuItem,
-  Button,
 } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select/SelectInput';
-import classnames from 'classnames';
 import { RootState } from 'application/store';
 import {
   Tabs,
   OutlinedInput,
   ModalLoader,
+  Button,
 } from 'common';
 import { checkIfLoading } from 'network/selectors';
 import styles from '../../Registration.module.scss';
@@ -365,20 +364,18 @@ class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProp
         {
           creatingStep !== CreateAccountStepsEnum.selectSubChain &&
           <Button
-            className={classnames(styles.registrationNextButton, styles.registrationNextButton_outlined)}
+            size="medium"
             variant="outlined"
-            size="large"
+            type="button"
             onClick={this.handleBackClick}
           >
-            <span className={styles.registrationNextButtonText}>
-              {'Back'}
-            </span>
+            {'Back'}
           </Button>
         }
         <Button
-          className={styles.registrationNextButton}
-          variant="contained"
-          size="large"
+          size="medium"
+          variant="filled"
+          type="button"
           onClick={this.submitForm}
           disabled={this.getSubmitButtonDisabled()}
         >

@@ -1,7 +1,5 @@
 import React from 'react';
-import { Button } from '@mui/material';
-import classnames from 'classnames';
-import { WizardComponentProps } from 'common';
+import { WizardComponentProps, Button } from 'common';
 import { RegistrationBackground } from '../common/RegistrationBackground';
 import { RegistrationStatement } from '../common/RegistrationStatement';
 import styles from '../Registration.module.scss';
@@ -23,19 +21,17 @@ export const BeAware: React.FC<BeAwareProps> = (props: BeAwareProps) => (
     </RegistrationBackground>
     <div className={styles.registrationButtonsHolder}>
       <Button
-        className={classnames(styles.registrationNextButton, styles.registrationNextButton_outlined)}
+        size="medium"
         variant="outlined"
-        size="large"
+        type="button"
         onClick={props.setPrevStep}
       >
-        <span className={styles.registrationNextButtonText}>
-          {'Back'}
-        </span>
+        {'Back'}
       </Button>
       <Button
-        className={styles.registrationNextButton}
-        variant="contained"
-        size="large"
+        size="medium"
+        variant="filled"
+        type="button"
         onClick={props.setNextStep}
       >
         {'Next'}

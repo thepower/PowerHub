@@ -1,8 +1,7 @@
 import React from 'react';
-import { Button } from '@mui/material';
 import { RegistrationBackground } from '../common/RegistrationBackground';
 import { RegistrationStatement } from '../common/RegistrationStatement';
-import { WizardComponentProps } from '../../../common';
+import { WizardComponentProps, Button } from '../../../common';
 import styles from '../Registration.module.scss';
 
 type QuickGuideProps = WizardComponentProps;
@@ -25,9 +24,9 @@ export const QuickGuide: React.FC<QuickGuideProps> = (props: QuickGuideProps) =>
     </RegistrationBackground>
     <div className={styles.registrationButtonsHolder}>
       <Button
-        className={styles.registrationNextButton}
-        variant="contained"
-        size="large"
+        size="medium"
+        variant="filled"
+        type="button"
         onClick={props.setNextStep}
       >
         {'Next'}
