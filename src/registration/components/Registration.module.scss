@@ -129,11 +129,11 @@
   max-width: 1000px;
   flex-direction: column;
   align-items: center;
-  padding: 0 $unit * 26;
+  padding: 20px $unit * 26;
   border-radius: $unit * 5;
   background-color: #151516 !important;
 
-  @media screen and (max-width: $notebook) {
+  @include mobile {
     padding: $unit * 5 $unit * 4;
   }
 }
@@ -158,33 +158,38 @@
   margin-bottom: $unit * 4;
   background: linear-gradient(90deg, #1768e5 50.44%, #00f0ff 129.31%);
 
-  div:not(:last-of-type) {
-    margin-bottom: $unit * 4;
+  @include mobile {
+    width: unset;
+    padding: $unit * 5 $unit * 2;
   }
 
-  @media screen and (max-width: $notebook) {
-    width: unset;
-    padding: $unit * 6 $unit * 2;
+  div:not(:last-of-type) {
+    margin-bottom: $unit * 4;
   }
 }
 
 .registrationStatement {
-  padding: $unit * 3 $unit * 5 $unit * 4;
+  padding: $unit * 3 $unit * 5 $unit * 4 $unit * 5;
   border-radius: $unit * 5;
   background: #151516;
+
+  @include mobile {
+    padding: $unit * 3 $unit * 1.5 $unit * 5 $unit * 5;
+  }
 }
 
 .registrationStatementTitle {
   padding-bottom: $unit * 2;
+  margin-bottom: 0 !important;
   color: #2997ff;
   font-size: $unit * 4.5;
   font-weight: 500;
   line-height: $unit * 6;
   text-shadow: 0 4px 4px rgb(0 0 0 / 25%);
 
-  @media screen and (max-width: $tablet) {
-    margin-bottom: 0 !important;
-  }
+  //@media screen and (max-width: $tablet) {
+  //  margin-bottom: 0 !important;
+  //}
 }
 
 .registrationStatementDesc {
@@ -202,6 +207,13 @@
   font-size: $unit * 6;
   font-weight: 700;
   line-height: $unit * 7;
+
+  @include mobile {
+    width: 100%;
+    margin-bottom: 20px !important;
+    margin-left: 0;
+    text-align: center;
+  }
 }
 
 .registrationButtonsHolder {
