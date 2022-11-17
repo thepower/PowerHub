@@ -12,9 +12,7 @@ interface TabsProps extends MUITabsProps {
   tabsLabels: any;
 }
 
-interface TabsState {}
-
-export class Tabs extends React.PureComponent<TabsProps, TabsState> {
+export class Tabs extends React.PureComponent<TabsProps> {
   boxSx = { borderBottom: 1, borderColor: 'divider' };
 
   tabClasses = {
@@ -28,7 +26,7 @@ export class Tabs extends React.PureComponent<TabsProps, TabsState> {
 
   renderTab = (key: string) => {
     const { tabs, tabsLabels } = this.props;
-    const labels =  tabsLabels || tabs;
+    const labels = tabsLabels || tabs;
 
     return <Tab
       className={styles.tab}
@@ -37,6 +35,7 @@ export class Tabs extends React.PureComponent<TabsProps, TabsState> {
       value={key}
       disableFocusRipple
       disableRipple
+      wrapped
     />;
   };
 
