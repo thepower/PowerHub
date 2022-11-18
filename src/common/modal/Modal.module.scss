@@ -51,6 +51,13 @@
   justify-content: center;
   padding: 32px;
   background: rgb(255 255 255 / 2%);
+
+  @include mobile {
+    width: 100vw;
+    min-width: unset;
+    height: 100vh;
+    min-height: unset;
+  }
 }
 
 .alwaysShowCloseIcon {

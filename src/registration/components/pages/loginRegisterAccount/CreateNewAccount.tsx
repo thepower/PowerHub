@@ -13,6 +13,7 @@ import {
 } from 'common';
 import { ChevronDown } from 'common/icons';
 import { checkIfLoading } from 'network/selectors';
+import classnames from 'classnames';
 import styles from '../../Registration.module.scss';
 import {
   setCreatingCurrentShard,
@@ -279,8 +280,8 @@ class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProp
     const { generatedSeedPhrase } = this.props;
     const { userSeedPhrase } = this.state;
 
-    return <RegistrationBackground>
-      <div className={styles.loginRegisterAccountTitle}>
+    return <RegistrationBackground className={styles.rememberBackground}>
+      <div className={classnames(styles.loginRegisterAccountTitle, styles.rememberTitle)}>
         {'Remember'}
       </div>
       <RegistrationStatement description={'Enter a seed phrase or use the one we provide'} />
@@ -330,7 +331,7 @@ class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProp
   renderEncryptPrivateKey = () => {
     const { password, confirmedPassword, passwordsNotEqual } = this.state;
 
-    return <RegistrationBackground>
+    return <RegistrationBackground className={styles.enterPasswordBackground}>
       <div className={styles.loginRegisterAccountTitle}>
         {'Enter password to encrypt your private key'}
       </div>

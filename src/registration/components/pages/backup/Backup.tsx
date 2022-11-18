@@ -48,7 +48,7 @@ class BackupComponent extends React.PureComponent<BackupProps, BackupState> {
         open={openedPasswordModal}
         onClose={this.closePasswordModal}
       />
-      <RegistrationBackground>
+      <RegistrationBackground className={styles.exportBackground}>
         <div className={styles.registrationPageTitle}>{'Important rules!'}</div>
         <RegistrationStatement title={'Export'} description={'Please export wallet data so that you may recover your wallet later in case of emergency'} />
         <RegistrationStatement title={'IMPORTANT!'} description={'You need both your address and seed phrase to restore your wallet. So store them both'} />

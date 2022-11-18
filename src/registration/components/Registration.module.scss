@@ -126,7 +126,7 @@
 
 .registrationWizardHolder {
   display: flex;
-  max-width: 1000px;
+  width: 1072px;
   flex-direction: column;
   align-items: center;
   padding: 20px $unit * 26;
@@ -134,12 +134,16 @@
   background-color: #151516 !important;
 
   @include mobile {
+    width: 100%;
     padding: $unit * 5 $unit * 4;
   }
 }
 
 .registrationWizard {
+  display: flex;
   height: 100%;
+  align-items: center;
+  justify-content: center;
   margin-top: $unit * 5;
   background-color: transparent;
 
@@ -150,7 +154,9 @@
 
 .registrationBackground {
   display: flex;
+  width: 800px;
   height: 100%;
+  min-height: 456px;
   flex-direction: column;
   align-items: flex-start;
   padding: $unit * 3 $unit * 21;
@@ -159,7 +165,9 @@
   background: linear-gradient(90deg, #1768e5 50.44%, #00f0ff 129.31%);
 
   @include mobile {
-    width: unset;
+    width: 100%;
+    height: unset;
+    min-height: unset;
     padding: $unit * 5 $unit * 2;
   }
 
@@ -294,7 +302,7 @@
 
 .loginRegisterAccountHolder {
   display: flex;
-  width: 100%;
+  width: 592px;
   min-height: 370px;
   flex-direction: column;
   align-items: center;
@@ -307,6 +315,7 @@
   background: #151516;
 
   @media screen and (max-width: $tablet) {
+    width: 100%;
     padding: 20px;
   }
 }
@@ -346,6 +355,7 @@
   width: 100%;
   align-items: center;
   justify-content: flex-start;
+  margin-bottom: 4px;
   color: #f5f5f7;
   font-size: 20px;
   font-style: normal;
@@ -353,6 +363,7 @@
   line-height: 24px;
 
   @media screen and (max-width: $tablet) {
+    width: 100%;
     justify-content: center;
   }
 }
@@ -385,7 +396,7 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  margin: 132px auto 172px;
+  margin: 132px auto 244px;
 
   @media screen and (max-width: $tablet) {
     width: 100%;
@@ -489,10 +500,12 @@
   display: flex;
   align-items: center;
   margin-top: 36px;
+  margin-bottom: 32px;
   color: #f5f5f7;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 500;
   line-height: 20px;
+  text-align: center;
   white-space: pre-line;
 }
 
@@ -573,8 +586,7 @@
 
 .loginPageBackground {
   display: flex;
-  width: 95vw;
-  max-width: 1072px;
+  width: 1072px;
   height: auto;
   align-items: center;
   padding: 40px 16px;
@@ -706,4 +718,36 @@
 .loginRegisterAccountShardMenuItem {
   background: #121923;
   color: #6b798f;
+}
+
+.rememberBackground {
+  padding: 12px 150px 36px;
+
+  @include mobile {
+    padding: 12px 8px;
+  }
+}
+
+.rememberTitle {
+  text-align: left;
+
+  @include mobile {
+    text-align: center;
+  }
+}
+
+.enterPasswordBackground {
+  padding: 40px 150px 51px;
+
+  @include mobile {
+    padding: 12px 8px;
+  }
+}
+
+.exportBackground {
+  padding: 80px 100px;
+
+  @include mobile {
+    padding: 12px 8px;
+  }
 }

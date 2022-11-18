@@ -5,11 +5,15 @@
   display: flex;
   width: 100%;
   justify-content: space-evenly;
-  margin-bottom: $unit * 6;
+  margin-bottom: 16px;
+
+  @include mobile {
+    margin-bottom: 28px;
+  }
 }
 
 .breadcrumbsHolderBordered {
-  padding-bottom: 28px;
+  padding-bottom: 24px;
   border-bottom: 2px solid #2e3642;
 
   @include mobile {
@@ -22,6 +26,7 @@
   font-size: 18px;
   font-weight: 400;
   line-height: 24px;
+  white-space: nowrap;
 
   @include mobile {
     font-size: 16px;
