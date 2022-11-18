@@ -19,6 +19,11 @@ export type RegistrationState = {
   currentShard: Maybe<number>;
   seedPhrase: Maybe<string>;
   creatingStep: CreateAccountStepsEnum;
+  address: Maybe<string>;
+  seed: Maybe<string>;
+  password: Maybe<string>;
+  confirmedPassword: Maybe<string>;
+  passwordsNotEqual: boolean;
 };
 
 const initialState: RegistrationState = {
@@ -26,6 +31,11 @@ const initialState: RegistrationState = {
   currentShard: null,
   seedPhrase: null,
   creatingStep: CreateAccountStepsEnum.selectSubChain,
+  address: null,
+  seed: null,
+  password: null,
+  confirmedPassword: null,
+  passwordsNotEqual: false,
 };
 
 const registrationSlice = createSlice({
@@ -45,6 +55,23 @@ const registrationSlice = createSlice({
     setCreatingStep: (state: RegistrationState, action: PayloadAction<CreateAccountStepsEnum>) => {
       state.creatingStep = action.payload;
     },
+    seLoginAddress: (state: RegistrationState, action: PayloadAction<string>) => {
+      state.address = action.payload;
+    },
+    setLoginSeed: (state: RegistrationState, action: PayloadAction<string>) => {
+      state.seed = action.payload;
+    },
+    setLoginPassword: (state: RegistrationState, action: PayloadAction<string>) => {
+      state.password = action.payload;
+      state.passwordsNotEqual = false;
+    },
+    setLoginConfirmedPassword: (state: RegistrationState, action: PayloadAction<string>) => {
+      state.confirmedPassword = action.payload;
+      state.passwordsNotEqual = false;
+    },
+    setPasswordNotEqual: (state: RegistrationState, action: PayloadAction<boolean>) => {
+      state.passwordsNotEqual = action.payload;
+    },
   },
 });
 
@@ -55,6 +82,11 @@ const {
     setCreatingCurrentShard,
     setSeedPhrase,
     setCreatingStep,
+    seLoginAddress,
+    setLoginSeed,
+    setLoginPassword,
+    setLoginConfirmedPassword,
+    setPasswordNotEqual,
   },
 } = registrationSlice;
 
@@ -68,4 +100,9 @@ export {
   createWallet,
   loginToWalletFromRegistration,
   proceedToHub,
+  seLoginAddress,
+  setLoginSeed,
+  setLoginPassword,
+  setLoginConfirmedPassword,
+  setPasswordNotEqual,
 };

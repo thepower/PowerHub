@@ -33,3 +33,14 @@ export const getGeneratedSeedPhrase = createSelector(
     registrationState.seedPhrase
   ),
 );
+
+export const getLoginData = createSelector(
+  getRegistrationState,
+  (registrationState: RegistrationState) => ({
+    address: registrationState.address,
+    seed: registrationState.seed,
+    password: registrationState.password,
+    confirmedPassword: registrationState.confirmedPassword,
+    passwordsNotEqual: registrationState.passwordsNotEqual,
+  }),
+);

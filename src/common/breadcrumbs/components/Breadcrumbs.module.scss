@@ -40,15 +40,16 @@
   align-items: center;
   margin-right: $unit * 8;
   color: #6b798f;
-  font-size: $unit * 3.5;
-  font-style: normal;
-  font-weight: normal;
+  font-size: 18px;
+  font-weight: 400;
   letter-spacing: 0.2px;
-  line-height: 17px;
+  line-height: 24px;
   text-align: center;
 
-  @media screen and (max-width: $tablet) {
+  @include mobile {
     margin-right: unset !important;
+    font-size: 16px;
+    white-space: nowrap;
   }
 }
 

@@ -232,7 +232,7 @@
 
     button:nth-child(2) {
       margin-top: 16px;
-      margin-left: 0;
+      margin-left: 0 !important;
     }
   }
 
@@ -321,17 +321,20 @@
 .registrationFormDesc {
   display: flex;
   align-items: center;
-  margin-top: 48px;
+  margin-top: 36px;
   color: #f5f5f7;
-  font-size: $unit * 3.3;
+  font-size: 14px;
   font-weight: 400;
   line-height: $unit * 4;
   white-space: pre-line;
 }
 
 .loginRegisterAccountCreateSelect {
-  width: 168px;
-  height: 34px;
+  width: 170px;
+  height: 40px;
+  padding: 0 !important;
+  //border: 1px solid #6B798F !important;
+  border-radius: 5px;
 }
 
 .loginRegisterAccountCreateSelectMenu {
@@ -485,9 +488,9 @@
 .importAccountFormDesc {
   display: flex;
   align-items: center;
-  margin-top: 48px;
+  margin-top: 36px;
   color: #f5f5f7;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
   line-height: 20px;
   white-space: pre-line;
@@ -655,4 +658,52 @@
 
 .loginPageImportButton {
   margin-top: 60px;
+}
+
+.registrationComponent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.loginRegisterAccountShardTitle {
+  margin-top: 4px;
+  margin-bottom: 8px !important;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.loginRegisterAccountShardInput {
+  padding: 8px 12px !important;
+}
+
+.loginRegisterAccountShardIcon {
+  margin-top: 3px !important;
+}
+
+.loginRegisterAccountShardPlaceholder {
+  display: flex;
+  align-items: center;
+  color: #6b798f;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.loginRegisterAccountShardPaper {
+  padding: 0 !important;
+  border: 1px solid #6b798f;
+  border-radius: 5px;
+  margin-top: 5px !important;
+  background: #121923;
+}
+
+.loginRegisterAccountShardMenu {
+  padding: 0 !important;
+}
+
+.loginRegisterAccountShardMenuItem {
+  background: #121923;
+  color: #6b798f;
 }
