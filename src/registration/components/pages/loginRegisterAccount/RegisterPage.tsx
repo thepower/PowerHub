@@ -5,7 +5,7 @@ import { RootState } from 'application/store';
 import {
   CreateAccountStepsEnum,
   LoginRegisterAccountTabs,
-  LoginRegisterAccountTabsLabels,
+  LoginRegisterAccountTabsLabels, LoginRegisterAccountTabsLabelsShort,
 } from '../../../typings/registrationTypes';
 import { CreateNewAccount } from './CreateNewAccount';
 import {
@@ -43,7 +43,19 @@ const mapDispatchToProps = {
 const connector = connect(mapStateToProps, mapDispatchToProps);
 type LoginRegisterAccountProps = ConnectedProps<typeof connector> & WizardComponentProps;
 
-class LoginRegisterAccountComponent extends React.PureComponent<LoginRegisterAccountProps, never> {
+interface LoginRegisterAccountState {
+  isMobile: boolean;
+}
+
+class LoginRegisterAccountComponent extends React.PureComponent<LoginRegisterAccountProps, LoginRegisterAccountState> {
+  constructor(props: LoginRegisterAccountProps) {
+    super(props);
+
+    this.state = {
+      isMobile: window.innerWidth < 768,
+    };
+  }
+
   onChangeTab = (_event: React.SyntheticEvent, value: LoginRegisterAccountTabs) => {
     this.props.setCurrentRegisterCreateAccountTab(value);
   };
@@ -127,6 +139,8 @@ class LoginRegisterAccountComponent extends React.PureComponent<LoginRegisterAcc
 
   render() {
     const { tab, setNextStep } = this.props;
+    const { isMobile } = this.state;
+
     if (this.props.creatingStep !== CreateAccountStepsEnum.selectSubChain) {
       return <CreateNewAccount setNextStep={setNextStep} />;
     }
@@ -139,7 +153,7 @@ class LoginRegisterAccountComponent extends React.PureComponent<LoginRegisterAcc
         <div className={styles.loginRegisterAccountHolder}>
           <Tabs
             tabs={LoginRegisterAccountTabs}
-            tabsLabels={LoginRegisterAccountTabsLabels}
+            tabsLabels={isMobile ? LoginRegisterAccountTabsLabelsShort : LoginRegisterAccountTabsLabels}
             value={tab}
             onChange={this.onChangeTab}
           />

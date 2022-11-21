@@ -22,6 +22,7 @@ export class Tabs extends React.PureComponent<TabsProps> {
   tabsClasses = {
     root: styles.tabsRoot,
     flexContainer: styles.tabsFlexContainer,
+    indicator: styles.tabsIndicator,
   };
 
   renderTab = (key: string) => {
@@ -41,7 +42,7 @@ export class Tabs extends React.PureComponent<TabsProps> {
 
   render() {
     const { value, onChange, tabs } = this.props;
-    return <Box sx={this.boxSx}>
+    return <Box className={styles.tabsHolder} sx={this.boxSx}>
       <MUITabs
         value={value}
         onChange={onChange}

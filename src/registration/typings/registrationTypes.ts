@@ -20,6 +20,12 @@ export enum LoginRegisterAccountTabsLabels {
   import = 'Import your account',
 }
 
+export enum LoginRegisterAccountTabsLabelsShort {
+  create = 'Create',
+  login = 'Login',
+  import = 'Import',
+}
+
 export enum CreateAccountStepsEnum {
   selectSubChain = 'selectSubChain',
   setSeedPhrase = 'setSeedPhrase',

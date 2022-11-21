@@ -71,7 +71,7 @@ const MUITheme = createTheme({
             },
           },
           '&:hover:not(.Mui-focused) .MuiOutlinedInput-notchedOutline': {
-            border: 'inherit',
+            border: '1px solid #F5F5F7',
           },
         },
         input: {

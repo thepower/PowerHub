@@ -219,11 +219,14 @@ class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProp
         {'The wallet is still in alpha-testing phase. \nWallet creation may take a couple of minutes'}
       </div>
       <div className={styles.loginRegisterAccountShardTitle}>
-        {'Selected shard:'}
+        {'Selected chain:'}
       </div>
       <Select
         value={currentShard!}
-        className={styles.loginRegisterAccountCreateSelect}
+        className={classnames(
+          styles.loginRegisterAccountCreateSelect,
+          currentShard ? styles.loginRegisterAccountCreateSelectWithValue : '',
+        )}
         fullWidth
         MenuProps={this.selectMenuProps}
         onChange={this.onSelectShard}
@@ -311,7 +314,7 @@ class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProp
     const { generatedSeedPhrase } = this.props;
     const { confirmedSeedPhrase, seedsNotEqual } = this.state;
 
-    return <div className={styles.confirmSeedPhraseHolder}>
+    return <RegistrationBackground className={styles.confirmSeedPhraseHolder}>
       <div className={styles.confirmSeedPhraseTitle}>
         {'Repeat seed phrase'}
       </div>
@@ -325,7 +328,7 @@ class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProp
         fullWidth
         errorMessage={'Oh:( the seed phrase is incorrect, please try again'}
       />
-    </div>;
+    </RegistrationBackground>;
   };
 
   renderEncryptPrivateKey = () => {

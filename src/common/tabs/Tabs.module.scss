@@ -1,12 +1,12 @@
 @import '../../styles/variables';
 @import '../../styles/mixins';
 
+.tabsHolder {
+  width: 100%;
+}
+
 .selectedTab {
   @include text-gradient($the-power-gradient);
-
-  @media screen and (max-width: $tablet) {
-    width: 60% !important;
-  }
 }
 
 .tab {
@@ -20,11 +20,12 @@
   text-transform: none;
 
   @include mobile {
-    width: 15%;
-    min-width: 40px;
-    justify-content: flex-start;
+    min-width: unset;
+    flex-grow: 1;
+    justify-content: space-evenly;
     padding: 4px 0 0;
     margin: 0 4px;
+    margin-bottom: 14px;
     font-size: 14px;
     line-height: 16px;
   }
@@ -36,4 +37,10 @@
 
 .tabsFlexContainer {
   margin-bottom: 4px !important;
+}
+
+.tabsIndicator {
+  height: 4px;
+  border-radius: 5px 5px 0 0;
+  background: linear-gradient(90deg, #1768e5 0%, #00f0ff 100%);
 }

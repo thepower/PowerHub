@@ -127,6 +127,7 @@
 .registrationWizardHolder {
   display: flex;
   width: 1072px;
+  max-width: 100vw;
   flex-direction: column;
   align-items: center;
   padding: 20px $unit * 26;
@@ -155,6 +156,7 @@
 .registrationBackground {
   display: flex;
   width: 800px;
+  max-width: 80vw;
   height: 100%;
   min-height: 456px;
   flex-direction: column;
@@ -169,6 +171,7 @@
     height: unset;
     min-height: unset;
     padding: $unit * 5 $unit * 2;
+    margin-bottom: 40px;
   }
 
   div:not(:last-of-type) {
@@ -302,7 +305,6 @@
 
 .loginRegisterAccountHolder {
   display: flex;
-  width: 592px;
   min-height: 370px;
   flex-direction: column;
   align-items: center;
@@ -342,8 +344,13 @@
   width: 170px;
   height: 40px;
   padding: 0 !important;
-  //border: 1px solid #6B798F !important;
   border-radius: 5px;
+}
+
+.loginRegisterAccountCreateSelectWithValue {
+  :global(.MuiOutlinedInput-notchedOutline) {
+    border: 1px solid #f5f5f7 !important;
+  }
 }
 
 .loginRegisterAccountCreateSelectMenu {
@@ -365,6 +372,8 @@
   @media screen and (max-width: $tablet) {
     width: 100%;
     justify-content: center;
+    margin-top: 12px;
+    margin-bottom: 20px !important;
   }
 }
 
@@ -392,22 +401,10 @@
 
 .confirmSeedPhraseHolder {
   display: flex;
-  width: 500px;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  margin: 132px auto 244px;
-
-  @media screen and (max-width: $tablet) {
-    width: 100%;
-    margin: 36px 0 72px;
-  }
-
-  div:last-of-type {
-    @media screen and (max-width: $tablet) {
-      width: 100%;
-    }
-  }
+  background: transparent;
 }
 
 .confirmSeedPhraseTitle {
@@ -415,14 +412,16 @@
   width: 100%;
   align-items: center;
   margin-bottom: 20px;
+  margin-left: 62px;
   color: #f5f5f7;
   font-size: 20px;
   font-style: normal;
   font-weight: 500;
   line-height: 24px;
 
-  @media screen and (max-width: $tablet) {
-    justify-content: center;
+  @include mobile {
+    justify-content: flex-start;
+    margin-left: unset !important;
     font-size: 24px;
   }
 }
@@ -587,6 +586,7 @@
 .loginPageBackground {
   display: flex;
   width: 1072px;
+  max-width: 100vw;
   height: auto;
   align-items: center;
   padding: 40px 16px;
