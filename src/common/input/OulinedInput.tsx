@@ -4,7 +4,6 @@ import {
   OutlinedInput as MUIOutlinedInput,
   OutlinedInputProps as MUIOutlinedInputProps,
 } from '@mui/material';
-import classnames from 'classnames';
 import { ClosedEyeIcon } from '../icons/ClosedEyeIcon';
 import { EyeIcon } from '../icons/EyeIcon';
 import styles from './Input.module.scss';
@@ -72,7 +71,7 @@ export class OutlinedInput extends React.PureComponent<OutlinedInputProps, Outli
     return <FormControl className={styles.formControl}>
       <MUIOutlinedInput
         placeholder={placeholder}
-        className={classnames(className)}
+        className={className}
         value={value}
         onChange={onChange}
         type={this.getInputType(type!)}
