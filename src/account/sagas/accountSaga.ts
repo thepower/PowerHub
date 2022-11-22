@@ -1,5 +1,5 @@
 import { call, put, select } from 'typed-redux-saga';
-import { ChainNameEnum, CryptoApi } from '@thepowereco/tssdk';
+import { CryptoApi } from '@thepowereco/tssdk';
 import fileSaver from 'file-saver';
 import { FileReaderType, getFileData } from 'common';
 import { push } from 'connected-react-router';
@@ -42,7 +42,7 @@ export function* loginToWalletSaga({ payload }: { payload?: LoginToWalletSagaInp
           return;
         }
 
-        const { networkApi } = yield* reInitApis({ payload: subChain.chain.toString() as ChainNameEnum });
+        const { networkApi } = yield* reInitApis({ payload: subChain.chain });
         NetworkAPI = networkApi;
       }
     } while (subChain.result !== 'found');
