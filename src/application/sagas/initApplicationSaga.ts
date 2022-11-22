@@ -32,7 +32,7 @@ export function* initApplicationSaga() {
   }
 
   const chains: number[] = yield NetworkApi.getNetworkChains(CURRENT_NETWORK);
-  yield put(setNetworkChains(chains));
+  yield put(setNetworkChains(chains.sort()));
 
   address = yield getKeyFromApplicationStorage('address');
   wif = yield getKeyFromApplicationStorage('wif');
@@ -55,6 +55,7 @@ export function* initApplicationSaga() {
       wif,
       logged: true,
     }));
+    yield* put(push(RoutesEnum.root));
   } else {
     yield* put(push(RoutesEnum.signup));
   }

@@ -31,12 +31,14 @@ import { getCurrentCreatingStep, getCurrentShardSelector, getGeneratedSeedPhrase
 import { RegistrationBackground } from '../../common/RegistrationBackground';
 import { RegistrationStatement } from '../../common/RegistrationStatement';
 import { compareTwoStrings } from '../../../utils/registrationUtils';
+import { getCurrentNetworkChains } from '../../../../application/selectors';
 
 const mapStateToProps = (state: RootState) => ({
   currentShard: getCurrentShardSelector(state),
   creatingStep: getCurrentCreatingStep(state),
   generatedSeedPhrase: getGeneratedSeedPhrase(state),
   loading: checkIfLoading(state, createWallet.type),
+  networkChains: getCurrentNetworkChains(state),
 });
 
 const mapDispatchToProps = {
@@ -211,8 +213,18 @@ class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProp
     </div>;
   };
 
+  renderNetworkMenuItem = (chain: number) => (
+    <MenuItem
+      key={chain}
+      className={styles.loginRegisterAccountShardMenuItem}
+      value={chain}
+    >
+      {chain}
+    </MenuItem>
+  );
+
   renderSelectSubChain = () => {
-    const { currentShard } = this.props;
+    const { currentShard, networkChains } = this.props;
 
     return <div className={styles.registrationFormHolder}>
       <div className={styles.registrationFormDesc}>
@@ -236,18 +248,7 @@ class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProp
         renderValue={this.renderShardSelectValue}
         IconComponent={ChevronDown}
       >
-        <MenuItem
-          className={styles.loginRegisterAccountShardMenuItem}
-          value={104}
-        >
-          {104}
-        </MenuItem>
-        <MenuItem
-          className={styles.loginRegisterAccountShardMenuItem}
-          value={103}
-        >
-          {103}
-        </MenuItem>
+        {networkChains?.map(this.renderNetworkMenuItem)}
       </Select>
     </div>;
   };
