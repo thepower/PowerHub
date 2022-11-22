@@ -1,6 +1,9 @@
 import { put, select } from 'typed-redux-saga';
 import {
-  CryptoApi, AddressApi, WalletApi, NetworkEnum, RegisteredAccount,
+  CryptoApi,
+  AddressApi,
+  WalletApi,
+  RegisteredAccount,
 } from '@thepowereco/tssdk';
 import { push } from 'connected-react-router';
 import { toast } from 'react-toastify';
@@ -11,6 +14,7 @@ import { getCurrentShardSelector, getGeneratedSeedPhrase } from '../selectors/re
 import { AddActionType } from '../../typings/common';
 import { getWalletData } from '../../account/selectors/accountSelectors';
 import { RoutesEnum } from '../../application/typings/routes';
+import { CURRENT_NETWORK } from '../../application/utils/applicationUtils';
 
 export function* generateSeedPhraseSaga() {
   const phrase: string = yield CryptoApi.generateSeedPhrase();
@@ -25,14 +29,13 @@ export function* createWalletSaga({ payload }: { payload: AddActionType<{ passwo
   const { password, additionalAction } = payload;
   const seedPhrase = yield* select(getGeneratedSeedPhrase);
   const shard = yield* select(getCurrentShardSelector);
-  const network = NetworkEnum.testnet; // TODO: move to config
   let account: RegisteredAccount;
 
   try {
     if (shard) {
       account = yield WalletApi.registerCertainChain(shard!, seedPhrase!);
     } else {
-      account = yield WalletApi.registerRandomChain(network!, seedPhrase!);
+      account = yield WalletApi.registerRandomChain(CURRENT_NETWORK!, seedPhrase!);
     }
 
     const privateKey = CryptoApi.encryptWif(account.wif, password);

@@ -5,12 +5,14 @@ import {
   PayloadAction,
 } from '@reduxjs/toolkit';
 import { NetworkApi, WalletApi } from '@thepowereco/tssdk';
+import { Maybe } from '../../typings/common';
 
 interface ApplicationDataState {
   testnetAvailable: boolean;
   showUnderConstruction: boolean;
-  networkApi: Draft<NetworkApi> | null;
-  walletApi: Draft<WalletApi> | null;
+  networkApi: Maybe<Draft<NetworkApi>>;
+  walletApi: Maybe<Draft<WalletApi>>;
+  networkChains: number[];
 }
 
 const SLICE_NAME = 'applicationData';
@@ -20,6 +22,7 @@ const initialState: ApplicationDataState = {
   showUnderConstruction: false,
   networkApi: null,
   walletApi: null,
+  networkChains: [],
 };
 
 const applicationDataSlice = createSlice({
@@ -36,6 +39,9 @@ const applicationDataSlice = createSlice({
     setShowUnderConstruction: (state: ApplicationDataState, action: PayloadAction<boolean>) => {
       state.showUnderConstruction = action.payload;
     },
+    setNetworkChains: (state: ApplicationDataState, action: PayloadAction<number[]>) => {
+      state.networkChains = action.payload;
+    },
   },
 });
 
@@ -47,5 +53,6 @@ export const {
     setDynamicApis,
     setTestnetAvailable,
     setShowUnderConstruction,
+    setNetworkChains,
   },
 } = applicationDataSlice;
