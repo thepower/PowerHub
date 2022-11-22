@@ -3,6 +3,8 @@ import { connect, ConnectedProps } from 'react-redux';
 import {
   Select,
   MenuItem,
+  Collapse,
+  FormControlLabel,
 } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select/SelectInput';
 import { RootState } from 'application/store';
@@ -10,8 +12,9 @@ import {
   OutlinedInput,
   ModalLoader,
   Button,
+  Checkbox,
 } from 'common';
-import { ChevronDown } from 'common/icons';
+import { CheckedIcon, ChevronDown, UnCheckedIcon } from 'common/icons';
 import { checkIfLoading } from 'network/selectors';
 import classnames from 'classnames';
 import styles from '../../Registration.module.scss';
@@ -62,6 +65,7 @@ interface CreateNewAccountState {
   password: string;
   confirmedPassword: string;
   passwordsNotEqual: boolean;
+  randomChain: boolean;
 }
 
 class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProps, CreateNewAccountState> {
@@ -81,6 +85,10 @@ class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProp
     icon: styles.loginRegisterAccountShardIcon,
   };
 
+  private selectChainCheckboxClasses = {
+    label: styles.selectChainCheckboxLabel,
+  };
+
   constructor(props: CreateNewAccountProps) {
     super(props);
     this.state = {
@@ -90,6 +98,7 @@ class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProp
       password: '',
       confirmedPassword: '',
       passwordsNotEqual: false,
+      randomChain: true,
     };
   }
 
@@ -116,6 +125,7 @@ class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProp
       confirmedSeedPhrase,
       password,
       confirmedPassword,
+      randomChain,
     } = this.state;
 
     if (creatingStep === CreateAccountStepsEnum.selectSubChain) {
@@ -156,8 +166,15 @@ class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProp
       createWallet({
         password,
         additionalAction: setNextStep,
+        randomChain,
       });
     }
+  };
+
+  toggleRandomChain = () => {
+    this.setState((state) => ({
+      randomChain: !state.randomChain,
+    }));
   };
 
   handleBackClick = () => {
@@ -223,34 +240,55 @@ class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProp
     </MenuItem>
   );
 
+  renderRandomChainCheckbox = () => (
+    <Checkbox
+      size={'medium'}
+      checked={!this.state.randomChain}
+      onClick={this.toggleRandomChain}
+      checkedIcon={<CheckedIcon />}
+      icon={<UnCheckedIcon />}
+      disableRipple
+    />
+  );
+
   renderSelectSubChain = () => {
     const { currentShard, networkChains } = this.props;
+    const { randomChain } = this.state;
 
-    return <div className={styles.registrationFormHolder}>
-      <div className={styles.registrationFormDesc}>
-        {'The wallet is still in alpha-testing phase. \nWallet creation may take a couple of minutes'}
+    return <>
+      <div className={styles.registrationFormHolder}>
+        <div className={styles.registrationFormDesc}>
+          {'The wallet is still in alpha-testing phase. \nWallet creation may take a couple of minutes'}
+        </div>
+        <Collapse in={!randomChain}>
+          <div className={styles.loginRegisterAccountShardTitle}>
+            {'Selected chain:'}
+          </div>
+          <Select
+            value={currentShard!}
+            className={classnames(
+              styles.loginRegisterAccountCreateSelect,
+              currentShard ? styles.loginRegisterAccountCreateSelectWithValue : '',
+            )}
+            fullWidth
+            MenuProps={this.selectMenuProps}
+            onChange={this.onSelectShard}
+            displayEmpty
+            inputProps={this.selectInputProps}
+            classes={this.selectClasses}
+            renderValue={this.renderShardSelectValue}
+            IconComponent={ChevronDown}
+          >
+            {networkChains?.map(this.renderNetworkMenuItem)}
+          </Select>
+        </Collapse>
       </div>
-      <div className={styles.loginRegisterAccountShardTitle}>
-        {'Selected chain:'}
-      </div>
-      <Select
-        value={currentShard!}
-        className={classnames(
-          styles.loginRegisterAccountCreateSelect,
-          currentShard ? styles.loginRegisterAccountCreateSelectWithValue : '',
-        )}
-        fullWidth
-        MenuProps={this.selectMenuProps}
-        onChange={this.onSelectShard}
-        displayEmpty
-        inputProps={this.selectInputProps}
-        classes={this.selectClasses}
-        renderValue={this.renderShardSelectValue}
-        IconComponent={ChevronDown}
-      >
-        {networkChains?.map(this.renderNetworkMenuItem)}
-      </Select>
-    </div>;
+      <FormControlLabel
+        control={this.renderRandomChainCheckbox()}
+        label="If you need a specific chain, check the box and select the chain"
+        classes={this.selectChainCheckboxClasses}
+      />
+    </>;
   };
 
   onChangeUserSeedPhrase = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {

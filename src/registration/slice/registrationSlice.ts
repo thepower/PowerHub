@@ -10,7 +10,7 @@ import { AddActionType, Maybe } from '../../typings/common';
 const SLICE_NAME = 'registration';
 
 const generateSeedPhrase = createAction(`${SLICE_NAME}/generateSeedPhrase`);
-const createWallet = createAction<AddActionType<{ password: string }>>(`${SLICE_NAME}/createWallet`);
+const createWallet = createAction<AddActionType<{ password: string; randomChain: boolean }>>(`${SLICE_NAME}/createWallet`);
 const loginToWalletFromRegistration = createAction<LoginToWalletInputType>(`${SLICE_NAME}/loginToWallet`);
 const proceedToHub = createAction(`${SLICE_NAME}/proceedToHub`);
 

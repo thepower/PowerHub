@@ -25,14 +25,14 @@ export function* generateSeedPhraseSaga() {
   }));
 }
 
-export function* createWalletSaga({ payload }: { payload: AddActionType<{ password: string }> }) {
-  const { password, additionalAction } = payload;
+export function* createWalletSaga({ payload }: { payload: AddActionType<{ password: string; randomChain: boolean }> }) {
+  const { password, additionalAction, randomChain } = payload;
   const seedPhrase = yield* select(getGeneratedSeedPhrase);
   const shard = yield* select(getCurrentShardSelector);
   let account: RegisteredAccount;
 
   try {
-    if (shard) {
+    if (randomChain) {
       account = yield WalletApi.registerCertainChain(shard!, seedPhrase!);
     } else {
       account = yield WalletApi.registerRandomChain(CURRENT_NETWORK!, seedPhrase!);
