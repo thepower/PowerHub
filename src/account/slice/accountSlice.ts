@@ -43,9 +43,6 @@ const accountSlice = createSlice({
     setLoggedToAccount: (state: AccountState, action: PayloadAction<boolean>) => {
       state.logged = action.payload;
     },
-    setChain: (state: AccountState, action: PayloadAction<boolean>) => {
-      state.logged = action.payload;
-    },
     clearAccountData: () => initialState,
     toggleOpenedAccountMenu: (state: AccountState) => {
       state.openedMenu = !state.openedMenu;

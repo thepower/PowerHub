@@ -1,10 +1,9 @@
 import { put, select } from 'typed-redux-saga';
 import {
-  CryptoApi, AddressApi, WalletApi, NetworkEnum,
+  CryptoApi, AddressApi, WalletApi, NetworkEnum, RegisteredAccount,
 } from '@thepowereco/tssdk';
 import { push } from 'connected-react-router';
 import { toast } from 'react-toastify';
-import { RegisteredAccount } from '@thepowereco/tssdk/dist/typings';
 import { setSeedPhrase } from '../slice/registrationSlice';
 import { CreateAccountStepsEnum, LoginToWalletInputType } from '../typings/registrationTypes';
 import { loginToWallet, setWalletData } from '../../account/slice/accountSlice';
