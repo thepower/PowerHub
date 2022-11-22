@@ -25,6 +25,7 @@ import {
   setSeedPhrase,
   createWallet,
   setCurrentRegisterCreateAccountTab,
+  toggleRandomChain,
 } from '../../../slice/registrationSlice';
 import {
   CreateAccountStepsEnum,
@@ -51,11 +52,13 @@ const mapDispatchToProps = {
   setSeedPhrase,
   createWallet,
   setCurrentRegisterCreateAccountTab,
+  toggleRandomChain,
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 type CreateNewAccountProps = ConnectedProps<typeof connector> & {
   setNextStep: () => void;
+  randomChain: boolean;
 };
 
 interface CreateNewAccountState {
@@ -65,7 +68,6 @@ interface CreateNewAccountState {
   password: string;
   confirmedPassword: string;
   passwordsNotEqual: boolean;
-  randomChain: boolean;
 }
 
 class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProps, CreateNewAccountState> {
@@ -98,7 +100,6 @@ class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProp
       password: '',
       confirmedPassword: '',
       passwordsNotEqual: false,
-      randomChain: true,
     };
   }
 
@@ -119,13 +120,13 @@ class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProp
       setCreatingStep,
       createWallet,
       setNextStep,
+      randomChain,
     } = this.props;
     const {
       userSeedPhrase,
       confirmedSeedPhrase,
       password,
       confirmedPassword,
-      randomChain,
     } = this.state;
 
     if (creatingStep === CreateAccountStepsEnum.selectSubChain) {
@@ -172,9 +173,7 @@ class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProp
   };
 
   toggleRandomChain = () => {
-    this.setState((state) => ({
-      randomChain: !state.randomChain,
-    }));
+    this.props.toggleRandomChain();
   };
 
   handleBackClick = () => {
@@ -243,7 +242,7 @@ class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProp
   renderRandomChainCheckbox = () => (
     <Checkbox
       size={'medium'}
-      checked={!this.state.randomChain}
+      checked={!this.props.randomChain}
       onClick={this.toggleRandomChain}
       checkedIcon={<CheckedIcon />}
       icon={<UnCheckedIcon />}
@@ -252,8 +251,7 @@ class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProp
   );
 
   renderSelectSubChain = () => {
-    const { currentShard, networkChains } = this.props;
-    const { randomChain } = this.state;
+    const { currentShard, networkChains, randomChain } = this.props;
 
     return <>
       <div className={styles.registrationFormHolder}>

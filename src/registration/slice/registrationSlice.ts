@@ -24,6 +24,7 @@ export type RegistrationState = {
   password: Maybe<string>;
   confirmedPassword: Maybe<string>;
   passwordsNotEqual: boolean;
+  randomChain: boolean;
 };
 
 const initialState: RegistrationState = {
@@ -36,6 +37,7 @@ const initialState: RegistrationState = {
   password: null,
   confirmedPassword: null,
   passwordsNotEqual: false,
+  randomChain: true,
 };
 
 const registrationSlice = createSlice({
@@ -72,6 +74,9 @@ const registrationSlice = createSlice({
     setPasswordNotEqual: (state: RegistrationState, action: PayloadAction<boolean>) => {
       state.passwordsNotEqual = action.payload;
     },
+    toggleRandomChain: (state: RegistrationState) => {
+      state.randomChain = !state.randomChain;
+    },
   },
 });
 
@@ -87,6 +92,7 @@ const {
     setLoginPassword,
     setLoginConfirmedPassword,
     setPasswordNotEqual,
+    toggleRandomChain,
   },
 } = registrationSlice;
 
@@ -105,4 +111,5 @@ export {
   setLoginPassword,
   setLoginConfirmedPassword,
   setPasswordNotEqual,
+  toggleRandomChain,
 };
