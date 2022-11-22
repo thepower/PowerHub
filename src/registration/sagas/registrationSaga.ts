@@ -33,9 +33,9 @@ export function* createWalletSaga({ payload }: { payload: AddActionType<{ passwo
 
   try {
     if (randomChain) {
-      account = yield WalletApi.registerCertainChain(shard!, seedPhrase!);
-    } else {
       account = yield WalletApi.registerRandomChain(CURRENT_NETWORK!, seedPhrase!);
+    } else {
+      account = yield WalletApi.registerCertainChain(shard!, seedPhrase!);
     }
 
     const privateKey = CryptoApi.encryptWif(account.wif, password);
