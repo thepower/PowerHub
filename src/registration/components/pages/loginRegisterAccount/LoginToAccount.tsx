@@ -1,158 +1,91 @@
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-import { Button } from '@mui/material';
-import { OutlinedInput, Tabs } from 'common';
+import { OutlinedInput } from 'common';
 import styles from '../../Registration.module.scss';
-import { LoginRegisterAccountTabs, LoginRegisterAccountTabsLabels, RegistrationPageAdditionalProps } from '../../../typings/registrationTypes';
-import { RegistrationBackground } from '../../common/RegistrationBackground';
-import { loginToWalletFromRegistration } from '../../../slice/registrationSlice';
-import { compareTwoStrings } from '../../../utils/registrationUtils';
+import {
+  setLoginSeed,
+  seLoginAddress,
+  setLoginPassword,
+  setLoginConfirmedPassword,
+} from '../../../slice/registrationSlice';
+import { Maybe } from '../../../../typings/common';
 
 const mapDispatchToProps = {
-  loginToWalletFromRegistration,
+  seLoginAddress,
+  setLoginSeed,
+  setLoginPassword,
+  setLoginConfirmedPassword,
 };
 
 const connector = connect(null, mapDispatchToProps);
-type LoginToAccountProps = ConnectedProps<typeof connector> & RegistrationPageAdditionalProps;
-
-interface LoginToAccountState {
-  address: string;
-  seed: string;
-  password: string;
-  confirmedPassword: string;
+type LoginToAccountProps = ConnectedProps<typeof connector> & {
+  address: Maybe<string>;
+  seed: Maybe<string>;
+  password: Maybe<string>;
+  confirmedPassword: Maybe<string>;
   passwordsNotEqual: boolean;
-}
+};
 
-class LoginToAccountComponent extends React.PureComponent<LoginToAccountProps, LoginToAccountState> {
-  constructor(props: LoginToAccountProps) {
-    super(props);
-    this.state = {
-      address: '',
-      seed: '',
-      password: '',
-      confirmedPassword: '',
-      passwordsNotEqual: false,
-    };
-  }
-
+class LoginToAccountComponent extends React.PureComponent<LoginToAccountProps> {
   onChangeAddress = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    this.setState({
-      address: event.target.value,
-    });
+    this.props.seLoginAddress(event.target.value);
   };
 
   onChangeSeed = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    this.setState({
-      seed: event.target.value,
-    });
-  };
-
-  loginToAccount = () => {
-    const { loginToWalletFromRegistration } = this.props;
-    const {
-      address,
-      seed,
-      password,
-      confirmedPassword,
-    } = this.state;
-
-    const passwordsNotEqual = !compareTwoStrings(password!, confirmedPassword!);
-
-    if (passwordsNotEqual) {
-      this.setState({ passwordsNotEqual });
-      return;
-    }
-
-    loginToWalletFromRegistration({ address, seed, password });
+    this.props.setLoginSeed(event.target.value);
   };
 
   onChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({
-      password: event.target.value,
-      passwordsNotEqual: false,
-    });
+    this.props.setLoginPassword(event.target.value);
   };
 
   onChangeConfirmedPassword = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({
-      confirmedPassword: event.target.value,
-      passwordsNotEqual: false,
-    });
+    this.props.setLoginConfirmedPassword(event.target.value);
   };
 
   render() {
-    const {
-      tab,
-      onChangeTab,
-    } = this.props;
     const {
       address,
       seed,
       passwordsNotEqual,
       password,
       confirmedPassword,
-    } = this.state;
+    } = this.props;
 
-    return <>
-      <RegistrationBackground>
-        <div className={styles.loginRegisterAccountTitle}>
-          {'Create, login or import an account'}
-        </div>
-        <div className={styles.loginRegisterAccountHolder}>
-          <Tabs
-            tabs={LoginRegisterAccountTabs}
-            tabsLabels={LoginRegisterAccountTabsLabels}
-            value={tab}
-            onChange={onChangeTab}
-          />
-          <div className={styles.registrationFormHolder}>
-            <div className={styles.registrationFormDesc}>
-              {'To login, you need enter the address\nand private key or seed phrase'}
-            </div>
-            <OutlinedInput
-              placeholder={'Address'}
-              className={styles.passwordInput}
-              value={address}
-              onChange={this.onChangeAddress}
-            />
-            <OutlinedInput
-              placeholder={'Seed phrase'}
-              className={styles.passwordInput}
-              value={seed}
-              type={'password'}
-              onChange={this.onChangeSeed}
-            />
-            <OutlinedInput
-              placeholder={'Password'}
-              className={styles.passwordInput}
-              value={password}
-              type={'password'}
-              onChange={this.onChangePassword}
-            />
-            <OutlinedInput
-              placeholder={'Repeated password'}
-              className={styles.passwordInput}
-              value={confirmedPassword}
-              type={'password'}
-              error={passwordsNotEqual}
-              errorMessage={'oops, passwords didn\'t match, try again'}
-              onChange={this.onChangeConfirmedPassword}
-            />
-          </div>
-        </div>
-      </RegistrationBackground>
-      <div className={styles.registrationButtonsHolder}>
-        <Button
-          className={styles.registrationNextButton}
-          variant="contained"
-          size="large"
-          onClick={this.loginToAccount}
-          disabled={!address || !seed || passwordsNotEqual || !password || !confirmedPassword}
-        >
-          {'Next'}
-        </Button>
+    return <div className={styles.registrationFormHolder}>
+      <div className={styles.registrationFormDesc}>
+        {'To login, you need enter the address\nand private key or seed phrase'}
       </div>
-    </>;
+      <OutlinedInput
+        placeholder={'Address'}
+        className={styles.passwordInput}
+        value={address}
+        onChange={this.onChangeAddress}
+      />
+      <OutlinedInput
+        placeholder={'Seed phrase'}
+        className={styles.passwordInput}
+        value={seed}
+        type={'password'}
+        onChange={this.onChangeSeed}
+      />
+      <OutlinedInput
+        placeholder={'Password'}
+        className={styles.passwordInput}
+        value={password}
+        type={'password'}
+        onChange={this.onChangePassword}
+      />
+      <OutlinedInput
+        placeholder={'Repeated password'}
+        className={styles.passwordInput}
+        value={confirmedPassword}
+        type={'password'}
+        error={passwordsNotEqual}
+        errorMessage={'oops, passwords didn\'t match, try again'}
+        onChange={this.onChangeConfirmedPassword}
+      />
+    </div>;
   }
 }
 

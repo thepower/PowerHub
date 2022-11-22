@@ -126,20 +126,25 @@
 
 .registrationWizardHolder {
   display: flex;
-  max-width: 1000px;
+  width: 1072px;
+  max-width: 100vw;
   flex-direction: column;
   align-items: center;
-  padding: 0 $unit * 26;
+  padding: 20px $unit * 26;
   border-radius: $unit * 5;
   background-color: #151516 !important;
 
-  @media screen and (max-width: $notebook) {
+  @include mobile {
+    width: 100%;
     padding: $unit * 5 $unit * 4;
   }
 }
 
 .registrationWizard {
+  display: flex;
   height: 100%;
+  align-items: center;
+  justify-content: center;
   margin-top: $unit * 5;
   background-color: transparent;
 
@@ -150,7 +155,10 @@
 
 .registrationBackground {
   display: flex;
+  width: 800px;
+  max-width: 80vw;
   height: 100%;
+  min-height: 456px;
   flex-direction: column;
   align-items: flex-start;
   padding: $unit * 3 $unit * 21;
@@ -158,33 +166,38 @@
   margin-bottom: $unit * 4;
   background: linear-gradient(90deg, #1768e5 50.44%, #00f0ff 129.31%);
 
-  div:not(:last-of-type) {
-    margin-bottom: $unit * 4;
+  @include mobile {
+    width: 100%;
+    height: unset;
+    min-height: unset;
+    padding: $unit * 5 $unit * 2;
+    margin-bottom: 40px;
   }
 
-  @media screen and (max-width: $notebook) {
-    width: unset;
-    padding: $unit * 6 $unit * 2;
+  div:not(:last-of-type) {
+    margin-bottom: $unit * 4;
   }
 }
 
 .registrationStatement {
-  padding: $unit * 3 $unit * 5 $unit * 4;
+  padding: $unit * 3 $unit * 5 $unit * 4 $unit * 5;
   border-radius: $unit * 5;
   background: #151516;
+
+  @include mobile {
+    width: 100%;
+    padding: $unit * 3 $unit * 1.5 $unit * 5 $unit * 5;
+  }
 }
 
 .registrationStatementTitle {
   padding-bottom: $unit * 2;
+  margin-bottom: 0 !important;
   color: #2997ff;
   font-size: $unit * 4.5;
   font-weight: 500;
   line-height: $unit * 6;
   text-shadow: 0 4px 4px rgb(0 0 0 / 25%);
-
-  @media screen and (max-width: $tablet) {
-    margin-bottom: 0 !important;
-  }
 }
 
 .registrationStatementDesc {
@@ -202,6 +215,13 @@
   font-size: $unit * 6;
   font-weight: 700;
   line-height: $unit * 7;
+
+  @include mobile {
+    width: 100%;
+    margin-bottom: 20px !important;
+    margin-left: 0;
+    text-align: center;
+  }
 }
 
 .registrationButtonsHolder {
@@ -211,19 +231,20 @@
   margin-right: auto;
   margin-left: auto;
 
-  button:nth-child(2) {
-    margin-left: $unit * 3;
-  }
-
-  @media screen and (max-width: $tablet) {
+  @include mobile {
     flex-direction: column;
     align-items: center;
     margin-right: 0 !important;
     margin-left: 0 !important;
 
     button:nth-child(2) {
-      margin-left: 0;
+      margin-top: 16px;
+      margin-left: 0 !important;
     }
+  }
+
+  button:nth-child(2) {
+    margin-left: $unit * 3;
   }
 }
 
@@ -280,7 +301,6 @@
 
 .loginRegisterAccountHolder {
   display: flex;
-  width: 100%;
   min-height: 370px;
   flex-direction: column;
   align-items: center;
@@ -293,6 +313,7 @@
   background: #151516;
 
   @media screen and (max-width: $tablet) {
+    width: 100%;
     padding: 20px;
   }
 }
@@ -307,17 +328,25 @@
 .registrationFormDesc {
   display: flex;
   align-items: center;
-  margin-top: 48px;
+  margin-top: 36px;
   color: #f5f5f7;
-  font-size: $unit * 3.3;
+  font-size: 14px;
   font-weight: 400;
   line-height: $unit * 4;
   white-space: pre-line;
 }
 
 .loginRegisterAccountCreateSelect {
-  width: 168px;
-  height: 34px;
+  width: 170px;
+  height: 40px;
+  padding: 0 !important;
+  border-radius: 5px;
+}
+
+.loginRegisterAccountCreateSelectWithValue {
+  :global(.MuiOutlinedInput-notchedOutline) {
+    border: 1px solid #f5f5f7 !important;
+  }
 }
 
 .loginRegisterAccountCreateSelectMenu {
@@ -329,6 +358,7 @@
   width: 100%;
   align-items: center;
   justify-content: flex-start;
+  margin-bottom: 4px;
   color: #f5f5f7;
   font-size: 20px;
   font-style: normal;
@@ -336,7 +366,10 @@
   line-height: 24px;
 
   @media screen and (max-width: $tablet) {
+    width: 100%;
     justify-content: center;
+    margin-top: 12px;
+    margin-bottom: 20px !important;
   }
 }
 
@@ -364,22 +397,10 @@
 
 .confirmSeedPhraseHolder {
   display: flex;
-  width: 500px;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  margin: 132px auto 172px;
-
-  @media screen and (max-width: $tablet) {
-    width: 100%;
-    margin: 36px 0 72px;
-  }
-
-  div:last-of-type {
-    @media screen and (max-width: $tablet) {
-      width: 100%;
-    }
-  }
+  background: transparent;
 }
 
 .confirmSeedPhraseTitle {
@@ -387,14 +408,16 @@
   width: 100%;
   align-items: center;
   margin-bottom: 20px;
+  margin-left: 62px;
   color: #f5f5f7;
   font-size: 20px;
   font-style: normal;
   font-weight: 500;
   line-height: 24px;
 
-  @media screen and (max-width: $tablet) {
-    justify-content: center;
+  @include mobile {
+    justify-content: flex-start;
+    margin-left: unset !important;
     font-size: 24px;
   }
 }
@@ -471,11 +494,13 @@
 .importAccountFormDesc {
   display: flex;
   align-items: center;
-  margin-top: 48px;
+  margin-top: 36px;
+  margin-bottom: 32px;
   color: #f5f5f7;
   font-size: 16px;
   font-weight: 500;
   line-height: 20px;
+  text-align: center;
   white-space: pre-line;
 }
 
@@ -556,8 +581,8 @@
 
 .loginPageBackground {
   display: flex;
-  width: 95vw;
-  max-width: 1072px;
+  width: 1072px;
+  max-width: 100vw;
   height: auto;
   align-items: center;
   padding: 40px 16px;
@@ -641,4 +666,84 @@
 
 .loginPageImportButton {
   margin-top: 60px;
+}
+
+.registrationComponent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.loginRegisterAccountShardTitle {
+  margin-top: 4px;
+  margin-bottom: 8px !important;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.loginRegisterAccountShardInput {
+  padding: 8px 12px !important;
+}
+
+.loginRegisterAccountShardIcon {
+  margin-top: 3px !important;
+}
+
+.loginRegisterAccountShardPlaceholder {
+  display: flex;
+  align-items: center;
+  color: #6b798f;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.loginRegisterAccountShardPaper {
+  padding: 0 !important;
+  border: 1px solid #6b798f;
+  border-radius: 5px;
+  margin-top: 5px !important;
+  background: #121923;
+}
+
+.loginRegisterAccountShardMenu {
+  padding: 0 !important;
+}
+
+.loginRegisterAccountShardMenuItem {
+  background: #121923;
+  color: #6b798f;
+}
+
+.rememberBackground {
+  padding: 12px 150px 36px;
+
+  @include mobile {
+    padding: 12px 8px;
+  }
+}
+
+.rememberTitle {
+  text-align: left;
+
+  @include mobile {
+    text-align: center;
+  }
+}
+
+.enterPasswordBackground {
+  padding: 40px 150px 51px;
+
+  @include mobile {
+    padding: 12px 8px;
+  }
+}
+
+.exportBackground {
+  padding: 80px 100px;
+
+  @include mobile {
+    padding: 12px 8px;
+  }
 }

@@ -1,7 +1,6 @@
 import React from 'react';
-import { Modal, OutlinedInput } from 'common';
+import { Modal, OutlinedInput, Button } from 'common';
 import classnames from 'classnames';
-import { Button } from '@mui/material';
 import styles from '../../../Registration.module.scss';
 
 interface ImportAccountModalProps {
@@ -67,14 +66,12 @@ export class ImportAccountModal extends React.PureComponent<ImportAccountModalPr
         autoFocus
       />
       <Button
-        className={classnames(styles.registrationNextButton, styles.registrationNextButton_outlined)}
-        variant="outlined"
-        size="large"
+        size="medium"
+        variant="filled"
+        type="button"
         onClick={this.handleSubmitImportModal}
       >
-        <span className={styles.registrationNextButtonText}>
-          {'Next'}
-        </span>
+        {'Next'}
       </Button>
     </Modal>;
   }

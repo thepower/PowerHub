@@ -17,3 +17,4 @@ export { ReactComponent as ExportIcon } from './export.svg';
 export { ReactComponent as ImportIcon } from './import.svg';
 export { ReactComponent as ResetIcon } from './reset.svg';
 export { ReactComponent as SupportIcon } from './support.svg';
+export { ReactComponent as ChevronDown } from './chevron_down.svg';

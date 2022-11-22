@@ -75,6 +75,9 @@ export class OutlinedInput extends React.PureComponent<OutlinedInputProps, Outli
         value={value}
         onChange={onChange}
         type={this.getInputType(type!)}
+        classes={{
+          notchedOutline: value ? styles.bordered : '',
+        }}
         endAdornment={this.getEndAdornment()}
         {...otherProps}
       />

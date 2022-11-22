@@ -1,7 +1,6 @@
 import React from 'react';
-import { Button } from '@mui/material';
-import classnames from 'classnames';
 import { connect, ConnectedProps } from 'react-redux';
+import { Button } from 'common';
 import { RegistrationBackground } from '../../common/RegistrationBackground';
 import { RegistrationStatement } from '../../common/RegistrationStatement';
 import styles from '../../Registration.module.scss';
@@ -49,26 +48,24 @@ class BackupComponent extends React.PureComponent<BackupProps, BackupState> {
         open={openedPasswordModal}
         onClose={this.closePasswordModal}
       />
-      <RegistrationBackground>
+      <RegistrationBackground className={styles.exportBackground}>
         <div className={styles.registrationPageTitle}>{'Important rules!'}</div>
         <RegistrationStatement title={'Export'} description={'Please export wallet data so that you may recover your wallet later in case of emergency'} />
         <RegistrationStatement title={'IMPORTANT!'} description={'You need both your address and seed phrase to restore your wallet. So store them both'} />
       </RegistrationBackground>
       <div className={styles.registrationButtonsHolder}>
         <Button
-          className={classnames(styles.registrationNextButton, styles.registrationNextButton_outlined)}
+          size="medium"
           variant="outlined"
-          size="large"
+          type="button"
           onClick={this.handleProceedToHub}
         >
-          <span className={styles.registrationNextButtonText}>
-            {'Skip'}
-          </span>
+          {'Skip'}
         </Button>
         <Button
-          className={styles.registrationNextButton}
-          variant="contained"
-          size="large"
+          size="medium"
+          variant="filled"
+          type="button"
           onClick={this.openPasswordModal}
         >
           {'Export'}

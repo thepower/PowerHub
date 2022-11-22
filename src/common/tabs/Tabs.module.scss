@@ -1,32 +1,33 @@
 @import '../../styles/variables';
 @import '../../styles/mixins';
 
+.tabsHolder {
+  width: 100%;
+}
+
 .selectedTab {
   @include text-gradient($the-power-gradient);
-
-  @media screen and (max-width: $tablet) {
-    width: 60% !important;
-  }
 }
 
 .tab {
   height: 20px;
   min-height: unset;
-  font-weight: 500;
+  padding-top: 4px;
   font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
   line-height: 20px;
   text-transform: none;
-  font-style: normal;
-  padding-top: 4px;
 
-  @media screen and (max-width: $tablet) {
+  @include mobile {
+    min-width: unset;
+    flex-grow: 1;
+    justify-content: space-evenly;
+    padding: 4px 0 0;
+    margin: 0 4px;
+    margin-bottom: 14px;
     font-size: 14px;
     line-height: 16px;
-    width: 15%;
-    justify-content: flex-start;
-    margin: 0 4px;
-    min-width: 40px;
-    padding: 4px 0 0;
   }
 }
 
@@ -36,4 +37,10 @@
 
 .tabsFlexContainer {
   margin-bottom: 4px !important;
+}
+
+.tabsIndicator {
+  height: 4px;
+  border-radius: 5px 5px 0 0;
+  background: linear-gradient(90deg, #1768e5 0%, #00f0ff 100%);
 }

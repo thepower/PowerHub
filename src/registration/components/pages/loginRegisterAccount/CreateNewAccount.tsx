@@ -3,17 +3,17 @@ import { connect, ConnectedProps } from 'react-redux';
 import {
   Select,
   MenuItem,
-  Button,
 } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select/SelectInput';
-import classnames from 'classnames';
 import { RootState } from 'application/store';
 import {
-  Tabs,
   OutlinedInput,
   ModalLoader,
+  Button,
 } from 'common';
+import { ChevronDown } from 'common/icons';
 import { checkIfLoading } from 'network/selectors';
+import classnames from 'classnames';
 import styles from '../../Registration.module.scss';
 import {
   setCreatingCurrentShard,
@@ -26,8 +26,6 @@ import {
 import {
   CreateAccountStepsEnum,
   LoginRegisterAccountTabs,
-  LoginRegisterAccountTabsLabels,
-  RegistrationPageAdditionalProps,
 } from '../../../typings/registrationTypes';
 import { getCurrentCreatingStep, getCurrentShardSelector, getGeneratedSeedPhrase } from '../../../selectors/registrationSelectors';
 import { RegistrationBackground } from '../../common/RegistrationBackground';
@@ -51,7 +49,9 @@ const mapDispatchToProps = {
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
-type CreateNewAccountProps = ConnectedProps<typeof connector> & RegistrationPageAdditionalProps;
+type CreateNewAccountProps = ConnectedProps<typeof connector> & {
+  setNextStep: () => void;
+};
 
 interface CreateNewAccountState {
   userSeedPhrase: string;
@@ -65,6 +65,18 @@ interface CreateNewAccountState {
 class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProps, CreateNewAccountState> {
   private selectMenuProps = {
     className: styles.loginRegisterAccountCreateSelectMenu,
+    classes: {
+      paper: styles.loginRegisterAccountShardPaper,
+      list: styles.loginRegisterAccountShardMenu,
+    },
+  };
+
+  private selectInputProps = {
+    className: styles.loginRegisterAccountShardInput,
+  };
+
+  private selectClasses = {
+    icon: styles.loginRegisterAccountShardIcon,
   };
 
   constructor(props: CreateNewAccountProps) {
@@ -189,38 +201,55 @@ class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProp
     }
   };
 
-  renderSelectSubChain = () => {
-    const { currentShard, tab, onChangeTab } = this.props;
+  renderShardSelectValue = (value: number) => {
+    if (value) {
+      return value;
+    }
 
-    return <RegistrationBackground>
-      <div className={styles.loginRegisterAccountTitle}>
-        {'Create, login or import an account'}
+    return <div className={styles.loginRegisterAccountShardPlaceholder}>
+      {'select a chain'}
+    </div>;
+  };
+
+  renderSelectSubChain = () => {
+    const { currentShard } = this.props;
+
+    return <div className={styles.registrationFormHolder}>
+      <div className={styles.registrationFormDesc}>
+        {'The wallet is still in alpha-testing phase. \nWallet creation may take a couple of minutes'}
       </div>
-      <div className={styles.loginRegisterAccountHolder}>
-        <Tabs
-          tabs={LoginRegisterAccountTabs}
-          tabsLabels={LoginRegisterAccountTabsLabels}
-          value={tab}
-          onChange={onChangeTab}
-        />
-        <div className={styles.registrationFormHolder}>
-          <div className={styles.registrationFormDesc}>
-            {'The wallet is still in alpha-testing phase. \nWallet creation may take a couple of minutes'}
-          </div>
-          <div>{'Selected shard:'}</div>
-          <Select
-            value={currentShard!}
-            className={styles.loginRegisterAccountCreateSelect}
-            fullWidth
-            MenuProps={this.selectMenuProps}
-            onChange={this.onSelectShard}
-          >
-            <MenuItem value={104}>{104}</MenuItem>
-            <MenuItem value={103}>{103}</MenuItem>
-          </Select>
-        </div>
+      <div className={styles.loginRegisterAccountShardTitle}>
+        {'Selected chain:'}
       </div>
-    </RegistrationBackground>;
+      <Select
+        value={currentShard!}
+        className={classnames(
+          styles.loginRegisterAccountCreateSelect,
+          currentShard ? styles.loginRegisterAccountCreateSelectWithValue : '',
+        )}
+        fullWidth
+        MenuProps={this.selectMenuProps}
+        onChange={this.onSelectShard}
+        displayEmpty
+        inputProps={this.selectInputProps}
+        classes={this.selectClasses}
+        renderValue={this.renderShardSelectValue}
+        IconComponent={ChevronDown}
+      >
+        <MenuItem
+          className={styles.loginRegisterAccountShardMenuItem}
+          value={104}
+        >
+          {104}
+        </MenuItem>
+        <MenuItem
+          className={styles.loginRegisterAccountShardMenuItem}
+          value={103}
+        >
+          {103}
+        </MenuItem>
+      </Select>
+    </div>;
   };
 
   onChangeUserSeedPhrase = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
@@ -254,8 +283,8 @@ class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProp
     const { generatedSeedPhrase } = this.props;
     const { userSeedPhrase } = this.state;
 
-    return <RegistrationBackground>
-      <div className={styles.loginRegisterAccountTitle}>
+    return <RegistrationBackground className={styles.rememberBackground}>
+      <div className={classnames(styles.loginRegisterAccountTitle, styles.rememberTitle)}>
         {'Remember'}
       </div>
       <RegistrationStatement description={'Enter a seed phrase or use the one we provide'} />
@@ -285,7 +314,7 @@ class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProp
     const { generatedSeedPhrase } = this.props;
     const { confirmedSeedPhrase, seedsNotEqual } = this.state;
 
-    return <div className={styles.confirmSeedPhraseHolder}>
+    return <RegistrationBackground className={styles.confirmSeedPhraseHolder}>
       <div className={styles.confirmSeedPhraseTitle}>
         {'Repeat seed phrase'}
       </div>
@@ -299,13 +328,13 @@ class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProp
         fullWidth
         errorMessage={'Oh:( the seed phrase is incorrect, please try again'}
       />
-    </div>;
+    </RegistrationBackground>;
   };
 
   renderEncryptPrivateKey = () => {
     const { password, confirmedPassword, passwordsNotEqual } = this.state;
 
-    return <RegistrationBackground>
+    return <RegistrationBackground className={styles.enterPasswordBackground}>
       <div className={styles.loginRegisterAccountTitle}>
         {'Enter password to encrypt your private key'}
       </div>
@@ -361,30 +390,28 @@ class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProp
         hideIcon
       />
       {this.renderContent()}
-      <div className={styles.registrationButtonsHolder}>
-        {
-          creatingStep !== CreateAccountStepsEnum.selectSubChain &&
+      {
+        creatingStep !== CreateAccountStepsEnum.selectSubChain &&
+        <div className={styles.registrationButtonsHolder}>
           <Button
-            className={classnames(styles.registrationNextButton, styles.registrationNextButton_outlined)}
+            size="medium"
             variant="outlined"
-            size="large"
+            type="button"
             onClick={this.handleBackClick}
           >
-            <span className={styles.registrationNextButtonText}>
-              {'Back'}
-            </span>
+            {'Back'}
           </Button>
-        }
-        <Button
-          className={styles.registrationNextButton}
-          variant="contained"
-          size="large"
-          onClick={this.submitForm}
-          disabled={this.getSubmitButtonDisabled()}
-        >
-          {'Next'}
-        </Button>
-      </div>
+          <Button
+            size="medium"
+            variant="filled"
+            type="button"
+            onClick={this.submitForm}
+            disabled={this.getSubmitButtonDisabled()}
+          >
+            {'Next'}
+          </Button>
+        </div>
+      }
     </>;
   }
 }
