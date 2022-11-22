@@ -9,7 +9,7 @@ export type WalletData = {
 
 export interface AccountState {
   walletData: WalletData;
-  subChain: Maybe<number>;
+  chain: Maybe<number>;
   logged: boolean;
   openedMenu: boolean;
 }
@@ -25,7 +25,7 @@ const initialState: AccountState = {
     address: '',
     wif: '',
   },
-  subChain: null,
+  chain: null,
   logged: false,
   openedMenu: false,
 };
@@ -41,6 +41,9 @@ const accountSlice = createSlice({
       };
     },
     setLoggedToAccount: (state: AccountState, action: PayloadAction<boolean>) => {
+      state.logged = action.payload;
+    },
+    setChain: (state: AccountState, action: PayloadAction<boolean>) => {
       state.logged = action.payload;
     },
     clearAccountData: () => initialState,

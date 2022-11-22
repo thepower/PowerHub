@@ -1,6 +1,6 @@
 import { put } from 'typed-redux-saga';
 import { push } from 'connected-react-router';
-import { ChainNameEnum, NetworkApi, WalletApi } from '@thepowereco/tssdk';
+import { NetworkApi, WalletApi, NetworkEnum } from '@thepowereco/tssdk';
 import { setDynamicApis, setTestnetAvailable } from '../slice/applicationSlice';
 import { getIsProductionOnlyDomains } from '../utils/applicationUtils';
 import { getKeyFromApplicationStorage } from '../utils/localStorageUtils';
@@ -8,8 +8,10 @@ import { loginToWalletSaga } from '../../account/sagas/accountSaga';
 import { setWalletData } from '../../account/slice/accountSlice';
 import { RoutesEnum } from '../typings/routes';
 
-export function* reInitApis({ payload }: { payload: ChainNameEnum }) {
-  const networkApi = new NetworkApi(payload || ChainNameEnum.first);
+const defaultChain = 1; // TODO: move to config
+
+export function* reInitApis({ payload }: { payload: number }) {
+  const networkApi = new NetworkApi(payload || defaultChain);
   yield networkApi.bootstrap();
 
   const walletApi = new WalletApi(networkApi);
@@ -20,10 +22,11 @@ export function* reInitApis({ payload }: { payload: ChainNameEnum }) {
 }
 
 export function* initApplicationSaga() {
-  yield* reInitApis({ payload: ChainNameEnum.first });
+  yield* reInitApis({ payload: defaultChain });
   // let subChain = -1;
   let address = '';
   let wif = '';
+
   // let hashParams = null;
 
   if (process.env.NODE_ENV !== 'test' && getIsProductionOnlyDomains()) {
@@ -31,6 +34,9 @@ export function* initApplicationSaga() {
   }
 
   // hashParams = parseHash();
+  const network = NetworkEnum.testnet; // TODO: config
+  const shards = NetworkApi.getNetworkChains(network); // TODO: use it
+  console.log(shards);
 
   address = yield getKeyFromApplicationStorage('address');
   wif = yield getKeyFromApplicationStorage('wif');
