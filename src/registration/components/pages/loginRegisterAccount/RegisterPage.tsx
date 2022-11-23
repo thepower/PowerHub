@@ -69,11 +69,15 @@ class LoginRegisterAccountComponent extends React.PureComponent<LoginRegisterAcc
       password,
       confirmedPassword,
       passwordsNotEqual,
+      randomChain,
     } = this.props;
 
     switch (tab) {
       case LoginRegisterAccountTabs.create:
-        return <CreateNewAccount setNextStep={setNextStep} />;
+        return <CreateNewAccount
+          setNextStep={setNextStep}
+          randomChain={randomChain}
+        />;
       case LoginRegisterAccountTabs.login:
         return <LoginToAccount
           address={address}
@@ -98,10 +102,11 @@ class LoginRegisterAccountComponent extends React.PureComponent<LoginRegisterAcc
       password,
       confirmedPassword,
       passwordsNotEqual,
+      randomChain,
     } = this.props;
 
     if (tab === LoginRegisterAccountTabs.create) {
-      return !currentShard;
+      return !randomChain && !currentShard;
     }
 
     return !address || !seed || passwordsNotEqual || !password || !confirmedPassword;
@@ -138,11 +143,14 @@ class LoginRegisterAccountComponent extends React.PureComponent<LoginRegisterAcc
   };
 
   render() {
-    const { tab, setNextStep } = this.props;
+    const { tab, setNextStep, randomChain } = this.props;
     const { isMobile } = this.state;
 
     if (this.props.creatingStep !== CreateAccountStepsEnum.selectSubChain) {
-      return <CreateNewAccount setNextStep={setNextStep} />;
+      return <CreateNewAccount
+        setNextStep={setNextStep}
+        randomChain={randomChain}
+      />;
     }
 
     return <div className={styles.registrationComponent}>

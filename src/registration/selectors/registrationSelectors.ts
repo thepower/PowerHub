@@ -42,5 +42,6 @@ export const getLoginData = createSelector(
     password: registrationState.password,
     confirmedPassword: registrationState.confirmedPassword,
     passwordsNotEqual: registrationState.passwordsNotEqual,
+    randomChain: registrationState.randomChain,
   }),
 );

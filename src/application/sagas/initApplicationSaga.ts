@@ -1,8 +1,8 @@
 import { put } from 'typed-redux-saga';
 import { push } from 'connected-react-router';
-import { NetworkApi, WalletApi, NetworkEnum } from '@thepowereco/tssdk';
-import { setDynamicApis, setTestnetAvailable } from '../slice/applicationSlice';
-import { getIsProductionOnlyDomains } from '../utils/applicationUtils';
+import { NetworkApi, WalletApi } from '@thepowereco/tssdk';
+import { setDynamicApis, setTestnetAvailable, setNetworkChains } from '../slice/applicationSlice';
+import { CURRENT_NETWORK, getIsProductionOnlyDomains } from '../utils/applicationUtils';
 import { getKeyFromApplicationStorage } from '../utils/localStorageUtils';
 import { loginToWalletSaga } from '../../account/sagas/accountSaga';
 import { setWalletData } from '../../account/slice/accountSlice';
@@ -27,16 +27,12 @@ export function* initApplicationSaga() {
   let address = '';
   let wif = '';
 
-  // let hashParams = null;
-
   if (process.env.NODE_ENV !== 'test' && getIsProductionOnlyDomains()) {
     yield* put(setTestnetAvailable(false));
   }
 
-  // hashParams = parseHash();
-  const network = NetworkEnum.testnet; // TODO: config
-  const shards = NetworkApi.getNetworkChains(network); // TODO: use it
-  console.log(shards);
+  const chains: number[] = yield NetworkApi.getNetworkChains(CURRENT_NETWORK);
+  yield put(setNetworkChains(chains.sort()));
 
   address = yield getKeyFromApplicationStorage('address');
   wif = yield getKeyFromApplicationStorage('wif');
@@ -59,6 +55,7 @@ export function* initApplicationSaga() {
       wif,
       logged: true,
     }));
+    yield* put(push(RoutesEnum.root));
   } else {
     yield* put(push(RoutesEnum.signup));
   }
