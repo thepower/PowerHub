@@ -124,7 +124,6 @@ class Send extends React.Component<SendProps, SendState> {
                   <MoneyBugIcon className={cn(formikProps.values.amount && styles.activeBugIcon)} />
                 </InputAdornment>
               ),
-              endAdornment: <InputAdornment position="end">SK</InputAdornment>,
             }}
           />
           <TextField
