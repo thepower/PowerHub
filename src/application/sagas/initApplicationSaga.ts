@@ -8,7 +8,7 @@ import { loginToWalletSaga } from '../../account/sagas/accountSaga';
 import { setWalletData } from '../../account/slice/accountSlice';
 import { RoutesEnum } from '../typings/routes';
 
-const defaultChain = 1; // TODO: move to config
+const defaultChain = 1025; // TODO: move to config
 
 export function* reInitApis({ payload }: { payload: number }) {
   const networkApi = new NetworkApi(payload || defaultChain);
