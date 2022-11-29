@@ -10,7 +10,7 @@ export type DiscoverState = {
 
 const initialState: DiscoverState = {
   currentTab: DiscoverTabs.Dapps,
-  currentPageNumber: 0,
+  currentPageNumber: 1,
 };
 
 const discoverSlice = createSlice({
@@ -20,6 +20,9 @@ const discoverSlice = createSlice({
     setCurrentDiscoverTab: (state: DiscoverState, action: PayloadAction<DiscoverTabs>) => {
       state.currentTab = action.payload;
     },
+    setCurrentDiscoverPage: (state: DiscoverState, action: PayloadAction<number>) => {
+      state.currentPageNumber = action.payload;
+    },
   },
 });
 
@@ -27,10 +30,12 @@ const {
   reducer: discoverReducer,
   actions: {
     setCurrentDiscoverTab,
+    setCurrentDiscoverPage,
   },
 } = discoverSlice;
 
 export {
   discoverReducer,
   setCurrentDiscoverTab,
+  setCurrentDiscoverPage,
 };

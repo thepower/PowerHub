@@ -6,6 +6,7 @@ import {
   ArrowR,
   ArrowRDisabled,
 } from '../icons';
+import styles from './Pagination.module.scss';
 
 interface PaginationProps {
   min: number;
@@ -37,11 +38,18 @@ export class Pagination extends React.PureComponent<PaginationProps, PaginationS
       onNext,
     } = this.props;
 
-    if (current + 1 > max) {
+    const newPageNumber = current + 1;
+
+    if (newPageNumber > max) {
+      this.setState({ disabledNext: true });
       return;
     }
 
-    onNext();
+    onNext(newPageNumber);
+    this.setState({
+      disabledPrev: false,
+      disabledNext: newPageNumber === max,
+    });
   };
 
   handlePrevClick = () => {
@@ -51,11 +59,18 @@ export class Pagination extends React.PureComponent<PaginationProps, PaginationS
       onPrev,
     } = this.props;
 
-    if (current - 1 < min) {
+    const newPageNumber = current - 1;
+
+    if (newPageNumber < min) {
+      this.setState({ disabledPrev: true });
       return;
     }
 
-    onPrev();
+    this.setState({
+      disabledPrev: newPageNumber === min,
+      disabledNext: false,
+    });
+    onPrev(newPageNumber);
   };
 
   render() {
@@ -65,11 +80,15 @@ export class Pagination extends React.PureComponent<PaginationProps, PaginationS
     } = this.props;
     const { disabledNext, disabledPrev } = this.state;
 
-    return <div>
+    return <div className={styles.pagination}>
       <IconButton onClick={this.handlePrevClick}>
         {disabledPrev ? <ArrowLDisabled /> : <ArrowL />}
       </IconButton>
-      <div>{`${current}/${max}`}</div>
+      <div className={styles.text}>
+        <span>{current}</span>
+        <span className={styles.textOpacity}>{' / '}</span>
+        <span className={!disabledNext ? styles.textOpacity : ''}>{max}</span>
+      </div>
       <IconButton onClick={this.handleNextClick}>
         {disabledNext ? <ArrowRDisabled /> : <ArrowR />}
       </IconButton>
