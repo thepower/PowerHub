@@ -8,6 +8,7 @@ import { RegistrationPage } from '../../registration/components/RegistrationPage
 import { LoginPage } from '../../registration/components/pages/LoginPage';
 import { useAppDispatch, useAppSelector } from '../store';
 import { checkIfLoading } from '../../network/selectors';
+import Discover from '../../discover/components/Discover';
 
 const AppRoutesComponent: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -28,8 +29,10 @@ const AppRoutesComponent: React.FC = () => {
 
   return (
     <Switch>
-      <Route exact path={RoutesEnum.discover} />
       <Route exact path={RoutesEnum.myPlace} />
+      <Route path={RoutesEnum.discover}>
+        <Discover />
+      </Route>
       <Route exact path={RoutesEnum.build} />
       <Route exact path={RoutesEnum.contribute} />
       <Route path={RoutesEnum.signup}>
