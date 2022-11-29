@@ -20,3 +20,7 @@ export { ReactComponent as SupportIcon } from './support.svg';
 export { ReactComponent as ChevronDown } from './chevron_down.svg';
 export { ReactComponent as CheckedIcon } from './select.svg';
 export { ReactComponent as UnCheckedIcon } from './unSelect.svg';
+export { ReactComponent as ArrowL } from './arrowL.svg';
+export { ReactComponent as ArrowR } from './arrowR.svg';
+export { ReactComponent as ArrowLDisabled } from './arrowLDisabled.svg';
+export { ReactComponent as ArrowRDisabled } from './arrowRDisabled.svg';
