@@ -1,4 +1,5 @@
 import React from 'react';
+import classnames from 'classnames';
 import IconButton from '../iconButton/IconButton';
 import {
   ArrowL,
@@ -14,6 +15,7 @@ interface PaginationProps {
   current: number;
   onNext: (data?: any) => void;
   onPrev: (data?: any) => void;
+  className?: string;
 }
 
 interface PaginationState {
@@ -77,10 +79,11 @@ export class Pagination extends React.PureComponent<PaginationProps, PaginationS
     const {
       current,
       max,
+      className,
     } = this.props;
     const { disabledNext, disabledPrev } = this.state;
 
-    return <div className={styles.pagination}>
+    return <div className={classnames(styles.pagination, className)}>
       <IconButton onClick={this.handlePrevClick}>
         {disabledPrev ? <ArrowLDisabled /> : <ArrowL />}
       </IconButton>
