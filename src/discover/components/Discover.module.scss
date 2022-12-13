@@ -1,10 +1,21 @@
+@import '../../styles/mixins';
+
 .discover {
   margin: 34px 32px;
+
+  @include mobile {
+    margin: 28px 10px;
+  }
 }
 
 .discoverTabsHolder {
   border: unset;
   margin-top: 14px;
+
+  @include mobile {
+    width: 151px;
+    margin-left: 12px;
+  }
 }
 
 .discoverTab {
@@ -20,7 +31,29 @@
   background: #f5f5f7;
 }
 
-.discoverPagination {
+.discoverPagination,
+.discoverTopPagination {
   justify-content: flex-end;
   margin-top: 45px;
+
+  @include mobile {
+    margin-top: 40px;
+  }
+}
+
+.discoverTopPagination {
+  display: none;
+  margin-bottom: 30px;
+
+  @include mobile {
+    display: flex;
+  }
+}
+
+
+
+.discoverTopBar {
+  @include mobile {
+    display: none;
+  }
 }

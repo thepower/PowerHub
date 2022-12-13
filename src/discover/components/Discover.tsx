@@ -1,9 +1,13 @@
 import React from 'react';
+import classnames from 'classnames';
 import {
-  Pagination, ShallowPageTemplate, Tabs, TopBar,
+  Pagination,
+  ShallowPageTemplate,
+  Tabs,
+  TopBar,
 } from 'common';
 import { connect, ConnectedProps } from 'react-redux';
-import { RootState } from '../../application/store';
+import { RootState } from 'application/store';
 import { getCurrentDiscoverPage, getCurrentDiscoverTab } from '../selectors/discoverSelectors';
 import { DiscoverTabs } from '../typings/discoverTypings';
 import { setCurrentDiscoverTab, setCurrentDiscoverPage } from '../slice/discoverSlice';
@@ -23,7 +27,7 @@ const mapDispatchToProps = {
 const connector = connect(mapStateToProps, mapDispatchToProps);
 type DiscoverPageProps = ConnectedProps<typeof connector>;
 
-class DiscoverPage extends React.PureComponent<DiscoverPageProps, never> {
+class DiscoverPage extends React.PureComponent<DiscoverPageProps, {}> {
   onChangeTab = (_event: React.SyntheticEvent, value: DiscoverTabs) => {
     this.props.setCurrentDiscoverTab(value);
     this.props.setCurrentDiscoverPage(1);
@@ -33,7 +37,7 @@ class DiscoverPage extends React.PureComponent<DiscoverPageProps, never> {
     const { tab, currentPage, setCurrentDiscoverPage } = this.props;
 
     return <ShallowPageTemplate>
-      <TopBar type="shallow">
+      <TopBar className={styles.discoverTopBar} type="shallow">
         <Tabs
           tabs={DiscoverTabs}
           tabsLabels={DiscoverTabs}
@@ -46,6 +50,14 @@ class DiscoverPage extends React.PureComponent<DiscoverPageProps, never> {
         />
       </TopBar>
       <div className={styles.discover}>
+        <Pagination
+          className={classnames(styles.discoverPagination, styles.discoverTopPagination)}
+          min={1}
+          max={3}
+          current={currentPage}
+          onNext={setCurrentDiscoverPage}
+          onPrev={setCurrentDiscoverPage}
+        />
         {
           tab === DiscoverTabs.Dapps &&
           <DappsList />

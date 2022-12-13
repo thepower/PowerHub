@@ -1,4 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
+import { dappsListData } from 'discover/utils/dappsListData';
 import { RootState } from '../../application/store';
 import { DiscoverState } from '../slice/discoverSlice';
 
@@ -14,4 +15,8 @@ export const getCurrentDiscoverTab = createSelector(
 export const getCurrentDiscoverPage = createSelector(
   getDiscoverState,
   (state: DiscoverState) => state.currentPageNumber,
+);
+
+export const getDappsCardData = (id: string) => (
+  dappsListData.find((dappsData) => dappsData.id === id)
 );

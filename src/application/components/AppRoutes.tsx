@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { FullScreenLoader } from 'common';
+import { RegistrationPage } from 'registration/components/RegistrationPage';
+import { LoginPage } from 'registration/components/pages/LoginPage';
+import { checkIfLoading } from 'network/selectors';
+import { DappsCard } from 'discover/components/dappsCard/DappsCard';
+import { useAppDispatch, useAppSelector } from '../store';
 import { RoutesEnum } from '../typings/routes';
 import { initApplication } from '../slice/applicationSlice';
 import Home from '../../home/components/Home';
-import { RegistrationPage } from '../../registration/components/RegistrationPage';
-import { LoginPage } from '../../registration/components/pages/LoginPage';
-import { useAppDispatch, useAppSelector } from '../store';
-import { checkIfLoading } from '../../network/selectors';
 import Discover from '../../discover/components/Discover';
 
 const AppRoutesComponent: React.FC = () => {
@@ -30,6 +31,7 @@ const AppRoutesComponent: React.FC = () => {
   return (
     <Switch>
       <Route exact path={RoutesEnum.myPlace} />
+      <Route path={`${RoutesEnum.discover}/dapps/:id`} component={DappsCard} />
       <Route path={RoutesEnum.discover}>
         <Discover />
       </Route>

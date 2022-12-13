@@ -13,6 +13,8 @@ type TopBarProps = {
   backUrl?: string;
   backUrlText?: string;
   children?: React.ReactNode;
+  disableAccount?: boolean;
+  className?: string;
 };
 
 const TopBar: React.FC<TopBarProps> = ({
@@ -20,6 +22,8 @@ const TopBar: React.FC<TopBarProps> = ({
   type,
   backUrl,
   backUrlText = 'Back',
+  disableAccount = false,
+  className,
 }) => {
   const dispatch = useAppDispatch();
   const handleShowUnderConstruction = React.useCallback(() => {
@@ -27,7 +31,7 @@ const TopBar: React.FC<TopBarProps> = ({
   }, [dispatch]);
 
   return <>
-    <header className={cn(styles.bar, styles[type])}>
+    <header className={cn(styles.bar, styles[type], className)}>
       {type === 'deep' && backUrl && (
         <ArrowLink
           to={backUrl}
@@ -39,7 +43,7 @@ const TopBar: React.FC<TopBarProps> = ({
           {backUrlText}
         </ArrowLink>
       )}
-      {type === 'shallow' && (
+      {type === 'shallow' && !disableAccount && (
         <div className={styles.accountHolder}>
           <Account />
         </div>

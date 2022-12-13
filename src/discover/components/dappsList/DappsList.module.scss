@@ -7,6 +7,11 @@
   height: 180px;
   border: 1px solid #6b798f;
   border-radius: 5px;
+
+  @include mobile {
+    width: 142px;
+    height: 100px;
+  }
 }
 
 .dappsName {
@@ -17,6 +22,13 @@
   font-weight: 700;
   letter-spacing: 0.04em;
   line-height: 16px;
+
+  @include mobile {
+    margin-top: 8px;
+    margin-bottom: 4px;
+    font-size: 12px;
+    line-height: 14px;
+  }
 }
 
 .dappsImg {
@@ -28,6 +40,10 @@
   position: relative;
   width: 210px;
   flex-grow: 0;
+
+  @include mobile {
+    width: 142px;
+  }
 
   &:hover {
     .dappsImgHolder {
@@ -56,6 +72,13 @@
   cursor: pointer;
   gap: 28px;
   grid-template-columns: repeat(auto-fill, minmax(202px, 1fr));
+
+  @include mobile {
+    gap: 16px;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    row-gap: 28px;
+  };
 }
 
 .dappsGenre {
@@ -64,6 +87,11 @@
   font-weight: 500;
   line-height: 16px;
   opacity: 0.8;
+
+  @include mobile {
+    font-size: 12px;
+    line-height: 14px;
+  }
 }
 
 .dappsFav {
@@ -74,6 +102,11 @@
   height: 32px;
   border-radius: 5px;
   background: rgba(245, 245, 247, 0.06);
+
+  @include mobile {
+    top: 8px;
+    right: 8px;
+  }
 
   &:hover {
     background: rgba(245, 245, 247, 0.12);
