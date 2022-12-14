@@ -5,8 +5,82 @@
 
 .dappsCoverHolder {
   width: 100%;
+  height: 450px;
 
   img {
     width: 100%;
+    height: 100%;
   }
+}
+
+.dappsCardControls {
+  position: absolute;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dappsCardGenreHolder {
+  position: relative;
+  top: 90%;
+  left: 320px;
+  display: flex;
+  gap: 20px;
+  grid-template-columns: auto auto;
+}
+
+.dappsCardGenre {
+  flex-grow: 0;
+  color: #f5f5f7;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 24px;
+}
+
+.dappsCardSmallCover {
+  position: relative;
+  top: 75%;
+  left: 136px;
+  width: 130px;
+  height: 116px;
+  border: 2px solid rgba(245, 245, 247, 0.12);
+  border-radius: 5px;
+  filter: drop-shadow(0 0 8px rgba(11, 14, 19, 0.24));
+}
+
+.dappsCardTitle {
+  margin-top: 22px;
+  margin-bottom: 12px;
+  color: #f5f5f7;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 28px;
+}
+
+.dappsCardInfo {
+  padding: 0 136px;
+  margin-top: 54px;
+}
+
+.dappsCardDesc {
+  width: 592px;
+  color: rgba(245, 245, 247, 0.6);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 16px;
+}
+
+.dappsCardShowMoreButton {
+  margin-top: 12px;
+  color: #f5f5f7;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16px;
+  opacity: 0.32;
+}
+
+.dappsCardShowMoreButtonLabel {
+  margin-right: 14px;
 }
