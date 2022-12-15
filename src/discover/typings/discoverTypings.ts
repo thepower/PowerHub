@@ -16,7 +16,6 @@ export type DappsItemCardType = {
   genre: string[];
   title: string;
   smallCover: string;
-  description: string;
   fullDescription: string;
   nfts?: DappsItemCardNftType[];
 };

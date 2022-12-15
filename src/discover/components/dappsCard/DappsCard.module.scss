@@ -1,4 +1,7 @@
+@import '../../../styles/mixins';
+
 .dappsCard {
+  overflow: hidden;
   width: 100vw;
   height: 100vh;
 }
@@ -6,6 +9,11 @@
 .dappsCoverHolder {
   width: 100%;
   height: 450px;
+  background-size: cover;
+
+  @include mobile {
+    height: 140px;
+  }
 
   img {
     width: 100%;
@@ -21,6 +29,12 @@
   justify-content: space-between;
 }
 
+.dappsCardBackButton {
+  @include mobile {
+    visibility: hidden;
+  }
+}
+
 .dappsCardGenreHolder {
   position: relative;
   top: 90%;
@@ -28,6 +42,12 @@
   display: flex;
   gap: 20px;
   grid-template-columns: auto auto;
+
+  @include mobile {
+    top: 100px;
+    left: 10px;
+    gap: 16px;
+  }
 }
 
 .dappsCardGenre {
@@ -47,10 +67,16 @@
   border: 2px solid rgba(245, 245, 247, 0.12);
   border-radius: 5px;
   filter: drop-shadow(0 0 8px rgba(11, 14, 19, 0.24));
+
+  @include mobile {
+    top: 136px;
+    left: 10px;
+    width: 61px;
+    height: 61px;
+  }
 }
 
 .dappsCardTitle {
-  margin-top: 22px;
   margin-bottom: 12px;
   color: #f5f5f7;
   font-size: 24px;
@@ -58,17 +84,17 @@
   line-height: 28px;
 }
 
-.dappsCardInfo {
+.dappsCardInfoHolder {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
   padding: 0 136px;
   margin-top: 54px;
-}
 
-.dappsCardDesc {
-  width: 592px;
-  color: rgba(245, 245, 247, 0.6);
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 16px;
+  @include mobile {
+    padding: 0 10px;
+    margin-top: 95px;
+  }
 }
 
 .dappsCardShowMoreButton {
@@ -83,4 +109,22 @@
 
 .dappsCardShowMoreButtonLabel {
   margin-right: 14px;
+}
+
+.dappsCardIconsHolder {
+  display: flex;
+  align-items: center;
+
+  @include mobile {
+    position: absolute;
+    top: 168px;
+    right: 15px;
+  }
+}
+
+.dappsCardDesc {
+  color: rgba(245, 245, 247, 0.6);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 16px;
 }

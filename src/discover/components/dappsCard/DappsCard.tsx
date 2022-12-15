@@ -5,6 +5,8 @@ import {
   ChevronLeftIcon,
   ChevronDown,
   ChevronUp,
+  HeartIcon,
+  ShareIcon,
 } from 'common/icons';
 import { IconButton } from 'common';
 import { connect, ConnectedProps } from 'react-redux';
@@ -68,13 +70,17 @@ class DappsCardComponent extends React.PureComponent<DappsCardProps, DappsCardSt
     </div>;
   };
 
+  handleSetFav = () => {};
+
+  handleShareDapps = () => {};
+
   render() {
     const { currentDappsData } = this.props;
     const { showMoreInfo } = this.state;
 
     return <div className={styles.dappsCard}>
       <div className={styles.dappsCardControls}>
-        <IconButton onClick={this.handleRouteToDappsList}>
+        <IconButton onClick={this.handleRouteToDappsList} className={styles.dappsCardBackButton}>
           <ChevronLeftIcon />
         </IconButton>
         <IconButton onClick={this.handleRouteToDappsList}>
@@ -89,19 +95,26 @@ class DappsCardComponent extends React.PureComponent<DappsCardProps, DappsCardSt
           <img src={currentDappsData?.card?.smallCover} alt={'dappsSmallCover'} />
         </div>
       </div>
-      <div className={styles.dappsCardInfo}>
-        <div className={styles.dappsCardTitle}>
-          {currentDappsData?.card.title}
-        </div>
-        <div className={styles.dappsCardDesc}>
-          {currentDappsData?.card.description}
-        </div>
-        <Collapse in={showMoreInfo}>
-          <div className={styles.dappsCardDesc}>
-            {currentDappsData?.card.fullDescription}
+      <div className={styles.dappsCardInfoHolder}>
+        <div className={styles.dappsCardInfo}>
+          <div className={styles.dappsCardTitle}>
+            {currentDappsData?.card.title}
           </div>
-        </Collapse>
-        {this.renderShowMoreButton()}
+          <Collapse in={showMoreInfo} collapsedSize={32}>
+            <div className={styles.dappsCardDesc}>
+              {currentDappsData?.card.fullDescription}
+            </div>
+          </Collapse>
+          {this.renderShowMoreButton()}
+        </div>
+        <div className={styles.dappsCardIconsHolder}>
+          <IconButton onClick={this.handleSetFav}>
+            <HeartIcon />
+          </IconButton>
+          <IconButton onClick={this.handleShareDapps}>
+            <ShareIcon />
+          </IconButton>
+        </div>
       </div>
     </div>;
   }
