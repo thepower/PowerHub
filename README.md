@@ -18,7 +18,11 @@ We hope you find the resources here helpful in creating and distributing your ow
 
 ## Available Scripts
 
-In the project directory, you can run:
+First install the project depencies with:
+
+### `yarn install`
+
+Then, you can run:
 
 ### `yarn start`
 Runs the app in the development mode.\
