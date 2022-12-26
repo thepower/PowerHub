@@ -6,9 +6,10 @@ export enum DiscoverTabs {
 export type DappsItemCardNftType = {
   cover: string;
   number: string;
-  count: number;
+  count: string;
   estValue: string;
-  priceChange: string;
+  priceChange: number;
+  positive?: boolean;
 };
 
 export type DappsItemCardType = {

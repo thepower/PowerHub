@@ -69,9 +69,10 @@
 .dappsListWrapper {
   display: grid;
   width: 100%;
+  justify-content: space-between;
   cursor: pointer;
   gap: 28px;
-  grid-template-columns: repeat(auto-fill, minmax(202px, 1fr));
+  grid-template-columns: repeat(auto-fill, 202px);
 
   @include mobile {
     gap: 16px;

@@ -12,11 +12,6 @@ export const getCurrentDiscoverTab = createSelector(
   (state: DiscoverState) => state.currentTab,
 );
 
-export const getCurrentDiscoverPage = createSelector(
-  getDiscoverState,
-  (state: DiscoverState) => state.currentPageNumber,
-);
-
 export const getDappsCardData = (id: string) => (
   dappsListData.find((dappsData) => dappsData.id === id)
 );

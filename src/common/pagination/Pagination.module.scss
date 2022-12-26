@@ -1,3 +1,6 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
 .pagination {
   display: flex;
   align-items: center;
@@ -14,4 +17,12 @@
 .textOpacity {
   color: #f5f5f7;
   opacity: 0.24;
+}
+
+.paginationListTop {
+  display: none;
+
+  @include mobile {
+    display: flex;
+  }
 }

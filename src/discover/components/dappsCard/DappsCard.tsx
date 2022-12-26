@@ -15,6 +15,7 @@ import { RootState } from 'application/store';
 import { Collapse } from '@mui/material';
 import { getDappsCardData } from 'discover/selectors/discoverSelectors';
 import { RoutesEnum } from 'application/typings/routes';
+import { DappsCardNFT } from 'discover/components/dappsCard/DappsCardNFT';
 import styles from './DappsCard.module.scss';
 
 type OwnProps = RouteComponentProps<{ id: string }>;
@@ -53,12 +54,14 @@ class DappsCardComponent extends React.PureComponent<DappsCardProps, DappsCardSt
     routeTo(RoutesEnum.discover);
   };
 
-  renderGenre = (genre: string) => <div
-    key={genre}
-    className={styles.dappsCardGenre}
-  >
-    {genre}
-  </div>;
+  renderGenre = (genre: string) => (
+    <div
+      key={genre}
+      className={styles.dappsCardGenre}
+    >
+      {genre}
+    </div>
+  );
 
   renderShowMoreButton = () => {
     const { showMoreInfo } = this.state;
@@ -87,7 +90,10 @@ class DappsCardComponent extends React.PureComponent<DappsCardProps, DappsCardSt
           <CloseIcon />
         </IconButton>
       </div>
-      <div className={styles.dappsCoverHolder} style={{ backgroundImage: `url(${currentDappsData?.card?.cover})` }}>
+      <div
+        className={styles.dappsCoverHolder}
+        style={{ backgroundImage: `url(${currentDappsData?.card?.cover})` }}
+      >
         <div className={styles.dappsCardGenreHolder}>
           {currentDappsData?.card.genre.map(this.renderGenre)}
         </div>
@@ -116,6 +122,7 @@ class DappsCardComponent extends React.PureComponent<DappsCardProps, DappsCardSt
           </IconButton>
         </div>
       </div>
+      <DappsCardNFT nfts={currentDappsData?.card.nfts} />
     </div>;
   }
 }

@@ -9,7 +9,7 @@ import {
 } from '../icons';
 import styles from './Pagination.module.scss';
 
-interface PaginationProps {
+export interface PaginationProps {
   min: number;
   max: number;
   current: number;
