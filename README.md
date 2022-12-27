@@ -18,14 +18,13 @@ We hope you find the resources here helpful in creating and distributing your ow
 
 ## Available Scripts
 
-First install the project depencies with:
-
+First install the project dependencies with:
 ### `yarn install`
 
 Then, you can run:
-
 ### `yarn start`
-Runs the app in the development mode.\
+
+It runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.\
