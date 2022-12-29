@@ -87,6 +87,10 @@
   }
 }
 
+.loginButton {
+  padding: 0 12px;
+}
+
 .registrationButton {
   @include the-power-color;
   width: 312px;
