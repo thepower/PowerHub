@@ -1,5 +1,6 @@
 import React from 'react';
 import { push } from 'connected-react-router';
+import { Trans } from 'react-i18next';
 import { connect, ConnectedProps } from 'react-redux';
 import {
   BreadcrumbsDataType,
@@ -65,25 +66,27 @@ class RegistrationPageComponent extends React.PureComponent<RegistrationPageProp
   renderWelcome = () => (
     <>
       <div className={styles.registrationTitle}>{'Power Hub'}</div>
-      <div className={styles.registrationDesc}>{'home for everyone and every dapp'}</div>
+      <div className={styles.registrationDesc}>
+        <Trans i18nKey={'registrationPageDesc'} />
+      </div>
       <div className={styles.buttonsHolder}>
         <Button
           size="large"
           variant="filled"
-          className={styles.button}
+          className={styles.loginButton}
           type="button"
           onClick={this.handleProceedToRegistration}
         >
-          {'Join to Web3'}
+          <Trans i18nKey={'registrationPageJoinButton'} />
         </Button>
         <Button
           size="large"
           variant="outlined"
-          className={styles.button}
+          className={styles.loginButton}
           type="button"
           onClick={this.handleProceedToLogin}
         >
-          {'Login or import an account'}
+          <Trans i18nKey={'registrationPageImportAccountButton'} />
         </Button>
       </div>
     </>
