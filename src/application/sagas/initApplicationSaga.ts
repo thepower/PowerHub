@@ -55,7 +55,8 @@ export function* initApplicationSaga() {
       wif,
       logged: true,
     }));
-    yield* put(push(RoutesEnum.root));
+
+    yield* put(push(window.location.pathname));
   } else {
     yield* put(push(RoutesEnum.signup));
   }

@@ -4,3 +4,11 @@
   flex: 1 1 auto;
   padding: 0 32px;
 }
+
+.accountHolder {
+  display: none;
+
+  @include mobile {
+    display: block;
+  }
+}
