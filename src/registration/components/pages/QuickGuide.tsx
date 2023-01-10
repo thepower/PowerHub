@@ -20,7 +20,11 @@ export const QuickGuide: React.FC<QuickGuideProps> = (props: QuickGuideProps) =>
         description={'Build Dapp where everything is in one place:  decentralized infrastructure\n' +
           'and services. Make developer’s life easier -  the real full-stack dappsList '}
       />
-      <RegistrationStatement title={'Contribute'} description={'?????'} />
+      <RegistrationStatement
+        title={'Contribute'}
+        description={'Community input is valuable and essential to ongoing growth ' +
+          'and improvement. Contributions and involvement help shape DAO\'s direction and development.'}
+      />
     </RegistrationBackground>
     <div className={styles.registrationButtonsHolder}>
       <Button
