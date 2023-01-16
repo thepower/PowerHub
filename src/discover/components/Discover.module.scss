@@ -9,8 +9,8 @@
 }
 
 .discoverTabsHolder {
+  padding-top: 14px;
   border: unset;
-  margin-top: 14px;
 
   @include mobile {
     width: 151px;
@@ -34,16 +34,16 @@
 .discoverPagination,
 .discoverTopPagination {
   justify-content: flex-end;
-  margin-top: 45px;
+  margin-top: 10px;
 
   @include mobile {
-    margin-top: 40px;
+    margin-top: 10px;
   }
 }
 
 .discoverTopPagination {
   display: none;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 
   @include mobile {
     display: flex;
