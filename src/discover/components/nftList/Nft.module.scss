@@ -22,6 +22,14 @@
   }
 }
 
+.nftAuthorImg {
+  position: absolute;
+  top: 110px;
+  left: 8px;
+  border-radius: 5px;
+  background: rgba(245, 245, 247, 0.12);
+}
+
 .nftListWrapper {
   display: grid;
   width: 100%;

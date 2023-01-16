@@ -39,6 +39,7 @@ class NftListComponent extends React.PureComponent<NftListProps, NftListState> {
       priceChange: { change, positive },
       totalVolume,
       floorPrice,
+      authorImgSrc,
     } = item;
 
     return <div
@@ -51,6 +52,7 @@ class NftListComponent extends React.PureComponent<NftListProps, NftListState> {
       </IconButton>
       <div className={styles.nftImgHolder}>
         <img className={styles.nftImg} src={imgSrc} alt={'nftImg'} />
+        <img className={styles.nftAuthorImg} src={authorImgSrc} alt={'nftAuthor'} />
       </div>
       <div className={styles.nftInfoHolder}>
         <div className={styles.nftInfoHolderFirstLine}>
