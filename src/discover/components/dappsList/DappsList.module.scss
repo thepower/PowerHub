@@ -9,8 +9,8 @@
   border-radius: 5px;
 
   @include mobile {
-    width: 142px;
-    height: 100px;
+    width: unset;
+    height: unset;
   }
 }
 
@@ -42,7 +42,7 @@
   flex-grow: 0;
 
   @include mobile {
-    width: 142px;
+    width: unset;
   }
 
   &:hover {

@@ -1,12 +1,17 @@
-import { DappsItemType } from '../typings/discoverTypings';
-import dummyDappsImg from './startWarDapps.png';
-import dappsCardSmallCover from './dappsCardSmallCover.png';
-import dappsCardCover from './dappsCardCover.png';
-import dappsNFT1 from './dappsNFT1.png';
-import dappsNFT2 from './dappsNFT2.png';
-import dappsNFT3 from './dappsNFT3.png';
-import dappsNFT4 from './dappsNFT4.png';
-import dappsNFT5 from './dappsNFT5.png';
+import dummyDappsImg from 'discover/utils/dapps/startWarDapps.png';
+import dappsCardSmallCover from 'discover/utils/dapps/dappsCardSmallCover.png';
+import dappsCardCover from 'discover/utils/dapps/dappsCardCover.png';
+import dappsNFT1 from 'discover/utils/dapps/dappsNFT1.png';
+import dappsNFT2 from 'discover/utils/dapps/dappsNFT2.png';
+import dappsNFT3 from 'discover/utils/dapps/dappsNFT3.png';
+import dappsNFT4 from 'discover/utils/dapps/dappsNFT4.png';
+import dappsNFT5 from 'discover/utils/dapps/dappsNFT5.png';
+import nftItem1 from 'discover/utils/nft/nftItem1.png';
+import nftItem2 from 'discover/utils/nft/nftItem2.png';
+import nftItem3 from 'discover/utils/nft/nftItem3.png';
+import nftItem4 from 'discover/utils/nft/nftItem4.png';
+import nftItemAuthor from './nft/nftItemAuthor.png';
+import { DappsItemType, NftItemType } from '../typings/discoverTypings';
 
 export const dappsListData: DappsItemType[] = [
   {
@@ -31,42 +36,106 @@ export const dappsListData: DappsItemType[] = [
           cover: dappsNFT1,
           count: '12.456',
           estValue: 'SK 202.09',
-          priceChange: 2.4,
-          positive: true,
+          priceChange: {
+            change: 2.4,
+            positive: true,
+          },
         },
         {
           number: '#769494',
           cover: dappsNFT2,
           count: '798.05',
           estValue: 'SK 2200.78',
-          priceChange: 7,
-          positive: false,
+          priceChange: {
+            change: 7,
+            positive: false,
+          },
         },
         {
           number: '#928473',
           cover: dappsNFT3,
           count: '374.00',
           estValue: 'SK 112.12',
-          priceChange: 20,
-          positive: true,
+          priceChange: {
+            change: 20,
+            positive: true,
+          },
         },
         {
           number: '#594093',
           cover: dappsNFT4,
           count: '12.00',
           estValue: 'SK 52.74',
-          priceChange: 12,
-          positive: true,
+          priceChange: {
+            change: 12,
+            positive: true,
+          },
         },
         {
           number: '#7563290',
           cover: dappsNFT5,
           count: '11.01',
           estValue: 'SK 0.009',
-          priceChange: 24,
-          positive: false,
+          priceChange: {
+            change: 24,
+            positive: false,
+          },
         },
       ],
     },
   },
+];
+
+export const nftListData: NftItemType[] = [{
+  id: '1',
+  imgSrc: nftItem1,
+  fav: false,
+  name: 'Art sculpture',
+  priceChange: {
+    change: 38.23,
+    positive: true,
+  },
+  authorImgSrc: nftItemAuthor,
+  floorPrice: 'SK 0.231',
+  totalVolume: 'SK 234.903',
+},
+{
+  id: '2',
+  imgSrc: nftItem2,
+  fav: false,
+  name: 'Crampled paper',
+  priceChange: {
+    change: 11.23,
+    positive: false,
+  },
+  authorImgSrc: nftItemAuthor,
+  floorPrice: 'SK 122.90',
+  totalVolume: 'SK 0.191',
+},
+{
+  id: '3',
+  imgSrc: nftItem3,
+  fav: false,
+  name: 'Crunch gallery',
+  priceChange: {
+    change: 8.00,
+    positive: true,
+  },
+  authorImgSrc: nftItemAuthor,
+  floorPrice: 'SK 0.21',
+  totalVolume: 'SK 80.07',
+},
+{
+  id: '4',
+  imgSrc: nftItem4,
+  fav: false,
+  name: 'Just a monkey',
+  priceChange: {
+    change: 10.11,
+    positive: false,
+  },
+  authorImgSrc: nftItemAuthor,
+  floorPrice: 'SK 0.188',
+  totalVolume: 'SK 121.003',
+},
 ];

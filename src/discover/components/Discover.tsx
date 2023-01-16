@@ -13,6 +13,7 @@ import { DiscoverTabs } from '../typings/discoverTypings';
 import { setCurrentDiscoverTab } from '../slice/discoverSlice';
 import styles from './Discover.module.scss';
 import { DappsList } from './dappsList/DappsList';
+import { NftList } from './nftList/NftList';
 
 const mapStateToProps = (state: RootState) => ({
   tab: getCurrentDiscoverTab(state),
@@ -74,7 +75,7 @@ class DiscoverPage extends React.PureComponent<DiscoverPageProps, DiscoverPageSt
           topPaginationClassName={classnames(styles.discoverPagination, styles.discoverTopPagination)}
           bottomPaginationClassName={styles.discoverPagination}
         >
-          {tab === DiscoverTabs.Dapps && <DappsList />}
+          {tab === DiscoverTabs.Dapps ? <DappsList /> : <NftList />}
         </PaginationList>
       </div>
     </ShallowPageTemplate>;

@@ -34,8 +34,7 @@ export class DappsCardNFT extends React.PureComponent<DappsCardNFTProps, DappsCa
       estValue,
       count,
       cover,
-      priceChange,
-      positive,
+      priceChange: { change, positive },
     } = nftData;
     return <div key={index} className={styles.dappsNft}>
       <div className={styles.dappsNftImgHolder}>
@@ -63,7 +62,7 @@ export class DappsCardNFT extends React.PureComponent<DappsCardNFTProps, DappsCa
           )}
           >
             <span>{positive ? '+' : '-'}</span>
-            <div className={styles.dappsNftPriceChange}>{priceChange}</div>
+            <div className={styles.dappsNftPriceChange}>{change}</div>
             {'%'}
           </div>
         </div>
