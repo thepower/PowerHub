@@ -1,12 +1,12 @@
 import React from 'react';
-import { DappsItemCardNftType } from 'discover/typings/discoverTypings';
+import { CardNftType } from 'discover/typings/discoverTypings';
 import { IconButton, PaginationList } from 'common';
 import classnames from 'classnames';
 import { FavIcon } from 'common/icons';
 import styles from './DappsCard.module.scss';
 
 interface DappsCardNFTProps {
-  nfts?: DappsItemCardNftType[];
+  nfts?: CardNftType[];
 }
 
 interface DappsCardNFTState {
@@ -28,13 +28,13 @@ export class DappsCardNFT extends React.PureComponent<DappsCardNFTProps, DappsCa
 
   handleAddToFavNFT = () => {};
 
-  renderNFT = (nftData: DappsItemCardNftType, index: number) => {
+  renderNFT = (nftData: CardNftType, index: number) => {
     const {
       number,
       estValue,
       count,
       cover,
-      priceChange: { change, positive },
+      priceChange,
     } = nftData;
     return <div key={index} className={styles.dappsNft}>
       <div className={styles.dappsNftImgHolder}>
@@ -56,15 +56,18 @@ export class DappsCardNFT extends React.PureComponent<DappsCardNFTProps, DappsCa
             <div className={styles.dappsNftPriceLabel}>{'Est.Value'}</div>
             <div className={styles.dappsNftPrice}>{estValue}</div>
           </div>
-          <div className={classnames(
-            styles.dappsNftPriceChangeHolder,
-            !positive && styles.dappsNftPriceChangeHolder_negative,
-          )}
-          >
-            <span>{positive ? '+' : '-'}</span>
-            <div className={styles.dappsNftPriceChange}>{change}</div>
-            {'%'}
-          </div>
+          {
+            priceChange &&
+            <div className={classnames(
+              styles.dappsNftPriceChangeHolder,
+              !priceChange.positive && styles.dappsNftPriceChangeHolder_negative,
+            )}
+            >
+              <span>{priceChange.positive ? '+' : '-'}</span>
+              <div className={styles.dappsNftPriceChange}>{priceChange.change}</div>
+              {'%'}
+            </div>
+          }
         </div>
       </div>
     </div>;

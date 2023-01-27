@@ -11,6 +11,12 @@ import nftItem2 from 'discover/utils/nft/nftItem2.png';
 import nftItem3 from 'discover/utils/nft/nftItem3.png';
 import nftItem4 from 'discover/utils/nft/nftItem4.png';
 import nftItemAuthor from './nft/nftItemAuthor.png';
+import nftCardCover from './nft/nftCardCover.png';
+import nftCardImg from './nft/nftCardImg.png';
+import nftCardItem1 from './nft/nftCardItem1.png';
+import nftCardItem2 from './nft/nftCardItem2.png';
+import nftCardItem3 from './nft/nftCardItem3.png';
+import nftCardItem4 from './nft/nftCardItem4.png';
 import { DappsItemType, NftItemType } from '../typings/discoverTypings';
 
 export const dappsListData: DappsItemType[] = [
@@ -98,6 +104,107 @@ export const nftListData: NftItemType[] = [{
   authorImgSrc: nftItemAuthor,
   floorPrice: 'SK 0.231',
   totalVolume: 'SK 234.903',
+  card: {
+    id: '1',
+    cover: nftCardCover,
+    smallCover: nftCardImg,
+    holders: '32 094',
+    followers: '32 094',
+    floor: '0.2356',
+    lastDayVolume: '23 993',
+    lastDayChange: '23 993',
+    title: 'Art sculpture',
+    fullDescription: 'Art Sculpture is a collection ' +
+      'of 10,000 unique NFT ART - unique digital collectibles ' +
+      'that live on the blockchain Power. Your Art Sculpture serves as your ' +
+      'museum membership card and grants access to member-only benefits, ' +
+      'the first of which is access to the bakery. Future areas and perks ' +
+      'can be unlocked by the community through roadmap activation',
+    nfts: [
+      {
+        number: '#768959',
+        cover: nftCardItem1,
+        count: '12.456',
+        estValue: 'SK 32340.09',
+        priceChange: {
+          change: 2.4,
+          positive: true,
+        },
+      },
+      {
+        number: '#767162',
+        cover: nftCardItem2,
+        count: '0.73',
+        estValue: 'SK 23.394',
+        priceChange: {
+          change: 2,
+          positive: false,
+        },
+      },
+      {
+        number: '#9038267',
+        cover: nftCardItem3,
+        count: '12',
+        estValue: 'SK 212.00',
+        priceChange: null,
+      },
+      {
+        number: '#27404',
+        cover: nftCardItem4,
+        count: null,
+        estValue: 'SK 0.00009',
+        priceChange: null,
+      },
+      {
+        number: '#768959',
+        cover: nftCardItem1,
+        count: '12.456',
+        estValue: 'SK 32340.09',
+        priceChange: {
+          change: 2.4,
+          positive: true,
+        },
+      },
+      {
+        number: '#767162',
+        cover: nftCardItem2,
+        count: '0.73',
+        estValue: 'SK 23.394',
+        priceChange: {
+          change: 2,
+          positive: false,
+        },
+      },
+      {
+        number: '#9038267',
+        cover: nftCardItem3,
+        count: '12',
+        estValue: 'SK 212.00',
+        priceChange: null,
+      },
+      {
+        number: '#27404',
+        cover: nftCardItem4,
+        count: null,
+        estValue: 'SK 0.00009',
+        priceChange: null,
+      },
+      {
+        number: '#9038267',
+        cover: nftCardItem3,
+        count: '12',
+        estValue: 'SK 212.00',
+        priceChange: null,
+      },
+      {
+        number: '#27404',
+        cover: nftCardItem4,
+        count: null,
+        estValue: 'SK 0.00009',
+        priceChange: null,
+      },
+    ],
+  },
 },
 {
   id: '2',
@@ -111,6 +218,107 @@ export const nftListData: NftItemType[] = [{
   authorImgSrc: nftItemAuthor,
   floorPrice: 'SK 122.90',
   totalVolume: 'SK 0.191',
+  card: {
+    id: '2',
+    cover: nftCardCover,
+    smallCover: nftCardImg,
+    holders: '32 094',
+    followers: '32 094',
+    floor: '0.2356',
+    lastDayVolume: '23 993',
+    lastDayChange: '23 993',
+    title: 'Art sculpture',
+    fullDescription: 'Art Sculpture is a collection ' +
+      'of 10,000 unique NFT ART - unique digital collectibles ' +
+      'that live on the blockchain Power. Your Art Sculpture serves as your ' +
+      'museum membership card and grants access to member-only benefits, ' +
+      'the first of which is access to the bakery. Future areas and perks ' +
+      'can be unlocked by the community through roadmap activation',
+    nfts: [
+      {
+        number: '#768959',
+        cover: nftCardItem1,
+        count: '12.456',
+        estValue: 'SK 32340.09',
+        priceChange: {
+          change: 2.4,
+          positive: true,
+        },
+      },
+      {
+        number: '#767162',
+        cover: nftCardItem2,
+        count: '0.73',
+        estValue: 'SK 23.394',
+        priceChange: {
+          change: 2,
+          positive: false,
+        },
+      },
+      {
+        number: '#9038267',
+        cover: nftCardItem3,
+        count: '12',
+        estValue: 'SK 212.00',
+        priceChange: null,
+      },
+      {
+        number: '#27404',
+        cover: nftCardItem4,
+        count: null,
+        estValue: 'SK 0.00009',
+        priceChange: null,
+      },
+      {
+        number: '#768959',
+        cover: nftCardItem1,
+        count: '12.456',
+        estValue: 'SK 32340.09',
+        priceChange: {
+          change: 2.4,
+          positive: true,
+        },
+      },
+      {
+        number: '#767162',
+        cover: nftCardItem2,
+        count: '0.73',
+        estValue: 'SK 23.394',
+        priceChange: {
+          change: 2,
+          positive: false,
+        },
+      },
+      {
+        number: '#9038267',
+        cover: nftCardItem3,
+        count: '12',
+        estValue: 'SK 212.00',
+        priceChange: null,
+      },
+      {
+        number: '#27404',
+        cover: nftCardItem4,
+        count: null,
+        estValue: 'SK 0.00009',
+        priceChange: null,
+      },
+      {
+        number: '#9038267',
+        cover: nftCardItem3,
+        count: '12',
+        estValue: 'SK 212.00',
+        priceChange: null,
+      },
+      {
+        number: '#27404',
+        cover: nftCardItem4,
+        count: null,
+        estValue: 'SK 0.00009',
+        priceChange: null,
+      },
+    ],
+  },
 },
 {
   id: '3',
@@ -124,6 +332,107 @@ export const nftListData: NftItemType[] = [{
   authorImgSrc: nftItemAuthor,
   floorPrice: 'SK 0.21',
   totalVolume: 'SK 80.07',
+  card: {
+    id: '3',
+    cover: nftCardCover,
+    smallCover: nftCardImg,
+    holders: '32 094',
+    followers: '32 094',
+    floor: '0.2356',
+    lastDayVolume: '23 993',
+    lastDayChange: '23 993',
+    title: 'Art sculpture',
+    fullDescription: 'Art Sculpture is a collection ' +
+      'of 10,000 unique NFT ART - unique digital collectibles ' +
+      'that live on the blockchain Power. Your Art Sculpture serves as your ' +
+      'museum membership card and grants access to member-only benefits, ' +
+      'the first of which is access to the bakery. Future areas and perks ' +
+      'can be unlocked by the community through roadmap activation',
+    nfts: [
+      {
+        number: '#768959',
+        cover: nftCardItem1,
+        count: '12.456',
+        estValue: 'SK 32340.09',
+        priceChange: {
+          change: 2.4,
+          positive: true,
+        },
+      },
+      {
+        number: '#767162',
+        cover: nftCardItem2,
+        count: '0.73',
+        estValue: 'SK 23.394',
+        priceChange: {
+          change: 2,
+          positive: false,
+        },
+      },
+      {
+        number: '#9038267',
+        cover: nftCardItem3,
+        count: '12',
+        estValue: 'SK 212.00',
+        priceChange: null,
+      },
+      {
+        number: '#27404',
+        cover: nftCardItem4,
+        count: null,
+        estValue: 'SK 0.00009',
+        priceChange: null,
+      },
+      {
+        number: '#768959',
+        cover: nftCardItem1,
+        count: '12.456',
+        estValue: 'SK 32340.09',
+        priceChange: {
+          change: 2.4,
+          positive: true,
+        },
+      },
+      {
+        number: '#767162',
+        cover: nftCardItem2,
+        count: '0.73',
+        estValue: 'SK 23.394',
+        priceChange: {
+          change: 2,
+          positive: false,
+        },
+      },
+      {
+        number: '#9038267',
+        cover: nftCardItem3,
+        count: '12',
+        estValue: 'SK 212.00',
+        priceChange: null,
+      },
+      {
+        number: '#27404',
+        cover: nftCardItem4,
+        count: null,
+        estValue: 'SK 0.00009',
+        priceChange: null,
+      },
+      {
+        number: '#9038267',
+        cover: nftCardItem3,
+        count: '12',
+        estValue: 'SK 212.00',
+        priceChange: null,
+      },
+      {
+        number: '#27404',
+        cover: nftCardItem4,
+        count: null,
+        estValue: 'SK 0.00009',
+        priceChange: null,
+      },
+    ],
+  },
 },
 {
   id: '4',
@@ -137,5 +446,106 @@ export const nftListData: NftItemType[] = [{
   authorImgSrc: nftItemAuthor,
   floorPrice: 'SK 0.188',
   totalVolume: 'SK 121.003',
+  card: {
+    id: '4',
+    cover: nftCardCover,
+    smallCover: nftCardImg,
+    holders: '32 094',
+    followers: '32 094',
+    floor: '0.2356',
+    lastDayVolume: '23 993',
+    lastDayChange: '23 993',
+    title: 'Art sculpture',
+    fullDescription: 'Art Sculpture is a collection ' +
+      'of 10,000 unique NFT ART - unique digital collectibles ' +
+      'that live on the blockchain Power. Your Art Sculpture serves as your ' +
+      'museum membership card and grants access to member-only benefits, ' +
+      'the first of which is access to the bakery. Future areas and perks ' +
+      'can be unlocked by the community through roadmap activation',
+    nfts: [
+      {
+        number: '#768959',
+        cover: nftCardItem1,
+        count: '12.456',
+        estValue: 'SK 32340.09',
+        priceChange: {
+          change: 2.4,
+          positive: true,
+        },
+      },
+      {
+        number: '#767162',
+        cover: nftCardItem2,
+        count: '0.73',
+        estValue: 'SK 23.394',
+        priceChange: {
+          change: 2,
+          positive: false,
+        },
+      },
+      {
+        number: '#9038267',
+        cover: nftCardItem3,
+        count: '12',
+        estValue: 'SK 212.00',
+        priceChange: null,
+      },
+      {
+        number: '#27404',
+        cover: nftCardItem4,
+        count: null,
+        estValue: 'SK 0.00009',
+        priceChange: null,
+      },
+      {
+        number: '#768959',
+        cover: nftCardItem1,
+        count: '12.456',
+        estValue: 'SK 32340.09',
+        priceChange: {
+          change: 2.4,
+          positive: true,
+        },
+      },
+      {
+        number: '#767162',
+        cover: nftCardItem2,
+        count: '0.73',
+        estValue: 'SK 23.394',
+        priceChange: {
+          change: 2,
+          positive: false,
+        },
+      },
+      {
+        number: '#9038267',
+        cover: nftCardItem3,
+        count: '12',
+        estValue: 'SK 212.00',
+        priceChange: null,
+      },
+      {
+        number: '#27404',
+        cover: nftCardItem4,
+        count: null,
+        estValue: 'SK 0.00009',
+        priceChange: null,
+      },
+      {
+        number: '#9038267',
+        cover: nftCardItem3,
+        count: '12',
+        estValue: 'SK 212.00',
+        priceChange: null,
+      },
+      {
+        number: '#27404',
+        cover: nftCardItem4,
+        count: null,
+        estValue: 'SK 0.00009',
+        priceChange: null,
+      },
+    ],
+  },
 },
 ];

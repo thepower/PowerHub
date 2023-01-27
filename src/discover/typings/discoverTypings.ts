@@ -1,3 +1,5 @@
+import { Maybe } from 'typings/common';
+
 export enum DiscoverTabs {
   Dapps = 'Dapps',
   NFT = 'NFT',
@@ -8,12 +10,13 @@ type DappsNftPriceChangeType = {
   positive?: boolean;
 };
 
-export type DappsItemCardNftType = {
+export type CardNftType = {
+  id?: string;
   cover: string;
   number: string;
-  count: string;
+  count: Maybe<string>;
   estValue: string;
-  priceChange: DappsNftPriceChangeType;
+  priceChange: Maybe<DappsNftPriceChangeType>;
 };
 
 export type DappsItemCardType = {
@@ -22,7 +25,7 @@ export type DappsItemCardType = {
   title: string;
   smallCover: string;
   fullDescription: string;
-  nfts?: DappsItemCardNftType[];
+  nfts?: CardNftType[];
 };
 
 export type DappsItemType = {
@@ -43,4 +46,19 @@ export type NftItemType = {
   priceChange: DappsNftPriceChangeType;
   totalVolume: string;
   floorPrice: string;
+  card: NftItemCardType;
+};
+
+export type NftItemCardType = {
+  id: string;
+  cover: string;
+  smallCover: string;
+  holders: string;
+  followers: string;
+  floor: string;
+  lastDayVolume: string;
+  lastDayChange: string;
+  title: string;
+  fullDescription: string;
+  nfts: CardNftType[];
 };

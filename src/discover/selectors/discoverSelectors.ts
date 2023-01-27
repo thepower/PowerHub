@@ -1,5 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { dappsListData } from 'discover/utils/dappsListData';
+import { dappsListData, nftListData } from 'discover/utils/dappsListData';
 import { RootState } from '../../application/store';
 import { DiscoverState } from '../slice/discoverSlice';
 
@@ -14,4 +14,8 @@ export const getCurrentDiscoverTab = createSelector(
 
 export const getDappsCardData = (id: string) => (
   dappsListData.find((dappsData) => dappsData.id === id)
+);
+
+export const getNftCardData = (id: string) => (
+  nftListData.find((data) => data.id === id)
 );

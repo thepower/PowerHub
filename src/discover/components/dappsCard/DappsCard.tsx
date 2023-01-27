@@ -48,7 +48,7 @@ class DappsCardComponent extends React.PureComponent<DappsCardProps, DappsCardSt
     this.setState((state) => ({ showMoreInfo: !state.showMoreInfo }));
   };
 
-  handleRouteToDappsList = () => {
+  handleRouteToDiscover = () => {
     const { routeTo } = this.props;
 
     routeTo(RoutesEnum.discover);
@@ -83,10 +83,10 @@ class DappsCardComponent extends React.PureComponent<DappsCardProps, DappsCardSt
 
     return <div className={styles.dappsCard}>
       <div className={styles.dappsCardControls}>
-        <IconButton onClick={this.handleRouteToDappsList} className={styles.dappsCardBackButton}>
+        <IconButton onClick={this.handleRouteToDiscover} className={styles.dappsCardBackButton}>
           <ChevronLeftIcon />
         </IconButton>
-        <IconButton onClick={this.handleRouteToDappsList}>
+        <IconButton onClick={this.handleRouteToDiscover}>
           <CloseIcon />
         </IconButton>
       </div>

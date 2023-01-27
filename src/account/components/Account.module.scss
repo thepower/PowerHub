@@ -43,6 +43,7 @@
 }
 
 .drawerPaper {
+  z-index: 250;
   left: $aside-width;
   display: flex;
   width: $aside-width;
@@ -66,7 +67,7 @@
 
 .drawerModalRoot {
   position: relative;
-  z-index: 10;
+  z-index: 300;
 
   @include mobile {
     z-index: 3000 !important;
