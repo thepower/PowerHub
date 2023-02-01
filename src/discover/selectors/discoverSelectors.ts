@@ -16,6 +16,6 @@ export const getDappsCardData = (id: string) => (
   dappsListData.find((dappsData) => dappsData.id === id)
 );
 
-export const getNftCardData = (id: string) => (
+export const getNftCollectionCardData = (id: string) => (
   nftListData.find((data) => data.id === id)
 );

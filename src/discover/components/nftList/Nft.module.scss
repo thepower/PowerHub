@@ -28,6 +28,10 @@
   left: 8px;
   border-radius: 5px;
   background: rgba(245, 245, 247, 0.12);
+
+  @include mobile {
+    top: 90px;
+  }
 }
 
 .nftListWrapper {

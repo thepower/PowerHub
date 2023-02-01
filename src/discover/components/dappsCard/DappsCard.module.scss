@@ -184,6 +184,12 @@
   width: 176px;
   height: 140px;
   background-size: cover;
+
+  @include mobile {
+    width: unset;
+    max-width: 176px;
+    height: 120px;
+  }
 }
 
 .dappsNftImgHolder {
@@ -209,6 +215,9 @@
   background: rgba(245, 245, 247, 0.08);
 
   @include mobile {
+    width: 100%;
+    max-width: 176px;
+    height: 204px;
     background: unset;
   }
 
@@ -225,6 +234,10 @@
   flex-direction: column;
   justify-content: space-between;
   padding: 12px;
+
+  @include mobile {
+    padding: 8px;
+  }
 }
 
 .dappsNftInfoFirstLine,

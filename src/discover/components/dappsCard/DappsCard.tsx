@@ -9,13 +9,15 @@ import {
   ShareIcon,
 } from 'common/icons';
 import { IconButton } from 'common';
+import { DiscoverTabs } from 'discover/typings/discoverTypings';
 import { connect, ConnectedProps } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
+import { setCurrentDiscoverTab } from 'discover/slice/discoverSlice';
 import { RootState } from 'application/store';
 import { Collapse } from '@mui/material';
 import { getDappsCardData } from 'discover/selectors/discoverSelectors';
 import { RoutesEnum } from 'application/typings/routes';
-import { DappsCardNFT } from 'discover/components/dappsCard/DappsCardNFT';
+import { DappsCardNfts } from 'discover/components/dappsCard/DappsCardNfts';
 import styles from './DappsCard.module.scss';
 
 type OwnProps = RouteComponentProps<{ id: string }>;
@@ -26,6 +28,7 @@ const mapStateToProps = (_state: RootState, props: OwnProps) => ({
 
 const mapDispatchToProps = {
   routeTo: push,
+  setCurrentDiscoverTab,
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
@@ -51,6 +54,7 @@ class DappsCardComponent extends React.PureComponent<DappsCardProps, DappsCardSt
   handleRouteToDiscover = () => {
     const { routeTo } = this.props;
 
+    setCurrentDiscoverTab(DiscoverTabs.Dapps);
     routeTo(RoutesEnum.discover);
   };
 
@@ -122,7 +126,7 @@ class DappsCardComponent extends React.PureComponent<DappsCardProps, DappsCardSt
           </IconButton>
         </div>
       </div>
-      <DappsCardNFT nfts={currentDappsData?.card.nfts} />
+      <DappsCardNfts nfts={currentDappsData?.card.nfts} />
     </div>;
   }
 }

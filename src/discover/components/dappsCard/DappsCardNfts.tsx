@@ -13,7 +13,7 @@ interface DappsCardNFTState {
   currentPage: number;
 }
 
-export class DappsCardNFT extends React.PureComponent<DappsCardNFTProps, DappsCardNFTState> {
+export class DappsCardNfts extends React.PureComponent<DappsCardNFTProps, DappsCardNFTState> {
   constructor(props: DappsCardNFTProps) {
     super(props);
 
