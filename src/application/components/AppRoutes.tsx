@@ -34,20 +34,12 @@ const AppRoutesComponent: React.FC = () => {
       <Route exact path={RoutesEnum.myPlace} />
       <Route path={`${RoutesEnum.discover}/dapps/:id`} component={DappsCard} />
       <Route path={`${RoutesEnum.discover}/nft/:id`} component={NftCollectionCard} />
-      <Route path={RoutesEnum.discover}>
-        <Discover />
-      </Route>
+      <Route path={RoutesEnum.discover} component={Discover} />
       <Route exact path={RoutesEnum.build} />
       <Route exact path={RoutesEnum.contribute} />
-      <Route path={RoutesEnum.signup}>
-        <RegistrationPage />
-      </Route>
-      <Route path={RoutesEnum.login}>
-        <LoginPage />
-      </Route>
-      <Route path={RoutesEnum.root}>
-        <Home />
-      </Route>
+      <Route path={RoutesEnum.signup} component={RegistrationPage} />
+      <Route path={RoutesEnum.login} component={LoginPage} />
+      <Route path={RoutesEnum.root} component={Home} />
     </Switch>
   );
 };
