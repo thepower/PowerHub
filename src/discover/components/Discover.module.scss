@@ -1,0 +1,59 @@
+@import '../../styles/mixins';
+
+.discover {
+  margin: 34px 32px;
+
+  @include mobile {
+    margin: 28px 10px;
+  }
+}
+
+.discoverTabsHolder {
+  padding-top: 14px;
+  border: unset;
+
+  @include mobile {
+    width: 151px;
+    margin-left: 12px;
+  }
+}
+
+.discoverTab {
+  min-width: unset;
+  -webkit-text-fill-color: #6b798f;
+}
+
+.discoverTabSelected {
+  -webkit-text-fill-color: #f5f5f7;
+}
+
+.discoverTabIndicator {
+  background: #f5f5f7;
+}
+
+.discoverPagination,
+.discoverTopPagination {
+  justify-content: flex-end;
+  margin-top: 10px;
+
+  @include mobile {
+    margin-top: 10px;
+  }
+}
+
+.discoverTopPagination {
+  display: none;
+  margin-bottom: 10px;
+
+  @include mobile {
+    display: flex;
+  }
+}
+
+
+
+.discoverTopBar {
+  @include mobile {
+    display: none;
+  }
+}

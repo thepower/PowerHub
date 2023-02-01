@@ -12,6 +12,7 @@ import { networkReducer } from '../network/slice';
 import { walletReducer } from '../myAssets/slices/walletSlice';
 import { transactionsReducer } from '../myAssets/slices/transactionsSlice';
 import { sendReducer } from '../send/slices/sendSlice';
+import { discoverReducer } from '../discover/slice/discoverSlice';
 
 const loggerMiddleware = createLogger();
 const routeMiddleware = routerMiddleware(history);
@@ -26,6 +27,7 @@ const reducer = {
   network: networkReducer,
   transactions: transactionsReducer,
   send: sendReducer,
+  discover: discoverReducer,
 };
 
 const store = configureStore({

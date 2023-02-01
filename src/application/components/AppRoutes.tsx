@@ -1,13 +1,16 @@
 import React, { useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { FullScreenLoader } from 'common';
+import { RegistrationPage } from 'registration/components/RegistrationPage';
+import { LoginPage } from 'registration/components/pages/LoginPage';
+import { checkIfLoading } from 'network/selectors';
+import { DappsCard } from 'discover/components/dappsCard/DappsCard';
+import { NftCollectionCard } from 'discover/components/nftCollectionCard/NftCollectionCard';
+import { useAppDispatch, useAppSelector } from '../store';
 import { RoutesEnum } from '../typings/routes';
 import { initApplication } from '../slice/applicationSlice';
 import Home from '../../home/components/Home';
-import { RegistrationPage } from '../../registration/components/RegistrationPage';
-import { LoginPage } from '../../registration/components/pages/LoginPage';
-import { useAppDispatch, useAppSelector } from '../store';
-import { checkIfLoading } from '../../network/selectors';
+import Discover from '../../discover/components/Discover';
 
 const AppRoutesComponent: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -28,19 +31,15 @@ const AppRoutesComponent: React.FC = () => {
 
   return (
     <Switch>
-      <Route exact path={RoutesEnum.discover} />
       <Route exact path={RoutesEnum.myPlace} />
+      <Route path={`${RoutesEnum.discover}/dapps/:id`} component={DappsCard} />
+      <Route path={`${RoutesEnum.discover}/nft/:id`} component={NftCollectionCard} />
+      <Route path={RoutesEnum.discover} component={Discover} />
       <Route exact path={RoutesEnum.build} />
       <Route exact path={RoutesEnum.contribute} />
-      <Route path={RoutesEnum.signup}>
-        <RegistrationPage />
-      </Route>
-      <Route path={RoutesEnum.login}>
-        <LoginPage />
-      </Route>
-      <Route path={RoutesEnum.root}>
-        <Home />
-      </Route>
+      <Route path={RoutesEnum.signup} component={RegistrationPage} />
+      <Route path={RoutesEnum.login} component={LoginPage} />
+      <Route path={RoutesEnum.root} component={Home} />
     </Switch>
   );
 };

@@ -1,0 +1,137 @@
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
+
+.nftImgHolder {
+  overflow: hidden;
+  width: 202px;
+  height: 140px;
+  border-radius: 5px;
+
+  @include mobile {
+    width: unset;
+    height: unset;
+  }
+}
+
+.nftImg {
+  width: 100%;
+  height: 100%;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.nftAuthorImg {
+  position: absolute;
+  top: 110px;
+  left: 8px;
+  border-radius: 5px;
+  background: rgba(245, 245, 247, 0.12);
+
+  @include mobile {
+    top: 90px;
+  }
+}
+
+.nftListWrapper {
+  display: grid;
+  width: 100%;
+  justify-content: space-between;
+  cursor: pointer;
+  gap: 32px;
+  grid-template-columns: repeat(auto-fill, 202px);
+
+  @include mobile {
+    gap: 16px;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+  };
+}
+
+.nftItem {
+  position: relative;
+  width: 202px;
+  flex-grow: 0;
+  border-radius: 5px;
+
+  @include mobile {
+    width: unset;
+  }
+
+  &:hover {
+    background: #26354d;
+
+    .nftFav {
+      z-index: 5000;
+    }
+  }
+}
+
+.nftFav {
+  position: absolute;
+  top: 12px;
+  right: 20px;
+  width: 32px;
+  height: 32px;
+  border-radius: 5px;
+  background: rgba(245, 245, 247, 0.06);
+
+  @include mobile {
+    top: 8px;
+    right: 8px;
+  }
+
+  &:hover {
+    background: rgba(245, 245, 247, 0.12);
+  }
+}
+
+.nftInfoHolder {
+  padding: 22px 8px;
+}
+
+.nftInfoHolderFirstLine {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 9px;
+}
+
+.nftInfoHolderSecondLine {
+  color: #f5f5f7;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 14px;
+}
+
+.nftName {
+  color: #f5f5f7;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 14px;
+  white-space: nowrap;
+}
+
+.nftPriceChangeHolder {
+  display: flex;
+  color: #2dac3a;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 14px;
+  text-align: right;
+
+  &_negative {
+    color: #ac2d2d;
+  }
+}
+
+.nftTotalVolume,
+.nftFloorPrice {
+  display: flex;
+  justify-content: space-between;
+}
+
+.nftTotalVolume {
+  margin-bottom: 4px;
+}
