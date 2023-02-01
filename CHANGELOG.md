@@ -6,7 +6,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ## [1.12.5](https://github.com/thepower/power_hub/compare/@thepowereco/hub@1.12.4...@thepowereco/hub@1.12.5) (2022-11-09)
 
 
-### Bug Fixes
+### Bug Fixe
 
 * **assets-fix:** fix assets and end ([7930deb](https://github.com/thepower/power_hub/commit/7930deb73a1f38437e264d76475f92f79193e9a6))
 
