@@ -82,7 +82,7 @@ class DappsCardComponent extends React.PureComponent<DappsCardProps, DappsCardSt
   handleShareDapps = () => {};
 
   render() {
-    const { currentDappsData } = this.props;
+    const { currentDappsData, routeTo } = this.props;
     const { showMoreInfo } = this.state;
 
     return <div className={styles.dappsCard}>
@@ -126,7 +126,10 @@ class DappsCardComponent extends React.PureComponent<DappsCardProps, DappsCardSt
           </IconButton>
         </div>
       </div>
-      <DappsCardNfts nfts={currentDappsData?.card.nfts} />
+      <DappsCardNfts
+        nfts={currentDappsData?.card.nfts}
+        routeTo={routeTo}
+      />
     </div>;
   }
 }

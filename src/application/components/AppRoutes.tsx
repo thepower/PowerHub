@@ -6,6 +6,7 @@ import { LoginPage } from 'registration/components/pages/LoginPage';
 import { checkIfLoading } from 'network/selectors';
 import { DappsCard } from 'discover/components/dappsCard/DappsCard';
 import { NftCollectionCard } from 'discover/components/nftCollectionCard/NftCollectionCard';
+import { NftCard } from 'discover/components/nftCard/NftCard';
 import { useAppDispatch, useAppSelector } from '../store';
 import { RoutesEnum } from '../typings/routes';
 import { initApplication } from '../slice/applicationSlice';
@@ -33,7 +34,8 @@ const AppRoutesComponent: React.FC = () => {
     <Switch>
       <Route exact path={RoutesEnum.myPlace} />
       <Route path={`${RoutesEnum.discover}/dapps/:id`} component={DappsCard} />
-      <Route path={`${RoutesEnum.discover}/nft/:id`} component={NftCollectionCard} />
+      <Route path={`${RoutesEnum.discover}/nftCollection/:id`} component={NftCollectionCard} />
+      <Route path={`${RoutesEnum.discover}/nft/:id`} component={NftCard} />
       <Route path={RoutesEnum.discover} component={Discover} />
       <Route exact path={RoutesEnum.build} />
       <Route exact path={RoutesEnum.contribute} />

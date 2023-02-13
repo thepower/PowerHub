@@ -17,9 +17,14 @@ import nftCardItem1 from './nft/nftCardItem1.png';
 import nftCardItem2 from './nft/nftCardItem2.png';
 import nftCardItem3 from './nft/nftCardItem3.png';
 import nftCardItem4 from './nft/nftCardItem4.png';
-import { DappsItemType, NftItemType } from '../typings/discoverTypings';
+import nftImg from './nft/nftImg.png';
+import {
+  DappsItemType,
+  NftItemType,
+  NtfCardType,
+} from '../typings/discoverTypings';
 
-export const dappsListData: DappsItemType[] = [
+export const dappsData: DappsItemType[] = [
   {
     id: '1', // tmp
     imgSrc: dummyDappsImg,
@@ -38,6 +43,7 @@ export const dappsListData: DappsItemType[] = [
         'collect rare resources, upgrade your character. See you in the game, good skills to you young padawan',
       nfts: [
         {
+          id: '1',
           number: '#768959',
           cover: dappsNFT1,
           count: '12.456',
@@ -48,6 +54,7 @@ export const dappsListData: DappsItemType[] = [
           },
         },
         {
+          id: '1',
           number: '#769494',
           cover: dappsNFT2,
           count: '798.05',
@@ -58,6 +65,7 @@ export const dappsListData: DappsItemType[] = [
           },
         },
         {
+          id: '1',
           number: '#928473',
           cover: dappsNFT3,
           count: '374.00',
@@ -68,6 +76,7 @@ export const dappsListData: DappsItemType[] = [
           },
         },
         {
+          id: '1',
           number: '#594093',
           cover: dappsNFT4,
           count: '12.00',
@@ -78,6 +87,7 @@ export const dappsListData: DappsItemType[] = [
           },
         },
         {
+          id: '1',
           number: '#7563290',
           cover: dappsNFT5,
           count: '11.01',
@@ -122,6 +132,7 @@ export const nftListData: NftItemType[] = [{
       'can be unlocked by the community through roadmap activation',
     nfts: [
       {
+        id: '1',
         number: '#768959',
         cover: nftCardItem1,
         count: '12.456',
@@ -132,6 +143,7 @@ export const nftListData: NftItemType[] = [{
         },
       },
       {
+        id: '1',
         number: '#767162',
         cover: nftCardItem2,
         count: '0.73',
@@ -142,6 +154,7 @@ export const nftListData: NftItemType[] = [{
         },
       },
       {
+        id: '1',
         number: '#9038267',
         cover: nftCardItem3,
         count: '12',
@@ -149,6 +162,7 @@ export const nftListData: NftItemType[] = [{
         priceChange: null,
       },
       {
+        id: '1',
         number: '#27404',
         cover: nftCardItem4,
         count: null,
@@ -156,6 +170,7 @@ export const nftListData: NftItemType[] = [{
         priceChange: null,
       },
       {
+        id: '1',
         number: '#768959',
         cover: nftCardItem1,
         count: '12.456',
@@ -166,6 +181,7 @@ export const nftListData: NftItemType[] = [{
         },
       },
       {
+        id: '1',
         number: '#767162',
         cover: nftCardItem2,
         count: '0.73',
@@ -176,6 +192,7 @@ export const nftListData: NftItemType[] = [{
         },
       },
       {
+        id: '1',
         number: '#9038267',
         cover: nftCardItem3,
         count: '12',
@@ -183,6 +200,7 @@ export const nftListData: NftItemType[] = [{
         priceChange: null,
       },
       {
+        id: '1',
         number: '#27404',
         cover: nftCardItem4,
         count: null,
@@ -222,6 +240,7 @@ export const nftListData: NftItemType[] = [{
       'can be unlocked by the community through roadmap activation',
     nfts: [
       {
+        id: '1',
         number: '#768959',
         cover: nftCardItem1,
         count: '12.456',
@@ -232,6 +251,7 @@ export const nftListData: NftItemType[] = [{
         },
       },
       {
+        id: '1',
         number: '#767162',
         cover: nftCardItem2,
         count: '0.73',
@@ -242,6 +262,7 @@ export const nftListData: NftItemType[] = [{
         },
       },
       {
+        id: '1',
         number: '#9038267',
         cover: nftCardItem3,
         count: '12',
@@ -249,6 +270,7 @@ export const nftListData: NftItemType[] = [{
         priceChange: null,
       },
       {
+        id: '1',
         number: '#27404',
         cover: nftCardItem4,
         count: null,
@@ -256,6 +278,7 @@ export const nftListData: NftItemType[] = [{
         priceChange: null,
       },
       {
+        id: '1',
         number: '#768959',
         cover: nftCardItem1,
         count: '12.456',
@@ -266,6 +289,7 @@ export const nftListData: NftItemType[] = [{
         },
       },
       {
+        id: '1',
         number: '#767162',
         cover: nftCardItem2,
         count: '0.73',
@@ -276,6 +300,7 @@ export const nftListData: NftItemType[] = [{
         },
       },
       {
+        id: '1',
         number: '#9038267',
         cover: nftCardItem3,
         count: '12',
@@ -283,6 +308,7 @@ export const nftListData: NftItemType[] = [{
         priceChange: null,
       },
       {
+        id: '1',
         number: '#27404',
         cover: nftCardItem4,
         count: null,
@@ -322,6 +348,7 @@ export const nftListData: NftItemType[] = [{
       'can be unlocked by the community through roadmap activation',
     nfts: [
       {
+        id: '1',
         number: '#768959',
         cover: nftCardItem1,
         count: '12.456',
@@ -332,6 +359,7 @@ export const nftListData: NftItemType[] = [{
         },
       },
       {
+        id: '1',
         number: '#767162',
         cover: nftCardItem2,
         count: '0.73',
@@ -342,6 +370,7 @@ export const nftListData: NftItemType[] = [{
         },
       },
       {
+        id: '1',
         number: '#9038267',
         cover: nftCardItem3,
         count: '12',
@@ -349,6 +378,7 @@ export const nftListData: NftItemType[] = [{
         priceChange: null,
       },
       {
+        id: '1',
         number: '#27404',
         cover: nftCardItem4,
         count: null,
@@ -356,6 +386,7 @@ export const nftListData: NftItemType[] = [{
         priceChange: null,
       },
       {
+        id: '1',
         number: '#768959',
         cover: nftCardItem1,
         count: '12.456',
@@ -366,6 +397,7 @@ export const nftListData: NftItemType[] = [{
         },
       },
       {
+        id: '1',
         number: '#767162',
         cover: nftCardItem2,
         count: '0.73',
@@ -376,6 +408,7 @@ export const nftListData: NftItemType[] = [{
         },
       },
       {
+        id: '1',
         number: '#9038267',
         cover: nftCardItem3,
         count: '12',
@@ -383,6 +416,7 @@ export const nftListData: NftItemType[] = [{
         priceChange: null,
       },
       {
+        id: '1',
         number: '#27404',
         cover: nftCardItem4,
         count: null,
@@ -422,6 +456,7 @@ export const nftListData: NftItemType[] = [{
       'can be unlocked by the community through roadmap activation',
     nfts: [
       {
+        id: '1',
         number: '#768959',
         cover: nftCardItem1,
         count: '12.456',
@@ -432,6 +467,7 @@ export const nftListData: NftItemType[] = [{
         },
       },
       {
+        id: '1',
         number: '#767162',
         cover: nftCardItem2,
         count: '0.73',
@@ -442,6 +478,7 @@ export const nftListData: NftItemType[] = [{
         },
       },
       {
+        id: '1',
         number: '#9038267',
         cover: nftCardItem3,
         count: '12',
@@ -449,6 +486,7 @@ export const nftListData: NftItemType[] = [{
         priceChange: null,
       },
       {
+        id: '1',
         number: '#27404',
         cover: nftCardItem4,
         count: null,
@@ -456,6 +494,7 @@ export const nftListData: NftItemType[] = [{
         priceChange: null,
       },
       {
+        id: '1',
         number: '#768959',
         cover: nftCardItem1,
         count: '12.456',
@@ -466,6 +505,7 @@ export const nftListData: NftItemType[] = [{
         },
       },
       {
+        id: '1',
         number: '#767162',
         cover: nftCardItem2,
         count: '0.73',
@@ -476,6 +516,7 @@ export const nftListData: NftItemType[] = [{
         },
       },
       {
+        id: '1',
         number: '#9038267',
         cover: nftCardItem3,
         count: '12',
@@ -483,6 +524,7 @@ export const nftListData: NftItemType[] = [{
         priceChange: null,
       },
       {
+        id: '1',
         number: '#27404',
         cover: nftCardItem4,
         count: null,
@@ -493,3 +535,34 @@ export const nftListData: NftItemType[] = [{
   },
 },
 ];
+
+export const nftCardData: NtfCardType = {
+  id: '1',
+  img: nftImg,
+  collection: 'Art sculpture',
+  collectionImg: nftCardImg,
+  creatorImg: nftItemAuthor,
+  creatorAddress: '@0x826e...93h34ofnc xz56',
+  ownerImg: nftItem4,
+  ownerAddress: '@0x826e...3209984rj83290',
+  tokenId: '#238492',
+  address: '@0x826e...34rj38521',
+  standart: 'ERC_721',
+  fileType: 'Image (webp)',
+  royalties: '8%',
+  estValue: '283.12',
+  rarity: '1st / 20 000',
+  quantity: '280',
+  fav: false,
+  ownershipHistory: [
+    {
+      id: '1',
+      ownerImg: nftCardItem1,
+      ownerName: 'kurt',
+      ownerAddress: '@0x826e...3209984rj83290309',
+      type: 'Minted by',
+      time: '00:00 PM',
+      date: '02/05/2018',
+    },
+  ],
+};

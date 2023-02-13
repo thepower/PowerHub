@@ -3,10 +3,12 @@ import { CardNftType } from 'discover/typings/discoverTypings';
 import { IconButton, PaginationList } from 'common';
 import classnames from 'classnames';
 import { FavIcon } from 'common/icons';
+import { RoutesEnum } from 'application/typings/routes';
 import styles from './DappsCard.module.scss';
 
 interface DappsCardNFTProps {
   nfts?: CardNftType[];
+  routeTo: (url: string) => void;
 }
 
 interface DappsCardNFTState {
@@ -28,15 +30,24 @@ export class DappsCardNfts extends React.PureComponent<DappsCardNFTProps, DappsC
 
   handleAddToFavNFT = () => {};
 
+  handleRouteToNftCard = (id: string) => () => {
+    this.props.routeTo(`${RoutesEnum.discover}/nft/${id}`);
+  };
+
   renderNFT = (nftData: CardNftType, index: number) => {
     const {
+      id,
       number,
       estValue,
       count,
       cover,
       priceChange,
     } = nftData;
-    return <div key={index} className={styles.dappsNft}>
+    return <div
+      key={index}
+      className={styles.dappsNft}
+      onClick={this.handleRouteToNftCard(id!)}
+    >
       <div className={styles.dappsNftImgHolder}>
         <div style={{ backgroundImage: `url(${cover})` }} className={styles.dappsNftImg} />
         <IconButton onClick={this.handleAddToFavNFT} className={styles.dappsNftFav}>
