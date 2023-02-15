@@ -15,6 +15,7 @@ import {
 import { RoutesEnum } from 'application/typings/routes';
 import { Collapse } from '@mui/material';
 import { DiscoverTabs } from 'discover/typings/discoverTypings';
+import { setBackUrl } from 'application/slice/applicationSlice';
 import styles from './NftCollectionCard.module.scss';
 import { NftCollectionsNfts } from './NftCollectionNfts';
 import { setCurrentDiscoverTab } from '../../slice/discoverSlice';
@@ -28,6 +29,7 @@ const mapStateToProps = (_state: RootState, props: OwnProps) => ({
 const mapDispatchToProps = {
   routeTo: push,
   setCurrentDiscoverTab,
+  setBackUrl,
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
@@ -143,6 +145,7 @@ class NftCollectionCardComponent extends React.PureComponent<NftCollectionCardPr
       <NftCollectionsNfts
         nfts={card.nfts}
         routeTo={this.props.routeTo}
+        setBackUrl={this.props.setBackUrl}
       />
     </div>;
   }

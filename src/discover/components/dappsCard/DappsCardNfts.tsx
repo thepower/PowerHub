@@ -9,6 +9,7 @@ import styles from './DappsCard.module.scss';
 interface DappsCardNFTProps {
   nfts?: CardNftType[];
   routeTo: (url: string) => void;
+  setBackUrl: (url: string) => void;
 }
 
 interface DappsCardNFTState {
@@ -31,7 +32,9 @@ export class DappsCardNfts extends React.PureComponent<DappsCardNFTProps, DappsC
   handleAddToFavNFT = () => {};
 
   handleRouteToNftCard = (id: string) => () => {
-    this.props.routeTo(`${RoutesEnum.discover}/nft/${id}`);
+    const { routeTo, setBackUrl } = this.props;
+    setBackUrl(window.location.pathname);
+    routeTo(`${RoutesEnum.discover}/nft/${id}`);
   };
 
   renderNFT = (nftData: CardNftType, index: number) => {

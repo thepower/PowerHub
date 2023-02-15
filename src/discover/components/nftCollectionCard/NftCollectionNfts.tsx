@@ -9,6 +9,7 @@ import styles from './NftCollectionCard.module.scss';
 interface NftCollectionsNftsProps {
   nfts?: CardNftType[];
   routeTo: (url: string) => void;
+  setBackUrl: (url: string) => void;
 }
 
 interface NftCollectionsNftsState {
@@ -31,7 +32,10 @@ export class NftCollectionsNfts extends React.PureComponent<NftCollectionsNftsPr
   handleAddToFavNFT = () => {};
 
   handleRouteToNftCard = (id: string) => () => {
-    this.props.routeTo(`${RoutesEnum.discover}/nft/${id}`);
+    const { setBackUrl, routeTo } = this.props;
+
+    setBackUrl(window.location.pathname);
+    routeTo(`${RoutesEnum.discover}/nft/${id}`);
   };
 
   renderNFT = (nftData: CardNftType, index: number) => {

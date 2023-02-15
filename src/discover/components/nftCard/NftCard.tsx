@@ -1,7 +1,7 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { RootState } from 'application/store';
-import { push, goBack } from 'connected-react-router';
+import { push } from 'connected-react-router';
 import { connect, ConnectedProps } from 'react-redux';
 import { nftCardData } from 'discover/utils/dappsData';
 import {
@@ -12,17 +12,20 @@ import {
 } from 'common/icons';
 import { IconButton } from 'common';
 import { NftCardInfoRecordType, NtfOwnershipType } from 'discover/typings/discoverTypings';
+import { setBackUrl } from 'application/slice/applicationSlice';
+import { RoutesEnum } from 'application/typings/routes';
 import styles from './NftCard.module.scss';
 
 type OwnProps = RouteComponentProps<{ id: string }>;
 
-const mapStateToProps = (_state: RootState, _props: OwnProps) => ({
+const mapStateToProps = (state: RootState, _props: OwnProps) => ({
   nftData: nftCardData,
+  backUrl: state.applicationData.backUrl,
 });
 
 const mapDispatchToProps = {
   routeTo: push,
-  goBack,
+  setBackUrl,
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
@@ -34,7 +37,11 @@ class NftCardComponent extends React.PureComponent<NftCardProps, never> {
   handleShareNft = () => {};
 
   handleClose = () => {
-    this.props.goBack();
+    const { setBackUrl, routeTo, backUrl } = this.props;
+
+    setBackUrl(null);
+
+    routeTo(backUrl || RoutesEnum.discover);
   };
 
   handleRefreshNftData = () => {
