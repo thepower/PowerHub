@@ -140,3 +140,86 @@
     display: none;
   }
 }
+
+.nftOwnershipHistory {
+  display: flex;
+  flex-direction: column;
+  margin-top: 60px;
+
+  @include mobile {
+    margin-top: 40px;
+  }
+}
+
+.nftOwnershipHistoryLabel {
+  margin-bottom: 32px;
+  color: #f5f5f7;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 16px;
+
+  @include mobile {
+    margin-bottom: 20px;
+  }
+}
+
+.nftOwnershipHistoryRecord {
+  display: grid;
+  align-items: center;
+  padding: 22px 34px;
+  border-radius: 5px;
+  background: rgba(245, 245, 247, 0.02);
+  font-size: 14px;
+  font-weight: 500;
+  gap: 40px;
+  grid-template-columns: 36px 1fr 100px 100px 100px;
+  line-height: 16px;
+
+  @include mobile {
+    padding: 16px 20px;
+    gap: 12px;
+
+    //grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 40px auto;
+
+    row-gap: 8px;
+  }
+}
+
+.nftOwnershipOwnerImg {
+  width: 36px;
+  height: 36px;
+  border-radius: 5px;
+  background-size: cover;
+
+  @include mobile {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+.nftOwnershipDate {
+  @include mobile {
+    grid-column-end: 1;
+    grid-column-start: 1;
+    grid-row-end: 3;
+    grid-row-start: 3;
+  }
+}
+
+.nftOwnershipType {
+  @include mobile {
+    white-space: nowrap;
+  }
+}
+
+.nftOwnershipTime {
+  @include mobile {
+    margin-left: auto;
+    grid-column-end: 2;
+    grid-column-start: 2;
+    grid-row-end: 3;
+    grid-row-start: 3;
+  }
+}
