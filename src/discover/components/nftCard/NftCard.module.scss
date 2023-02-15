@@ -1,17 +1,142 @@
+@import '../../../styles/mixins';
+
 .nftCard {
   padding: 60px 136px;
+
+  @include mobile {
+    overflow: hidden;
+    width: 100vw;
+    padding: 20px 10px;
+  }
 }
 
 .nftMainPart {
+  position: relative;
   display: flex;
+  flex-direction: row;
+
+  @include mobile {
+    flex-direction: column;
+  }
+}
+
+.nftOwnersInfo {
+  display: flex;
+  flex-direction: column;
+  margin-left: 34px;
+  gap: 20px;
+
+  @include mobile {
+    margin-top: 32px;
+    margin-left: 0;
+  }
 }
 
 .nftImg {
   position: relative;
   width: 280px;
   height: 280px;
+  flex-shrink: 0;
+  border-radius: 5px 5px 0 0;
+
+  @include mobile {
+    width: calc(100vw - 20px);
+    height: calc(100vw - 20px);
+    border-radius: 5px;
+    background-size: cover;
+  }
 }
 
-//.nftFav {
-//
-//}
+.nftOwnersInfoPart {
+  display: flex;
+  flex-direction: row;
+}
+
+.nftOwnerPartImg {
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: rgba(245, 245, 247, 0.12);
+  background-size: cover;
+
+  @include mobile {
+    width: 63px;
+    height: 63px;
+  }
+}
+
+.nftOwnersInfoTextPart {
+  display: flex;
+  height: 40px;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-left: 18px;
+  color: #f5f5f7;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 16px;
+  opacity: 0.6;
+}
+
+.nftInfoPart {
+  display: grid;
+  width: 592px;
+  column-gap: 32px;
+  grid-template-columns: 1fr 1fr;
+  row-gap: 12px;
+
+  @include mobile {
+    width: unset;
+    gap: 12px;
+    grid-template-columns: 1fr;
+  }
+}
+
+.nftInfoPartRecord {
+  display: grid;
+  gap: 43px;
+  grid-template-columns: 80px 176px;
+}
+
+.nftInfoPartKey,
+.nftInfoPartValue {
+  color: #f5f5f7;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 16px;
+}
+
+.nftInfoPartKey {
+  opacity: 0.8;
+}
+
+.nftButtonsHolder {
+  display: flex;
+  margin-left: auto;
+  gap: 16px;
+
+  @include mobile {
+    position: absolute;
+    left: calc(100% - 48px);
+    flex-direction: column-reverse;
+    margin-left: unset;
+    gap: 0;
+  }
+}
+
+.nftFav {
+  position: absolute;
+  left: calc(100% - 48px);
+
+  @include mobile {
+    top: 96px;
+  }
+}
+
+.nftRefreshButton {
+  @include mobile {
+    display: none;
+  }
+}

@@ -29,3 +29,4 @@ export { ReactComponent as FavIcon } from './fav.svg';
 export { ReactComponent as CloseIcon } from './close.svg';
 export { ReactComponent as HeartIcon } from './heart.svg';
 export { ReactComponent as ShareIcon } from './share.svg';
+export { ReactComponent as RefreshIcon } from './refresh.svg';

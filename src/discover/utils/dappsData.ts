@@ -545,14 +545,40 @@ export const nftCardData: NtfCardType = {
   creatorAddress: '@0x826e...93h34ofnc xz56',
   ownerImg: nftItem4,
   ownerAddress: '@0x826e...3209984rj83290',
-  tokenId: '#238492',
-  address: '@0x826e...34rj38521',
-  standart: 'ERC_721',
-  fileType: 'Image (webp)',
-  royalties: '8%',
-  estValue: '283.12',
-  rarity: '1st / 20 000',
-  quantity: '280',
+  nftCardInfo: {
+    tokenId: {
+      label: 'Token ID',
+      value: '#238492',
+    },
+    royalties: {
+      label: 'Royalties',
+      value: '8%',
+    },
+    address: {
+      label: 'Address',
+      value: '@0x826e...34rj38521',
+    },
+    estValue: {
+      label: 'Est. Value',
+      value: '283.12',
+    },
+    standart: {
+      label: 'Standart',
+      value: 'ERC_721',
+    },
+    rarity: {
+      label: 'Rarity',
+      value: '1st / 20 000',
+    },
+    fileType: {
+      label: 'File type',
+      value: 'Image (webp)',
+    },
+    quantity: {
+      label: 'Quantity',
+      value: '280',
+    },
+  },
   fav: false,
   ownershipHistory: [
     {
