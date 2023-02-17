@@ -18,6 +18,7 @@ import { Collapse } from '@mui/material';
 import { getDappsCardData } from 'discover/selectors/discoverSelectors';
 import { RoutesEnum } from 'application/typings/routes';
 import { DappsCardNfts } from 'discover/components/dappsCard/DappsCardNfts';
+import { setBackUrl } from 'application/slice/applicationSlice';
 import styles from './DappsCard.module.scss';
 
 type OwnProps = RouteComponentProps<{ id: string }>;
@@ -29,6 +30,7 @@ const mapStateToProps = (_state: RootState, props: OwnProps) => ({
 const mapDispatchToProps = {
   routeTo: push,
   setCurrentDiscoverTab,
+  setBackUrl,
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
@@ -82,7 +84,7 @@ class DappsCardComponent extends React.PureComponent<DappsCardProps, DappsCardSt
   handleShareDapps = () => {};
 
   render() {
-    const { currentDappsData } = this.props;
+    const { currentDappsData, routeTo, setBackUrl } = this.props;
     const { showMoreInfo } = this.state;
 
     return <div className={styles.dappsCard}>
@@ -126,7 +128,11 @@ class DappsCardComponent extends React.PureComponent<DappsCardProps, DappsCardSt
           </IconButton>
         </div>
       </div>
-      <DappsCardNfts nfts={currentDappsData?.card.nfts} />
+      <DappsCardNfts
+        nfts={currentDappsData?.card.nfts}
+        routeTo={routeTo}
+        setBackUrl={setBackUrl}
+      />
     </div>;
   }
 }

@@ -3,9 +3,9 @@ import { push } from 'connected-react-router';
 import { connect, ConnectedProps } from 'react-redux';
 import { RoutesEnum } from 'application/typings/routes';
 import classnames from 'classnames';
+import { nftListData } from 'discover/utils/dappsData';
 import styles from './Nft.module.scss';
 import { NftItemType } from '../../typings/discoverTypings';
-import { nftListData } from '../../utils/dappsListData';
 import { IconButton } from '../../../common';
 import { FavIcon } from '../../../common/icons';
 
@@ -28,7 +28,7 @@ class NftListComponent extends React.PureComponent<NftListProps, NftListState> {
   handleShowNftCard = (nftId: string) => () => {
     const { routeTo } = this.props;
 
-    routeTo(`${RoutesEnum.discover}/nft/${nftId}`);
+    routeTo(`${RoutesEnum.discover}/nftCollection/${nftId}`);
   };
 
   renderNftListItem = (item: NftItemType) => {

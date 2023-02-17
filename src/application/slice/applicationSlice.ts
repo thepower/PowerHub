@@ -13,6 +13,7 @@ interface ApplicationDataState {
   networkApi: Maybe<Draft<NetworkApi>>;
   walletApi: Maybe<Draft<WalletApi>>;
   networkChains: number[];
+  backUrl: Maybe<string>;
 }
 
 const SLICE_NAME = 'applicationData';
@@ -23,6 +24,7 @@ const initialState: ApplicationDataState = {
   networkApi: null,
   walletApi: null,
   networkChains: [],
+  backUrl: null,
 };
 
 const applicationDataSlice = createSlice({
@@ -42,6 +44,9 @@ const applicationDataSlice = createSlice({
     setNetworkChains: (state: ApplicationDataState, action: PayloadAction<number[]>) => {
       state.networkChains = action.payload;
     },
+    setBackUrl: (state: ApplicationDataState, action: PayloadAction<Maybe<string>>) => {
+      state.backUrl = action.payload;
+    },
   },
 });
 
@@ -54,5 +59,6 @@ export const {
     setTestnetAvailable,
     setShowUnderConstruction,
     setNetworkChains,
+    setBackUrl,
   },
 } = applicationDataSlice;

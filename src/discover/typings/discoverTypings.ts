@@ -62,3 +62,43 @@ export type NftItemCardType = {
   fullDescription: string;
   nfts: CardNftType[];
 };
+
+export type NtfOwnershipType = {
+  id: string;
+  ownerImg: string;
+  ownerName: string;
+  ownerAddress: string;
+  type: string; // todo specify
+  time: string;
+  date: string;
+};
+
+export type NftCardInfoRecordType = {
+  label: string;
+  value: string;
+};
+
+export type NftCardInfo = {
+  tokenId: NftCardInfoRecordType;
+  address: NftCardInfoRecordType;
+  standart: NftCardInfoRecordType; // todo: specify
+  fileType: NftCardInfoRecordType; // todo: specify
+  royalties: NftCardInfoRecordType;
+  estValue: NftCardInfoRecordType;
+  rarity: NftCardInfoRecordType;
+  quantity: NftCardInfoRecordType;
+};
+
+export type NtfCardType = {
+  id: string;
+  img: string;
+  fav: boolean;
+  collection: string;
+  collectionImg: string; // todo: link to collection
+  creatorImg: string;
+  creatorAddress: string; // todo: link to creator
+  ownerImg: string;
+  ownerAddress: string;
+  nftCardInfo: NftCardInfo;
+  ownershipHistory: NtfOwnershipType[];
+};

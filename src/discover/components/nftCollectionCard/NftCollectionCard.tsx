@@ -15,6 +15,7 @@ import {
 import { RoutesEnum } from 'application/typings/routes';
 import { Collapse } from '@mui/material';
 import { DiscoverTabs } from 'discover/typings/discoverTypings';
+import { setBackUrl } from 'application/slice/applicationSlice';
 import styles from './NftCollectionCard.module.scss';
 import { NftCollectionsNfts } from './NftCollectionNfts';
 import { setCurrentDiscoverTab } from '../../slice/discoverSlice';
@@ -28,6 +29,7 @@ const mapStateToProps = (_state: RootState, props: OwnProps) => ({
 const mapDispatchToProps = {
   routeTo: push,
   setCurrentDiscoverTab,
+  setBackUrl,
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
@@ -73,7 +75,7 @@ class NftCollectionCardComponent extends React.PureComponent<NftCollectionCardPr
     </div>;
   };
 
-  rendernftCollectionCardMetrics = () => {
+  renderNftCollectionCardMetrics = () => {
     const { card } = this.props.currentNftData!;
 
     return <div className={styles.nftCollectionCardMetricsHolder}>
@@ -114,7 +116,7 @@ class NftCollectionCardComponent extends React.PureComponent<NftCollectionCardPr
         className={styles.nftCoverHolder}
         style={{ backgroundImage: `url(${card.cover})` }}
       >
-        {this.rendernftCollectionCardMetrics()}
+        {this.renderNftCollectionCardMetrics()}
         <div className={styles.nftSmallCover}>
           <img src={card?.smallCover} alt={'nftSmallCover'} />
         </div>
@@ -140,7 +142,11 @@ class NftCollectionCardComponent extends React.PureComponent<NftCollectionCardPr
           </IconButton>
         </div>
       </div>
-      <NftCollectionsNfts nfts={card.nfts} />
+      <NftCollectionsNfts
+        nfts={card.nfts}
+        routeTo={this.props.routeTo}
+        setBackUrl={this.props.setBackUrl}
+      />
     </div>;
   }
 }

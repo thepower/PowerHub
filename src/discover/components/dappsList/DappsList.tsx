@@ -2,9 +2,9 @@ import React from 'react';
 import { push } from 'connected-react-router';
 import { connect, ConnectedProps } from 'react-redux';
 import { RoutesEnum } from 'application/typings/routes';
+import { dappsData } from 'discover/utils/dappsData';
 import styles from './DappsList.module.scss';
 import { DappsItemType } from '../../typings/discoverTypings';
-import { dappsListData } from '../../utils/dappsListData';
 import { IconButton } from '../../../common';
 import { FavIcon } from '../../../common/icons';
 
@@ -66,7 +66,7 @@ class DappsListComponent extends React.PureComponent<DappsListProps, DappsListSt
     const { isMobile } = this.state;
 
     return <div className={styles.dappsListWrapper}>
-      {Array(isMobile ? 8 : 12).fill(dappsListData[0]).map(this.renderDappsListItem)}
+      {Array(isMobile ? 8 : 12).fill(dappsData[0]).map(this.renderDappsListItem)}
     </div>;
   }
 }
