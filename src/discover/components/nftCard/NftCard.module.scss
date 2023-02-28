@@ -82,12 +82,14 @@
 .nftInfoPart {
   display: grid;
   width: 592px;
+  margin-top: 4px;
   column-gap: 32px;
   grid-template-columns: 1fr 1fr;
   row-gap: 12px;
 
   @include mobile {
     width: unset;
+    margin-top: 14px;
     gap: 12px;
     grid-template-columns: 1fr;
   }
