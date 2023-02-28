@@ -326,4 +326,26 @@
   }
 }
 
+.dappsButton {
+  width: 240px;
+  height: 48px;
+
+  @include mobile {
+    width: 100%;
+  }
+}
+
+.dappsButtonHolder {
+  display: flex;
+  padding: 0 136px;
+  margin-top: 36px;
+  gap: 20px;
+
+  @include mobile {
+    width: 100%;
+    flex-direction: column;
+    padding: 0 10px;
+  }
+}
+
 

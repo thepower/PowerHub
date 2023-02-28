@@ -8,7 +8,7 @@ import {
   HeartIcon,
   ShareIcon,
 } from 'common/icons';
-import { IconButton } from 'common';
+import { Button, IconButton } from 'common';
 import { DiscoverTabs } from 'discover/typings/discoverTypings';
 import { connect, ConnectedProps } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
@@ -83,6 +83,10 @@ class DappsCardComponent extends React.PureComponent<DappsCardProps, DappsCardSt
 
   handleShareDapps = () => {};
 
+  handleJoinToCommunity = () => {};
+
+  handlePlayToGame = () => {};
+
   render() {
     const { currentDappsData, routeTo, setBackUrl } = this.props;
     const { showMoreInfo } = this.state;
@@ -127,6 +131,26 @@ class DappsCardComponent extends React.PureComponent<DappsCardProps, DappsCardSt
             <ShareIcon />
           </IconButton>
         </div>
+      </div>
+      <div className={styles.dappsButtonHolder}>
+        <Button
+          className={styles.dappsButton}
+          size="medium"
+          variant="outlined"
+          type="button"
+          onClick={this.handleJoinToCommunity}
+        >
+          {'JOIN THE COMMUNITY'}
+        </Button>
+        <Button
+          className={styles.dappsButton}
+          size="medium"
+          variant="filled"
+          type="button"
+          onClick={this.handlePlayToGame}
+        >
+          {'PLAY TO GAME'}
+        </Button>
       </div>
       <DappsCardNfts
         nfts={currentDappsData?.card.nfts}
