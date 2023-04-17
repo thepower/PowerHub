@@ -3,14 +3,14 @@ import { LoadBalancePayloadType } from '../types';
 import { Maybe } from '../../typings/common';
 
 type InitialState = {
-  amount: Maybe<string>;
+  amount: { [key: string]: string };
   lastblk: Maybe<string>;
   pubkey: Maybe<string>;
   preblk: Maybe<string>;
 };
 
 const initialState: InitialState = {
-  amount: null,
+  amount: {},
   lastblk: null,
   pubkey: null,
   preblk: null,
@@ -25,7 +25,10 @@ const walletSlice = createSlice({
       prepare: ({ amount, ...otherData }: LoadBalancePayloadType) => ({
         payload: {
           ...otherData,
-          amount: Object.values(amount)[0]?.toFixed(2) || '0',
+          amount: Object.entries(amount).reduce(
+            (acc, [key, value]) => Object.assign(acc, { [key]: value?.toFixed(2) || '0' }),
+            {},
+          ),
         },
       }),
     },
@@ -38,4 +41,7 @@ const walletSlice = createSlice({
 export const loadBalanceTrigger = createAction('loadBalance');
 export const loadTransactionsTrigger = createAction('loadTransactions');
 
-export const { actions: { setWalletData, setLastBlock }, reducer: walletReducer } = walletSlice;
+export const {
+  actions: { setWalletData, setLastBlock },
+  reducer: walletReducer,
+} = walletSlice;

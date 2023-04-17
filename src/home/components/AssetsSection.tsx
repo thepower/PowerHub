@@ -1,10 +1,6 @@
 import React from 'react';
 import {
-  BuySvg,
-  FaucetSvg,
-  LogoIcon,
-  SendSvg,
-  WalletsSvg,
+  BuySvg, FaucetSvg, LogoIcon, SendSvg, WalletsSvg,
 } from 'common/icons';
 import { connect, ConnectedProps } from 'react-redux';
 import { ArrowLink, CardLink, CopyButton } from 'common';
@@ -27,11 +23,14 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type AssetsSectionProps = ConnectedProps<typeof connector>;
 
 const AssetsSection = ({ walletAddress, setShowUnderConstruction, amount }: AssetsSectionProps) => {
-  const handleShowUnderConstruction = React.useCallback((event: React.MouseEvent) => {
-    event.preventDefault();
+  const handleShowUnderConstruction = React.useCallback(
+    (event: React.MouseEvent) => {
+      event.preventDefault();
 
-    setShowUnderConstruction(true);
-  }, [setShowUnderConstruction]);
+      setShowUnderConstruction(true);
+    },
+    [setShowUnderConstruction],
+  );
 
   return (
     <div>
@@ -42,13 +41,9 @@ const AssetsSection = ({ walletAddress, setShowUnderConstruction, amount }: Asse
         <div className={styles.majorWallet}>
           <p className={styles.total}>
             <LogoIcon className={styles.icon} />
-            {amount === '0' ? <span className={styles.emptyTitle}>Your tokens will be here</span> : amount}
+            {amount?.SK === '0' ? <span className={styles.emptyTitle}>Your tokens will be here</span> : amount.SK}
           </p>
-          <CopyButton
-            textButton={walletAddress}
-            className={styles.addressButton}
-            iconClassName={styles.copyIcon}
-          />
+          <CopyButton textButton={walletAddress} className={styles.addressButton} iconClassName={styles.copyIcon} />
         </div>
         <div className={styles.cards}>
           <CardLink to="/my-assets" label="Wallets">

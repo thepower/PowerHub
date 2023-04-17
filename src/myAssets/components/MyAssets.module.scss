@@ -105,3 +105,25 @@
 .transactionsList {
   list-style: none;
 }
+
+.myAssetsTabsHolder {
+  margin-top: 36px;
+}
+
+.myAssetsTabIndicator {
+  height: 2px;
+  background: #f5f5f7;
+}
+
+.myAssetsTabSelected {
+  background: unset;
+  background-clip: unset;
+  background-clip: unset;
+  color: #f5f5f7 !important;
+  -webkit-text-fill-color: unset;
+  text-fill-color: unset;
+}
+
+.myAssetsTabsRoot {
+  padding: 0 20px;
+}

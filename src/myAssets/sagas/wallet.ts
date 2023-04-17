@@ -28,7 +28,7 @@ export function* loadTransactionsSaga() {
       walletAddress,
     );
 
-    const lastblk = transactions.get('needMore') as string || null;
+    const lastblk = (transactions.get('needMore') as string) || null;
     transactions.delete('needMore');
 
     yield* put(setLastBlock(lastblk));

@@ -11,4 +11,3 @@ const applicationStorage = localForage.createInstance({
 export const getKeyFromApplicationStorage = (key: ApplicationStorageKeyType) => applicationStorage.getItem(key);
 export const setKeyToApplicationStorage = (key: ApplicationStorageKeyType, value: any) => applicationStorage.setItem(key, value);
 export const clearApplicationStorage = () => applicationStorage.clear();
-

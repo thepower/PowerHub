@@ -2,19 +2,13 @@ import React from 'react';
 import { InputAdornment, TextField } from '@mui/material';
 import { connect, ConnectedProps } from 'react-redux';
 import {
-  Form,
-  Formik,
-  FormikHelpers,
-  FormikProps,
+  Form, Formik, FormikHelpers, FormikProps,
 } from 'formik';
 import * as yup from 'yup';
 import cn from 'classnames';
 import { AddressApi } from '@thepowereco/tssdk';
 import {
-  Button,
-  DeepPageTemplate,
-  Divider,
-  FullScreenLoader,
+  Button, DeepPageTemplate, Divider, FullScreenLoader,
 } from '../../common';
 import { RoutesEnum } from '../../application/typings/routes';
 import { RootState } from '../../application/store';
@@ -47,8 +41,8 @@ type SendState = {
 
 type FormValues = {
   amount: string;
-  comment: string,
-  address: string,
+  comment: string;
+  address: string;
 };
 
 const initialValues: FormValues = {
@@ -75,16 +69,14 @@ class Send extends React.Component<SendProps, SendState> {
   }
 
   getValidationSchema = () => yup.object({
-    amount: yup.number()
+    amount: yup
+      .number()
       .required()
       .moreThan(0)
       .lessThan(Number(this.props.amount), 'Balance exceeded, reduce amount')
       .nullable(),
-    address: yup.string()
-      .required()
-      .length(20),
-    comment: yup.string()
-      .max(1024),
+    address: yup.string().required().length(20),
+    comment: yup.string().max(1024),
   });
 
   handleClose = () => this.setState({ openModal: false });
@@ -99,11 +91,7 @@ class Send extends React.Component<SendProps, SendState> {
 
   renderForm = (formikProps: FormikProps<typeof initialValues>) => (
     <>
-      <ConfirmSendModal
-        open={this.state.openModal}
-        trxValues={formikProps.values}
-        onClose={this.handleClose}
-      />
+      <ConfirmSendModal open={this.state.openModal} trxValues={formikProps.values} onClose={this.handleClose} />
       <Form className={styles.form}>
         <div className={styles.fields}>
           <TextField
@@ -150,13 +138,7 @@ class Send extends React.Component<SendProps, SendState> {
             helperText={formikProps.touched.comment && formikProps.errors.comment}
           />
         </div>
-        <Button
-          size="large"
-          variant="filled"
-          className={styles.button}
-          type="submit"
-          disabled={!formikProps.dirty}
-        >
+        <Button size="large" variant="filled" className={styles.button} type="submit" disabled={!formikProps.dirty}>
           Send
         </Button>
       </Form>
@@ -165,10 +147,7 @@ class Send extends React.Component<SendProps, SendState> {
 
   render() {
     const {
-      amount,
-      address,
-      sentData,
-      loading,
+      amount, address, sentData, loading,
     } = this.props;
 
     if (loading) {
@@ -177,11 +156,7 @@ class Send extends React.Component<SendProps, SendState> {
 
     if (sentData) {
       return (
-        <DeepPageTemplate
-          topBarTitle="Send"
-          backUrl={RoutesEnum.myAssets}
-          backUrlText="My assets"
-        >
+        <DeepPageTemplate topBarTitle="Send" backUrl={RoutesEnum.myAssets} backUrlText="My assets">
           <div className={styles.content}>
             <div className={styles.result}>
               <div>
@@ -217,15 +192,11 @@ class Send extends React.Component<SendProps, SendState> {
       <DeepPageTemplate topBarTitle="Send" backUrl={RoutesEnum.myAssets} backUrlText="My assets">
         <div className={styles.content}>
           <div className={styles.walletInfo}>
-            <span className={styles.titleBalance}>
-              Total balance
-            </span>
-            <span className={styles.address}>
-              {address}
-            </span>
+            <span className={styles.titleBalance}>Total balance</span>
+            <span className={styles.address}>{address}</span>
             <span className={styles.amount}>
               <LogoIcon width={20} height={20} className={styles.totalBalanceIcon} />
-              {amount === '0' ? 'Your tokens will be here' : amount}
+              {amount?.SK === '0' ? 'Your tokens will be here' : amount.SK}
             </span>
           </div>
           <Divider className={styles.divider} />

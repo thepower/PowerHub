@@ -2,20 +2,13 @@
   "root": true,
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint"],
-  "extends": [
-    "airbnb",
-    "airbnb-typescript",
-    "airbnb/hooks",
-    "plugin:@typescript-eslint/recommended"
-  ],
+  "extends": ["airbnb", "airbnb-typescript", "airbnb/hooks", "plugin:@typescript-eslint/recommended"],
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
     },
     "sourceType": "module",
-    "project": [
-      "./tsconfig.json"
-    ]
+    "project": ["./tsconfig.json"]
   },
   "env": {
     "browser": true,
@@ -23,12 +16,15 @@
     "es6": true
   },
   "rules": {
-    "react/function-component-definition": [2, {
-      "namedComponents": "arrow-function"
-    }],
+    "react/function-component-definition": [
+      2,
+      {
+        "namedComponents": "arrow-function"
+      }
+    ],
     "no-console": 1,
     "no-unused-vars": 0,
-    "no-empty":1,
+    "no-empty": 1,
     "react-hooks/rules-of-hooks": 2,
     "react-hooks/exhaustive-deps": 1,
     "quotes": ["error", "single"],
@@ -44,7 +40,6 @@
       }
     ],
     "@typescript-eslint/no-shadow": 0,
-    "import-name": 0,
     "no-await-in-loop": 0,
     "no-mixed-operators": 0,
     "no-restricted-syntax": ["off", "ForOfStatement"],
