@@ -21,6 +21,7 @@ export { default as Divider } from './divider/Divider';
 export { default as DeepPageTemplate } from './deepPageTemplate/DeepPageTemplate';
 export { UnderConstruction } from './underConstruction/UnderConstruction';
 export { Checkbox } from './checkbox/Checkbox';
+export { Switch } from './switch/Switch';
 export { Pagination } from './pagination/Pagination';
 export { PaginationList } from './pagination/PaginationList';
 

@@ -38,11 +38,24 @@ export type TransactionPayloadType = {
 export enum MyAssetsTabs {
   PowerNativeTokens = 'PowerNativeTokens',
   Erc20 = 'Erc20',
-  // NFT = 'NFT',
+  NFT = 'NFT',
 }
 
 export enum MyAssetsTabsLabels {
   PowerNativeTokens = 'Power native tokens',
   Erc20 = 'Erc_20',
-  // NFT = 'NFT',
+  NFT = 'NFT',
 }
+
+export type TokenKind = 'nft' | 'erc20' | 'native';
+
+export type TokenPayloadType = {
+  type: TokenKind;
+  name: string;
+  address: string;
+  symbol: string;
+  decimals: number;
+  amount?: string
+};
+
+export const nativeTokensNameMap = { SK: 'Smart key' };

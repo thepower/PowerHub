@@ -1,27 +1,30 @@
 import React from 'react';
 import {
   CardLink, DeepPageTemplate, Divider, FullScreenLoader, Tabs,
+  Switch,
 } from 'common';
 import {
   BuySvg, FaucetSvg, LogoIcon, SendSvg,
 } from 'common/icons';
 // import { InView } from 'react-intersection-observer';
 import { connect, ConnectedProps } from 'react-redux';
-import { MyAssetsTabs, MyAssetsTabsLabels } from 'myAssets/types';
+import { MyAssetsTabs, MyAssetsTabsLabels, TokenKind } from 'myAssets/types';
+import { TokenType } from 'myAssets/slices/tokensSlice';
 import { RootState } from '../../application/store';
 import { loadTransactionsTrigger } from '../slices/walletSlice';
 import { checkIfLoading } from '../../network/selectors';
-import { getWalletAmount } from '../selectors/walletSelectors';
+import { getWalletNativeTokensAmounts } from '../selectors/walletSelectors';
 // import Transaction from './Transaction';
 import { getGroupedWalletTransactions } from '../selectors/transactionsSelectors';
 import styles from './MyAssets.module.scss';
 // import { TransactionType } from '../slices/transactionsSlice';
 import { setShowUnderConstruction } from '../../application/slice/applicationSlice';
 import { RoutesEnum } from '../../application/typings/routes';
+import Token from './Token';
 
 const connector = connect(
   (state: RootState) => ({
-    amount: getWalletAmount(state),
+    amounts: getWalletNativeTokensAmounts(state),
     loading: checkIfLoading(state, loadTransactionsTrigger.type),
     transactions: getGroupedWalletTransactions(state),
   }),
@@ -34,7 +37,7 @@ const connector = connect(
 type MyAssetsProps = ConnectedProps<typeof connector>;
 
 type MyAssetsState = {
-  tab: keyof typeof MyAssetsTabs;
+  tab: MyAssetsTabs;
 };
 
 class MyAssets extends React.PureComponent<MyAssetsProps, MyAssetsState> {
@@ -42,7 +45,7 @@ class MyAssets extends React.PureComponent<MyAssetsProps, MyAssetsState> {
     super(props);
 
     this.state = {
-      tab: 'PowerNativeTokens',
+      tab: MyAssetsTabs.PowerNativeTokens,
     };
   }
 
@@ -73,18 +76,45 @@ class MyAssets extends React.PureComponent<MyAssetsProps, MyAssetsState> {
   //   </li>
   // );
 
+  renderTokensList = (tokens: TokenType[]) => (
+    <ul className={styles.tokensList}>
+      {tokens.map((token) => (
+        <li key={token.address}>
+          <Token token={token} />
+        </li>
+      ))}
+    </ul>
+  );
+
   handleShowUnderConstruction = (event: React.MouseEvent) => {
     event.preventDefault();
     this.props.setShowUnderConstruction(true);
   };
 
   render() {
-    const { amount, loading, transactions } = this.props;
+    const { amounts, loading, transactions } = this.props;
     const { tab } = this.state;
 
     if (loading && !Object.keys(transactions).length) {
       return <FullScreenLoader />;
     }
+
+    const nativeTokens = Object.entries(amounts).map(([symbol, amount]) => ({
+      type: 'native' as TokenKind,
+      name: symbol,
+      address: symbol,
+      symbol,
+      decimals: 9,
+      amount,
+    }));
+
+    const tokensMap = {
+      [MyAssetsTabs.PowerNativeTokens]: nativeTokens,
+      [MyAssetsTabs.Erc20]: [],
+      [MyAssetsTabs.NFT]: [],
+    };
+
+    const tokens = tokensMap[tab];
 
     return (
       <DeepPageTemplate topBarTitle="My Assets" backUrl="/">
@@ -93,7 +123,7 @@ class MyAssets extends React.PureComponent<MyAssetsProps, MyAssetsState> {
             <p className={styles.title}>{'Total balance'}</p>
             <p className={styles.balance}>
               <LogoIcon className={styles.icon} />
-              {amount?.SK === '0' ? <span className={styles.emptyTitle}>Your tokens will be here</span> : amount?.SK}
+              {amounts?.SK === '0' ? <span className={styles.emptyTitle}>Your tokens will be here</span> : amounts?.SK}
             </p>
           </div>
           <div className={styles.linksGroup}>
@@ -109,6 +139,7 @@ class MyAssets extends React.PureComponent<MyAssetsProps, MyAssetsState> {
           </div>
         </div>
         <Divider />
+        <Switch />
         <Tabs
           tabs={MyAssetsTabs}
           tabsLabels={MyAssetsTabsLabels}
@@ -120,6 +151,7 @@ class MyAssets extends React.PureComponent<MyAssetsProps, MyAssetsState> {
           tabIndicatorClassName={styles.myAssetsTabIndicator}
           tabSelectedClassName={styles.myAssetsTabSelected}
         />
+        <div className={styles.tokens}>{this.renderTokensList(tokens)}</div>
         {/* <div className={styles.transactions}>
           <p className={styles.pageTitle}>
             {Object.entries(transactions).length

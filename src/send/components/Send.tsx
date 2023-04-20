@@ -12,7 +12,7 @@ import {
 } from '../../common';
 import { RoutesEnum } from '../../application/typings/routes';
 import { RootState } from '../../application/store';
-import { getWalletAmount } from '../../myAssets/selectors/walletSelectors';
+import { getWalletNativeTokensAmounts } from '../../myAssets/selectors/walletSelectors';
 import { getWalletAddress } from '../../account/selectors/accountSelectors';
 import { LogoIcon, MoneyBugIcon } from '../../common/icons';
 import ConfirmSendModal from './ConfirmSendModal';
@@ -23,7 +23,7 @@ import styles from './Send.module.scss';
 
 const connector = connect(
   (state: RootState) => ({
-    amount: getWalletAmount(state),
+    amount: getWalletNativeTokensAmounts(state),
     address: getWalletAddress(state),
     sentData: getSentData(state),
     loading: checkIfLoading(state, sendTrxTrigger.type),

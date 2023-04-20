@@ -3,6 +3,7 @@ import { createLogger } from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { tokensReducer } from 'myAssets/slices/tokensSlice';
 import rootSaga from './sagas/rootSaga';
 import history from './utils/history';
 import { accountReducer } from '../account/slice/accountSlice';
@@ -25,6 +26,7 @@ const reducer = {
   registration: registrationReducer,
   wallet: walletReducer,
   network: networkReducer,
+  tokens: tokensReducer,
   transactions: transactionsReducer,
   send: sendReducer,
   discover: discoverReducer,

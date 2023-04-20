@@ -106,6 +106,15 @@
   list-style: none;
 }
 
+.tokensList {
+  margin-top: 40px;
+  list-style: none;
+
+  > :not(:first-child) {
+    margin-top: 40px;
+  }
+}
+
 .myAssetsTabsHolder {
   margin-top: 36px;
 }

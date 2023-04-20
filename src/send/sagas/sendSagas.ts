@@ -1,4 +1,5 @@
 import { put, select } from 'typed-redux-saga';
+import { loadTransactionsTrigger } from 'myAssets/slices/walletSlice';
 import { getWalletApi } from '../../application/selectors';
 import { sendTrxTrigger, setSentData } from '../slices/sendSlice';
 import { loadBalanceSaga, loadTransactionsSaga } from '../../myAssets/sagas/wallet';
@@ -17,5 +18,5 @@ export function* sendTrxSaga({
   }));
 
   yield loadBalanceSaga();
-  yield loadTransactionsSaga();
+  yield loadTransactionsSaga({ payload: undefined, type: loadTransactionsTrigger.type });
 }

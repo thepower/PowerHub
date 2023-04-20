@@ -5,7 +5,7 @@ import {
 import { connect, ConnectedProps } from 'react-redux';
 import { ArrowLink, CardLink, CopyButton } from 'common';
 import { getWalletAddress } from '../../account/selectors/accountSelectors';
-import { getWalletAmount } from '../../myAssets/selectors/walletSelectors';
+import { getWalletNativeTokensAmounts } from '../../myAssets/selectors/walletSelectors';
 import { setShowUnderConstruction } from '../../application/slice/applicationSlice';
 import { RootState } from '../../application/store';
 import styles from './AssetsSection.module.scss';
@@ -13,7 +13,7 @@ import { RoutesEnum } from '../../application/typings/routes';
 
 const mapStateToProps = (state: RootState) => ({
   walletAddress: getWalletAddress(state),
-  amount: getWalletAmount(state),
+  amount: getWalletNativeTokensAmounts(state),
 });
 const mapDispatchToProps = {
   setShowUnderConstruction,
