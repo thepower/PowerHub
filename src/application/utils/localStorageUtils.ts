@@ -1,6 +1,6 @@
 import localForage from 'localforage';
 
-type ApplicationStorageKeyType = 'address' | 'wif' | 'scapps';
+type ApplicationStorageKeyType = 'address' | 'wif' | 'scapps' | 'tokens';
 
 const applicationStorage = localForage.createInstance({
   driver: localForage.LOCALSTORAGE,

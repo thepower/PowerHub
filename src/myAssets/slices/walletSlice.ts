@@ -20,7 +20,7 @@ const walletSlice = createSlice({
   name: 'wallet',
   initialState,
   reducers: {
-    setWalletData: {
+    setWalletBalanceData: {
       reducer: (_state, { payload }: PayloadAction<InitialState>) => payload,
       prepare: ({ amount, ...otherData }: LoadBalancePayloadType) => ({
         payload: {
@@ -42,6 +42,6 @@ export const loadBalanceTrigger = createAction('loadBalance');
 export const loadTransactionsTrigger = createAction<{ tokenAddress:string } | undefined>('loadTransactions');
 
 export const {
-  actions: { setWalletData, setLastBlock },
+  actions: { setWalletBalanceData, setLastBlock },
   reducer: walletReducer,
 } = walletSlice;

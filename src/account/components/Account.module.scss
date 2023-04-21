@@ -118,7 +118,6 @@
   font-weight: 500;
   gap: 28px;
   line-height: 21px;
-  list-style: none;
 
   @include mobile {
     gap: 20px;
@@ -151,7 +150,7 @@
     background: #252b35;
 
     .accountActionText {
-      @include text-gradient(linear-gradient(90deg, #1768E5 0%, #00F0FF 100%));
+      @include text-gradient(linear-gradient(90deg, #1768e5 0%, #00f0ff 100%));
     }
   }
 
@@ -160,12 +159,10 @@
     background: #2e353d;
 
     .accountActionText {
-      @include text-gradient(linear-gradient(90deg, #1768E5 50.44%, #00F0FF 129.31%));
+      @include text-gradient(linear-gradient(90deg, #1768e5 50.44%, #00f0ff 129.31%));
     }
   }
 }
-
-
 
 .icon {
   margin-right: 18px;

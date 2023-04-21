@@ -13,7 +13,7 @@ import { RoutesEnum } from '../../application/typings/routes';
 
 const mapStateToProps = (state: RootState) => ({
   walletAddress: getWalletAddress(state),
-  amount: getWalletNativeTokensAmounts(state),
+  amounts: getWalletNativeTokensAmounts(state),
 });
 const mapDispatchToProps = {
   setShowUnderConstruction,
@@ -22,7 +22,7 @@ const mapDispatchToProps = {
 const connector = connect(mapStateToProps, mapDispatchToProps);
 type AssetsSectionProps = ConnectedProps<typeof connector>;
 
-const AssetsSection = ({ walletAddress, setShowUnderConstruction, amount }: AssetsSectionProps) => {
+const AssetsSection = ({ walletAddress, setShowUnderConstruction, amounts }: AssetsSectionProps) => {
   const handleShowUnderConstruction = React.useCallback(
     (event: React.MouseEvent) => {
       event.preventDefault();
@@ -41,7 +41,7 @@ const AssetsSection = ({ walletAddress, setShowUnderConstruction, amount }: Asse
         <div className={styles.majorWallet}>
           <p className={styles.total}>
             <LogoIcon className={styles.icon} />
-            {amount?.SK === '0' ? <span className={styles.emptyTitle}>Your tokens will be here</span> : amount.SK}
+            {amounts?.SK === '0' ? <span className={styles.emptyTitle}>Your tokens will be here</span> : amounts.SK}
           </p>
           <CopyButton textButton={walletAddress} className={styles.addressButton} iconClassName={styles.copyIcon} />
         </div>

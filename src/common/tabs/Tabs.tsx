@@ -41,6 +41,7 @@ export class Tabs extends React.PureComponent<TabsProps> {
 
     return (
       <Tab
+        key={key}
         className={classnames(styles.tab, tabClassName)}
         classes={this.getTabClasses()}
         label={labels[key as keyof typeof labels]}

@@ -1,0 +1,57 @@
+.addAssetsPage {
+  display: flex;
+  flex-direction: column;
+  padding: 40px 0;
+}
+
+.addAssetsPageSearchInput {
+  margin: 0 32px;
+  margin-bottom: 40px;
+}
+
+.addAssetsPageTabIndicator {
+  height: 2px;
+  background: #f5f5f7;
+}
+
+.addAssetsPageTabSelected {
+  background: unset;
+  background-clip: unset;
+  background-clip: unset;
+  color: #f5f5f7 !important;
+  -webkit-text-fill-color: unset;
+  text-fill-color: unset;
+}
+
+.addAssetsPageTabsRoot {
+  padding: 0 20px;
+}
+
+.addAssetsPageAddAssetsButton {
+  margin-right: 32px;
+  margin-bottom: 24px;
+  margin-left: auto;
+}
+
+.addAssetsPageForm {
+  display: flex;
+  flex-direction: column;
+  margin: 32px 32px 20px;
+}
+
+.addAssetsPageFormTip {
+
+  margin-bottom: 20px;
+  color: #6b798f;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.addAssetsPageFormInput {
+  margin-bottom: 40px;
+}
+
+.addAssetsPageFormButton {
+  margin-left: auto;
+}

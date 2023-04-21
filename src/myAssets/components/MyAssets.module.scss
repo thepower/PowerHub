@@ -3,7 +3,7 @@
 .panel {
   display: flex;
   justify-content: space-between;
-  padding: 32px 32px 60px;
+  padding: 32px 32px 40px;
 
   @include mobile {
     flex-direction: column;
@@ -88,7 +88,6 @@
 
 .groupByDates {
   margin-top: 40px;
-  list-style: none;
 
   > :not(:first-child) {
     margin-top: 40px;
@@ -102,21 +101,12 @@
   line-height: 20px;
 }
 
-.transactionsList {
-  list-style: none;
-}
-
 .tokensList {
   margin-top: 40px;
-  list-style: none;
 
   > :not(:first-child) {
     margin-top: 40px;
   }
-}
-
-.myAssetsTabsHolder {
-  margin-top: 36px;
 }
 
 .myAssetsTabIndicator {
@@ -135,4 +125,10 @@
 
 .myAssetsTabsRoot {
   padding: 0 20px;
+}
+
+.myAssetsAddAssetsButton {
+  margin-right: 32px;
+  margin-bottom: 24px;
+  margin-left: auto;
 }

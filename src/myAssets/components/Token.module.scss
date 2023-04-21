@@ -1,6 +1,7 @@
 @import 'src/styles/utils';
 
 .token {
+  display: block;
   padding: 12px 16px;
   border-radius: 5px;
   margin-top: 40px;
@@ -84,4 +85,8 @@
 
 .divider {
   margin-top: 20px;
+}
+
+.tokenSwitch {
+  margin-left: auto;
 }

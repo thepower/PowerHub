@@ -4,6 +4,8 @@ import createSagaMiddleware from 'redux-saga';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { tokensReducer } from 'myAssets/slices/tokensSlice';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
 import rootSaga from './sagas/rootSaga';
 import history from './utils/history';
 import { accountReducer } from '../account/slice/accountSlice';
@@ -19,6 +21,11 @@ const loggerMiddleware = createLogger();
 const routeMiddleware = routerMiddleware(history);
 const sagaMiddleware = createSagaMiddleware();
 
+const tokensPersistConfig = {
+  key: 'PowerHub/tokens',
+  storage,
+};
+
 const reducer = {
   router: connectRouter(history),
   account: accountReducer,
@@ -26,7 +33,7 @@ const reducer = {
   registration: registrationReducer,
   wallet: walletReducer,
   network: networkReducer,
-  tokens: tokensReducer,
+  tokens: persistReducer(tokensPersistConfig, tokensReducer),
   transactions: transactionsReducer,
   send: sendReducer,
   discover: discoverReducer,
@@ -50,4 +57,6 @@ export type AppDispatch = typeof store.dispatch;
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
-export default store;
+const persistor = persistStore(store);
+
+export { store, persistor };

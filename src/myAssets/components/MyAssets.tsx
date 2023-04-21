@@ -1,35 +1,32 @@
 import React from 'react';
 import {
-  CardLink, DeepPageTemplate, Divider, FullScreenLoader, Tabs,
-  Switch,
+  CardLink, DeepPageTemplate, Tabs,
 } from 'common';
 import {
   BuySvg, FaucetSvg, LogoIcon, SendSvg,
 } from 'common/icons';
-// import { InView } from 'react-intersection-observer';
 import { connect, ConnectedProps } from 'react-redux';
 import { MyAssetsTabs, MyAssetsTabsLabels, TokenKind } from 'myAssets/types';
-import { TokenType } from 'myAssets/slices/tokensSlice';
+import { TokenType, updateTokensAmountsTrigger } from 'myAssets/slices/tokensSlice';
+import { Link } from 'react-router-dom';
+import { getTokens } from 'myAssets/selectors/tokensSelectors';
 import { RootState } from '../../application/store';
-import { loadTransactionsTrigger } from '../slices/walletSlice';
-import { checkIfLoading } from '../../network/selectors';
 import { getWalletNativeTokensAmounts } from '../selectors/walletSelectors';
-// import Transaction from './Transaction';
 import { getGroupedWalletTransactions } from '../selectors/transactionsSelectors';
 import styles from './MyAssets.module.scss';
-// import { TransactionType } from '../slices/transactionsSlice';
 import { setShowUnderConstruction } from '../../application/slice/applicationSlice';
 import { RoutesEnum } from '../../application/typings/routes';
 import Token from './Token';
+import AddButton from './AddButton';
 
 const connector = connect(
   (state: RootState) => ({
     amounts: getWalletNativeTokensAmounts(state),
-    loading: checkIfLoading(state, loadTransactionsTrigger.type),
+    tokens: getTokens(state),
     transactions: getGroupedWalletTransactions(state),
   }),
   {
-    loadTransactionsTrigger,
+    updateTokensAmountsTrigger,
     setShowUnderConstruction,
   },
 );
@@ -50,7 +47,7 @@ class MyAssets extends React.PureComponent<MyAssetsProps, MyAssetsState> {
   }
 
   componentDidMount() {
-    this.props.loadTransactionsTrigger();
+    this.props.updateTokensAmountsTrigger();
   }
 
   onChangeTab = (_event: React.SyntheticEvent, value: MyAssetsTabs) => {
@@ -92,12 +89,10 @@ class MyAssets extends React.PureComponent<MyAssetsProps, MyAssetsState> {
   };
 
   render() {
-    const { amounts, loading, transactions } = this.props;
+    const {
+      amounts, tokens,
+    } = this.props;
     const { tab } = this.state;
-
-    if (loading && !Object.keys(transactions).length) {
-      return <FullScreenLoader />;
-    }
 
     const nativeTokens = Object.entries(amounts).map(([symbol, amount]) => ({
       type: 'native' as TokenKind,
@@ -108,13 +103,15 @@ class MyAssets extends React.PureComponent<MyAssetsProps, MyAssetsState> {
       amount,
     }));
 
+    const erc20tokens = tokens;
+
     const tokensMap = {
       [MyAssetsTabs.PowerNativeTokens]: nativeTokens,
-      [MyAssetsTabs.Erc20]: [],
-      [MyAssetsTabs.NFT]: [],
+      [MyAssetsTabs.Erc20]: erc20tokens,
+      // [MyAssetsTabs.NFT]: [],
     };
 
-    const tokens = tokensMap[tab];
+    const currentTokens = tokensMap[tab];
 
     return (
       <DeepPageTemplate topBarTitle="My Assets" backUrl="/">
@@ -138,8 +135,9 @@ class MyAssets extends React.PureComponent<MyAssetsProps, MyAssetsState> {
             </CardLink>
           </div>
         </div>
-        <Divider />
-        <Switch />
+        <Link className={styles.myAssetsAddAssetsButton} to={`${RoutesEnum.myAssets}${RoutesEnum.add}`}>
+          <AddButton>Add assets</AddButton>
+        </Link>
         <Tabs
           tabs={MyAssetsTabs}
           tabsLabels={MyAssetsTabsLabels}
@@ -151,7 +149,7 @@ class MyAssets extends React.PureComponent<MyAssetsProps, MyAssetsState> {
           tabIndicatorClassName={styles.myAssetsTabIndicator}
           tabSelectedClassName={styles.myAssetsTabSelected}
         />
-        <div className={styles.tokens}>{this.renderTokensList(tokens)}</div>
+        <div className={styles.tokens}>{this.renderTokensList(currentTokens)}</div>
         {/* <div className={styles.transactions}>
           <p className={styles.pageTitle}>
             {Object.entries(transactions).length

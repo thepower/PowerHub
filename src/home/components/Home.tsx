@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { FullScreenLoader, ShallowPageTemplate, TopBar } from 'common';
 import { Route, Switch } from 'react-router-dom';
+import { AddAssetsPage } from 'myAssets/pages/AddAssets/AddAssetsPage';
 import AssetsSection from './AssetsSection';
 import { useAppDispatch, useAppSelector } from '../../application/store';
 import { loadBalanceTrigger } from '../../myAssets/slices/walletSlice';
@@ -26,6 +27,12 @@ const Home = () => {
     <Switch>
       <Route path={`${RoutesEnum.myAssets}${RoutesEnum.send}`}>
         <Send />
+      </Route>
+      <Route path={`${RoutesEnum.myAssets}${RoutesEnum.add}`}>
+        <AddAssetsPage />
+      </Route>
+      <Route path={`${RoutesEnum.myAssets}/:tokenType/:tokenAddress${RoutesEnum.transactions}`}>
+        <div />
       </Route>
       <Route path={RoutesEnum.myAssets}>
         <MyAssets />

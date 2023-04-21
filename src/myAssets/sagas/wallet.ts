@@ -2,7 +2,7 @@ import { put, select } from 'typed-redux-saga';
 import { getWalletApi } from '../../application/selectors';
 import { getWalletAddress } from '../../account/selectors/accountSelectors';
 import { LoadBalancePayloadType, TransactionPayloadType } from '../types';
-import { loadTransactionsTrigger, setLastBlock, setWalletData } from '../slices/walletSlice';
+import { loadTransactionsTrigger, setLastBlock, setWalletBalanceData } from '../slices/walletSlice';
 import { setTransactions } from '../slices/transactionsSlice';
 import { getWalletLastBlock } from '../selectors/walletSelectors';
 
@@ -13,7 +13,7 @@ export function* loadBalanceSaga() {
 
   const balance: LoadBalancePayloadType = yield WalletAPI.loadBalance(walletAddress!);
 
-  yield* put(setWalletData(balance));
+  yield* put(setWalletBalanceData(balance));
 }
 
 export function* loadTransactionsSaga({ payload }: ReturnType<typeof loadTransactionsTrigger>) {
