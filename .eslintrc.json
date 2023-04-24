@@ -1,14 +1,23 @@
 {
   "root": true,
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint"],
-  "extends": ["airbnb", "airbnb-typescript", "airbnb/hooks", "plugin:@typescript-eslint/recommended"],
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "extends": [
+    "airbnb",
+    "airbnb-typescript",
+    "airbnb/hooks",
+    "plugin:@typescript-eslint/recommended"
+  ],
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
     },
     "sourceType": "module",
-    "project": ["./tsconfig.json"]
+    "project": [
+      "./tsconfig.json"
+    ]
   },
   "env": {
     "browser": true,
@@ -27,8 +36,14 @@
     "no-empty": 1,
     "react-hooks/rules-of-hooks": 2,
     "react-hooks/exhaustive-deps": 1,
-    "quotes": ["error", "single"],
-    "comma-dangle": ["error", "always-multiline"],
+    "quotes": [
+      "error",
+      "single"
+    ],
+    "comma-dangle": [
+      "error",
+      "always-multiline"
+    ],
     "no-shadow": 0,
     "@typescript-eslint/no-explicit-any": 0,
     "@typescript-eslint/no-unused-vars": [
@@ -42,7 +57,10 @@
     "@typescript-eslint/no-shadow": 0,
     "no-await-in-loop": 0,
     "no-mixed-operators": 0,
-    "no-restricted-syntax": ["off", "ForOfStatement"],
+    "no-restricted-syntax": [
+      "off",
+      "ForOfStatement"
+    ],
     "react/jsx-props-no-spreading": 0,
     "react/jsx-wrap-multilines": 0,
     "import/prefer-default-export": 0,
@@ -55,9 +73,22 @@
     "react/require-default-props": 0,
     "operator-linebreak": 0,
     "jsx-a11y/no-static-element-interactions": 0,
-    "no-param-reassign": ["error", { "props": false }],
+    "no-param-reassign": [
+      "error",
+      {
+        "props": false
+      }
+    ],
     "class-methods-use-this": 0,
-    "max-len": ["error", { "code": 170 }],
+    "max-len": [
+      "warn",
+      {
+        "code": 120,
+        "ignoreStrings": true,
+        "ignorePattern": "^\\s*var\\s.+=\\s*require\\s*\\(",
+        "ignoreUrls": true
+      }
+    ],
     "import/no-cycle": 0,
     "no-bitwise": "off",
     "max-classes-per-file": 0,

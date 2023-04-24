@@ -1,0 +1,32 @@
+@import 'src/styles/utils';
+
+.transactions {
+  padding: 30px 32px;
+
+  @include mobile {
+    padding: 40px 15px;
+  }
+}
+
+.groupByDates {
+  margin-top: 40px;
+
+  > :not(:first-child) {
+    margin-top: 40px;
+  }
+}
+
+.date {
+  color: #f5f5f7;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.transactionsList {
+  margin-top: 40px;
+
+  > :not(:first-child) {
+    margin-top: 40px;
+  }
+}

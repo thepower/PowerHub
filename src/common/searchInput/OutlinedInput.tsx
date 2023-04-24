@@ -14,8 +14,8 @@ export interface OutlinedInputProps extends MuiOutlinedInputProps {
 export const OutlinedInput: React.FC<OutlinedInputProps> = ({
   errorMessage, className, error, ...otherProps
 }) => (
-  <FormControl>
-    <MuiOutlinedInput className={className} classes={styles} {...otherProps} />
+  <FormControl className={className}>
+    <MuiOutlinedInput classes={styles} {...otherProps} />
     {error && <FormHelperText className={styles.errorMessage}>{errorMessage}</FormHelperText>}
   </FormControl>
 );

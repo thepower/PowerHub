@@ -4,9 +4,15 @@ import { tokensAdapter } from '../slices/tokensSlice';
 
 const {
   selectAll,
+  selectById,
 } = tokensAdapter.getSelectors((state: RootState) => state.tokens);
 
 export const getTokens = createSelector(
   selectAll,
   (tokens) => tokens,
+);
+
+export const getTokensByID = createSelector(
+  selectById,
+  (token) => token,
 );

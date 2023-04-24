@@ -13,21 +13,31 @@ type OwnProps = { token: TokenType, onClickSwitch?: (checked: boolean) => void }
 type TokenProps = OwnProps;
 
 class Token extends React.PureComponent<TokenProps> {
+  renderWrapper = (children: React.ReactNode) => {
+    const { token, onClickSwitch } = this.props;
+    return onClickSwitch ?
+      <div className={styles.token}>{children}</div>
+      : <Link
+          to={`${RoutesEnum.myAssets}/${token.type}/${token.address}${RoutesEnum.transactions}`}
+          className={styles.token}
+      >
+        {children}
+      </Link>;
+  };
+
   render() {
     const { token, onClickSwitch } = this.props;
     const {
       symbol, name, amount, decimals,
     } = token;
-    let formattedAmount = '0';
-    if (typeof amount === 'string') {
-      formattedAmount = amount;
-    } else {
-      formattedAmount = BigNumber.from(amount).div(decimals).toString();
-    }
+
+    const formattedAmount = typeof amount === 'string'
+      ? amount
+      : BigNumber.from(amount).div(decimals).toString();
 
     return (
       <>
-        <Link to={`${RoutesEnum.myAssets}/${token.type}/${token.address}/transactions`} className={styles.token}>
+        {this.renderWrapper(
           <div className={styles.row}>
             <div className={cn(styles.icon)} />
             <div className={styles.info}>
@@ -37,12 +47,16 @@ class Token extends React.PureComponent<TokenProps> {
               </span>
             </div>
             {onClickSwitch ?
-              <Switch className={styles.tokenSwitch} onChange={(e) => onClickSwitch(e.target.checked)} checked={token.isShow} /> :
+              <Switch
+                className={styles.tokenSwitch}
+                onChange={(e) => onClickSwitch(e.target.checked)}
+                checked={token.isShow}
+              /> :
               <span className={styles.amount}>
                 {formattedAmount}
               </span>}
-          </div>
-        </Link>
+          </div>,
+        )}
         <Divider className={styles.divider} />
       </>
     );

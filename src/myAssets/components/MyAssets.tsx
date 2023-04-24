@@ -54,25 +54,6 @@ class MyAssets extends React.PureComponent<MyAssetsProps, MyAssetsState> {
     this.setState({ tab: value });
   };
 
-  // handleChangeView = (inView: boolean) => {
-  //   if (inView) {
-  //     this.props.loadTransactionsTrigger();
-  //   }
-  // };
-
-  // renderTransactionsList = ([date, transactions]: [date: string, transactions: TransactionType[]]) => (
-  //   <li key={date}>
-  //     <p className={styles.date}>{date}</p>
-  //     <ul className={styles.transactionsList}>
-  //       {transactions.map((trx) => (
-  //         <li key={trx.id}>
-  //           <Transaction trx={trx} />
-  //         </li>
-  //       ))}
-  //     </ul>
-  //   </li>
-  // );
-
   renderTokensList = (tokens: TokenType[]) => (
     <ul className={styles.tokensList}>
       {tokens.map((token) => (
@@ -103,7 +84,7 @@ class MyAssets extends React.PureComponent<MyAssetsProps, MyAssetsState> {
       amount,
     }));
 
-    const erc20tokens = tokens;
+    const erc20tokens = tokens.filter((token) => token.isShow);
 
     const tokensMap = {
       [MyAssetsTabs.PowerNativeTokens]: nativeTokens,
@@ -150,18 +131,6 @@ class MyAssets extends React.PureComponent<MyAssetsProps, MyAssetsState> {
           tabSelectedClassName={styles.myAssetsTabSelected}
         />
         <div className={styles.tokens}>{this.renderTokensList(currentTokens)}</div>
-        {/* <div className={styles.transactions}>
-          <p className={styles.pageTitle}>
-            {Object.entries(transactions).length
-              ? 'Transaction history'
-              : 'Make the first transaction and they will be reflected below'}
-          </p>
-          <Divider />
-          <ul className={styles.groupByDates}>{Object.entries(transactions).map(this.renderTransactionsList)}</ul>
-        </div>
-        <InView onChange={this.handleChangeView}>
-          <div />
-        </InView> */}
       </DeepPageTemplate>
     );
   }

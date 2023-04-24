@@ -1,8 +1,9 @@
 import { put, select } from 'typed-redux-saga';
+import { loadTransactionsTrigger } from 'myAssets/slices/transactionsSlice';
 import { getWalletApi } from '../../application/selectors';
 import { getWalletAddress } from '../../account/selectors/accountSelectors';
 import { LoadBalancePayloadType, TransactionPayloadType } from '../types';
-import { loadTransactionsTrigger, setLastBlock, setWalletBalanceData } from '../slices/walletSlice';
+import { setLastBlock, setWalletBalanceData } from '../slices/walletSlice';
 import { setTransactions } from '../slices/transactionsSlice';
 import { getWalletLastBlock } from '../selectors/walletSelectors';
 

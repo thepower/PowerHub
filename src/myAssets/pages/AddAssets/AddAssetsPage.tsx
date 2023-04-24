@@ -57,7 +57,10 @@ class AddAssetsPageComponent extends React.PureComponent<AddAssetsPageProps, Add
     return <ul className={styles.tokensList}>
       {tokens.map((token) => (
         <li key={token.address}>
-          <Token token={token} onClickSwitch={() => toggleTokenShow({ address: token.address, isShow: !token.isShow })} />
+          <Token
+            token={token}
+            onClickSwitch={() => toggleTokenShow({ address: token.address, isShow: !token.isShow })}
+          />
         </li>
       ))}
     </ul>;
@@ -85,6 +88,7 @@ class AddAssetsPageComponent extends React.PureComponent<AddAssetsPageProps, Add
           className={styles.addAssetsPageFormButton}
           onClick={() => addTokenTrigger(address)}
           variant="filled"
+          disabled={!address}
         >
           Add assets
         </Button>
@@ -103,23 +107,27 @@ class AddAssetsPageComponent extends React.PureComponent<AddAssetsPageProps, Add
 
     const currentTokens = tokensMap[tab];
 
-    return <DeepPageTemplate topBarTitle="Add assets" backUrl="/my-assets">
-      <div className={styles.addAssetsPage}>
-        <SearchInput className={styles.addAssetsPageSearchInput} onClickSearch={() => {}} />
-        <Tabs
-          tabs={AddAssetsTabs}
-          tabsLabels={AddAssetsTabsLabels}
-          value={tab}
-          onChange={this.onChangeTab}
-          tabsRootClassName={styles.addAssetsPageTabsRoot}
-          tabsHolderClassName={styles.addAssetsPageTabsHolder}
-          tabClassName={styles.addAssetsPageTab}
-          tabIndicatorClassName={styles.addAssetsPageTabIndicator}
-          tabSelectedClassName={styles.addAssetsPageTabSelected}
-        />
-        {tab === AddAssetsTabs.AddAssets ? this.renderAddAssetsForm() : <div className={styles.tokens}>{this.renderTokensList(currentTokens)}</div>}
-      </div>
-    </DeepPageTemplate>;
+    return (
+      <DeepPageTemplate topBarTitle="Add assets" backUrl="/my-assets">
+        <div className={styles.addAssetsPage}>
+          <SearchInput className={styles.addAssetsPageSearchInput} onClickSearch={() => {}} />
+          <Tabs
+            tabs={AddAssetsTabs}
+            tabsLabels={AddAssetsTabsLabels}
+            value={tab}
+            onChange={this.onChangeTab}
+            tabsRootClassName={styles.addAssetsPageTabsRoot}
+            tabsHolderClassName={styles.addAssetsPageTabsHolder}
+            tabClassName={styles.addAssetsPageTab}
+            tabIndicatorClassName={styles.addAssetsPageTabIndicator}
+            tabSelectedClassName={styles.addAssetsPageTabSelected}
+          />
+          {tab === AddAssetsTabs.AddAssets ?
+            this.renderAddAssetsForm() :
+            <div className={styles.tokens}>{this.renderTokensList(currentTokens)}</div>}
+        </div>
+      </DeepPageTemplate>
+    );
   }
 }
 

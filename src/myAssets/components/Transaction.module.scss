@@ -64,7 +64,7 @@
 }
 
 .msg {
-  display: box;
+  display: flex;
   overflow: hidden;
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
