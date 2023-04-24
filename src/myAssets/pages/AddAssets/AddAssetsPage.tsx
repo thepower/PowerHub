@@ -27,6 +27,7 @@ const mapStateToProps = (state: RootState) => ({
 });
 
 interface AddAssetsPageState {
+  search: string;
   address: string;
   tab: AddAssetsTabs;
 }
@@ -40,6 +41,7 @@ class AddAssetsPageComponent extends React.PureComponent<AddAssetsPageProps, Add
 
     this.state = {
       address: '',
+      search: '',
       tab: AddAssetsTabs.Erc20,
     };
   }
@@ -50,6 +52,10 @@ class AddAssetsPageComponent extends React.PureComponent<AddAssetsPageProps, Add
 
   onChangeAddressInput = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     this.setState({ address: e.target.value });
+  };
+
+  onChangeSearchInput = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    this.setState({ search: e.target.value });
   };
 
   renderTokensList = (tokens: TokenType[]) => {
@@ -67,7 +73,9 @@ class AddAssetsPageComponent extends React.PureComponent<AddAssetsPageProps, Add
   };
 
   renderAddAssetsForm = () => {
-    const { onChangeAddressInput, props, state } = this;
+    const {
+      onChangeAddressInput, props, state,
+    } = this;
     const { addTokenTrigger } = props;
     const { address } = state;
     return (
@@ -76,6 +84,7 @@ class AddAssetsPageComponent extends React.PureComponent<AddAssetsPageProps, Add
           You can add any standard token or standard asset....................................................
           Enter the address, scan the code and click &quot;add asset&quot;
         </div>
+
         <OutlinedInput
           placeholder="Assets adress"
           fullWidth
@@ -97,7 +106,7 @@ class AddAssetsPageComponent extends React.PureComponent<AddAssetsPageProps, Add
 
   render() {
     const { tokens: erc20Tokens } = this.props;
-    const { tab } = this.state;
+    const { tab, search } = this.state;
 
     const tokensMap = {
       [AddAssetsTabs.Erc20]: erc20Tokens,
@@ -107,10 +116,21 @@ class AddAssetsPageComponent extends React.PureComponent<AddAssetsPageProps, Add
 
     const currentTokens = tokensMap[tab];
 
+    const filteredTokens = currentTokens?.filter((token) => {
+      const regexp = new RegExp(search, 'gmi');
+      const stringifiedToken = JSON.stringify(token);
+      return !search || regexp.test(stringifiedToken);
+    });
+
     return (
-      <DeepPageTemplate topBarTitle="Add assets" backUrl="/my-assets">
+      <DeepPageTemplate topBarTitle="Add assets" backUrl="/my-assets" backUrlText="My assets">
         <div className={styles.addAssetsPage}>
-          <SearchInput className={styles.addAssetsPageSearchInput} onClickSearch={() => {}} />
+          <SearchInput
+            className={styles.addAssetsPageSearchInput}
+            onClickSearch={() => {}}
+            onChange={this.onChangeSearchInput}
+            value={search}
+          />
           <Tabs
             tabs={AddAssetsTabs}
             tabsLabels={AddAssetsTabsLabels}
@@ -122,9 +142,9 @@ class AddAssetsPageComponent extends React.PureComponent<AddAssetsPageProps, Add
             tabIndicatorClassName={styles.addAssetsPageTabIndicator}
             tabSelectedClassName={styles.addAssetsPageTabSelected}
           />
-          {tab === AddAssetsTabs.AddAssets ?
-            this.renderAddAssetsForm() :
-            <div className={styles.tokens}>{this.renderTokensList(currentTokens)}</div>}
+          {tab === AddAssetsTabs.AddAssets
+            ? this.renderAddAssetsForm()
+            : <div className={styles.tokens}>{this.renderTokensList(filteredTokens)}</div>}
         </div>
       </DeepPageTemplate>
     );

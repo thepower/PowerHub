@@ -2,7 +2,7 @@ import React from 'react';
 import { push } from 'connected-react-router';
 import { connect, ConnectedProps } from 'react-redux';
 
-import { DeepPageTemplate } from 'common';
+import { DeepPageTemplate, FullScreenLoader } from 'common';
 
 import { RootState } from 'application/store';
 
@@ -15,7 +15,7 @@ import { RouteComponentProps } from 'react-router';
 import { TokenKind } from 'myAssets/types';
 import { getTokensByID } from 'myAssets/selectors/tokensSelectors';
 import { setLastBlockToInitialLastBlock } from 'myAssets/slices/walletSlice';
-import styles from './TokenTransactionsPage.module.scss';
+import styles from './AssetTransactionsPage.module.scss';
 
 type OwnProps = RouteComponentProps<{ type: TokenKind, address: string }>;
 
@@ -35,9 +35,9 @@ const mapStateToProps = (state: RootState, props: OwnProps) => ({
 });
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
-type TokenTransactionsPageProps = ConnectedProps<typeof connector>;
+type AssetTransactionsPageProps = ConnectedProps<typeof connector>;
 
-class TokenTransactionsPageComponent extends React.PureComponent<TokenTransactionsPageProps> {
+class AssetTransactionsPageComponent extends React.PureComponent<AssetTransactionsPageProps> {
   componentDidMount() {
     this.props.setLastBlockToInitialLastBlock();
     this.props.resetTransactionsState();
@@ -69,22 +69,28 @@ class TokenTransactionsPageComponent extends React.PureComponent<TokenTransactio
 
   render() {
     const {
-      transactions, token, address, type,
+      transactions, token, address, type, loading,
     } = this.props;
 
     const tokenSymbol = type === 'native' ? address : token?.symbol;
 
-    return <DeepPageTemplate topBarTitle={`${tokenSymbol} transactions`} backUrl="/my-assets">
-      <div className={styles.tokenTransactionsPage}>
-        <div className={styles.transactions}>
-          <ul className={styles.groupByDates}>{Object.entries(transactions).map(this.renderTransactionsList)}</ul>
+    if (loading) {
+      return <FullScreenLoader />;
+    }
+
+    return (
+      <DeepPageTemplate topBarTitle={`${tokenSymbol} transactions`} backUrl="/my-assets" backUrlText="My Assets">
+        <div className={styles.AssetTransactionsPage}>
+          <div className={styles.transactions}>
+            <ul className={styles.groupByDates}>{Object.entries(transactions).map(this.renderTransactionsList)}</ul>
+          </div>
+          <InView onChange={this.handleChangeView}>
+            <div />
+          </InView>
         </div>
-        <InView onChange={this.handleChangeView}>
-          <div />
-        </InView>
-      </div>
-    </DeepPageTemplate>;
+      </DeepPageTemplate>
+    );
   }
 }
 
-export const TokenTransactionsPage = connector(TokenTransactionsPageComponent);
+export const AssetTransactionsPage = connector(AssetTransactionsPageComponent);

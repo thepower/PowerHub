@@ -6,7 +6,9 @@ import {
   BuySvg, FaucetSvg, LogoIcon, SendSvg,
 } from 'common/icons';
 import { connect, ConnectedProps } from 'react-redux';
-import { MyAssetsTabs, MyAssetsTabsLabels, TokenKind } from 'myAssets/types';
+import {
+  MyAssetsTabs, MyAssetsTabsLabels, TokenPayloadType,
+} from 'myAssets/types';
 import { TokenType, updateTokensAmountsTrigger } from 'myAssets/slices/tokensSlice';
 import { Link } from 'react-router-dom';
 import { getTokens } from 'myAssets/selectors/tokensSelectors';
@@ -76,13 +78,13 @@ class MyAssets extends React.PureComponent<MyAssetsProps, MyAssetsState> {
     const { tab } = this.state;
 
     const nativeTokens = Object.entries(amounts).map(([symbol, amount]) => ({
-      type: 'native' as TokenKind,
+      type: 'native',
       name: symbol,
       address: symbol,
       symbol,
       decimals: 9,
       amount,
-    }));
+    }) as TokenPayloadType);
 
     const erc20tokens = tokens.filter((token) => token.isShow);
 
@@ -95,7 +97,7 @@ class MyAssets extends React.PureComponent<MyAssetsProps, MyAssetsState> {
     const currentTokens = tokensMap[tab];
 
     return (
-      <DeepPageTemplate topBarTitle="My Assets" backUrl="/">
+      <DeepPageTemplate topBarTitle="My Assets" backUrl="/" backUrlText="Home">
         <div className={styles.panel}>
           <div className={styles.info}>
             <p className={styles.title}>{'Total balance'}</p>
