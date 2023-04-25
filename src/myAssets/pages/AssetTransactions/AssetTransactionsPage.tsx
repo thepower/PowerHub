@@ -13,7 +13,7 @@ import { checkIfLoading } from 'network/selectors';
 import { InView } from 'react-intersection-observer';
 import { RouteComponentProps } from 'react-router';
 import { TokenKind } from 'myAssets/types';
-import { getTokensByID } from 'myAssets/selectors/tokensSelectors';
+import { getTokenByID } from 'myAssets/selectors/tokensSelectors';
 import { setLastBlockToInitialLastBlock } from 'myAssets/slices/walletSlice';
 import styles from './AssetTransactionsPage.module.scss';
 
@@ -31,7 +31,7 @@ const mapStateToProps = (state: RootState, props: OwnProps) => ({
   transactions: getGroupedWalletTransactions(state),
   type: props.match?.params?.type,
   address: props.match?.params?.address,
-  token: getTokensByID(state, props.match?.params?.address),
+  token: getTokenByID(state, props.match?.params?.address),
 });
 
 const connector = connect(mapStateToProps, mapDispatchToProps);

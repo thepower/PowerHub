@@ -12,7 +12,7 @@ export const getTokens = createSelector(
   (tokens) => tokens,
 );
 
-export const getTokensByID = createSelector(
+export const getTokenByID = createSelector(
   selectById,
   (token) => token,
 );

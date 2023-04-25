@@ -18,7 +18,7 @@ import { getGroupedWalletTransactions } from '../selectors/transactionsSelectors
 import styles from './MyAssets.module.scss';
 import { setShowUnderConstruction } from '../../application/slice/applicationSlice';
 import { RoutesEnum } from '../../application/typings/routes';
-import Token from './Token';
+import Asset from './Asset';
 import AddButton from './AddButton';
 
 const connector = connect(
@@ -56,11 +56,11 @@ class MyAssets extends React.PureComponent<MyAssetsProps, MyAssetsState> {
     this.setState({ tab: value });
   };
 
-  renderTokensList = (tokens: TokenType[]) => (
+  renderAssetsList = (assets: TokenType[]) => (
     <ul className={styles.tokensList}>
-      {tokens.map((token) => (
-        <li key={token.address}>
-          <Token token={token} />
+      {assets.map((asset) => (
+        <li key={asset.address}>
+          <Asset asset={asset} />
         </li>
       ))}
     </ul>
@@ -110,7 +110,7 @@ class MyAssets extends React.PureComponent<MyAssetsProps, MyAssetsState> {
             <CardLink label="Faucet" isAnchor to="https://faucet.thepower.io/" target="_blank" rel="noreferrer">
               <FaucetSvg />
             </CardLink>
-            <CardLink to={`${RoutesEnum.myAssets}${RoutesEnum.send}`} label="Send">
+            <CardLink to={`${RoutesEnum.myAssets}${RoutesEnum.assetSelection}`} label="Send">
               <SendSvg />
             </CardLink>
             <CardLink onClick={this.handleShowUnderConstruction} to="/buy" label="Buy">
@@ -132,7 +132,7 @@ class MyAssets extends React.PureComponent<MyAssetsProps, MyAssetsState> {
           tabIndicatorClassName={styles.myAssetsTabIndicator}
           tabSelectedClassName={styles.myAssetsTabSelected}
         />
-        <div className={styles.tokens}>{this.renderTokensList(currentTokens)}</div>
+        <div className={styles.tokens}>{this.renderAssetsList(currentTokens)}</div>
       </DeepPageTemplate>
     );
   }

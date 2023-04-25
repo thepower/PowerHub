@@ -9,7 +9,7 @@ import {
 import { RootState } from 'application/store';
 import { getWalletNativeTokensAmounts } from 'myAssets/selectors/walletSelectors';
 import { TokenType, addTokenTrigger, toggleTokenShow } from 'myAssets/slices/tokensSlice';
-import Token from 'myAssets/components/Token';
+import Asset from 'myAssets/components/Asset';
 import { OutlinedInput } from '@mui/material';
 import { getTokens } from 'myAssets/selectors/tokensSelectors';
 import styles from './AddAssetsPage.module.scss';
@@ -58,13 +58,13 @@ class AddAssetsPageComponent extends React.PureComponent<AddAssetsPageProps, Add
     this.setState({ search: e.target.value });
   };
 
-  renderTokensList = (tokens: TokenType[]) => {
+  renderAssetsList = (tokens: TokenType[]) => {
     const { toggleTokenShow } = this.props;
     return <ul className={styles.tokensList}>
       {tokens.map((token) => (
         <li key={token.address}>
-          <Token
-            token={token}
+          <Asset
+            asset={token}
             onClickSwitch={() => toggleTokenShow({ address: token.address, isShow: !token.isShow })}
           />
         </li>
@@ -116,7 +116,7 @@ class AddAssetsPageComponent extends React.PureComponent<AddAssetsPageProps, Add
 
     const currentTokens = tokensMap[tab];
 
-    const filteredTokens = currentTokens?.filter((token) => {
+    const filteredAssets = currentTokens?.filter((token) => {
       const regexp = new RegExp(search, 'gmi');
       const stringifiedToken = JSON.stringify(token);
       return !search || regexp.test(stringifiedToken);
@@ -144,7 +144,7 @@ class AddAssetsPageComponent extends React.PureComponent<AddAssetsPageProps, Add
           />
           {tab === AddAssetsTabs.AddAssets
             ? this.renderAddAssetsForm()
-            : <div className={styles.tokens}>{this.renderTokensList(filteredTokens)}</div>}
+            : <div className={styles.tokens}>{this.renderAssetsList(filteredAssets)}</div>}
         </div>
       </DeepPageTemplate>
     );

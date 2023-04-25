@@ -1,6 +1,7 @@
 export enum RoutesEnum {
   send = '/send',
   myAssets = '/my-assets',
+  assetSelection = '/selection',
   transactions = '/transactions',
   add = '/add',
   discover = '/discover',

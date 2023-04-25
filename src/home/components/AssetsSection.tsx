@@ -52,7 +52,7 @@ const AssetsSection = ({ walletAddress, setShowUnderConstruction, amounts }: Ass
           <CardLink label="Faucet" isAnchor to="https://faucet.thepower.io/" target="_blank" rel="noreferrer">
             <FaucetSvg />
           </CardLink>
-          <CardLink to={`${RoutesEnum.myAssets}${RoutesEnum.send}`} label="Send">
+          <CardLink to={`${RoutesEnum.myAssets}${RoutesEnum.assetSelection}`} label="Send">
             <SendSvg />
           </CardLink>
           <CardLink to="/buy" label="Buy" onClick={handleShowUnderConstruction}>

@@ -1,6 +1,6 @@
 @import 'src/styles/utils';
 
-.token {
+.asset {
   display: block;
   padding: 12px 16px;
   border-radius: 5px;
@@ -87,6 +87,10 @@
   margin-top: 20px;
 }
 
-.tokenSwitch {
+.assetSwitch {
+  margin-left: auto;
+}
+
+.assetCheckBox {
   margin-left: auto;
 }
