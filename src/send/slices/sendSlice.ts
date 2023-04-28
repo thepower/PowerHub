@@ -36,4 +36,13 @@ export const sendTrxTrigger = createAction<{
   comment: Maybe<string>;
 }>('send/sendTrxTrigger');
 
+export const sendTokenTrxTrigger = createAction<{
+  wif: string;
+  from: string
+  to: string;
+  address: string,
+  decimals: number,
+  amount: number;
+}>('send/sendTokenTrxTrigger');
+
 export const { actions: { setSentData, clearSentData }, reducer: sendReducer } = sendSlice;

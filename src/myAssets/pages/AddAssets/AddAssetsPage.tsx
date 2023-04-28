@@ -58,18 +58,32 @@ class AddAssetsPageComponent extends React.PureComponent<AddAssetsPageProps, Add
     this.setState({ search: e.target.value });
   };
 
-  renderAssetsList = (tokens: TokenType[]) => {
+  renderAssetsList = (assets: TokenType[]) => {
     const { toggleTokenShow } = this.props;
-    return <ul className={styles.tokensList}>
-      {tokens.map((token) => (
-        <li key={token.address}>
-          <Asset
-            asset={token}
-            onClickSwitch={() => toggleTokenShow({ address: token.address, isShow: !token.isShow })}
-          />
-        </li>
-      ))}
-    </ul>;
+
+    if (!assets.length && this.state.search) {
+      return (
+        <div className={styles.noTokens}>
+          Asset not found
+        </div>);
+    }
+    if (!assets.length) {
+      return (
+        <div className={styles.noTokens}>
+          Your tokens will be here
+        </div>);
+    }
+    return (
+      <ul className={styles.tokensList}>
+        {assets.map((asset) => (
+          <li key={asset.address}>
+            <Asset
+              asset={asset}
+              onClickSwitch={() => toggleTokenShow({ address: asset.address, isShow: !asset.isShow })}
+            />
+          </li>
+        ))}
+      </ul>);
   };
 
   renderAddAssetsForm = () => {

@@ -6,7 +6,7 @@ import { BigNumber } from '@ethersproject/bignumber';
 
 import { Link } from 'react-router-dom';
 import { RoutesEnum } from 'application/typings/routes';
-import { CheckedIcon, UnCheckedIcon } from 'common/icons';
+import { CheckedIcon, LogoIcon, UnCheckedIcon } from 'common/icons';
 import styles from './Asset.module.scss';
 
 type OwnProps = {
@@ -24,7 +24,7 @@ class Asset extends React.PureComponent<AssetProps> {
     const { amount, decimals } = asset;
     return typeof amount === 'string'
       ? amount
-      : BigNumber.from(amount).div(decimals).toString();
+      : BigNumber.from(amount).div(BigNumber.from(decimals).mul(10)).toString();
   }
 
   onClickAsset = () => {
@@ -58,6 +58,18 @@ class Asset extends React.PureComponent<AssetProps> {
     return onClickCheckBox ? `${symbol} ${this.formattedAmount}` : symbol;
   };
 
+  renderIcon = () => {
+    const { asset } = this.props;
+
+    switch (asset.address) {
+      case 'SK':
+        return <LogoIcon />;
+
+      default:
+        return <div />;
+    }
+  };
+
   renderRightCol = () => {
     const {
       asset, onClickSwitch, onClickCheckBox, isCheckBoxChecked,
@@ -87,7 +99,7 @@ class Asset extends React.PureComponent<AssetProps> {
 
   render() {
     const { asset } = this.props;
-    const { renderRightCol, renderSymbol } = this;
+    const { renderRightCol, renderSymbol, renderIcon } = this;
     const {
       name,
     } = asset;
@@ -96,7 +108,7 @@ class Asset extends React.PureComponent<AssetProps> {
       <>
         {this.renderWrapper(
           <div className={styles.row}>
-            <div className={cn(styles.icon)} />
+            <div className={cn(styles.icon)}>{renderIcon()}</div>
             <div className={styles.info}>
               <span className={styles.symbol}>{renderSymbol()}</span>
               <span className={styles.name}>

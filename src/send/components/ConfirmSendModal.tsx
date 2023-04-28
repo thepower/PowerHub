@@ -2,15 +2,17 @@ import React, { useCallback, useMemo } from 'react';
 import { Form, Formik, FormikHelpers } from 'formik';
 import { CryptoApi } from '@thepowereco/tssdk';
 import { connect, ConnectedProps } from 'react-redux';
+import { TokenType } from 'myAssets/slices/tokensSlice';
 import { Button, Modal, OutlinedInput } from '../../common';
 import styles from './ConfirmSendModal.module.scss';
 import { RootState } from '../../application/store';
 import { getWalletAddress, getWalletData } from '../../account/selectors/accountSelectors';
-import { sendTrxTrigger } from '../slices/sendSlice';
+import { sendTokenTrxTrigger, sendTrxTrigger } from '../slices/sendSlice';
 
 interface OwnProps {
   open: boolean;
   onClose: () => void;
+  token?: TokenType;
   trxValues: {
     amount: string;
     comment: string;
@@ -28,35 +30,47 @@ const connector = connect(
   }),
   {
     sendTrxTrigger,
+    sendTokenTrxTrigger,
   },
 );
 
 type ConfirmSendModalProps = ConnectedProps<typeof connector> & OwnProps;
 
 const ConfirmSendModal: React.FC<ConfirmSendModalProps> = ({
-  onClose, open, trxValues, wif, from, sendTrxTrigger,
+  onClose, open, trxValues, wif, from, sendTrxTrigger, token, sendTokenTrxTrigger,
 }) => {
   const handleSubmit = useCallback(async (values: Values, formikHelpers: FormikHelpers<Values>) => {
     try {
       const decryptedWif = await CryptoApi.decryptWif(wif, values.password);
-      sendTrxTrigger({
-        from,
-        to: trxValues.address!,
-        comment: trxValues.comment,
-        amount: Number(trxValues.amount)!,
-        wif: decryptedWif,
-      });
+      if (!token) {
+        sendTrxTrigger({
+          from,
+          to: trxValues.address!,
+          comment: trxValues.comment,
+          amount: Number(trxValues.amount)!,
+          wif: decryptedWif,
+        });
+      } else {
+        sendTokenTrxTrigger({
+          address: token.address,
+          amount: Number(trxValues.amount),
+          decimals: token.decimals,
+          from,
+          to: trxValues.address!,
+          wif: decryptedWif,
+        });
+      }
       onClose();
     } catch (e) {
       formikHelpers.setFieldError('password', 'Invalid password');
     }
-  }, [from, onClose, sendTrxTrigger, trxValues, wif]);
+  }, [from, onClose, sendTrxTrigger, sendTokenTrxTrigger, trxValues, wif, token]);
 
   const fields = useMemo(() => [
     { key: 'From', value: from },
     { key: 'To', value: trxValues.address },
-    { key: 'Amount', value: `${trxValues.amount} SK` },
-  ], [from, trxValues]);
+    { key: 'Amount', value: `${trxValues.amount} ${token ? token.symbol : 'SK'}` },
+  ], [from, trxValues, token]);
 
   return (
     <Modal open={open} onClose={onClose} contentClassName={styles.modalContent}>

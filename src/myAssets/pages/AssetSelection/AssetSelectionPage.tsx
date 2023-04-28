@@ -55,17 +55,19 @@ class AssetSelectionPageComponent extends React.PureComponent<AssetSelectionPage
 
   renderAssetsList = (assets: TokenType[]) => {
     const { state, onClickCheckBox } = this;
-    return <ul className={styles.tokensList}>
-      {assets.map((token) => <li key={token.address}>
-        <Asset
-          asset={token}
-          isCheckBoxChecked={token.type === 'native' ?
-            state.selectedAsset === token.symbol :
-            state.selectedAsset === token.address}
-          onClickCheckBox={onClickCheckBox}
-        />
-      </li>)}
-    </ul>;
+    return (
+      <ul className={styles.tokensList}>
+        {assets.map((token) => (
+          <li key={token.address}>
+            <Asset
+              asset={token}
+              isCheckBoxChecked={token.type === 'native' ?
+                state.selectedAsset === token.symbol :
+                state.selectedAsset === token.address}
+              onClickCheckBox={onClickCheckBox}
+            />
+          </li>))}
+      </ul>);
   };
 
   render() {
@@ -82,15 +84,16 @@ class AssetSelectionPageComponent extends React.PureComponent<AssetSelectionPage
       decimals: 9,
       amount,
     }) as TokenPayloadType);
+
     const nativeAssetAmount = getWalletNativeTokensAmountByID(selectedAsset);
     const asset = getTokenByID(selectedAsset);
     const assetIndetifier = nativeAssetAmount ? selectedAsset : asset?.address;
-    const type = nativeAssetAmount ? 'native' : asset?.type;
+    const assetType = nativeAssetAmount ? 'native' : asset?.type;
     return (
       <DeepPageTemplate topBarTitle="Asset selection" backUrl="/my-assets" backUrlText="My assets">
         <div className={styles.assetSelection}>
           <div className={styles.tokens}>{this.renderAssetsList([...nativeTokens, ...erc20Tokens])}</div>
-          <Link to={`${RoutesEnum.myAssets}/${type}/${assetIndetifier}${RoutesEnum.send}`}>
+          <Link to={`${RoutesEnum.myAssets}/${assetType}/${assetIndetifier}${RoutesEnum.send}`}>
             <Button disabled={!asset && !nativeAssetAmount} className={styles.assetSelectionFixedButton} variant="filled">Next</Button>
           </Link>
         </div>

@@ -56,15 +56,22 @@ class MyAssets extends React.PureComponent<MyAssetsProps, MyAssetsState> {
     this.setState({ tab: value });
   };
 
-  renderAssetsList = (assets: TokenType[]) => (
-    <ul className={styles.tokensList}>
-      {assets.map((asset) => (
-        <li key={asset.address}>
-          <Asset asset={asset} />
-        </li>
-      ))}
-    </ul>
-  );
+  renderAssetsList = (assets: TokenType[]) => {
+    if (!assets.length) {
+      return <div className={styles.noTokens}>
+        Your tokens will be here
+      </div>;
+    }
+
+    return (
+      <ul className={styles.tokensList}>
+        {assets.map((asset) => (
+          <li key={asset.address}>
+            <Asset asset={asset} />
+          </li>
+        ))}
+      </ul>);
+  };
 
   handleShowUnderConstruction = (event: React.MouseEvent) => {
     event.preventDefault();
@@ -91,7 +98,7 @@ class MyAssets extends React.PureComponent<MyAssetsProps, MyAssetsState> {
     const tokensMap = {
       [MyAssetsTabs.PowerNativeTokens]: nativeTokens,
       [MyAssetsTabs.Erc20]: erc20tokens,
-      // [MyAssetsTabs.NFT]: [],
+      // [MyAssetsTabs.NFT]: [],/my-assets
     };
 
     const currentTokens = tokensMap[tab];
@@ -103,7 +110,7 @@ class MyAssets extends React.PureComponent<MyAssetsProps, MyAssetsState> {
             <p className={styles.title}>{'Total balance'}</p>
             <p className={styles.balance}>
               <LogoIcon className={styles.icon} />
-              {amounts?.SK === '0' ? <span className={styles.emptyTitle}>Your tokens will be here</span> : amounts?.SK}
+              {!amounts?.SK || amounts?.SK === '0' ? <span className={styles.emptyTitle}>Your tokens will be here</span> : amounts?.SK}
             </p>
           </div>
           <div className={styles.linksGroup}>
@@ -132,7 +139,9 @@ class MyAssets extends React.PureComponent<MyAssetsProps, MyAssetsState> {
           tabIndicatorClassName={styles.myAssetsTabIndicator}
           tabSelectedClassName={styles.myAssetsTabSelected}
         />
-        <div className={styles.tokens}>{this.renderAssetsList(currentTokens)}</div>
+        <div className={styles.tokens}>
+          {this.renderAssetsList(currentTokens)}
+        </div>
       </DeepPageTemplate>
     );
   }

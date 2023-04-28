@@ -15,6 +15,7 @@ import { RouteComponentProps } from 'react-router';
 import { TokenKind } from 'myAssets/types';
 import { getTokenByID } from 'myAssets/selectors/tokensSelectors';
 import { setLastBlockToInitialLastBlock } from 'myAssets/slices/walletSlice';
+import { isEmpty } from 'lodash';
 import styles from './AssetTransactionsPage.module.scss';
 
 type OwnProps = RouteComponentProps<{ type: TokenKind, address: string }>;
@@ -74,7 +75,7 @@ class AssetTransactionsPageComponent extends React.PureComponent<AssetTransactio
 
     const tokenSymbol = type === 'native' ? address : token?.symbol;
 
-    if (loading) {
+    if (loading && isEmpty(transactions)) {
       return <FullScreenLoader />;
     }
 

@@ -41,7 +41,7 @@ const AssetsSection = ({ walletAddress, setShowUnderConstruction, amounts }: Ass
         <div className={styles.majorWallet}>
           <p className={styles.total}>
             <LogoIcon className={styles.icon} />
-            {amounts?.SK === '0' ? <span className={styles.emptyTitle}>Your tokens will be here</span> : amounts.SK}
+            {!amounts?.SK || amounts?.SK === '0' ? <span className={styles.emptyTitle}>Your tokens will be here</span> : amounts.SK}
           </p>
           <CopyButton textButton={walletAddress} className={styles.addressButton} iconClassName={styles.copyIcon} />
         </div>
