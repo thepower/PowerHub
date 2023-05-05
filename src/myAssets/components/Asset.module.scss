@@ -1,0 +1,96 @@
+@import 'src/styles/utils';
+
+.asset {
+  display: block;
+  padding: 12px 16px;
+  border-radius: 5px;
+  margin-top: 40px;
+  background: #1b222c;
+
+  &:hover {
+    background: #252b35;
+
+    .icon {
+      background: #2e353d;
+    }
+  }
+
+  &[aria-expanded='false'] {
+    .msg {
+      -webkit-line-clamp: 2;
+    }
+  }
+
+  &[aria-expanded='true'] {
+    background: rgba(37, 43, 53, 0.7);
+
+    .icon {
+      background: rgba(46, 53, 61, 0.7);
+    }
+
+    .msg {
+      -webkit-line-clamp: unset;
+    }
+  }
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.icon {
+  display: flex;
+  width: 48px;
+  height: 48px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  margin-right: 12px;
+  background: #252b35;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+}
+
+.name {
+  color: #f5f5f7;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+
+  @include mobile {
+    font-size: 14px;
+    line-height: 16px;
+  }
+}
+
+.amount {
+  margin-left: auto;
+  color: #f5f5f7;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 24px;
+
+  @include mobile {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 20px;
+  }
+}
+
+.divider {
+  margin-top: 20px;
+}
+
+.assetSwitch {
+  margin-left: auto;
+}
+
+.assetCheckBox {
+  margin-left: auto;
+}

@@ -1,0 +1,17 @@
+.assetSelection {
+  display: flex;
+  flex-direction: column;
+  padding: 40px 0;
+}
+
+.tokensList {
+  padding: 0 32px;
+}
+
+.assetSelectionFixedButton {
+  position: fixed;
+  right: 50%;
+  bottom: 32px;
+  width: max-content;
+  transform: translateX(50%);
+}

@@ -64,7 +64,7 @@
 }
 
 .msg {
-  display: -webkit-box;
+  display: flex;
   overflow: hidden;
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
@@ -186,7 +186,7 @@
   line-height: 20px;
 }
 
-.minimizedIcon {;
+.minimizedIcon {
   transform: rotate(180deg);
   transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 }

@@ -19,8 +19,10 @@ export { default as TopBar } from './topBar/TopBar';
 export { default as ShallowPageTemplate } from './shallowPageTemplate/ShallowPageTemplate';
 export { default as Divider } from './divider/Divider';
 export { default as DeepPageTemplate } from './deepPageTemplate/DeepPageTemplate';
+export { default as SearchInput } from './searchInput/SearchInput';
 export { UnderConstruction } from './underConstruction/UnderConstruction';
 export { Checkbox } from './checkbox/Checkbox';
+export { Switch } from './switch/Switch';
 export { Pagination } from './pagination/Pagination';
 export { PaginationList } from './pagination/PaginationList';
 

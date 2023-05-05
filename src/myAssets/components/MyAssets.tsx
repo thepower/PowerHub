@@ -1,66 +1,77 @@
 import React from 'react';
 import {
-  CardLink,
-  DeepPageTemplate,
-  Divider,
-  FullScreenLoader,
+  CardLink, DeepPageTemplate, Tabs,
 } from 'common';
 import {
-  BuySvg,
-  FaucetSvg,
-  LogoIcon,
-  SendSvg,
+  BuySvg, FaucetSvg, LogoIcon, SendSvg,
 } from 'common/icons';
-import { InView } from 'react-intersection-observer';
 import { connect, ConnectedProps } from 'react-redux';
+import {
+  MyAssetsTabs, MyAssetsTabsLabels, TokenPayloadType,
+} from 'myAssets/types';
+import { TokenType, updateTokensAmountsTrigger } from 'myAssets/slices/tokensSlice';
+import { Link } from 'react-router-dom';
+import { getTokens } from 'myAssets/selectors/tokensSelectors';
 import { RootState } from '../../application/store';
-import { loadTransactionsTrigger } from '../slices/walletSlice';
-import { checkIfLoading } from '../../network/selectors';
-import { getWalletAmount } from '../selectors/walletSelectors';
-import Transaction from './Transaction';
+import { getWalletNativeTokensAmounts } from '../selectors/walletSelectors';
 import { getGroupedWalletTransactions } from '../selectors/transactionsSelectors';
 import styles from './MyAssets.module.scss';
-import { TransactionType } from '../slices/transactionsSlice';
 import { setShowUnderConstruction } from '../../application/slice/applicationSlice';
 import { RoutesEnum } from '../../application/typings/routes';
+import Asset from './Asset';
+import AddButton from './AddButton';
 
 const connector = connect(
   (state: RootState) => ({
-    amount: getWalletAmount(state),
-    loading: checkIfLoading(state, loadTransactionsTrigger.type),
+    amounts: getWalletNativeTokensAmounts(state),
+    tokens: getTokens(state),
     transactions: getGroupedWalletTransactions(state),
   }),
   {
-    loadTransactionsTrigger,
+    updateTokensAmountsTrigger,
     setShowUnderConstruction,
   },
 );
 
 type MyAssetsProps = ConnectedProps<typeof connector>;
 
-class MyAssets extends React.PureComponent<MyAssetsProps> {
-  componentDidMount() {
-    this.props.loadTransactionsTrigger();
+type MyAssetsState = {
+  tab: MyAssetsTabs;
+};
+
+class MyAssets extends React.PureComponent<MyAssetsProps, MyAssetsState> {
+  constructor(props: MyAssetsProps) {
+    super(props);
+
+    this.state = {
+      tab: MyAssetsTabs.PowerNativeTokens,
+    };
   }
 
-  handleChangeView = (inView: boolean) => {
-    if (inView) {
-      this.props.loadTransactionsTrigger();
-    }
+  componentDidMount() {
+    this.props.updateTokensAmountsTrigger();
+  }
+
+  onChangeTab = (_event: React.SyntheticEvent, value: MyAssetsTabs) => {
+    this.setState({ tab: value });
   };
 
-  renderTransactionsList = ([date, transactions]: [date: string, transactions: TransactionType[]]) => (
-    <li key={date}>
-      <p className={styles.date}>{date}</p>
-      <ul className={styles.transactionsList}>
-        {transactions.map((trx) => (
-          <li key={trx.id}>
-            <Transaction trx={trx} />
+  renderAssetsList = (assets: TokenType[]) => {
+    if (!assets.length) {
+      return <div className={styles.noTokens}>
+        Your tokens will be here
+      </div>;
+    }
+
+    return (
+      <ul className={styles.tokensList}>
+        {assets.map((asset) => (
+          <li key={asset.address}>
+            <Asset asset={asset} />
           </li>
         ))}
-      </ul>
-    </li>
-  );
+      </ul>);
+  };
 
   handleShowUnderConstruction = (event: React.MouseEvent) => {
     event.preventDefault();
@@ -68,33 +79,45 @@ class MyAssets extends React.PureComponent<MyAssetsProps> {
   };
 
   render() {
-    const { amount, loading, transactions } = this.props;
+    const {
+      amounts, tokens,
+    } = this.props;
+    const { tab } = this.state;
 
-    if (loading && !Object.keys(transactions).length) {
-      return <FullScreenLoader />;
-    }
+    const nativeTokens = Object.entries(amounts).map(([symbol, amount]) => ({
+      type: 'native',
+      name: symbol,
+      address: symbol,
+      symbol,
+      decimals: 9,
+      amount,
+    }) as TokenPayloadType);
+
+    const erc20tokens = tokens.filter((token) => token.isShow);
+
+    const tokensMap = {
+      [MyAssetsTabs.PowerNativeTokens]: nativeTokens,
+      [MyAssetsTabs.Erc20]: erc20tokens,
+      // [MyAssetsTabs.NFT]: [],/my-assets
+    };
+
+    const currentTokens = tokensMap[tab];
 
     return (
-      <DeepPageTemplate topBarTitle="My Assets" backUrl="/">
+      <DeepPageTemplate topBarTitle="My Assets" backUrl="/" backUrlText="Home">
         <div className={styles.panel}>
           <div className={styles.info}>
-            <p className={styles.title}>
-              {'Total balance'}
-            </p>
+            <p className={styles.title}>{'Total balance'}</p>
             <p className={styles.balance}>
               <LogoIcon className={styles.icon} />
-              {amount === '0' ? (
-                <span className={styles.emptyTitle}>
-                  Your tokens will be here
-                </span>
-              ) : amount}
+              {!amounts?.SK || amounts?.SK === '0' ? <span className={styles.emptyTitle}>Your tokens will be here</span> : amounts?.SK}
             </p>
           </div>
           <div className={styles.linksGroup}>
             <CardLink label="Faucet" isAnchor to="https://faucet.thepower.io/" target="_blank" rel="noreferrer">
               <FaucetSvg />
             </CardLink>
-            <CardLink to={`${RoutesEnum.myAssets}${RoutesEnum.send}`} label="Send">
+            <CardLink to={`${RoutesEnum.myAssets}${RoutesEnum.assetSelection}`} label="Send">
               <SendSvg />
             </CardLink>
             <CardLink onClick={this.handleShowUnderConstruction} to="/buy" label="Buy">
@@ -102,21 +125,23 @@ class MyAssets extends React.PureComponent<MyAssetsProps> {
             </CardLink>
           </div>
         </div>
-        <Divider />
-        <div className={styles.transactions}>
-          <p className={styles.pageTitle}>
-            {Object.entries(transactions).length
-              ? 'Transaction history'
-              : 'Make the first transaction and they will be reflected below'}
-          </p>
-          <Divider />
-          <ul className={styles.groupByDates}>
-            {Object.entries(transactions).map(this.renderTransactionsList)}
-          </ul>
+        <Link className={styles.myAssetsAddAssetsButton} to={`${RoutesEnum.myAssets}${RoutesEnum.add}`}>
+          <AddButton>Add assets</AddButton>
+        </Link>
+        <Tabs
+          tabs={MyAssetsTabs}
+          tabsLabels={MyAssetsTabsLabels}
+          value={tab}
+          onChange={this.onChangeTab}
+          tabsRootClassName={styles.myAssetsTabsRoot}
+          tabsHolderClassName={styles.myAssetsTabsHolder}
+          tabClassName={styles.myAssetsTab}
+          tabIndicatorClassName={styles.myAssetsTabIndicator}
+          tabSelectedClassName={styles.myAssetsTabSelected}
+        />
+        <div className={styles.tokens}>
+          {this.renderAssetsList(currentTokens)}
         </div>
-        <InView onChange={this.handleChangeView}>
-          <div />
-        </InView>
       </DeepPageTemplate>
     );
   }

@@ -2341,10 +2341,10 @@
     int64-buffer "^0.1.9"
     isarray "^1.0.0"
 
-"@thepowereco/tssdk@^1.15.5":
-  version "1.15.5"
-  resolved "https://registry.yarnpkg.com/@thepowereco/tssdk/-/tssdk-1.15.5.tgz#1728054276276220ee99f213b3fc3a65786452c9"
-  integrity sha512-Vr4icrm0AwR9uO9zJn4NceSwOIJmzwlJ0RL4+moNUaOkOdYmMkYeJ9G+Z5aRLBoNhO1De/CqNAjleDIHsJvNXg==
+"@thepowereco/tssdk@^1.15.19":
+  version "1.15.19"
+  resolved "https://registry.yarnpkg.com/@thepowereco/tssdk/-/tssdk-1.15.19.tgz#6fe2088db2f78a5123ce69d3016b9d35b6e59608"
+  integrity sha512-mHFz3TsT40gp2Q7Q5/mMStoPiM9t0hJK7hcx8ujUFUMQK7/xtc30rVskTA2D6QCbGKk7F4sZ5Gm+xM6hgyUp+A==
   dependencies:
     "@ethereumjs/common" "^2.6.4"
     "@ethereumjs/tx" "^3.5.2"
@@ -10511,6 +10511,11 @@ redux-logger@^3.0.6:
   integrity sha512-JoCIok7bg/XpqA1JqCqXFypuqBbQzGQySrhFzewB7ThcnysTO30l4VCst86AuB9T9tuT03MAA56Jw2PNhRSNCg==
   dependencies:
     deep-diff "^0.3.5"
+
+redux-persist@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/redux-persist/-/redux-persist-6.0.0.tgz#b4d2972f9859597c130d40d4b146fecdab51b3a8"
+  integrity sha512-71LLMbUq2r02ng2We9S215LtPu3fY0KgaGE0k8WRgl6RkqxtGfl7HUozz1Dftwsb0D/5mZ8dwAaPbtnzfvbEwQ==
 
 redux-saga@^1.2.1:
   version "1.2.1"

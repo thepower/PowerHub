@@ -1,3 +1,5 @@
+import { BigNumber } from '@ethersproject/bignumber';
+
 export type LoadBalancePayloadType = {
   amount: {
     [key: string]: number;
@@ -14,7 +16,7 @@ export type TransactionPayloadType = {
   };
   from: string;
   kind: string;
-  payload: { amout: number, cur: string, purpose: string }[];
+  payload: { amout: number; cur: string; purpose: string }[];
   seq: number;
   sig: {
     [key: string]: string;
@@ -34,3 +36,41 @@ export type TransactionPayloadType = {
   inBlock: string;
   blockNumber: number;
 };
+
+export enum MyAssetsTabs {
+  PowerNativeTokens = 'PowerNativeTokens',
+  Erc20 = 'Erc20',
+  // NFT = 'NFT',
+}
+
+export enum MyAssetsTabsLabels {
+  PowerNativeTokens = 'Power native tokens',
+  Erc20 = 'Erc_20',
+  // NFT = 'NFT',
+}
+
+export enum AddAssetsTabs {
+  Erc20 = 'Erc20',
+  // NFT = 'NFT',
+  AddAssets = 'AddAssets',
+}
+
+export enum AddAssetsTabsLabels {
+  Erc20 = 'Erc_20',
+  // NFT = 'NFT',
+  AddAssets = 'Add other assets',
+}
+
+export type TokenKind = 'nft' | 'erc20' | 'native';
+
+export type TokenPayloadType = {
+  type: TokenKind;
+  name: string;
+  address: string;
+  symbol: string;
+  decimals: number;
+  amount?: BigNumber | string
+  isShow?: boolean;
+};
+
+export const nativeTokensNameMap = { SK: 'Smart key' };

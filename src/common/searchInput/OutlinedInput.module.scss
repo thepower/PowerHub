@@ -1,0 +1,59 @@
+@import 'src/styles/variables';
+
+.root {
+  width: auto;
+  padding: 12px 16px 12px 18px;
+  border: 1px solid rgba(245, 245, 247, 0.12);
+  border-radius: 5px;
+  background: #1b222c;
+  color: #f5f5f7;
+
+  &:hover {
+    background: #181e26;
+  }
+
+  &:hover .MuiOutlinedInput-input::placeholder {
+    color: rgba(87, 97, 114, 0.7);
+  }
+
+  &.Mui-focused {
+    background: #181e26;
+
+    .MuiOutlinedInput-notchedOutline {
+      border: transparent;
+    }
+  }
+
+  &:hover:not(.Mui-focused) .MuiOutlinedInput-notchedOutline {
+    border: transparent;
+  }
+}
+
+.input {
+  &::placeholder {
+    // color: $grey;
+  }
+
+  &[placeholder] {
+    overflow: hidden;
+    text-overflow: ellipsis !important;
+    white-space: nowrap;
+  }
+}
+
+.sizeSmall {
+  height: 48px;
+}
+
+.notchedOutline {
+  border: transparent;
+}
+
+.errorMessage {
+  position: absolute;
+  bottom: -50%;
+  color: $red;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16px;
+}

@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react';
 import { FullScreenLoader, ShallowPageTemplate, TopBar } from 'common';
 import { Route, Switch } from 'react-router-dom';
+import { AddAssetsPage } from 'myAssets/pages/AddAssets/AddAssetsPage';
+import { AssetTransactionsPage } from 'myAssets/pages/AssetTransactions/AssetTransactionsPage';
+import { AssetSelectionPage } from 'myAssets/pages/AssetSelection/AssetSelectionPage';
 import AssetsSection from './AssetsSection';
 import { useAppDispatch, useAppSelector } from '../../application/store';
 import { loadBalanceTrigger } from '../../myAssets/slices/walletSlice';
@@ -24,9 +27,18 @@ const Home = () => {
 
   return (
     <Switch>
-      <Route path={`${RoutesEnum.myAssets}${RoutesEnum.send}`}>
-        <Send />
+      <Route path={`${RoutesEnum.myAssets}/:type/:address${RoutesEnum.send}`} component={Send} />
+      <Route path={`${RoutesEnum.myAssets}${RoutesEnum.add}`}>
+        <AddAssetsPage />
       </Route>
+      <Route
+        path={`${RoutesEnum.myAssets}/:type/:address${RoutesEnum.transactions}`}
+        component={AssetTransactionsPage}
+      />
+      <Route
+        path={`${RoutesEnum.myAssets}${RoutesEnum.assetSelection}`}
+        component={AssetSelectionPage}
+      />
       <Route path={RoutesEnum.myAssets}>
         <MyAssets />
       </Route>

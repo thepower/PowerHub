@@ -1,4 +1,6 @@
-import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
+import {
+  PayloadAction, createAction, createEntityAdapter, createSlice,
+} from '@reduxjs/toolkit';
 import { TransactionPayloadType } from '../types';
 
 export type TransactionType = TransactionPayloadType & { id: string };
@@ -11,22 +13,30 @@ const transactionsSlice = createSlice({
   name: 'transactions',
   initialState: transactionsAdapter.getInitialState(),
   reducers: {
-    setTransactions: {
-      reducer: transactionsAdapter.setMany,
-      prepare: (values: Map<string, TransactionPayloadType>) => ({
-        payload: Array.from(values)
+    setTransactions: (
+      state: ReturnType<typeof transactionsAdapter.getInitialState>,
+      { payload }: PayloadAction<Map<string, TransactionPayloadType>>,
+    ) => {
+      transactionsAdapter.setMany(
+        state,
+        Array.from(payload)
           .map(([key, value]) => ({
             id: key,
             ...value,
           })),
-      }),
+      );
     },
+    resetTransactionsState: () => transactionsAdapter.getInitialState(),
   },
 });
+
+export const loadTransactionsTrigger =
+  createAction<{ tokenAddress?:string, isResetState?: boolean } | undefined>('loadTransactions');
 
 export const {
   actions: {
     setTransactions,
+    resetTransactionsState,
   },
   reducer: transactionsReducer,
 } = transactionsSlice;
