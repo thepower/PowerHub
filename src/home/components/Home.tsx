@@ -4,14 +4,15 @@ import { Route, Switch } from 'react-router-dom';
 import { AddAssetsPage } from 'myAssets/pages/AddAssets/AddAssetsPage';
 import { AssetTransactionsPage } from 'myAssets/pages/AssetTransactions/AssetTransactionsPage';
 import { AssetSelectionPage } from 'myAssets/pages/AssetSelection/AssetSelectionPage';
+import SignAndSendPage from 'sign-and-send/components/SingAndSendPage';
+import { useAppDispatch, useAppSelector } from 'application/store';
+import { loadBalanceTrigger } from 'myAssets/slices/walletSlice';
+import { checkIfLoading } from 'network/selectors';
+import { RoutesEnum } from 'application/typings/routes';
+import Send from 'send/components/Send';
 import AssetsSection from './AssetsSection';
-import { useAppDispatch, useAppSelector } from '../../application/store';
-import { loadBalanceTrigger } from '../../myAssets/slices/walletSlice';
-import { checkIfLoading } from '../../network/selectors';
-import { RoutesEnum } from '../../application/typings/routes';
 import MyAssets from '../../myAssets/components/MyAssets';
 import styles from './Home.module.scss';
-import Send from '../../send/components/Send';
 
 const Home = () => {
   const dispatch = useAppDispatch();
@@ -39,6 +40,7 @@ const Home = () => {
         path={`${RoutesEnum.myAssets}${RoutesEnum.assetSelection}`}
         component={AssetSelectionPage}
       />
+      <Route path={`${RoutesEnum.myAssets}${RoutesEnum.signAndSend}/:txBody`} component={SignAndSendPage} />
       <Route path={RoutesEnum.myAssets}>
         <MyAssets />
       </Route>

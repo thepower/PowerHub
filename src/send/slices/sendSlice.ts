@@ -45,4 +45,9 @@ export const sendTokenTrxTrigger = createAction<{
   amount: number;
 }>('send/sendTokenTrxTrigger');
 
+export const signAndSendTrxTrigger = createAction<{
+  wif: string;
+  t: number;
+}>('send/signAndSendTrxTrigger');
+
 export const { actions: { setSentData, clearSentData }, reducer: sendReducer } = sendSlice;

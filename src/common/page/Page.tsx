@@ -5,7 +5,6 @@ import styles from './Page.module.scss';
 interface PageProps extends React.ComponentProps<any> {
   className?: string;
   contentClassName?: string;
-  loading?: boolean;
   title?: string;
 }
 

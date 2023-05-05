@@ -1,4 +1,5 @@
 export enum RoutesEnum {
+  signAndSend = '/sign-and-send',
   send = '/send',
   myAssets = '/my-assets',
   assetSelection = '/selection',

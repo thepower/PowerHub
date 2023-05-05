@@ -7,7 +7,9 @@ import { loadBalanceSaga } from 'myAssets/sagas/wallet';
 import { defaultABI, updateTokenAmountSaga } from 'myAssets/sagas/tokens';
 import { BigNumber } from '@ethersproject/bignumber';
 import { toast } from 'react-toastify';
-import { sendTokenTrxTrigger, sendTrxTrigger, setSentData } from '../slices/sendSlice';
+import {
+  sendTokenTrxTrigger, sendTrxTrigger, setSentData, signAndSendTrxTrigger,
+} from '../slices/sendSlice';
 
 export function* sendTrxSaga({
   payload: {
@@ -55,4 +57,21 @@ export function* sendTokenTrxSaga({
   } catch (error: any) {
     toast.error(`An error occurred while sending the asset. Code: ${error?.code}`);
   }
+}
+
+export function* singAndSendTrxSaga({
+  payload: {
+    wif,
+  },
+}: ReturnType<typeof signAndSendTrxTrigger>) {
+  // const WalletAPI = (yield* select(getWalletApi))!;
+
+  // const { txId }: { txId: string; status: string } = yield WalletAPI.makeNewTx(wif, from, to, 'SK', amount, comment ?? '', +new Date());
+
+  // yield* put(setSentData({
+  //   txId, comment, amount, from, to,
+  // }));
+
+  // yield loadBalanceSaga();
+  // yield loadTransactionsSaga();
 }
