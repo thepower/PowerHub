@@ -24,7 +24,7 @@ const routes = [
     name: 'Discover',
     link: RoutesEnum.discover,
     Icon: DiscoverIcon,
-    disabled: false,
+    disabled: true,
   },
   {
     name: 'MyPlace',
