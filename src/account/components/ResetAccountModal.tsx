@@ -69,6 +69,7 @@ export class ResetAccountModalComponent extends React.PureComponent<ResetAccount
         </div>
       </div>
       <OutlinedInput
+        inputRef={(input) => input && input.focus()}
         placeholder={'Password'}
         className={classnames(styles.passwordInput, styles.importModalPasswordInput)}
         value={password}

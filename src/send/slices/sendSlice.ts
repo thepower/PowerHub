@@ -1,4 +1,5 @@
 import { createAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { TxBody } from 'sign-and-send/typing';
 import { Maybe } from '../../typings/common';
 
 type InitialState = {
@@ -47,7 +48,7 @@ export const sendTokenTrxTrigger = createAction<{
 
 export const signAndSendTrxTrigger = createAction<{
   wif: string;
-  t: number;
+  decodedTxBody: TxBody;
 }>('send/signAndSendTrxTrigger');
 
 export const { actions: { setSentData, clearSentData }, reducer: sendReducer } = sendSlice;

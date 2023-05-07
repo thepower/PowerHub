@@ -45,6 +45,7 @@ export class ImportAccountModal extends React.PureComponent<ImportAccountModalPr
                 </div>
               </div>
               <OutlinedInput
+                inputRef={(input) => input && input.focus()}
                 placeholder={'Password'}
                 className={classnames(styles.passwordInput, styles.importModalPasswordInput)}
                 name="password"

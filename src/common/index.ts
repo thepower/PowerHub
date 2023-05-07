@@ -4,7 +4,6 @@ export { Page } from './page/Page';
 export { default as Button } from './button/Button';
 export { LinkBlock } from './linkBlock/LinkBlock';
 export { Modal } from './modal/Modal';
-export { ConfirmModal } from './modal/ConfirmModal';
 export { Breadcrumbs } from './breadcrumbs/components/Breadcrumbs';
 export { Wizard } from './wizard/Wizard';
 export { Tabs } from './tabs/Tabs';
