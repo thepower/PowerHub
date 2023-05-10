@@ -17,7 +17,7 @@ import { checkIfLoading } from 'network/selectors';
 import { RouteComponentProps } from 'react-router';
 import { AddressApi } from '@thepowereco/tssdk';
 import { TxBody, TxKindByName, TxPurpose } from 'sign-and-send/typing';
-import { isElement, isEmpty, isObject } from 'lodash';
+import { isEmpty, isObject } from 'lodash';
 import { correctAmount } from '@thepowereco/tssdk/dist/utils/numbers';
 import CardTableKeyAccordion from 'common/cardTableKeyAccordion/CardTableKeyAccordion';
 import CardTable from 'common/cardTable/CardTable';
@@ -143,7 +143,7 @@ class SignAndSendPage extends React.Component<SignAndSendProps, SignAndSendState
 
     const comment = decodedTxBody?.e?.msg;
 
-    const isExtDataEmpty = isElement(decodedTxBody?.e);
+    const isExtDataEmpty = isEmpty(decodedTxBody?.e);
 
     return (
       <div className={styles.content}>
