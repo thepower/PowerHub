@@ -137,14 +137,13 @@ class SignAndSendPage extends React.Component<SignAndSendProps, SignAndSendState
     const feeAmount = fee?.[2] ? correctAmount(fee?.[2], fee?.[1]) : null;
     const feeCur = fee?.[1];
 
-    const call = decodedTxBody?.c && JSON.stringify(decodedTxBody?.c, null, 10);
+    const call = decodedTxBody?.c;
     const functionName = call?.[0];
     const functionArguments = call?.[1].length && JSON.stringify(call?.[1], null, 10);
 
     const comment = decodedTxBody?.e?.msg;
 
     const isExtDataEmpty = isEmpty(decodedTxBody?.e);
-
     return (
       <div className={styles.content}>
         <div className={styles.title}>Transfer of tokens</div>
@@ -181,7 +180,7 @@ class SignAndSendPage extends React.Component<SignAndSendProps, SignAndSendState
           <div className={styles.tableTitle}>Comment</div>
           <div className={styles.tableValue}>{comment || '-'}</div>
 
-          {isExtDataEmpty && <CardTableKeyAccordion valueLabel="Extra data">{renderExtraDataTable()}</CardTableKeyAccordion>}
+          {!isExtDataEmpty && <CardTableKeyAccordion valueLabel="Extra data">{renderExtraDataTable()}</CardTableKeyAccordion>}
 
         </div>
         <div className={styles.buttons}>
