@@ -58,6 +58,7 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
               onChange={formikProps.handleChange}
               onBlur={formikProps.handleBlur}
               type={'password'}
+              autoComplete="new-password"
               autoFocus
               errorMessage={formikProps.errors.password}
               error={formikProps.touched.password && Boolean(formikProps.errors.password)}

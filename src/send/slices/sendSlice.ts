@@ -49,6 +49,7 @@ export const sendTokenTrxTrigger = createAction<{
 export const signAndSendTrxTrigger = createAction<{
   wif: string;
   decodedTxBody: TxBody;
+  chainID: string
 }>('send/signAndSendTrxTrigger');
 
 export const { actions: { setSentData, clearSentData }, reducer: sendReducer } = sendSlice;

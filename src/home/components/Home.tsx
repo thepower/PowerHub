@@ -40,7 +40,7 @@ const Home = () => {
         path={`${RoutesEnum.myAssets}${RoutesEnum.assetSelection}`}
         component={AssetSelectionPage}
       />
-      <Route path={`${RoutesEnum.myAssets}${RoutesEnum.signAndSend}/:txBody`} component={SignAndSendPage} />
+      <Route path={`${RoutesEnum.myAssets}${RoutesEnum.signAndSend}/:chainID/:txBody`} component={SignAndSendPage} />
       <Route path={RoutesEnum.myAssets}>
         <MyAssets />
       </Route>

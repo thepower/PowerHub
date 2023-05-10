@@ -68,11 +68,17 @@ export function* sendTokenTrxSaga({
 
 export function* singAndSendTrxSaga({
   payload: {
-    wif, decodedTxBody,
+    wif, decodedTxBody, chainID,
   },
 }: ReturnType<typeof signAndSendTrxTrigger>) {
   try {
-    const networkAPI = (yield* select(getNetworkApi))!;
+    let networkAPI = (yield* select(getNetworkApi))!;
+
+    if (+chainID !== networkAPI.getChain()) {
+      networkAPI = new NetworkApi(+chainID);
+      yield networkAPI.bootstrap();
+    }
+
     const walletAddress = yield* select(getWalletAddress);
     let body = cloneDeep(decodedTxBody);
 
@@ -99,6 +105,7 @@ export function* singAndSendTrxSaga({
     if (!body?.e) {
       body.e = {};
     }
+
     body.f = Buffer.from(AddressApi.parseTextAddress(walletAddress));
     body.s = Date.now();
     body.t = Date.now();
