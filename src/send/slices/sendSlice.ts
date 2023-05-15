@@ -2,14 +2,16 @@ import { createAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TxBody } from 'sign-and-send/typing';
 import { Maybe } from '../../typings/common';
 
+export type SentData = {
+  from: string;
+  to: string;
+  amount: number | string;
+  comment: Maybe<string>;
+  txId: string;
+};
+
 type InitialState = {
-  sentData: Maybe<{
-    from: string;
-    to: string;
-    amount: number;
-    comment: Maybe<string>;
-    txId: string;
-  }>;
+  sentData: Maybe<SentData>;
 };
 
 const initialState: InitialState = {
@@ -49,7 +51,6 @@ export const sendTokenTrxTrigger = createAction<{
 export const signAndSendTrxTrigger = createAction<{
   wif: string;
   decodedTxBody: TxBody;
-  chainID: string
 }>('send/signAndSendTrxTrigger');
 
 export const { actions: { setSentData, clearSentData }, reducer: sendReducer } = sendSlice;

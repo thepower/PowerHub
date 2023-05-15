@@ -24,6 +24,7 @@ import { getSentData } from '../selectors/sendSelectors';
 import { checkIfLoading } from '../../network/selectors';
 import { clearSentData, sendTokenTrxTrigger, sendTrxTrigger } from '../slices/sendSlice';
 import styles from './Send.module.scss';
+import TxResult from '../../common/txResult/TxResult';
 
 type OwnProps = RouteComponentProps<{ type: TokenKind, address: string }>;
 
@@ -189,7 +190,9 @@ class Send extends React.Component<SendProps, SendState> {
 
   render() {
     const {
-      address, sentData, loading, token, tokenAddress,
+      address,
+      sentData,
+      loading, token, tokenAddress,
     } = this.props;
     const { isNativeToken, formattedAmount } = this;
     const assetSymbol = isNativeToken ? tokenAddress : token?.symbol;
@@ -201,35 +204,11 @@ class Send extends React.Component<SendProps, SendState> {
     if (sentData) {
       return (
         <DeepPageTemplate topBarTitle="Send" backUrl={RoutesEnum.myAssets} backUrlText="My assets">
-          <div className={styles.content}>
-            <div className={styles.result}>
-              <div>
-                <div className={styles.resultKey}>Amount</div>
-                <div className={styles.resultValue}>
-                  {sentData.amount}
-                  {' '}
-                  {assetSymbol}
-                  {isNativeToken && <LogoIcon height={24} width={24} className={styles.icon} />}
-                </div>
-              </div>
-              <div>
-                <div className={styles.resultKey}>From</div>
-                <div className={styles.resultValue}>{sentData.from}</div>
-              </div>
-              <div>
-                <div className={styles.resultKey}>To</div>
-                <div className={styles.resultValue}>{sentData.to}</div>
-              </div>
-              <div>
-                <div className={styles.resultKey}>Tx</div>
-                <div className={styles.resultValue}>{sentData.txId}</div>
-              </div>
-              <div>
-                <div className={styles.commentLabel}>Comments</div>
-                <div className={styles.comment}>{sentData.comment}</div>
-              </div>
-            </div>
-          </div>
+          <TxResult sentData={{
+            ...sentData,
+            amount: `${sentData.amount} ${assetSymbol}`,
+          }}
+          />
         </DeepPageTemplate>
       );
     }

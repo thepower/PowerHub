@@ -8,15 +8,15 @@ import { loadBalanceSaga } from 'myAssets/sagas/wallet';
 import { defaultABI, updateTokenAmountSaga } from 'myAssets/sagas/tokens';
 import { BigNumber } from '@ethersproject/bignumber';
 import { toast } from 'react-toastify';
-import { TxPurpose } from 'sign-and-send/typing';
+import { TxBody, TxPurpose } from 'sign-and-send/typing';
 import { getWalletAddress } from 'account/selectors/accountSelectors';
-import { cloneDeep } from 'lodash';
 import { correctAmount } from '@thepowereco/tssdk/dist/utils/numbers';
+import { cloneDeep } from 'lodash';
 import {
   sendTokenTrxTrigger, sendTrxTrigger, setSentData, signAndSendTrxTrigger,
 } from '../slices/sendSlice';
 
-const { autoAddFee, autoAddGas, packAndSignTX } = TransactionsApi;
+const { autoAddGas, autoAddFee, packAndSignTX } = TransactionsApi;
 
 export function* sendTrxSaga({
   payload: {
@@ -68,19 +68,14 @@ export function* sendTokenTrxSaga({
 
 export function* singAndSendTrxSaga({
   payload: {
-    wif, decodedTxBody, chainID,
+    wif, decodedTxBody,
   },
 }: ReturnType<typeof signAndSendTrxTrigger>) {
   try {
-    let networkAPI = (yield* select(getNetworkApi))!;
-
-    if (+chainID !== networkAPI.getChain()) {
-      networkAPI = new NetworkApi(+chainID);
-      yield networkAPI.bootstrap();
-    }
+    const networkAPI = (yield* select(getNetworkApi))!;
 
     const walletAddress = yield* select(getWalletAddress);
-    let body = cloneDeep(decodedTxBody);
+    let body = cloneDeep<TxBody>(decodedTxBody);
 
     const transfer = body?.p?.find((purpose) => purpose?.[0] === TxPurpose.TRANSFER);
     const transferAmount = transfer?.[2];
@@ -94,12 +89,12 @@ export function* singAndSendTrxSaga({
     const gas = body?.p?.find((purpose) => purpose?.[0] === TxPurpose.GAS);
     const comment = body?.e?.msg;
 
-    if (!srcFee) {
-      body = autoAddFee(body, networkAPI.feeSettings);
-    }
-
     if (!gas) {
       body = autoAddGas(body, networkAPI.gasSettings);
+    }
+
+    if (!srcFee) {
+      body = autoAddFee(body, networkAPI.feeSettings);
     }
 
     if (!body?.e) {
@@ -113,9 +108,10 @@ export function* singAndSendTrxSaga({
     const txResponse: { txId: string } = yield networkAPI.sendTxAndWaitForResponse(packAndSignTX(body, wif));
 
     yield* put(setSentData({
-      txId: txResponse.txId, comment: comment || '', amount: amount || 0, from: walletAddress, to,
+      txId: txResponse.txId, comment: comment || '', amount: amount && transferToken ? `${amount} ${transferToken}` : '-' || 0, from: walletAddress, to,
     }));
   } catch (error: any) {
+    console.error(error);
     toast.error(`Something went wrong when sending the transaction. Code: ${error?.code}`);
   }
 }
