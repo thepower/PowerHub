@@ -32,15 +32,17 @@
   font-size: 20px;
   font-weight: 500;
   line-height: 24px;
-
-  &__successIcon {
-    margin-left: 8px;
-  }
 }
 
 .resultValue_success {
-  @extend %resultValue;
+  display: flex;
+  align-items: center;
+  color: #f5f5f7;
+
   color: #2dac3a;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 24px;
 }
 
 .resultValue__successIcon {
