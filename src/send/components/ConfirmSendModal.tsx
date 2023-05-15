@@ -96,6 +96,7 @@ const ConfirmSendModal: React.FC<ConfirmSendModalProps> = ({
               ))}
             </div>
             <OutlinedInput
+              inputRef={(input) => input && input.focus()}
               placeholder={'Password'}
               className={styles.passwordInput}
               name="password"

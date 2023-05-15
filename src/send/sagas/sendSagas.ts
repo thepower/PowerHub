@@ -1,13 +1,22 @@
 import { put, select } from 'typed-redux-saga';
 import {
-  Evm20Contract, EvmContract, EvmCore, NetworkApi,
+  AddressApi,
+  Evm20Contract, EvmContract, EvmCore, NetworkApi, TransactionsApi,
 } from '@thepowereco/tssdk';
 import { getNetworkApi, getWalletApi } from 'application/selectors';
 import { loadBalanceSaga } from 'myAssets/sagas/wallet';
 import { defaultABI, updateTokenAmountSaga } from 'myAssets/sagas/tokens';
 import { BigNumber } from '@ethersproject/bignumber';
 import { toast } from 'react-toastify';
-import { sendTokenTrxTrigger, sendTrxTrigger, setSentData } from '../slices/sendSlice';
+import { TxBody, TxPurpose } from 'sign-and-send/typing';
+import { getWalletAddress } from 'account/selectors/accountSelectors';
+import { correctAmount } from '@thepowereco/tssdk/dist/utils/numbers';
+import { cloneDeep } from 'lodash';
+import {
+  sendTokenTrxTrigger, sendTrxTrigger, setSentData, signAndSendTrxTrigger,
+} from '../slices/sendSlice';
+
+const { autoAddGas, autoAddFee, packAndSignTX } = TransactionsApi;
 
 export function* sendTrxSaga({
   payload: {
@@ -54,5 +63,55 @@ export function* sendTokenTrxSaga({
     yield updateTokenAmountSaga({ address });
   } catch (error: any) {
     toast.error(`An error occurred while sending the asset. Code: ${error?.code}`);
+  }
+}
+
+export function* singAndSendTrxSaga({
+  payload: {
+    wif, decodedTxBody,
+  },
+}: ReturnType<typeof signAndSendTrxTrigger>) {
+  try {
+    const networkAPI = (yield* select(getNetworkApi))!;
+
+    const walletAddress = yield* select(getWalletAddress);
+    let body = cloneDeep<TxBody>(decodedTxBody);
+
+    const transfer = body?.p?.find((purpose) => purpose?.[0] === TxPurpose.TRANSFER);
+    const transferAmount = transfer?.[2];
+    const transferToken = transfer?.[1];
+
+    const amount = transferAmount && transferToken && correctAmount(transferAmount, transferToken);
+
+    const to = body?.to && AddressApi.hexToTextAddress(Buffer.from(body.to).toString('hex'));
+
+    const srcFee = body?.p?.find((purpose) => purpose?.[0] === TxPurpose.SRCFEE);
+    const gas = body?.p?.find((purpose) => purpose?.[0] === TxPurpose.GAS);
+    const comment = body?.e?.msg;
+
+    if (!gas) {
+      body = autoAddGas(body, networkAPI.gasSettings);
+    }
+
+    if (!srcFee) {
+      body = autoAddFee(body, networkAPI.feeSettings);
+    }
+
+    if (!body?.e) {
+      body.e = {};
+    }
+
+    body.f = Buffer.from(AddressApi.parseTextAddress(walletAddress));
+    body.s = Date.now();
+    body.t = Date.now();
+
+    const txResponse: { txId: string } = yield networkAPI.sendTxAndWaitForResponse(packAndSignTX(body, wif));
+
+    yield* put(setSentData({
+      txId: txResponse.txId, comment: comment || '', amount: amount && transferToken ? `${amount} ${transferToken}` : '-' || 0, from: walletAddress, to,
+    }));
+  } catch (error: any) {
+    console.error(error);
+    toast.error(`Something went wrong when sending the transaction. Code: ${error?.code}`);
   }
 }

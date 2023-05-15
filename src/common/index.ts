@@ -4,7 +4,6 @@ export { Page } from './page/Page';
 export { default as Button } from './button/Button';
 export { LinkBlock } from './linkBlock/LinkBlock';
 export { Modal } from './modal/Modal';
-export { ConfirmModal } from './modal/ConfirmModal';
 export { Breadcrumbs } from './breadcrumbs/components/Breadcrumbs';
 export { Wizard } from './wizard/Wizard';
 export { Tabs } from './tabs/Tabs';
@@ -20,6 +19,7 @@ export { default as ShallowPageTemplate } from './shallowPageTemplate/ShallowPag
 export { default as Divider } from './divider/Divider';
 export { default as DeepPageTemplate } from './deepPageTemplate/DeepPageTemplate';
 export { default as SearchInput } from './searchInput/SearchInput';
+export { default as TxResult } from './txResult/TxResult';
 export { UnderConstruction } from './underConstruction/UnderConstruction';
 export { Checkbox } from './checkbox/Checkbox';
 export { Switch } from './switch/Switch';

@@ -1,0 +1,24 @@
+@import 'src/styles/variables';
+
+.cardTable {
+  display: grid;
+  overflow: hidden;
+
+  border: 1px solid #6b798f;
+  border-radius: 5px;
+  grid-auto-flow: row;
+  grid-template-columns: 2fr 8fr;
+}
+
+.cardTableTitle {
+  padding: 10px;
+  border: 1px solid #6b798f;
+  color: #6b798f;
+  overflow-wrap: anywhere;
+}
+
+.cardTableValue {
+  padding: 10px;
+  border: 1px solid #6b798f;
+  overflow-wrap: anywhere;
+}
