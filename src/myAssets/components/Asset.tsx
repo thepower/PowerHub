@@ -5,7 +5,7 @@ import { Checkbox, Divider, Switch } from 'common';
 import { BigNumber } from '@ethersproject/bignumber';
 
 import { Link } from 'react-router-dom';
-import { RoutesEnum } from 'application/typings/routes';
+import { WalletRoutesEnum } from 'application/typings/routes';
 import { CheckedIcon, LogoIcon, UnCheckedIcon } from 'common/icons';
 import styles from './Asset.module.scss';
 
@@ -45,7 +45,7 @@ class Asset extends React.PureComponent<AssetProps> {
     return onClickSwitch || onClickCheckBox ?
       <div onClick={this.onClickAsset} className={styles.asset}>{children}</div>
       : <Link
-          to={`${RoutesEnum.myAssets}/${asset.type}/${asset.address}${RoutesEnum.transactions}`}
+          to={`${WalletRoutesEnum.myAssets}/${asset.type}/${asset.address}${WalletRoutesEnum.transactions}`}
           className={styles.asset}
       >
         {children}

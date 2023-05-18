@@ -17,7 +17,7 @@ import {
 } from '../typings/accountTypings';
 import { clearApplicationStorage, setKeyToApplicationStorage } from '../../application/utils/localStorageUtils';
 import { getNetworkApi, getWalletApi } from '../../application/selectors';
-import { RoutesEnum } from '../../application/typings/routes';
+import { WalletRoutesEnum } from '../../application/typings/routes';
 import { reInitApis } from '../../application/sagas/initApplicationSaga';
 import { loadBalanceTrigger } from '../../myAssets/slices/walletSlice';
 
@@ -71,7 +71,7 @@ export function* importAccountFromFileSaga({ payload }: { payload:ImportAccountI
     const wif = yield* call(CryptoApi.encryptWif, walletData.wif!, password);
 
     yield* loginToWalletSaga({ payload: { address: walletData.address, wif } });
-    yield* put(push(RoutesEnum.root));
+    yield* put(push(WalletRoutesEnum.root));
   } catch (e) {
     toast.error('Import account error. Try again in a few minutes.');
   }
@@ -90,7 +90,7 @@ export function* exportAccountSaga({ payload }: { payload: ExportAccountInputTyp
     yield fileSaver.saveAs(blob, 'power_wallet.pem', true);
 
     yield* loginToWalletSaga({ payload: { address, wif } });
-    yield put(push(RoutesEnum.root));
+    yield put(push(WalletRoutesEnum.root));
   } catch (e) {
     toast.error('Export account error. Try again in a few minutes.');
   }
@@ -102,7 +102,7 @@ export function* resetAccountSaga({ payload }: { payload: string }) {
     yield CryptoApi.decryptWif(wif, payload);
     yield clearApplicationStorage();
     yield put(clearAccountData());
-    yield put(push(RoutesEnum.signup));
+    yield put(push(WalletRoutesEnum.signup));
   } catch (e) {
     toast.error('Reset account error. Try again in a few minutes.');
   }

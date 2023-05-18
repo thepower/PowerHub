@@ -4,12 +4,14 @@ import {
 } from 'common/icons';
 import { connect, ConnectedProps } from 'react-redux';
 import { ArrowLink, CardLink, CopyButton } from 'common';
+import { isHub } from 'application/components/AppRoutes';
+import { faucetThePowerUrl, walletThePowerUrl } from 'appConstants';
 import { getWalletAddress } from '../../account/selectors/accountSelectors';
 import { getWalletNativeTokensAmounts } from '../../myAssets/selectors/walletSelectors';
 import { setShowUnderConstruction } from '../../application/slice/applicationSlice';
 import { RootState } from '../../application/store';
 import styles from './AssetsSection.module.scss';
-import { RoutesEnum } from '../../application/typings/routes';
+import { WalletRoutesEnum } from '../../application/typings/routes';
 
 const mapStateToProps = (state: RootState) => ({
   walletAddress: getWalletAddress(state),
@@ -49,10 +51,18 @@ const AssetsSection = ({ walletAddress, setShowUnderConstruction, amounts }: Ass
           <CardLink to="/my-assets" label="Wallets">
             <WalletsSvg />
           </CardLink>
-          <CardLink label="Faucet" isAnchor to="https://faucet.thepower.io/" target="_blank" rel="noreferrer">
+          <CardLink label="Faucet" isAnchor to={faucetThePowerUrl} target="_blank" rel="noreferrer">
             <FaucetSvg />
           </CardLink>
-          <CardLink to={`${RoutesEnum.myAssets}${RoutesEnum.assetSelection}`} label="Send">
+          <CardLink
+            isAnchor
+            to={isHub
+              ? `${walletThePowerUrl}${WalletRoutesEnum.send}`
+              : `${WalletRoutesEnum.myAssets}${WalletRoutesEnum.assetSelection}`}
+            label="Send"
+            target="_blank"
+            rel="noreferrer"
+          >
             <SendSvg />
           </CardLink>
           <CardLink to="/buy" label="Buy" onClick={handleShowUnderConstruction}>

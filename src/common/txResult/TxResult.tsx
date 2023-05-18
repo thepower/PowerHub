@@ -5,7 +5,7 @@ import { Button } from 'common';
 import { useAppSelector } from 'application/store';
 import { getNetworkChainID } from 'application/selectors';
 import { toast } from 'react-toastify';
-import { explorerThePowerUrl } from '../../constants';
+import { explorerThePowerUrl } from 'appConstants';
 import styles from './TxResult.module.scss';
 import {
   SuccessSvg,

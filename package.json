@@ -5,7 +5,8 @@
   "author": "thepower",
   "license": "ISC",
   "scripts": {
-    "start": "DISABLE_ESLINT_PLUGIN=true react-app-rewired start",
+    "start:wallet": "DISABLE_ESLINT_PLUGIN=true REACT_APP_TYPE=wallet react-app-rewired start",
+    "start:hub": "DISABLE_ESLINT_PLUGIN=true REACT_APP_TYPE=hub react-app-rewired start",
     "build": "DISABLE_ESLINT_PLUGIN=true react-app-rewired build",
     "prepare": "yarn run build && husky install",
     "prod": "serve -s build",

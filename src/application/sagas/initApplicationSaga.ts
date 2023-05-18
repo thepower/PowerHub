@@ -1,12 +1,13 @@
 import { put } from 'typed-redux-saga';
 import { push } from 'connected-react-router';
 import { NetworkApi, WalletApi } from '@thepowereco/tssdk';
+import { isWallet } from 'application/components/AppRoutes';
 import { setDynamicApis, setTestnetAvailable, setNetworkChains } from '../slice/applicationSlice';
 import { CURRENT_NETWORK, getIsProductionOnlyDomains } from '../utils/applicationUtils';
 import { getKeyFromApplicationStorage } from '../utils/localStorageUtils';
 import { loginToWalletSaga } from '../../account/sagas/accountSaga';
 import { setWalletData } from '../../account/slice/accountSlice';
-import { RoutesEnum } from '../typings/routes';
+import { WalletRoutesEnum } from '../typings/routes';
 
 const defaultChain = 1025; // TODO: move to config
 
@@ -34,30 +35,34 @@ export function* initApplicationSaga() {
   const chains: number[] = yield NetworkApi.getNetworkChains(CURRENT_NETWORK);
   yield put(setNetworkChains(chains.sort()));
 
-  address = yield getKeyFromApplicationStorage('address');
-  wif = yield getKeyFromApplicationStorage('wif');
-  const sCAPPs: string = yield getKeyFromApplicationStorage('scapps');
-
-  if (sCAPPs) {
-    // setSCAPPs
+  if (isWallet) {
+    address = yield getKeyFromApplicationStorage('address');
+    wif = yield getKeyFromApplicationStorage('wif');
   }
 
-  if (address && wif) {
-    yield loginToWalletSaga({
-      payload: {
+  // const sCAPPs: string = yield getKeyFromApplicationStorage('scapps');
+
+  // if (sCAPPs) {
+  //   setSCAPPs
+  // }
+  if (isWallet) {
+    if (address && wif) {
+      yield loginToWalletSaga({
+        payload: {
+          address,
+          wif,
+        },
+      });
+
+      yield* put(setWalletData({
         address,
         wif,
-      },
-    });
+        logged: true,
+      }));
 
-    yield* put(setWalletData({
-      address,
-      wif,
-      logged: true,
-    }));
-
-    yield* put(push(window.location.pathname));
-  } else {
-    yield* put(push(RoutesEnum.signup));
+      yield* put(push(window.location.pathname));
+    } else {
+      yield* put(push(WalletRoutesEnum.signup));
+    }
   }
 }

@@ -13,7 +13,7 @@ import { loginToWallet, setWalletData } from '../../account/slice/accountSlice';
 import { getCurrentShardSelector, getGeneratedSeedPhrase } from '../selectors/registrationSelectors';
 import { AddActionType } from '../../typings/common';
 import { getWalletData } from '../../account/selectors/accountSelectors';
-import { RoutesEnum } from '../../application/typings/routes';
+import { WalletRoutesEnum } from '../../application/typings/routes';
 import { CURRENT_NETWORK } from '../../application/utils/applicationUtils';
 
 export function* generateSeedPhraseSaga() {
@@ -72,7 +72,7 @@ export function* loginToWalletSaga({ payload }: { payload: LoginToWalletInputTyp
     const wif: string = yield CryptoApi.encryptWif(keyPair.toWIF(), payload.password);
 
     yield* put(loginToWallet({ address, wif }));
-    yield* put(push(RoutesEnum.root));
+    yield* put(push(WalletRoutesEnum.root));
   } catch (e) {
     toast.error('Login error');
   }
@@ -82,5 +82,5 @@ export function* proceedToHubSaga() {
   const { wif, address } = yield* select(getWalletData);
 
   yield* put(loginToWallet({ address, wif }));
-  yield* put(push(RoutesEnum.root));
+  yield* put(push(WalletRoutesEnum.root));
 }

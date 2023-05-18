@@ -7,46 +7,54 @@ import {
 } from 'common/icons';
 import React, { MouseEvent } from 'react';
 import { NavLink } from 'react-router-dom';
-import { RoutesEnum } from '../../application/typings/routes';
+import { isHub } from 'application/components/AppRoutes';
+import { WalletRoutesEnum, HubRoutesEnum } from '../../application/typings/routes';
 import styles from './NavList.module.scss';
 import { setShowUnderConstruction } from '../../application/slice/applicationSlice';
 import { closeAccountMenu } from '../../account/slice/accountSlice';
 import { useAppDispatch } from '../../application/store';
 
-const routes = [
+const routes = isHub ? [
   {
     name: 'Home',
-    link: RoutesEnum.root,
+    link: HubRoutesEnum.root,
     Icon: HomeIcon,
     disabled: false,
   },
   {
     name: 'Discover',
-    link: RoutesEnum.discover,
+    link: HubRoutesEnum.discover,
     Icon: DiscoverIcon,
     disabled: true,
   },
   {
     name: 'MyPlace',
-    link: RoutesEnum.myPlace,
+    link: HubRoutesEnum.myPlace,
     Icon: MyPlaceIcon,
     disabled: true,
   },
   {
     name: 'Build',
-    link: RoutesEnum.build,
+    link: HubRoutesEnum.build,
     Icon: BuildIcon,
     disabled: true,
   },
   {
     name: 'Contribute',
-    link: RoutesEnum.contribute,
+    link: HubRoutesEnum.contribute,
     Icon: ContributeIcon,
     disabled: true,
   },
+] : [
+  {
+    name: 'Home',
+    link: WalletRoutesEnum.root,
+    Icon: HomeIcon,
+    disabled: false,
+  },
 ];
 
-export const NavList = React.memo(() => {
+const NavList = React.memo(() => {
   const dispatch = useAppDispatch();
   const handleShowUnderConstruction = React.useCallback((event: MouseEvent) => {
     event.preventDefault();

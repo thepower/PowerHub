@@ -15,7 +15,7 @@ import { BeAware } from './pages/BeAware';
 import { RegisterPage } from './pages/loginRegisterAccount/RegisterPage';
 import { Backup } from './pages/backup/Backup';
 import styles from './Registration.module.scss';
-import { RoutesEnum } from '../../application/typings/routes';
+import { WalletRoutesEnum } from '../../application/typings/routes';
 
 const mapDispatchToProps = {
   routeTo: push,
@@ -60,7 +60,7 @@ class RegistrationPageComponent extends React.PureComponent<RegistrationPageProp
   };
 
   handleProceedToLogin = () => {
-    this.props.routeTo(RoutesEnum.login);
+    this.props.routeTo(WalletRoutesEnum.login);
   };
 
   renderWelcome = () => (

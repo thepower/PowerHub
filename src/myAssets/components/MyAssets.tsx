@@ -12,12 +12,15 @@ import {
 import { TokenType, updateTokensAmountsTrigger } from 'myAssets/slices/tokensSlice';
 import { Link } from 'react-router-dom';
 import { getTokens } from 'myAssets/selectors/tokensSelectors';
+import { getRouterParamsAddress } from 'router/selectors';
+import { isHub } from 'application/components/AppRoutes';
+import { faucetThePowerUrl } from 'appConstants';
 import { RootState } from '../../application/store';
 import { getWalletNativeTokensAmounts } from '../selectors/walletSelectors';
 import { getGroupedWalletTransactions } from '../selectors/transactionsSelectors';
 import styles from './MyAssets.module.scss';
 import { setShowUnderConstruction } from '../../application/slice/applicationSlice';
-import { RoutesEnum } from '../../application/typings/routes';
+import { WalletRoutesEnum } from '../../application/typings/routes';
 import Asset from './Asset';
 import AddButton from './AddButton';
 
@@ -26,6 +29,7 @@ const connector = connect(
     amounts: getWalletNativeTokensAmounts(state),
     tokens: getTokens(state),
     transactions: getGroupedWalletTransactions(state),
+    walletAddress: getRouterParamsAddress(state),
   }),
   {
     updateTokensAmountsTrigger,
@@ -114,10 +118,22 @@ class MyAssets extends React.PureComponent<MyAssetsProps, MyAssetsState> {
             </p>
           </div>
           <div className={styles.linksGroup}>
-            <CardLink label="Faucet" isAnchor to="https://faucet.thepower.io/" target="_blank" rel="noreferrer">
+            <CardLink
+              label="Faucet"
+              isAnchor
+              to={faucetThePowerUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
               <FaucetSvg />
             </CardLink>
-            <CardLink to={`${RoutesEnum.myAssets}${RoutesEnum.assetSelection}`} label="Send">
+            <CardLink
+              isAnchor={isHub}
+              to={isHub ? 'https://faucet.thepower.io/' : `${WalletRoutesEnum.myAssets}${WalletRoutesEnum.assetSelection}`}
+              label="Send"
+              target="_blank"
+              rel="noreferrer"
+            >
               <SendSvg />
             </CardLink>
             <CardLink onClick={this.handleShowUnderConstruction} to="/buy" label="Buy">
@@ -125,7 +141,7 @@ class MyAssets extends React.PureComponent<MyAssetsProps, MyAssetsState> {
             </CardLink>
           </div>
         </div>
-        <Link className={styles.myAssetsAddAssetsButton} to={`${RoutesEnum.myAssets}${RoutesEnum.add}`}>
+        <Link className={styles.myAssetsAddAssetsButton} to={`${WalletRoutesEnum.myAssets}${WalletRoutesEnum.add}`}>
           <AddButton>Add assets</AddButton>
         </Link>
         <Tabs

@@ -3,7 +3,7 @@ import { CardNftType } from 'discover/typings/discoverTypings';
 import { IconButton, PaginationList } from 'common';
 import classnames from 'classnames';
 import { FavIcon } from 'common/icons';
-import { RoutesEnum } from 'application/typings/routes';
+import { HubRoutesEnum } from 'application/typings/routes';
 import styles from './DappsCard.module.scss';
 
 interface DappsCardNFTProps {
@@ -34,7 +34,7 @@ export class DappsCardNfts extends React.PureComponent<DappsCardNFTProps, DappsC
   handleRouteToNftCard = (id: string) => () => {
     const { routeTo, setBackUrl } = this.props;
     setBackUrl(window.location.pathname);
-    routeTo(`${RoutesEnum.discover}/nft/${id}`);
+    routeTo(`${HubRoutesEnum.discover}/nft/${id}`);
   };
 
   renderNFT = (nftData: CardNftType, index: number) => {
