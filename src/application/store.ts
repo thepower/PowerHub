@@ -17,7 +17,7 @@ import { transactionsReducer } from '../myAssets/slices/transactionsSlice';
 import { sendReducer } from '../send/slices/sendSlice';
 import { discoverReducer } from '../discover/slice/discoverSlice';
 
-const loggerMiddleware = createLogger();
+const loggerMiddleware = createLogger({ collapsed: true });
 const routeMiddleware = routerMiddleware(history);
 const sagaMiddleware = createSagaMiddleware();
 

@@ -12,9 +12,9 @@ import {
 import { TokenType, updateTokensAmountsTrigger } from 'myAssets/slices/tokensSlice';
 import { Link } from 'react-router-dom';
 import { getTokens } from 'myAssets/selectors/tokensSelectors';
-import { getRouterParamsAddress } from 'router/selectors';
-import { isHub } from 'application/components/AppRoutes';
-import { faucetThePowerUrl } from 'appConstants';
+import { isHub, isWallet } from 'application/components/AppRoutes';
+import { faucetThePowerUrl, walletThePowerUrl } from 'appConstants';
+import { getWalletAddress } from 'account/selectors/accountSelectors';
 import { RootState } from '../../application/store';
 import { getWalletNativeTokensAmounts } from '../selectors/walletSelectors';
 import { getGroupedWalletTransactions } from '../selectors/transactionsSelectors';
@@ -29,7 +29,7 @@ const connector = connect(
     amounts: getWalletNativeTokensAmounts(state),
     tokens: getTokens(state),
     transactions: getGroupedWalletTransactions(state),
-    walletAddress: getRouterParamsAddress(state),
+    walletAddress: getWalletAddress(state),
   }),
   {
     updateTokensAmountsTrigger,
@@ -129,21 +129,32 @@ class MyAssets extends React.PureComponent<MyAssetsProps, MyAssetsState> {
             </CardLink>
             <CardLink
               isAnchor={isHub}
-              to={isHub ? 'https://faucet.thepower.io/' : `${WalletRoutesEnum.myAssets}${WalletRoutesEnum.assetSelection}`}
+              to={isHub
+                ? `${walletThePowerUrl}${WalletRoutesEnum.myAssets}${WalletRoutesEnum.assetSelection}`
+                : `${WalletRoutesEnum.myAssets}${WalletRoutesEnum.assetSelection}`}
               label="Send"
-              target="_blank"
+              target={isHub ? '_blank' : '_self'}
               rel="noreferrer"
             >
               <SendSvg />
             </CardLink>
-            <CardLink onClick={this.handleShowUnderConstruction} to="/buy" label="Buy">
+            <CardLink
+              onClick={this.handleShowUnderConstruction}
+              isAnchor={isHub}
+              to={isHub
+                ? `${walletThePowerUrl}${WalletRoutesEnum.buy}`
+                : WalletRoutesEnum.buy}
+              label="Buy"
+              target={isHub ? '_blank' : '_self'}
+            >
               <BuySvg />
             </CardLink>
           </div>
         </div>
+        {isWallet &&
         <Link className={styles.myAssetsAddAssetsButton} to={`${WalletRoutesEnum.myAssets}${WalletRoutesEnum.add}`}>
           <AddButton>Add assets</AddButton>
-        </Link>
+        </Link>}
         <Tabs
           tabs={MyAssetsTabs}
           tabsLabels={MyAssetsTabsLabels}

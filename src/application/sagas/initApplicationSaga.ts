@@ -1,7 +1,7 @@
 import { put } from 'typed-redux-saga';
 import { push } from 'connected-react-router';
 import { NetworkApi, WalletApi } from '@thepowereco/tssdk';
-import { isWallet } from 'application/components/AppRoutes';
+import { isHub, isWallet } from 'application/components/AppRoutes';
 import { setDynamicApis, setTestnetAvailable, setNetworkChains } from '../slice/applicationSlice';
 import { CURRENT_NETWORK, getIsProductionOnlyDomains } from '../utils/applicationUtils';
 import { getKeyFromApplicationStorage } from '../utils/localStorageUtils';
@@ -35,8 +35,9 @@ export function* initApplicationSaga() {
   const chains: number[] = yield NetworkApi.getNetworkChains(CURRENT_NETWORK);
   yield put(setNetworkChains(chains.sort()));
 
+  address = yield getKeyFromApplicationStorage('address');
+
   if (isWallet) {
-    address = yield getKeyFromApplicationStorage('address');
     wif = yield getKeyFromApplicationStorage('wif');
   }
 
@@ -63,6 +64,23 @@ export function* initApplicationSaga() {
       yield* put(push(window.location.pathname));
     } else {
       yield* put(push(WalletRoutesEnum.signup));
+    }
+  } if (isHub) {
+    if (address) {
+      yield loginToWalletSaga({
+        payload: {
+          address,
+          wif,
+        },
+      });
+
+      yield* put(setWalletData({
+        address,
+        wif,
+        logged: true,
+      }));
+
+      yield* put(push(window.location.pathname));
     }
   }
 }

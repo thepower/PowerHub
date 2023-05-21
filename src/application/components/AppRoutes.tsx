@@ -12,14 +12,16 @@ import { AssetTransactionsPage } from 'myAssets/pages/AssetTransactions/AssetTra
 import { AssetSelectionPage } from 'myAssets/pages/AssetSelection/AssetSelectionPage';
 import MyAssets from 'myAssets/components/MyAssets';
 import Send from 'send/components/Send';
-import { useAppDispatch, useAppSelector } from '../store';
-import { WalletRoutesEnum, HubRoutesEnum } from '../typings/routes';
-import { initApplication } from '../slice/applicationSlice';
-import WalletHome from '../../home/components/WalletHome';
-import HubHome from '../../home/components/HubHome';
+import { WalletHome } from 'home/components/pages/WalletHome';
+import { HubHome } from 'home/components/pages/HubHome';
 
-import Discover from '../../discover/components/Discover';
-import SignAndSendPage from '../../sign-and-send/components/SingAndSendPage';
+import Discover from 'discover/components/Discover';
+import SignAndSendPage from 'sign-and-send/components/SingAndSendPage';
+import SSOPage from 'sso/components/pages/WalletSSOPage';
+import HubSSOPage from 'sso/components/pages/HubSSOPage';
+import { initApplication } from '../slice/applicationSlice';
+import { WalletRoutesEnum, HubRoutesEnum } from '../typings/routes';
+import { useAppDispatch, useAppSelector } from '../store';
 
 export const localApp: any = process.env.REACT_APP_TYPE;
 
@@ -30,10 +32,10 @@ export const isHub = (localApp === 'hub' && isLocalHost) || [subdomain1, subdoma
 
 const renderWalletRoutes = () => (
   <>
-    <Route path={WalletRoutesEnum.signup} component={RegistrationPage} />
-    <Route path={WalletRoutesEnum.login} component={LoginPage} />
+    <Route exact path={WalletRoutesEnum.signup} component={RegistrationPage} />
+    <Route exact path={WalletRoutesEnum.login} component={LoginPage} />
     <Route path={`${WalletRoutesEnum.myAssets}/:type/:address${WalletRoutesEnum.send}`} component={Send} />
-    <Route path={`${WalletRoutesEnum.myAssets}${WalletRoutesEnum.add}`}>
+    <Route exact path={`${WalletRoutesEnum.myAssets}${WalletRoutesEnum.add}`}>
       <AddAssetsPage />
     </Route>
     <Route
@@ -48,7 +50,8 @@ const renderWalletRoutes = () => (
     <Route path={WalletRoutesEnum.myAssets}>
       <MyAssets />
     </Route>
-    <Route path={WalletRoutesEnum.root} component={WalletHome} />
+    <Route path={`${WalletRoutesEnum.sso}/:data`} component={SSOPage} />
+    <Route exact path={WalletRoutesEnum.root} component={WalletHome} />
   </>
 );
 
@@ -58,10 +61,18 @@ const renderHubRoutes = () => (
     <Route path={`${HubRoutesEnum.discover}/dapps/:id`} component={DappsCard} />
     <Route path={`${HubRoutesEnum.discover}/nftCollection/:id`} component={NftCollectionCard} />
     <Route path={`${HubRoutesEnum.discover}/nft/:id`} component={NftCard} />
-    <Route path={HubRoutesEnum.discover} component={Discover} />
+    <Route exact path={HubRoutesEnum.discover} component={Discover} />
     <Route exact path={HubRoutesEnum.build} />
     <Route exact path={HubRoutesEnum.contribute} />
-    <Route path={HubRoutesEnum.root} component={HubHome} />
+    <Route path={`${WalletRoutesEnum.sso}/:data`} component={HubSSOPage} />
+    <Route
+      path={`${WalletRoutesEnum.myAssets}/:type/:address${WalletRoutesEnum.transactions}`}
+      component={AssetTransactionsPage}
+    />
+    <Route exact path={WalletRoutesEnum.myAssets}>
+      <MyAssets />
+    </Route>
+    <Route exact path={HubRoutesEnum.root} component={HubHome} />
   </>
 );
 

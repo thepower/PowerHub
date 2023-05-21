@@ -5,9 +5,11 @@ export enum WalletRoutesEnum {
   assetSelection = '/selection',
   transactions = '/transactions',
   add = '/add',
+  buy = '/buy',
   signup = '/signup',
   root = '/',
   login = '/login',
+  sso = '/sso',
 }
 
 export enum HubRoutesEnum {
@@ -16,5 +18,6 @@ export enum HubRoutesEnum {
   myPlace = '/my-place',
   build = '/build',
   contribute = '/contribute',
-  root = '/:address?/',
+  sso = '/sso',
+  root = '/',
 }

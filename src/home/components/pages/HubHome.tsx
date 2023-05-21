@@ -5,10 +5,10 @@ import { useAppDispatch, useAppSelector } from 'application/store';
 import { loadBalanceTrigger } from 'myAssets/slices/walletSlice';
 import { checkIfLoading } from 'network/selectors';
 
-import AssetsSection from './AssetsSection';
+import AssetsSection from '../AssetsSection';
 import styles from './HubHome.module.scss';
 
-const HubHome = () => {
+export const HubHome = () => {
   const dispatch = useAppDispatch();
   const loading = useAppSelector((state) => checkIfLoading(state, loadBalanceTrigger.type));
 
@@ -29,5 +29,3 @@ const HubHome = () => {
     </ShallowPageTemplate>
   );
 };
-
-export default HubHome;

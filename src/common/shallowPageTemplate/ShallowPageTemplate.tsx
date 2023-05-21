@@ -1,14 +1,23 @@
 import React from 'react';
 import { isHub } from 'application/components/AppRoutes';
 import { useAppSelector } from 'application/store';
-import { getRouterParamsAddress } from 'router/selectors';
 import Button from 'common/button/Button';
+import { walletThePowerUrl } from 'appConstants';
+import { WalletRoutesEnum } from 'application/typings/routes';
+import { objectToString } from 'sso/utils';
+import { getWalletAddress } from 'account/selectors/accountSelectors';
 import NavList from './NavList';
 import { Account } from '../../account/components/Account';
 import styles from './ShallowPageTemplate.module.scss';
 
 const ShallowPageTemplate: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const walletAddress = useAppSelector(getRouterParamsAddress);
+  const walletAddress = useAppSelector(getWalletAddress);
+
+  const onClickSignUp = () => {
+    const stringData = objectToString({ callbackUrl: `${window.location.href}` });
+    window.open(`${walletThePowerUrl}${WalletRoutesEnum.sso}/${stringData}`, '_blank', 'noreferrer');
+    window.close();
+  };
 
   return (
 
@@ -17,7 +26,7 @@ const ShallowPageTemplate: React.FC<{ children: React.ReactNode }> = ({ children
         <header className={styles.header}>
           <p className={styles.logo}>{isHub ? 'Power Hub' : 'Power Wallet'}</p>
           {isHub && !walletAddress
-            ? <Button variant="filled">Sign up</Button>
+            ? <Button onClick={onClickSignUp} variant="filled">Sign up</Button>
             : <Account />}
         </header>
         <NavList />

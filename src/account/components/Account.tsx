@@ -10,13 +10,15 @@ import {
 import { CopyButton } from 'common';
 import { connect, ConnectedProps } from 'react-redux';
 import { Drawer } from '@mui/material';
+import { isHub, isWallet } from 'application/components/AppRoutes';
+import { clearApplicationStorage } from 'application/utils/localStorageUtils';
 import { getOpenedMenu, getWalletAddress } from '../selectors/accountSelectors';
 import globe from './globe.jpg';
 import { Maybe } from '../../typings/common';
 import { AccountActionsList } from './AccountActionsList';
 import { AccountActionType } from '../typings/accountTypings';
 import { ImportAccountModal } from '../../registration/components/pages/loginRegisterAccount/import/ImportAccountModal';
-import { importAccountFromFile, toggleOpenedAccountMenu } from '../slice/accountSlice';
+import { clearAccountData, importAccountFromFile, toggleOpenedAccountMenu } from '../slice/accountSlice';
 import { ExportAccountModal } from '../../registration/components/pages/backup/ExportAccountModal';
 import { ResetAccountModal } from './ResetAccountModal';
 import { setShowUnderConstruction } from '../../application/slice/applicationSlice';
@@ -32,6 +34,7 @@ const mapDispatchToProps = {
   importAccountFromFile,
   setShowUnderConstruction,
   toggleOpenedAccountMenu,
+  clearAccountData,
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
@@ -116,7 +119,12 @@ class AccountComponent extends React.PureComponent<AccountProps, AccountState> {
   };
 
   handleResetAccount = () => {
-    this.setState({ openedResetAccountModal: true });
+    if (isWallet) {
+      this.setState({ openedResetAccountModal: true });
+    } else if (isHub) {
+      clearApplicationStorage();
+      window.location.reload();
+    }
   };
 
   closeResetAccountModal = () => {
@@ -124,7 +132,7 @@ class AccountComponent extends React.PureComponent<AccountProps, AccountState> {
   };
 
   // eslint-disable-next-line react/sort-comp
-  private accountActionsData: AccountActionType[] = [
+  private accountActionsData: AccountActionType[] = isWallet ? [
     {
       title: 'Create new account',
       action: this.handleCreateAccount,
@@ -145,7 +153,11 @@ class AccountComponent extends React.PureComponent<AccountProps, AccountState> {
       action: this.handleResetAccount,
       Icon: ResetIcon,
     },
-  ];
+  ] : [{
+    title: 'Reset account',
+    action: this.handleResetAccount,
+    Icon: ResetIcon,
+  }];
 
   toggleAccountMenu = () => {
     this.props.toggleOpenedAccountMenu();

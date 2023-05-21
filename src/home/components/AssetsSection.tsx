@@ -36,7 +36,12 @@ const AssetsSection = ({ walletAddress, setShowUnderConstruction, amounts }: Ass
 
   return (
     <div>
-      <ArrowLink size="large" direction="right" to="my-assets">
+      <ArrowLink
+        disabled={!walletAddress}
+        size="large"
+        direction="right"
+        to="my-assets"
+      >
         {'My assets'}
       </ArrowLink>
       <div className={styles.box}>
@@ -45,27 +50,42 @@ const AssetsSection = ({ walletAddress, setShowUnderConstruction, amounts }: Ass
             <LogoIcon className={styles.icon} />
             {!amounts?.SK || amounts?.SK === '0' ? <span className={styles.emptyTitle}>Your tokens will be here</span> : amounts.SK}
           </p>
-          <CopyButton textButton={walletAddress} className={styles.addressButton} iconClassName={styles.copyIcon} />
+          {walletAddress && <CopyButton
+            textButton={walletAddress}
+            className={styles.addressButton}
+            iconClassName={styles.copyIcon}
+          />}
         </div>
         <div className={styles.cards}>
-          <CardLink to="/my-assets" label="Wallets">
+          <CardLink
+            to={'/my-assets'}
+            label="Wallets"
+            disabled={!walletAddress}
+          >
             <WalletsSvg />
           </CardLink>
           <CardLink label="Faucet" isAnchor to={faucetThePowerUrl} target="_blank" rel="noreferrer">
             <FaucetSvg />
           </CardLink>
           <CardLink
-            isAnchor
+            isAnchor={isHub}
             to={isHub
-              ? `${walletThePowerUrl}${WalletRoutesEnum.send}`
+              ? `${walletThePowerUrl}${WalletRoutesEnum.myAssets}${WalletRoutesEnum.assetSelection}`
               : `${WalletRoutesEnum.myAssets}${WalletRoutesEnum.assetSelection}`}
             label="Send"
-            target="_blank"
-            rel="noreferrer"
+            target={isHub ? '_blank' : '_self'}
           >
             <SendSvg />
           </CardLink>
-          <CardLink to="/buy" label="Buy" onClick={handleShowUnderConstruction}>
+          <CardLink
+            isAnchor={isHub}
+            to={isHub
+              ? `${walletThePowerUrl}${WalletRoutesEnum.buy}`
+              : WalletRoutesEnum.buy}
+            label="Buy"
+            target={isHub ? '_blank' : '_self'}
+            onClick={handleShowUnderConstruction}
+          >
             <BuySvg />
           </CardLink>
         </div>
