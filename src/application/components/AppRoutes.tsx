@@ -45,9 +45,10 @@ const renderWalletRoutes = () => (
     <Route
       path={`${WalletRoutesEnum.myAssets}${WalletRoutesEnum.assetSelection}`}
       component={AssetSelectionPage}
+      exact
     />
     <Route path={`${WalletRoutesEnum.myAssets}${WalletRoutesEnum.signAndSend}/:txBody`} component={SignAndSendPage} />
-    <Route path={WalletRoutesEnum.myAssets}>
+    <Route exact path={WalletRoutesEnum.myAssets}>
       <MyAssets />
     </Route>
     <Route path={`${WalletRoutesEnum.sso}/:data`} component={SSOPage} />

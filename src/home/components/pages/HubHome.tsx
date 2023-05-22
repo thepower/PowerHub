@@ -5,16 +5,18 @@ import { useAppDispatch, useAppSelector } from 'application/store';
 import { loadBalanceTrigger } from 'myAssets/slices/walletSlice';
 import { checkIfLoading } from 'network/selectors';
 
+import { getWalletAddress } from 'account/selectors/accountSelectors';
 import AssetsSection from '../AssetsSection';
 import styles from './HubHome.module.scss';
 
 export const HubHome = () => {
   const dispatch = useAppDispatch();
+  const walletAddress = useAppSelector(getWalletAddress);
   const loading = useAppSelector((state) => checkIfLoading(state, loadBalanceTrigger.type));
 
   useEffect(() => {
-    dispatch(loadBalanceTrigger());
-  }, [dispatch]);
+    if (walletAddress) dispatch(loadBalanceTrigger());
+  }, [dispatch, walletAddress]);
 
   if (loading) {
     return <FullScreenLoader />;

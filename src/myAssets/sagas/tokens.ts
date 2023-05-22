@@ -32,7 +32,7 @@ export function* addTokenSaga({ payload: address }: ReturnType<typeof addTokenTr
 
     if (chain !== networkAPI.getChain()) {
       contractNetworkApi = new NetworkApi(chain!);
-      yield contractNetworkApi.bootstrap();
+      yield contractNetworkApi.bootstrap(true);
     }
 
     const EVM: EvmCore = yield EvmCore.build(contractNetworkApi as NetworkApi);
@@ -67,7 +67,7 @@ export function* updateTokenAmountSaga({ address }: { address: string }) {
 
   if (chain !== networkAPI.getChain()) {
     contractNetworkApi = new NetworkApi(chain!);
-    yield contractNetworkApi.bootstrap();
+    yield contractNetworkApi.bootstrap(true);
   }
 
   const EVM: EvmCore = yield EvmCore.build(contractNetworkApi as NetworkApi);

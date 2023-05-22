@@ -13,7 +13,7 @@ const defaultChain = 1025; // TODO: move to config
 
 export function* reInitApis({ payload }: { payload: number }) {
   const networkApi = new NetworkApi(payload || defaultChain);
-  yield networkApi.bootstrap();
+  yield networkApi.bootstrap(true);
 
   const walletApi = new WalletApi(networkApi);
 
