@@ -17,7 +17,7 @@ import { HubHome } from 'home/components/pages/HubHome';
 
 import Discover from 'discover/components/Discover';
 import SignAndSendPage from 'sign-and-send/components/SingAndSendPage';
-import SSOPage from 'sso/components/pages/WalletSSOPage';
+import WalletSSOPage from 'sso/components/pages/WalletSSOPage';
 import HubSSOPage from 'sso/components/pages/HubSSOPage';
 import { initApplication } from '../slice/applicationSlice';
 import { WalletRoutesEnum, HubRoutesEnum } from '../typings/routes';
@@ -51,7 +51,7 @@ const renderWalletRoutes = () => (
     <Route exact path={WalletRoutesEnum.myAssets}>
       <MyAssets />
     </Route>
-    <Route path={`${WalletRoutesEnum.sso}/:data`} component={SSOPage} />
+    <Route path={`${WalletRoutesEnum.sso}/:data`} component={WalletSSOPage} />
     <Route exact path={WalletRoutesEnum.root} component={WalletHome} />
   </>
 );
@@ -65,11 +65,14 @@ const renderHubRoutes = () => (
     <Route exact path={HubRoutesEnum.discover} component={Discover} />
     <Route exact path={HubRoutesEnum.build} />
     <Route exact path={HubRoutesEnum.contribute} />
-    <Route path={`${WalletRoutesEnum.sso}/:data`} component={HubSSOPage} />
+    <Route path={`${HubRoutesEnum.sso}/:data`} component={HubSSOPage} />
     <Route
       path={`${WalletRoutesEnum.myAssets}/:type/:address${WalletRoutesEnum.transactions}`}
       component={AssetTransactionsPage}
     />
+    <Route exact path={`${WalletRoutesEnum.myAssets}${WalletRoutesEnum.add}`}>
+      <AddAssetsPage />
+    </Route>
     <Route exact path={WalletRoutesEnum.myAssets}>
       <MyAssets />
     </Route>

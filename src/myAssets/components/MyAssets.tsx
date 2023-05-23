@@ -12,7 +12,7 @@ import {
 import { TokenType, updateTokensAmountsTrigger } from 'myAssets/slices/tokensSlice';
 import { Link } from 'react-router-dom';
 import { getTokens } from 'myAssets/selectors/tokensSelectors';
-import { isHub, isWallet } from 'application/components/AppRoutes';
+import { isHub } from 'application/components/AppRoutes';
 import { faucetThePowerUrl, walletThePowerUrl } from 'appConstants';
 import { getWalletAddress } from 'account/selectors/accountSelectors';
 import { RootState } from '../../application/store';
@@ -151,10 +151,9 @@ class MyAssets extends React.PureComponent<MyAssetsProps, MyAssetsState> {
             </CardLink>
           </div>
         </div>
-        {isWallet &&
         <Link className={styles.myAssetsAddAssetsButton} to={`${WalletRoutesEnum.myAssets}${WalletRoutesEnum.add}`}>
           <AddButton>Add assets</AddButton>
-        </Link>}
+        </Link>
         <Tabs
           tabs={MyAssetsTabs}
           tabsLabels={MyAssetsTabsLabels}
