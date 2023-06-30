@@ -5,6 +5,8 @@ import { objectToString, stringToObject } from 'sso/utils';
 
 import { RootState } from 'application/store';
 import { getWalletAddress } from 'account/selectors/accountSelectors';
+import { push } from 'connected-react-router';
+import { WalletRoutesEnum } from 'application/typings/routes';
 
 type OwnProps = RouteComponentProps<{ data?: string }>;
 
@@ -14,11 +16,13 @@ const mapDispatchToProps = {
 const mapStateToProps = (state: RootState, props: OwnProps) => ({
   data: props.match.params.data,
   address: getWalletAddress(state),
+  routeTo: push,
 });
 
 const connector = connect(
   mapStateToProps,
   mapDispatchToProps,
+
 );
 
 type WalletSSOProps = ConnectedProps<typeof connector>;
@@ -30,10 +34,15 @@ type WalletSSOState = {
 class WalletSSOPage extends React.Component<WalletSSOProps, WalletSSOState> {
   componentDidMount(): void {
     const { parsedData } = this;
-    const { address } = this.props;
-    const stringData = objectToString({ address });
-    if (parsedData?.callbackUrl) {
-      window.location.replace(`${parsedData.callbackUrl}sso/${stringData}`);
+    const { address, routeTo } = this.props;
+
+    if (!address) {
+      routeTo(WalletRoutesEnum.signup);
+    } else {
+      const stringData = objectToString({ address });
+      if (parsedData?.callbackUrl) {
+        window.location.replace(`${parsedData.callbackUrl}sso/${stringData}`);
+      }
     }
   }
 

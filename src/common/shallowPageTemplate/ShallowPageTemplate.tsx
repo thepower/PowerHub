@@ -15,8 +15,7 @@ const ShallowPageTemplate: React.FC<{ children: React.ReactNode }> = ({ children
 
   const onClickSignUp = () => {
     const stringData = objectToString({ callbackUrl: `${window.location.href}` });
-    window.open(`${walletThePowerUrl}${WalletRoutesEnum.sso}/${stringData}`, '_blank', 'noreferrer');
-    window.close();
+    window.location.replace(`${walletThePowerUrl}${WalletRoutesEnum.sso}/${stringData}`);
   };
 
   return (
