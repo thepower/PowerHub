@@ -15,7 +15,7 @@ import { BigNumber } from '@ethersproject/bignumber';
 import {
   Button, DeepPageTemplate, Divider, FullScreenLoader,
 } from '../../common';
-import { RoutesEnum } from '../../application/typings/routes';
+import { WalletRoutesEnum } from '../../application/typings/routes';
 import { RootState } from '../../application/store';
 import { getWalletAddress } from '../../account/selectors/accountSelectors';
 import { LogoIcon, MoneyBugIcon } from '../../common/icons';
@@ -203,7 +203,7 @@ class Send extends React.Component<SendProps, SendState> {
 
     if (sentData) {
       return (
-        <DeepPageTemplate topBarTitle="Send" backUrl={RoutesEnum.myAssets} backUrlText="My assets">
+        <DeepPageTemplate topBarTitle="Send" backUrl={WalletRoutesEnum.myAssets} backUrlText="My assets">
           <TxResult sentData={{
             ...sentData,
             amount: `${sentData.amount} ${assetSymbol}`,
@@ -214,7 +214,7 @@ class Send extends React.Component<SendProps, SendState> {
     }
 
     return (
-      <DeepPageTemplate topBarTitle="Send" backUrl={RoutesEnum.myAssets} backUrlText="My assets">
+      <DeepPageTemplate topBarTitle="Send" backUrl={WalletRoutesEnum.myAssets} backUrlText="My assets">
         <div className={styles.content}>
           <div className={styles.walletInfo}>
             <span className={styles.titleBalance}>Total balance</span>

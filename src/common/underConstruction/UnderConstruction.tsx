@@ -4,7 +4,7 @@ import { Button } from '@mui/material';
 import { push } from 'connected-react-router';
 import { setShowUnderConstruction } from '../../application/slice/applicationSlice';
 import { Modal } from '../modal/Modal';
-import { RoutesEnum } from '../../application/typings/routes';
+import { WalletRoutesEnum } from '../../application/typings/routes';
 import styles from './underConstruction.module.scss';
 import { RootState } from '../../application/store';
 
@@ -32,7 +32,7 @@ const UnderConstructionComponent: React.FC<UnderConstructionProps> = (props: Und
   }, [setShowUnderConstruction]);
 
   const handleProceedToHome = React.useCallback(() => {
-    routeTo(RoutesEnum.root);
+    routeTo(WalletRoutesEnum.root);
     handleCloseModal();
   }, [handleCloseModal, routeTo]);
 

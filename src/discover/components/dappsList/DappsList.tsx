@@ -1,7 +1,7 @@
 import React from 'react';
 import { push } from 'connected-react-router';
 import { connect, ConnectedProps } from 'react-redux';
-import { RoutesEnum } from 'application/typings/routes';
+import { HubRoutesEnum } from 'application/typings/routes';
 import { dappsData } from 'discover/utils/dappsData';
 import styles from './DappsList.module.scss';
 import { DappsItemType } from '../../typings/discoverTypings';
@@ -35,7 +35,7 @@ class DappsListComponent extends React.PureComponent<DappsListProps, DappsListSt
   handleShowDappsCard = (dappsId: string) => () => {
     const { routeTo } = this.props;
 
-    routeTo(`${RoutesEnum.discover}/dapps/${dappsId}`);
+    routeTo(`${HubRoutesEnum.discover}/dapps/${dappsId}`);
   };
 
   renderDappsListItem = (item: DappsItemType, index: number) => {

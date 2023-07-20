@@ -31,7 +31,10 @@ const applicationDataSlice = createSlice({
   name: SLICE_NAME,
   initialState,
   reducers: {
-    setDynamicApis: (state: ApplicationDataState, { payload }: PayloadAction<{ networkApi: NetworkApi, walletApi: WalletApi }>) => {
+    setDynamicApis: (
+      state: ApplicationDataState,
+      { payload }: PayloadAction<{ networkApi: NetworkApi, walletApi: WalletApi }>,
+    ) => {
       state.networkApi = payload.networkApi;
       state.walletApi = payload.walletApi;
     },

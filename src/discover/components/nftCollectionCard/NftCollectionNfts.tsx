@@ -3,7 +3,7 @@ import { CardNftType } from 'discover/typings/discoverTypings';
 import { IconButton, PaginationList } from 'common';
 import classnames from 'classnames';
 import { FavIcon } from 'common/icons';
-import { RoutesEnum } from 'application/typings/routes';
+import { HubRoutesEnum } from 'application/typings/routes';
 import styles from './NftCollectionCard.module.scss';
 
 interface NftCollectionsNftsProps {
@@ -35,7 +35,7 @@ export class NftCollectionsNfts extends React.PureComponent<NftCollectionsNftsPr
     const { setBackUrl, routeTo } = this.props;
 
     setBackUrl(window.location.pathname);
-    routeTo(`${RoutesEnum.discover}/nft/${id}`);
+    routeTo(`${HubRoutesEnum.discover}/nft/${id}`);
   };
 
   renderNFT = (nftData: CardNftType, index: number) => {

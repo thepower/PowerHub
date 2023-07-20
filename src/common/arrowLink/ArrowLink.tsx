@@ -10,6 +10,7 @@ interface LinkButtonProps extends LinkProps {
   size?: 'small' | 'medium' | 'large';
   direction: 'left' | 'right';
   children: React.ReactNode;
+  disabled?: boolean,
 }
 
 const ArrowLink: React.FC<LinkButtonProps> = ({
@@ -18,11 +19,17 @@ const ArrowLink: React.FC<LinkButtonProps> = ({
   size = 'medium',
   defaultColor = 'white',
   hideTextOnMobile = false,
+  disabled,
   ...linkProps
 }) => (
   <Link
     {...linkProps}
-    className={cn(styles.button, styles[defaultColor], hideTextOnMobile && styles.hideTextOnMobile)}
+    className={cn(
+      styles.button,
+      styles[defaultColor],
+      hideTextOnMobile && styles.hideTextOnMobile,
+      disabled && styles.disabled,
+    )}
   >
     {direction === 'left' && <ChevronLeftIcon />}
     <span className={cn(styles.text, styles[size])}>

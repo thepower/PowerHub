@@ -1,18 +1,19 @@
 import { put } from 'typed-redux-saga';
 import { push } from 'connected-react-router';
 import { NetworkApi, WalletApi } from '@thepowereco/tssdk';
+import { isHub, isWallet } from 'application/components/AppRoutes';
 import { setDynamicApis, setTestnetAvailable, setNetworkChains } from '../slice/applicationSlice';
 import { CURRENT_NETWORK, getIsProductionOnlyDomains } from '../utils/applicationUtils';
 import { getKeyFromApplicationStorage } from '../utils/localStorageUtils';
 import { loginToWalletSaga } from '../../account/sagas/accountSaga';
 import { setWalletData } from '../../account/slice/accountSlice';
-import { RoutesEnum } from '../typings/routes';
+import { WalletRoutesEnum } from '../typings/routes';
 
 const defaultChain = 1025; // TODO: move to config
 
 export function* reInitApis({ payload }: { payload: number }) {
   const networkApi = new NetworkApi(payload || defaultChain);
-  yield networkApi.bootstrap();
+  yield networkApi.bootstrap(true);
 
   const walletApi = new WalletApi(networkApi);
 
@@ -35,29 +36,51 @@ export function* initApplicationSaga() {
   yield put(setNetworkChains(chains.sort()));
 
   address = yield getKeyFromApplicationStorage('address');
-  wif = yield getKeyFromApplicationStorage('wif');
-  const sCAPPs: string = yield getKeyFromApplicationStorage('scapps');
 
-  if (sCAPPs) {
-    // setSCAPPs
+  if (isWallet) {
+    wif = yield getKeyFromApplicationStorage('wif');
   }
 
-  if (address && wif) {
-    yield loginToWalletSaga({
-      payload: {
+  // const sCAPPs: string = yield getKeyFromApplicationStorage('scapps');
+
+  // if (sCAPPs) {
+  //   setSCAPPs
+  // }
+  if (isWallet) {
+    if (address && wif) {
+      yield loginToWalletSaga({
+        payload: {
+          address,
+          wif,
+        },
+      });
+
+      yield* put(setWalletData({
         address,
         wif,
-      },
-    });
+        logged: true,
+      }));
 
-    yield* put(setWalletData({
-      address,
-      wif,
-      logged: true,
-    }));
+      yield* put(push(window.location.pathname));
+    } else {
+      yield* put(push(WalletRoutesEnum.signup));
+    }
+  } if (isHub) {
+    if (address) {
+      yield loginToWalletSaga({
+        payload: {
+          address,
+          wif,
+        },
+      });
 
-    yield* put(push(window.location.pathname));
-  } else {
-    yield* put(push(RoutesEnum.signup));
+      yield* put(setWalletData({
+        address,
+        wif,
+        logged: true,
+      }));
+
+      yield* put(push(window.location.pathname));
+    }
   }
 }

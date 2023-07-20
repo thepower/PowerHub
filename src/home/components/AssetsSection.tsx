@@ -4,12 +4,14 @@ import {
 } from 'common/icons';
 import { connect, ConnectedProps } from 'react-redux';
 import { ArrowLink, CardLink, CopyButton } from 'common';
+import { isHub } from 'application/components/AppRoutes';
+import { faucetThePowerUrl, walletThePowerUrl } from 'appConstants';
 import { getWalletAddress } from '../../account/selectors/accountSelectors';
 import { getWalletNativeTokensAmounts } from '../../myAssets/selectors/walletSelectors';
 import { setShowUnderConstruction } from '../../application/slice/applicationSlice';
 import { RootState } from '../../application/store';
 import styles from './AssetsSection.module.scss';
-import { RoutesEnum } from '../../application/typings/routes';
+import { WalletRoutesEnum } from '../../application/typings/routes';
 
 const mapStateToProps = (state: RootState) => ({
   walletAddress: getWalletAddress(state),
@@ -34,7 +36,12 @@ const AssetsSection = ({ walletAddress, setShowUnderConstruction, amounts }: Ass
 
   return (
     <div>
-      <ArrowLink size="large" direction="right" to="my-assets">
+      <ArrowLink
+        disabled={!walletAddress}
+        size="large"
+        direction="right"
+        to="my-assets"
+      >
         {'My assets'}
       </ArrowLink>
       <div className={styles.box}>
@@ -43,19 +50,42 @@ const AssetsSection = ({ walletAddress, setShowUnderConstruction, amounts }: Ass
             <LogoIcon className={styles.icon} />
             {!amounts?.SK || amounts?.SK === '0' ? <span className={styles.emptyTitle}>Your tokens will be here</span> : amounts.SK}
           </p>
-          <CopyButton textButton={walletAddress} className={styles.addressButton} iconClassName={styles.copyIcon} />
+          {walletAddress && <CopyButton
+            textButton={walletAddress}
+            className={styles.addressButton}
+            iconClassName={styles.copyIcon}
+          />}
         </div>
         <div className={styles.cards}>
-          <CardLink to="/my-assets" label="Wallets">
+          <CardLink
+            to={'/my-assets'}
+            label="Wallets"
+            disabled={!walletAddress}
+          >
             <WalletsSvg />
           </CardLink>
-          <CardLink label="Faucet" isAnchor to="https://faucet.thepower.io/" target="_blank" rel="noreferrer">
+          <CardLink label="Faucet" isAnchor to={faucetThePowerUrl} target="_blank" rel="noreferrer">
             <FaucetSvg />
           </CardLink>
-          <CardLink to={`${RoutesEnum.myAssets}${RoutesEnum.assetSelection}`} label="Send">
+          <CardLink
+            isAnchor={isHub}
+            to={isHub
+              ? `${walletThePowerUrl}${WalletRoutesEnum.myAssets}${WalletRoutesEnum.assetSelection}`
+              : `${WalletRoutesEnum.myAssets}${WalletRoutesEnum.assetSelection}`}
+            label="Send"
+            target={isHub ? '_blank' : '_self'}
+          >
             <SendSvg />
           </CardLink>
-          <CardLink to="/buy" label="Buy" onClick={handleShowUnderConstruction}>
+          <CardLink
+            isAnchor={isHub}
+            to={isHub
+              ? `${walletThePowerUrl}${WalletRoutesEnum.buy}`
+              : WalletRoutesEnum.buy}
+            label="Buy"
+            target={isHub ? '_blank' : '_self'}
+            onClick={handleShowUnderConstruction}
+          >
             <BuySvg />
           </CardLink>
         </div>

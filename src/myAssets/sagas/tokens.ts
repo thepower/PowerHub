@@ -5,7 +5,7 @@ import {
 import { getWalletAddress } from 'account/selectors/accountSelectors';
 
 import { getNetworkApi } from 'application/selectors';
-import { RoutesEnum } from 'application/typings/routes';
+import { WalletRoutesEnum } from 'application/typings/routes';
 import { push } from 'connected-react-router';
 import {
   addToken, addTokenTrigger, updateTokenAmount,
@@ -32,7 +32,7 @@ export function* addTokenSaga({ payload: address }: ReturnType<typeof addTokenTr
 
     if (chain !== networkAPI.getChain()) {
       contractNetworkApi = new NetworkApi(chain!);
-      yield contractNetworkApi.bootstrap();
+      yield contractNetworkApi.bootstrap(true);
     }
 
     const EVM: EvmCore = yield EvmCore.build(contractNetworkApi as NetworkApi);
@@ -50,7 +50,7 @@ export function* addTokenSaga({ payload: address }: ReturnType<typeof addTokenTr
     yield put(addToken({
       name, symbol, address, decimals, type: 'erc20', amount: balance, isShow: true,
     }));
-    yield* put(push(RoutesEnum.myAssets));
+    yield* put(push(WalletRoutesEnum.myAssets));
   } catch (error: any) {
     toast.error(`Something went wrong when adding a token. Code: ${error?.code}`);
   }
@@ -67,7 +67,7 @@ export function* updateTokenAmountSaga({ address }: { address: string }) {
 
   if (chain !== networkAPI.getChain()) {
     contractNetworkApi = new NetworkApi(chain!);
-    yield contractNetworkApi.bootstrap();
+    yield contractNetworkApi.bootstrap(true);
   }
 
   const EVM: EvmCore = yield EvmCore.build(contractNetworkApi as NetworkApi);

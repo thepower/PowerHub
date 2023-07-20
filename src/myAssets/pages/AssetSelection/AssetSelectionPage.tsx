@@ -11,7 +11,7 @@ import {
 import Asset from 'myAssets/components/Asset';
 import { getTokens, getTokenByID } from 'myAssets/selectors/tokensSelectors';
 import { Link } from 'react-router-dom';
-import { RoutesEnum } from 'application/typings/routes';
+import { WalletRoutesEnum } from 'application/typings/routes';
 import { TokenPayloadType } from 'myAssets/types';
 import styles from './AssetSelectionPage.module.scss';
 
@@ -93,7 +93,7 @@ class AssetSelectionPageComponent extends React.PureComponent<AssetSelectionPage
       <DeepPageTemplate topBarTitle="Asset selection" backUrl="/my-assets" backUrlText="My assets">
         <div className={styles.assetSelection}>
           <div className={styles.tokens}>{this.renderAssetsList([...nativeTokens, ...erc20Tokens])}</div>
-          <Link to={`${RoutesEnum.myAssets}/${assetType}/${assetIndetifier}${RoutesEnum.send}`}>
+          <Link to={`${WalletRoutesEnum.myAssets}/${assetType}/${assetIndetifier}${WalletRoutesEnum.send}`}>
             <Button disabled={!asset && !nativeAssetAmount} className={styles.assetSelectionFixedButton} variant="filled">Next</Button>
           </Link>
         </div>

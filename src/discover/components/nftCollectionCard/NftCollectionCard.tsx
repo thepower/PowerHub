@@ -12,7 +12,7 @@ import {
   HeartIcon,
   ShareIcon,
 } from 'common/icons';
-import { RoutesEnum } from 'application/typings/routes';
+import { HubRoutesEnum } from 'application/typings/routes';
 import { Collapse } from '@mui/material';
 import { DiscoverTabs } from 'discover/typings/discoverTypings';
 import { setBackUrl } from 'application/slice/applicationSlice';
@@ -53,7 +53,7 @@ class NftCollectionCardComponent extends React.PureComponent<NftCollectionCardPr
 
     setCurrentDiscoverTab(DiscoverTabs.NFT);
 
-    routeTo(RoutesEnum.discover);
+    routeTo(HubRoutesEnum.discover);
   };
 
   handleSetFav = () => {};

@@ -4,7 +4,7 @@
   color: #f5f5f7;
 }
 
-@include icon-colors('.white', #F5F5F7);
+@include icon-colors('.white', #f5f5f7);
 
 .lilac .text {
   color: #6b798f;
@@ -37,6 +37,10 @@
       background: #79789d;
     }
   }
+}
+
+.disabled {
+  pointer-events: none;
 }
 
 .hideTextOnMobile {

@@ -13,7 +13,7 @@ import {
 import { IconButton } from 'common';
 import { NftCardInfoRecordType, NtfOwnershipType } from 'discover/typings/discoverTypings';
 import { setBackUrl } from 'application/slice/applicationSlice';
-import { RoutesEnum } from 'application/typings/routes';
+import { HubRoutesEnum } from 'application/typings/routes';
 import styles from './NftCard.module.scss';
 
 type OwnProps = RouteComponentProps<{ id: string }>;
@@ -41,7 +41,7 @@ class NftCardComponent extends React.PureComponent<NftCardProps, never> {
 
     setBackUrl(null);
 
-    routeTo(backUrl || RoutesEnum.discover);
+    routeTo(backUrl || HubRoutesEnum.discover);
   };
 
   handleRefreshNftData = () => {

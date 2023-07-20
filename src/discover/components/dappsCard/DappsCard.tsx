@@ -16,7 +16,7 @@ import { setCurrentDiscoverTab } from 'discover/slice/discoverSlice';
 import { RootState } from 'application/store';
 import { Collapse } from '@mui/material';
 import { getDappsCardData } from 'discover/selectors/discoverSelectors';
-import { RoutesEnum } from 'application/typings/routes';
+import { HubRoutesEnum } from 'application/typings/routes';
 import { DappsCardNfts } from 'discover/components/dappsCard/DappsCardNfts';
 import { setBackUrl } from 'application/slice/applicationSlice';
 import styles from './DappsCard.module.scss';
@@ -57,7 +57,7 @@ class DappsCardComponent extends React.PureComponent<DappsCardProps, DappsCardSt
     const { routeTo } = this.props;
 
     setCurrentDiscoverTab(DiscoverTabs.Dapps);
-    routeTo(RoutesEnum.discover);
+    routeTo(HubRoutesEnum.discover);
   };
 
   renderGenre = (genre: string) => (
