@@ -16,6 +16,7 @@ import { TokenKind } from 'myAssets/types';
 import { getTokenByID } from 'myAssets/selectors/tokensSelectors';
 import { setLastBlockToInitialLastBlock } from 'myAssets/slices/walletSlice';
 import { isEmpty } from 'lodash';
+import { t } from 'i18next';
 import styles from './AssetTransactionsPage.module.scss';
 
 type OwnProps = RouteComponentProps<{ type: TokenKind, address: string }>;
@@ -80,7 +81,7 @@ class AssetTransactionsPageComponent extends React.PureComponent<AssetTransactio
     }
 
     return (
-      <DeepPageTemplate topBarTitle={`${tokenSymbol} transactions`} backUrl="/my-assets" backUrlText="My Assets">
+      <DeepPageTemplate topBarTitle={`${tokenSymbol} transactions`} backUrl="/my-assets" backUrlText={t('myAssets')!}>
         <div className={styles.AssetTransactionsPage}>
           <div className={styles.transactions}>
             <ul className={styles.groupByDates}>{Object.entries(transactions).map(this.renderTransactionsList)}</ul>

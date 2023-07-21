@@ -2,6 +2,7 @@ import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { Button, Tabs, WizardComponentProps } from 'common';
 import { RootState } from 'application/store';
+import { t } from 'i18next';
 import {
   CreateAccountStepsEnum,
   LoginRegisterAccountTabs,
@@ -156,7 +157,7 @@ class LoginRegisterAccountComponent extends React.PureComponent<LoginRegisterAcc
     return <div className={styles.registrationComponent}>
       <RegistrationBackground>
         <div className={styles.loginRegisterAccountTitle}>
-          {'Create, login or import an account'}
+          {t('createLoginImport')}
         </div>
         <div className={styles.loginRegisterAccountHolder}>
           <Tabs
@@ -178,7 +179,7 @@ class LoginRegisterAccountComponent extends React.PureComponent<LoginRegisterAcc
             onClick={this.handleButtonClick}
             disabled={this.getButtonDisabled()}
           >
-            {'Next'}
+            {t('next')}
           </Button>
         }
       </div>

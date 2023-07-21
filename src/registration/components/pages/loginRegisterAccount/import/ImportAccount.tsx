@@ -1,6 +1,7 @@
 import React, { ChangeEvent } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { AttachIcon, Button } from 'common';
+import { t } from 'i18next';
 import styles from '../../../Registration.module.scss';
 import { Maybe } from '../../../../../typings/common';
 import { importAccountFromFile } from '../../../../../account/slice/accountSlice';
@@ -72,7 +73,7 @@ class ImportAccountComponent extends React.PureComponent<ImportAccountProps, Imp
       />
       <div className={styles.importAccountFormHolder}>
         <div className={styles.importAccountFormDesc}>
-          {'To import an account, upload the required file'}
+          {t('toImportAccountUpload')}
         </div>
         <input
           ref={this.setImportAccountRef}
@@ -88,7 +89,7 @@ class ImportAccountComponent extends React.PureComponent<ImportAccountProps, Imp
         >
           <AttachIcon />
           <span className={styles.importAccountButtonLabel}>
-            {'Choose file'}
+            {t('chooseFile')}
           </span>
         </Button>
       </div>

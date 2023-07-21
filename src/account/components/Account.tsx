@@ -12,6 +12,7 @@ import { connect, ConnectedProps } from 'react-redux';
 import { Drawer } from '@mui/material';
 import { isHub, isWallet } from 'application/components/AppRoutes';
 import { clearApplicationStorage } from 'application/utils/localStorageUtils';
+import { t } from 'i18next';
 import { getOpenedMenu, getWalletAddress } from '../selectors/accountSelectors';
 import globe from './globe.jpg';
 import { Maybe } from '../../typings/common';
@@ -134,27 +135,27 @@ class AccountComponent extends React.PureComponent<AccountProps, AccountState> {
   // eslint-disable-next-line react/sort-comp
   private accountActionsData: AccountActionType[] = isWallet ? [
     {
-      title: 'Create new account',
+      title: t('createNewAccount'),
       action: this.handleCreateAccount,
       Icon: CreateIcon,
     },
     {
-      title: 'Export account',
+      title: t('exportAccount'),
       action: this.handleExportAccount,
       Icon: ExportIcon,
     },
     {
-      title: 'Import account',
+      title: t('importAccount'),
       action: this.handleOpenImportFile,
       Icon: ImportIcon,
     },
     {
-      title: 'Reset account',
+      title: t('resetAccount'),
       action: this.handleResetAccount,
       Icon: ResetIcon,
     },
   ] : [{
-    title: 'Reset account',
+    title: t('resetAccount'),
     action: this.handleResetAccount,
     Icon: ResetIcon,
   }];
@@ -192,7 +193,7 @@ class AccountComponent extends React.PureComponent<AccountProps, AccountState> {
         classes={this.drawerPaperClasses}
       >
         <div className={styles.accountTitle}>
-          {'My Account'}
+          {t('myAccount')}
         </div>
         <CopyButton
           textButton={walletAddress}

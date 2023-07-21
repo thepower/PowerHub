@@ -4,6 +4,7 @@ import { IconButton, PaginationList } from 'common';
 import classnames from 'classnames';
 import { FavIcon } from 'common/icons';
 import { HubRoutesEnum } from 'application/typings/routes';
+import { t } from 'i18next';
 import styles from './DappsCard.module.scss';
 
 interface DappsCardNFTProps {
@@ -61,13 +62,13 @@ export class DappsCardNfts extends React.PureComponent<DappsCardNFTProps, DappsC
         <div className={styles.dappsNftInfoFirstLine}>
           <div className={styles.dappsCardNftNumber}>{number}</div>
           <div className={styles.dappsNftCount}>
-            <span className={styles.dappsCardNftCountLabel}>{'Last'}</span>
+            <span className={styles.dappsCardNftCountLabel}>{t('last')}</span>
             <span>{count}</span>
           </div>
         </div>
         <div className={styles.dappsNftInfoSecondLine}>
           <div className={styles.dappsNftPriceHolder}>
-            <div className={styles.dappsNftPriceLabel}>{'Est.Value'}</div>
+            <div className={styles.dappsNftPriceLabel}>{t('estValue')}</div>
             <div className={styles.dappsNftPrice}>{estValue}</div>
           </div>
           {
@@ -93,7 +94,7 @@ export class DappsCardNfts extends React.PureComponent<DappsCardNFTProps, DappsC
 
     return <div className={styles.nftHolder}>
       <div className={styles.nftHolderTitle}>
-        {'NFT in the game'}
+        {t('nftInGame')}
       </div>
       <div className={styles.nftDivider} />
       <PaginationList

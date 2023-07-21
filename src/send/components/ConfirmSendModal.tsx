@@ -3,6 +3,7 @@ import { Form, Formik, FormikHelpers } from 'formik';
 import { CryptoApi } from '@thepowereco/tssdk';
 import { connect, ConnectedProps } from 'react-redux';
 import { TokenType } from 'myAssets/slices/tokensSlice';
+import { t } from 'i18next';
 import { Button, Modal, OutlinedInput } from '../../common';
 import styles from './ConfirmSendModal.module.scss';
 import { RootState } from '../../application/store';
@@ -62,14 +63,14 @@ const ConfirmSendModal: React.FC<ConfirmSendModalProps> = ({
       }
       onClose();
     } catch (e) {
-      formikHelpers.setFieldError('password', 'Invalid password');
+      formikHelpers.setFieldError('password', t('invalidPasswordError')!);
     }
   }, [from, onClose, sendTrxTrigger, sendTokenTrxTrigger, trxValues, wif, token]);
 
   const fields = useMemo(() => [
-    { key: 'From', value: from },
-    { key: 'To', value: trxValues.address },
-    { key: 'Amount', value: `${trxValues.amount} ${token ? token.symbol : 'SK'}` },
+    { key: t('from'), value: from },
+    { key: t('to'), value: trxValues.address },
+    { key: t('amount'), value: `${trxValues.amount} ${token ? token.symbol : 'SK'}` },
   ], [from, trxValues, token]);
 
   return (
@@ -78,10 +79,10 @@ const ConfirmSendModal: React.FC<ConfirmSendModalProps> = ({
         {(formikProps) => (
           <Form className={styles.form}>
             <p className={styles.title}>
-              Confirm transfer
+              {t('confirmTransfer')}
             </p>
             <p className={styles.subTitle}>
-              Enter your password to complete the transaction
+              {t('enterYourPasswordCompleteTransaction')}
             </p>
             <div className={styles.grid}>
               {fields.map(({ key, value }) => (
@@ -97,7 +98,7 @@ const ConfirmSendModal: React.FC<ConfirmSendModalProps> = ({
             </div>
             <OutlinedInput
               inputRef={(input) => input && input.focus()}
-              placeholder={'Password'}
+              placeholder={t('password')!}
               className={styles.passwordInput}
               name="password"
               value={formikProps.values.password}
@@ -109,7 +110,7 @@ const ConfirmSendModal: React.FC<ConfirmSendModalProps> = ({
               error={formikProps.touched.password && Boolean(formikProps.errors.password)}
             />
             <Button variant="outlined" type="submit" disabled={!formikProps.dirty} className={styles.button}>
-              Next
+              {t('next')}
             </Button>
           </Form>
         )}

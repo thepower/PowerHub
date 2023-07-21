@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { Button } from 'common';
+import { t } from 'i18next';
 import { RegistrationBackground } from '../../common/RegistrationBackground';
 import { RegistrationStatement } from '../../common/RegistrationStatement';
 import styles from '../../Registration.module.scss';
@@ -49,9 +50,9 @@ class BackupComponent extends React.PureComponent<BackupProps, BackupState> {
         onClose={this.closePasswordModal}
       />
       <RegistrationBackground className={styles.exportBackground}>
-        <div className={styles.registrationPageTitle}>{'Important rules!'}</div>
-        <RegistrationStatement title={'Export'} description={'Please export wallet data so that you may recover your wallet later in case of emergency'} />
-        <RegistrationStatement title={'IMPORTANT!'} description={'You need both your address and seed phrase to restore your wallet. So store them both'} />
+        <div className={styles.registrationPageTitle}>{t('importantRules')}</div>
+        <RegistrationStatement title={t('export')!} description={t('pleaseExportWalletData')} />
+        <RegistrationStatement title={t('important')!} description={t('youNeedBothYourAddress')} />
       </RegistrationBackground>
       <div className={styles.registrationButtonsHolder}>
         <Button
@@ -60,7 +61,7 @@ class BackupComponent extends React.PureComponent<BackupProps, BackupState> {
           type="button"
           onClick={this.handleProceedToHub}
         >
-          {'Skip'}
+          {t('skip')}
         </Button>
         <Button
           size="medium"
@@ -68,7 +69,7 @@ class BackupComponent extends React.PureComponent<BackupProps, BackupState> {
           type="button"
           onClick={this.openPasswordModal}
         >
-          {'Export'}
+          {t('export')}
         </Button>
       </div>
     </>;

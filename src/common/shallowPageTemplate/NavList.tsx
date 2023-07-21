@@ -8,6 +8,7 @@ import {
 import React, { MouseEvent } from 'react';
 import { NavLink } from 'react-router-dom';
 import { isHub } from 'application/components/AppRoutes';
+import { t } from 'i18next';
 import { WalletRoutesEnum, HubRoutesEnum } from '../../application/typings/routes';
 import styles from './NavList.module.scss';
 import { setShowUnderConstruction } from '../../application/slice/applicationSlice';
@@ -16,38 +17,38 @@ import { useAppDispatch } from '../../application/store';
 
 const routes = isHub ? [
   {
-    name: 'Home',
+    name: t('home'),
     link: HubRoutesEnum.root,
     Icon: HomeIcon,
     disabled: false,
   },
   {
-    name: 'Discover',
+    name: t('discover'),
     link: HubRoutesEnum.discover,
     Icon: DiscoverIcon,
     disabled: true,
   },
   {
-    name: 'MyPlace',
+    name: t('myPlace'),
     link: HubRoutesEnum.myPlace,
     Icon: MyPlaceIcon,
     disabled: true,
   },
   {
-    name: 'Build',
+    name: t('build'),
     link: HubRoutesEnum.build,
     Icon: BuildIcon,
     disabled: true,
   },
   {
-    name: 'Contribute',
+    name: t('contribute'),
     link: HubRoutesEnum.contribute,
     Icon: ContributeIcon,
     disabled: true,
   },
 ] : [
   {
-    name: 'Home',
+    name: t('home'),
     link: WalletRoutesEnum.root,
     Icon: HomeIcon,
     disabled: false,

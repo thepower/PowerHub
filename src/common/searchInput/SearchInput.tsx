@@ -19,7 +19,7 @@ const SearchInput: React.FC<SearchInputProps> = ({ onClickSearch, className, ...
   return (
     <MUIOutlinedInput
       className={className}
-      placeholder="Search for any name or attribute"
+      placeholder={'searchAnyNameOrAttribute'}
       size="small"
       fullWidth
       autoComplete={'off'}

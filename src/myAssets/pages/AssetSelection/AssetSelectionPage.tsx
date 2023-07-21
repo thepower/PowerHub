@@ -13,6 +13,7 @@ import { getTokens, getTokenByID } from 'myAssets/selectors/tokensSelectors';
 import { Link } from 'react-router-dom';
 import { WalletRoutesEnum } from 'application/typings/routes';
 import { TokenPayloadType } from 'myAssets/types';
+import { t } from 'i18next';
 import styles from './AssetSelectionPage.module.scss';
 
 const mapDispatchToProps = {
@@ -90,11 +91,11 @@ class AssetSelectionPageComponent extends React.PureComponent<AssetSelectionPage
     const assetIndetifier = nativeAssetAmount ? selectedAsset : asset?.address;
     const assetType = nativeAssetAmount ? 'native' : asset?.type;
     return (
-      <DeepPageTemplate topBarTitle="Asset selection" backUrl="/my-assets" backUrlText="My assets">
+      <DeepPageTemplate topBarTitle={t('assetSelection')} backUrl="/my-assets" backUrlText={t('myAssets')!}>
         <div className={styles.assetSelection}>
           <div className={styles.tokens}>{this.renderAssetsList([...nativeTokens, ...erc20Tokens])}</div>
           <Link to={`${WalletRoutesEnum.myAssets}/${assetType}/${assetIndetifier}${WalletRoutesEnum.send}`}>
-            <Button disabled={!asset && !nativeAssetAmount} className={styles.assetSelectionFixedButton} variant="filled">Next</Button>
+            <Button disabled={!asset && !nativeAssetAmount} className={styles.assetSelectionFixedButton} variant="filled">{t('next')}</Button>
           </Link>
         </div>
       </DeepPageTemplate>

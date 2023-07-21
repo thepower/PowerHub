@@ -12,6 +12,7 @@ import { getWalletNativeTokensAmountByID } from 'myAssets/selectors/walletSelect
 import { RouteComponentProps } from 'react-router';
 import { TokenKind } from 'myAssets/types';
 import { BigNumber } from '@ethersproject/bignumber';
+import { t } from 'i18next';
 import {
   Button, DeepPageTemplate, Divider, FullScreenLoader,
 } from '../../common';
@@ -105,7 +106,7 @@ class Send extends React.Component<SendProps, SendState> {
         .number()
         .required()
         .moreThan(0)
-        .lessThan(Number(formattedAmount?.toString()), 'Balance exceeded, reduce amount')
+        .lessThan(Number(formattedAmount?.toString()), t('balanceExceededReduceAmount')!)
         .nullable(),
       address: yup.string().required().length(20),
       comment: yup.string().max(1024),
@@ -116,7 +117,7 @@ class Send extends React.Component<SendProps, SendState> {
 
   handleSubmit = ({ address }: FormValues, formikHelpers: FormikHelpers<FormValues>) => {
     if (!AddressApi.isTextAddressValid(address!)) {
-      formikHelpers.setFieldError('address', 'invalid address');
+      formikHelpers.setFieldError('address', t('invalidAddress')!);
     } else {
       this.setState({ openModal: true });
     }
@@ -138,7 +139,7 @@ class Send extends React.Component<SendProps, SendState> {
         <div className={styles.fields}>
           <TextField
             variant="standard"
-            label="Amount"
+            label={t('amount')}
             type="number"
             placeholder="00.000"
             name="amount"
@@ -158,7 +159,7 @@ class Send extends React.Component<SendProps, SendState> {
           />
           <TextField
             variant="standard"
-            label="Address of the recipient"
+            label={t('addressOfTheRecipient')}
             placeholder="AA000000000000000000"
             name="address"
             value={formikProps.values.address}
@@ -170,7 +171,7 @@ class Send extends React.Component<SendProps, SendState> {
           <TextField
             disabled={!isNativeToken}
             variant="outlined"
-            placeholder="Add comment"
+            placeholder={t('addComment')!}
             multiline
             minRows={2}
             name="comment"
@@ -182,7 +183,7 @@ class Send extends React.Component<SendProps, SendState> {
           />
         </div>
         <Button size="large" variant="filled" className={styles.button} type="submit" disabled={!formikProps.dirty}>
-          Send
+          {t('send')}
         </Button>
       </Form>
     </>;
@@ -203,7 +204,11 @@ class Send extends React.Component<SendProps, SendState> {
 
     if (sentData) {
       return (
-        <DeepPageTemplate topBarTitle="Send" backUrl={WalletRoutesEnum.myAssets} backUrlText="My assets">
+        <DeepPageTemplate
+          topBarTitle={t('send')}
+          backUrl={WalletRoutesEnum.myAssets}
+          backUrlText={t('myAssets')!}
+        >
           <TxResult sentData={{
             ...sentData,
             amount: `${sentData.amount} ${assetSymbol}`,
@@ -214,14 +219,14 @@ class Send extends React.Component<SendProps, SendState> {
     }
 
     return (
-      <DeepPageTemplate topBarTitle="Send" backUrl={WalletRoutesEnum.myAssets} backUrlText="My assets">
+      <DeepPageTemplate topBarTitle={t('send')} backUrl={WalletRoutesEnum.myAssets} backUrlText={t('myAssets')!}>
         <div className={styles.content}>
           <div className={styles.walletInfo}>
-            <span className={styles.titleBalance}>Total balance</span>
+            <span className={styles.titleBalance}>{t('totalBalance')}</span>
             <span className={styles.address}>{address}</span>
             <span className={styles.amount}>
               {isNativeToken && <LogoIcon width={20} height={20} className={styles.totalBalanceIcon} />}
-              {formattedAmountString === '0' ? 'Your tokens will be here' : `${formattedAmountString} ${assetSymbol}` }
+              {formattedAmountString === '0' ? t('yourTokensWillBeHere') : `${formattedAmountString} ${assetSymbol}` }
             </span>
           </div>
           <Divider className={styles.divider} />

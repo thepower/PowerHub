@@ -1,6 +1,7 @@
 import React, { ChangeEvent } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import classnames from 'classnames';
+import { t } from 'i18next';
 import styles from '../Registration.module.scss';
 import { RegistrationBackground } from '../common/RegistrationBackground';
 import {
@@ -135,10 +136,10 @@ class LoginPageComponent extends React.PureComponent<LoginPageProps, LoginPageSt
       type="file"
     />
     <div className={styles.loginPagePartTitle}>
-      {'Import account'}
+      {t('importAccount')}
     </div>
     <div className={classnames(styles.loginPagePartDesc, styles.loginPagePartDesc_short)}>
-      {'To import an account, upload the required file'}
+      {t('toImportAccountUpload')}
     </div>
     <Button
       className={classnames(
@@ -153,7 +154,7 @@ class LoginPageComponent extends React.PureComponent<LoginPageProps, LoginPageSt
     >
       <AttachIcon />
       <span className={styles.importAccountButtonLabel}>
-        {'Choose file'}
+        {t('chooseFile')}
       </span>
     </Button>
   </div>;
@@ -169,38 +170,38 @@ class LoginPageComponent extends React.PureComponent<LoginPageProps, LoginPageSt
 
     return <div className={styles.loginPagePart}>
       <div className={styles.loginPagePartTitle}>
-        {'Login to account'}
+        {t('loginToAccount')}
       </div>
       <div className={classnames(styles.loginPagePartDesc, styles.loginPagePartLoginDesc)}>
-        {'To login, you need enter the address and private key or seed phrase'}
+        {t('toLoginYouNeedEnter')}
       </div>
       <OutlinedInput
-        placeholder={'Address'}
+        placeholder={t('address')!}
         className={styles.passwordInput}
         value={address}
         onChange={this.onChangeAddress}
       />
       <OutlinedInput
-        placeholder={'Seed phrase'}
+        placeholder={t('seedPhrase')!}
         className={styles.passwordInput}
         value={seed}
         type={'password'}
         onChange={this.onChangeSeed}
       />
       <OutlinedInput
-        placeholder={'Password'}
+        placeholder={t('password')!}
         className={styles.passwordInput}
         value={password}
         type={'password'}
         onChange={this.onChangePassword}
       />
       <OutlinedInput
-        placeholder={'Repeated password'}
+        placeholder={t('repeatedPassword')!}
         className={styles.passwordInput}
         value={confirmedPassword}
         type={'password'}
         error={passwordsNotEqual}
-        errorMessage={'oops, passwords didn\'t match, try again'}
+        errorMessage={t('oopsPasswordsDidntMatch')!}
         onChange={this.onChangeConfirmedPassword}
       />
       <div className={styles.loginButtonHolder}>
@@ -212,7 +213,7 @@ class LoginPageComponent extends React.PureComponent<LoginPageProps, LoginPageSt
           disabled={!address || !seed || passwordsNotEqual || !password || !confirmedPassword}
           onClick={this.loginToAccount}
         >
-          {'Next'}
+          {t('next')}
         </Button>
       </div>
     </div>;
@@ -232,7 +233,7 @@ class LoginPageComponent extends React.PureComponent<LoginPageProps, LoginPageSt
         <PELogoWithTitle className={styles.registrationPageIcon} />
         <RegistrationBackground className={styles.loginPageBackground}>
           <div className={styles.loginRegisterAccountTitle}>
-            {'Login or import an account'}
+            {t('registrationPageImportAccountButton')}
           </div>
           <div className={styles.loginPageFormsHolder}>
             {this.renderImportPart()}

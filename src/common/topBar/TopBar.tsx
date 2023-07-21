@@ -1,5 +1,6 @@
 import React from 'react';
 import cn from 'classnames';
+import { t } from 'i18next';
 import IconButton from '../iconButton/IconButton';
 import { Account } from '../../account/components/Account';
 import ArrowLink from '../arrowLink/ArrowLink';
@@ -21,7 +22,7 @@ const TopBar: React.FC<TopBarProps> = ({
   children,
   type,
   backUrl,
-  backUrlText = 'Back',
+  backUrlText = t('back')!,
   disableAccount = false,
   className,
 }) => {

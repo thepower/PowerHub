@@ -19,6 +19,7 @@ import { getDappsCardData } from 'discover/selectors/discoverSelectors';
 import { HubRoutesEnum } from 'application/typings/routes';
 import { DappsCardNfts } from 'discover/components/dappsCard/DappsCardNfts';
 import { setBackUrl } from 'application/slice/applicationSlice';
+import { t } from 'i18next';
 import styles from './DappsCard.module.scss';
 
 type OwnProps = RouteComponentProps<{ id: string }>;
@@ -73,7 +74,7 @@ class DappsCardComponent extends React.PureComponent<DappsCardProps, DappsCardSt
     const { showMoreInfo } = this.state;
     return <div className={styles.dappsCardShowMoreButton} onClick={this.toggleShowMore}>
       <span className={styles.dappsCardShowMoreButtonLabel}>
-        {showMoreInfo ? 'Show less' : 'Show more'}
+        {showMoreInfo ? t('showLess') : t('showMore')}
       </span>
       {showMoreInfo ? <ChevronUp /> : <ChevronDown />}
     </div>;
@@ -140,7 +141,7 @@ class DappsCardComponent extends React.PureComponent<DappsCardProps, DappsCardSt
           type="button"
           onClick={this.handleJoinToCommunity}
         >
-          {'JOIN THE COMMUNITY'}
+          {t('joinTheCommunity')}
         </Button>
         <Button
           className={styles.dappsButton}
@@ -149,7 +150,7 @@ class DappsCardComponent extends React.PureComponent<DappsCardProps, DappsCardSt
           type="button"
           onClick={this.handlePlayToGame}
         >
-          {'PLAY TO GAME'}
+          {t('playToGame')}
         </Button>
       </div>
       <DappsCardNfts

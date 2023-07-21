@@ -27,6 +27,7 @@ import { correctAmount } from '@thepowereco/tssdk/dist/utils/numbers';
 import CardTableKeyAccordion from 'common/cardTableKeyAccordion/CardTableKeyAccordion';
 import CardTable from 'common/cardTable/CardTable';
 import { Link } from 'react-router-dom';
+import { t } from 'i18next';
 import styles from './SingAndSendPage.module.scss';
 import { ThePowerLogoIcon } from './ThePowerLogoIcon';
 import ConfirmModal from '../../common/confirmModal/ConfirmModal';
@@ -165,44 +166,44 @@ class SignAndSendPage extends React.Component<SignAndSendProps, SignAndSendState
 
     return (
       <div className={styles.content}>
-        <div className={styles.title}>Transfer of tokens</div>
+        <div className={styles.title}>{t('transferOfTokens')}</div>
         <div className={styles.table}>
-          <div className={styles.tableTitle}>Transaction type</div>
+          <div className={styles.tableTitle}>{t('transactionType')}</div>
           <div className={styles.tableValue}>{txKindName || '-'}</div>
 
-          <div className={styles.tableTitle}>Sender&apos;s address</div>
+          <div className={styles.tableTitle}>{t('senderAddress')}</div>
           <div className={styles.tableValue}>{address || '-'}</div>
 
-          <div className={styles.tableTitle}>Address of the recipient</div>
+          <div className={styles.tableTitle}>{t('addressOfTheRecipient')}</div>
           <div className={styles.tableValue}>{to || '-'}</div>
 
-          <div className={styles.tableTitle}>Transaction subject</div>
+          <div className={styles.tableTitle}>{t('transactionSubject')}</div>
           <div className={styles.tableValue}>
             {(transferAmount && transferCur) ? `${transferAmount} ${transferCur}` : '-'}
           </div>
 
-          <div className={styles.tableTitle}>Function call</div>
+          <div className={styles.tableTitle}>{t('functionCall')}</div>
           <div className={styles.tableValue}>{functionName || '-'}</div>
 
-          <div className={styles.tableTitle}>Call arguments</div>
+          <div className={styles.tableTitle}>{t('callArguments')}</div>
           <div className={styles.tableValue}>{functionArguments || '-'}</div>
 
-          <div className={styles.tableTitle}>Fee</div>
+          <div className={styles.tableTitle}>{t('fee')}</div>
           <div className={styles.tableValue}>{(feeAmount && feeCur) && `${feeAmount} ${feeCur}` || '-'}</div>
 
           {/* <div className={styles.tableTitle}>Details</div>
           <div className={styles.tableValue}>?</div> */}
 
-          <div className={styles.tableTitle}>Comment</div>
+          <div className={styles.tableTitle}>{t('comment')}</div>
           <div className={styles.tableValue}>{comment || '-'}</div>
 
-          {!isExtDataEmpty && <CardTableKeyAccordion valueLabel="Extra data">{renderExtraDataTable()}</CardTableKeyAccordion>}
+          {!isExtDataEmpty && <CardTableKeyAccordion valueLabel={t('extraData')}>{renderExtraDataTable()}</CardTableKeyAccordion>}
 
         </div>
         <div className={styles.buttons}>
-          <Button onClick={handleClickSignAndSend} variant="filled">Sign and send</Button>
+          <Button onClick={handleClickSignAndSend} variant="filled">{t('signAndSend')}</Button>
           <Link to="/">
-            <Button fullWidth variant="outlined">Cancel</Button>
+            <Button fullWidth variant="outlined">{t('cancel')}</Button>
           </Link>
         </div>
       </div>);

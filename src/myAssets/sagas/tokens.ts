@@ -14,6 +14,7 @@ import { all, put, select } from 'typed-redux-saga';
 import { BigNumber } from '@ethersproject/bignumber';
 import { getTokens } from 'myAssets/selectors/tokensSelectors';
 import { toast } from 'react-toastify';
+import { t } from 'i18next';
 
 export const defaultABI = JSON.parse(
   // eslint-disable-next-line max-len
@@ -52,7 +53,7 @@ export function* addTokenSaga({ payload: address }: ReturnType<typeof addTokenTr
     }));
     yield* put(push(WalletRoutesEnum.myAssets));
   } catch (error: any) {
-    toast.error(`Something went wrong when adding a token. Code: ${error?.code}`);
+    toast.error(`${t('somethingWentWrongCode')} ${error?.code}`);
   }
 }
 
@@ -62,7 +63,7 @@ export function* updateTokenAmountSaga({ address }: { address: string }) {
   const { chain }: { chain?: number } = yield networkAPI.getAddressChain(address);
 
   if (!chain) {
-    toast.error('Address not found');
+    toast.error(t('addressNotFound'));
   }
 
   if (chain !== networkAPI.getChain()) {

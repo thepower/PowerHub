@@ -1,4 +1,5 @@
 import React, { PropsWithChildren } from 'react';
+import { t } from 'i18next';
 import styles from './DeepPageTemplate.module.scss';
 import { TopBar } from '../index';
 
@@ -12,7 +13,7 @@ const DeepPageTemplate: React.FC<PropsWithChildren<DeepPageTemplateProps>> = ({
   children,
   topBarTitle,
   backUrl,
-  backUrlText = 'Back',
+  backUrlText = t('back')!,
 }) => (
   <div className={styles.template}>
     <TopBar type="deep" backUrl={backUrl} backUrlText={backUrlText}>

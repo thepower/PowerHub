@@ -2,8 +2,9 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import Backend from 'i18next-http-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
-import i18nEn from './i18nEn.json';
-import i18nEs from './i18Es.json';
+
+import en from './en.json';
+import ru from './ru.json';
 
 i18n
   .use(Backend)
@@ -12,8 +13,8 @@ i18n
   .init({
     fallbackLng: ['en'],
     resources: {
-      en: i18nEn,
-      es: i18nEs,
+      en,
+      ru,
     },
     interpolation: {
       escapeValue: true,
