@@ -28,7 +28,7 @@ export function* addTokenSaga({ payload: address }: ReturnType<typeof addTokenTr
     const { chain }: { chain?: number } = yield networkAPI.getAddressChain(address);
 
     if (!chain) {
-      toast.error('Address not found');
+      toast.error(t('addressNotFound'));
     }
 
     if (chain !== networkAPI.getChain()) {

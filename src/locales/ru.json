@@ -134,7 +134,7 @@
     "powerHubGivesPeople": "",
     "buildPublish": "",
     "buildDappWhereEverything": "",
-    "communityInputIsValuable ": "",
+    "communityInputIsValuable": "",
     "createAccountError": "",
     "seedPhraseIsNotValid": "",
     "importYourAccount": "",
@@ -157,6 +157,7 @@
     "fee": "",
     "extraData": "",
     "signAndSend": "",
-    "cancel": ""
+    "cancel": "",
+    "networkError": ""
   }
 }

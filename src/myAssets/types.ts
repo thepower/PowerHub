@@ -1,5 +1,4 @@
 import { BigNumber } from '@ethersproject/bignumber';
-import { t } from 'i18next';
 
 export type LoadBalancePayloadType = {
   amount: {
@@ -45,7 +44,7 @@ export enum MyAssetsTabs {
 }
 
 export const MyAssetsTabsLabels = {
-  PowerNativeTokens: t('powerNativeTokens'),
+  PowerNativeTokens: 'powerNativeTokens',
   Erc20: 'Erc_20',
   // NFT : 'NFT',
 } as const;
@@ -59,7 +58,7 @@ export enum AddAssetsTabs {
 export const AddAssetsTabsLabels = {
   Erc20: 'Erc_20',
   // NFT :'NFT',
-  AddAssets: t('addOtherAssets'),
+  AddAssets: 'addOtherAssets',
 } as const;
 
 export type TokenKind = 'nft' | 'erc20' | 'native';

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { SearchIcon } from 'common/icons';
+import { t } from 'i18next';
 import styles from './SearchInput.module.scss';
 import MUIOutlinedInput, { OutlinedInputProps } from './OutlinedInput';
 
@@ -19,7 +20,7 @@ const SearchInput: React.FC<SearchInputProps> = ({ onClickSearch, className, ...
   return (
     <MUIOutlinedInput
       className={className}
-      placeholder={'searchAnyNameOrAttribute'}
+      placeholder={t('searchAnyNameOrAttribute')!}
       size="small"
       fullWidth
       autoComplete={'off'}

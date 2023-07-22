@@ -17,38 +17,38 @@ import { useAppDispatch } from '../../application/store';
 
 const routes = isHub ? [
   {
-    name: t('home'),
+    name: 'home',
     link: HubRoutesEnum.root,
     Icon: HomeIcon,
     disabled: false,
   },
   {
-    name: t('discover'),
+    name: 'discover',
     link: HubRoutesEnum.discover,
     Icon: DiscoverIcon,
     disabled: true,
   },
   {
-    name: t('myPlace'),
+    name: 'myPlace',
     link: HubRoutesEnum.myPlace,
     Icon: MyPlaceIcon,
     disabled: true,
   },
   {
-    name: t('build'),
+    name: 'build',
     link: HubRoutesEnum.build,
     Icon: BuildIcon,
     disabled: true,
   },
   {
-    name: t('contribute'),
+    name: 'contribute',
     link: HubRoutesEnum.contribute,
     Icon: ContributeIcon,
     disabled: true,
   },
 ] : [
   {
-    name: t('home'),
+    name: 'home',
     link: WalletRoutesEnum.root,
     Icon: HomeIcon,
     disabled: false,
@@ -80,7 +80,7 @@ const NavList = React.memo(() => {
           onClick={disabled ? handleShowUnderConstruction : undefined}
         >
           <Icon className={styles.icon} />
-          <span className={styles.text}>{name}</span>
+          <span className={styles.text}>{t(name)}</span>
         </NavLink>
       ))}
     </ul>
