@@ -5,6 +5,7 @@ import { FileReaderType, getFileData } from 'common';
 import { push } from 'connected-react-router';
 import { toast } from 'react-toastify';
 import { isWallet } from 'application/components/AppRoutes';
+import { t } from 'i18next';
 import {
   clearAccountData,
   setWalletData,
@@ -39,7 +40,7 @@ export function* loginToWalletSaga({ payload }: { payload?: LoginToWalletSagaInp
 
       if (subChain.result === 'other_chain') {
         if (subChain.chain === null) {
-          toast.error('Portation in progress. Try again in a few minutes.');
+          toast.error(t('portationInProgress'));
           return;
         }
 
@@ -60,11 +61,11 @@ export function* loginToWalletSaga({ payload }: { payload?: LoginToWalletSagaInp
 
     yield* put(loadBalanceTrigger());
   } catch (e) {
-    toast.error('Login error');
+    toast.error(t('loginError'));
   }
 }
 
-export function* importAccountFromFileSaga({ payload }: { payload:ImportAccountInputType }) {
+export function* importAccountFromFileSaga({ payload }: { payload: ImportAccountInputType }) {
   const { accountFile, password } = payload;
   const WalletAPI = (yield* select(getWalletApi))!;
 
@@ -76,7 +77,7 @@ export function* importAccountFromFileSaga({ payload }: { payload:ImportAccountI
     yield* loginToWalletSaga({ payload: { address: walletData.address, wif } });
     yield* put(push(WalletRoutesEnum.root));
   } catch (e) {
-    toast.error('Import account error. Try again in a few minutes.');
+    toast.error(t('importAccountError'));
   }
 }
 
@@ -95,7 +96,7 @@ export function* exportAccountSaga({ payload }: { payload: ExportAccountInputTyp
     yield* loginToWalletSaga({ payload: { address, wif } });
     yield put(push(WalletRoutesEnum.root));
   } catch (e) {
-    toast.error('Export account error. Try again in a few minutes.');
+    toast.error(t('exportAccountError'));
   }
 }
 
@@ -107,6 +108,6 @@ export function* resetAccountSaga({ payload }: { payload: string }) {
     yield put(clearAccountData());
     yield put(push(WalletRoutesEnum.signup));
   } catch (e) {
-    toast.error('Reset account error. Try again in a few minutes.');
+    toast.error(t('resetAccountError'));
   }
 }

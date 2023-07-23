@@ -6,16 +6,15 @@ interface RegistrationStatementProps {
   description: string;
 }
 
-export const RegistrationStatement: React.FC<RegistrationStatementProps> = (props: RegistrationStatementProps) => {
-  return <div className={styles.registrationStatement}>
-    {
+export const RegistrationStatement: React.FC<RegistrationStatementProps> =
+(props: RegistrationStatementProps) => <div className={styles.registrationStatement}>
+  {
       props.title &&
       <div className={styles.registrationStatementTitle}>
         {props.title}
       </div>
     }
-    <div className={styles.registrationStatementDesc}>
-      {props.description}
-    </div>
-  </div>;
-};
+  <div className={styles.registrationStatementDesc}>
+    {props.description}
+  </div>
+</div>;

@@ -3,6 +3,7 @@ import { Modal, OutlinedInput } from 'common';
 import classnames from 'classnames';
 import { connect, ConnectedProps } from 'react-redux';
 import { Button } from '@mui/material';
+import { t } from 'i18next';
 import styles from '../../registration/components/Registration.module.scss';
 import { resetAccount } from '../slice/accountSlice';
 
@@ -59,18 +60,18 @@ export class ResetAccountModalComponent extends React.PureComponent<ResetAccount
     >
       <div className={styles.exportModalTitleHolder}>
         <div className={styles.exportModalTitle}>
-          {'Reset account'}
+          {t('resetAccount')}
         </div>
         <div className={styles.exportModalTitle}>
-          {'Are you sure you want to reset your account?'}
+          {t('areYouSureYouWantResetYourAccount')}
         </div>
         <div className={styles.exportModalTitle}>
-          {'Enter your password to confirm account reset'}
+          {t('enterYourPasswordConfirmAccountReset')}
         </div>
       </div>
       <OutlinedInput
         inputRef={(input) => input && input.focus()}
-        placeholder={'Password'}
+        placeholder={t('password')!}
         className={classnames(styles.passwordInput, styles.importModalPasswordInput)}
         value={password}
         onChange={this.onChangePassword}
@@ -84,7 +85,7 @@ export class ResetAccountModalComponent extends React.PureComponent<ResetAccount
         onClick={this.handleSubmitImportModal}
       >
         <span className={styles.registrationNextButtonText}>
-          {'Next'}
+          {t('next')}
         </span>
       </Button>
     </Modal>;

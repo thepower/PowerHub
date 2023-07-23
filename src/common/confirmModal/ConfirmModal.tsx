@@ -4,6 +4,7 @@ import React, {
 import { Form, Formik, FormikHelpers } from 'formik';
 import { CryptoApi } from '@thepowereco/tssdk';
 import { connect, ConnectedProps } from 'react-redux';
+import { t } from 'i18next';
 import { Button, Modal, OutlinedInput } from '..';
 import styles from './ConfirmModal.module.scss';
 import { RootState } from '../../application/store';
@@ -34,7 +35,7 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
       const decryptedWif = await CryptoApi.decryptWif(wif, values.password);
       callback(decryptedWif);
     } catch (e) {
-      formikHelpers.setFieldError('password', 'Invalid password');
+      formikHelpers.setFieldError('password', t('invalidPasswordError')!);
     }
   }, [callback, wif]);
 
@@ -44,14 +45,14 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
         {(formikProps) => (
           <Form className={styles.form}>
             <p className={styles.title}>
-              Confirm action
+              {t('confirmAction')}
             </p>
             <p className={styles.subTitle}>
-              Enter your password to complete the transaction
+              {t('enterYourPasswordCompleteTransaction')}
             </p>
             <OutlinedInput
               inputRef={(input) => input && input.focus()}
-              placeholder={'Password'}
+              placeholder={t('password')!}
               className={styles.passwordInput}
               name="password"
               value={formikProps.values.password}
@@ -64,7 +65,7 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
               error={formikProps.touched.password && Boolean(formikProps.errors.password)}
             />
             <Button variant="outlined" type="submit" disabled={!formikProps.dirty} className={styles.button}>
-              Confirm
+              {t('confirm')}
             </Button>
           </Form>
         )}

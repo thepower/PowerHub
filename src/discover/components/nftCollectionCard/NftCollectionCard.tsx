@@ -16,6 +16,7 @@ import { HubRoutesEnum } from 'application/typings/routes';
 import { Collapse } from '@mui/material';
 import { DiscoverTabs } from 'discover/typings/discoverTypings';
 import { setBackUrl } from 'application/slice/applicationSlice';
+import { t } from 'i18next';
 import styles from './NftCollectionCard.module.scss';
 import { NftCollectionsNfts } from './NftCollectionNfts';
 import { setCurrentDiscoverTab } from '../../slice/discoverSlice';
@@ -69,7 +70,7 @@ class NftCollectionCardComponent extends React.PureComponent<NftCollectionCardPr
 
     return <div className={styles.nftCollectionCardShowMoreButton} onClick={this.toggleShowMore}>
       <span className={styles.nftCollectionCardShowMoreButtonLabel}>
-        {showMoreInfo ? 'Show less' : 'Show more'}
+        {showMoreInfo ? t('showLess') : t('showMore')}
       </span>
       {showMoreInfo ? <ChevronUp /> : <ChevronDown />}
     </div>;
@@ -80,23 +81,23 @@ class NftCollectionCardComponent extends React.PureComponent<NftCollectionCardPr
 
     return <div className={styles.nftCollectionCardMetricsHolder}>
       <div className={styles.nftCollectionCardMetrics}>
-        <div className={styles.nftCollectionCardMetricsDesc}>{'Holders'}</div>
+        <div className={styles.nftCollectionCardMetricsDesc}>{t('holders')}</div>
         <div>{card.holders}</div>
       </div>
       <div className={styles.nftCollectionCardMetrics}>
-        <div className={styles.nftCollectionCardMetricsDesc}>{'Followers'}</div>
+        <div className={styles.nftCollectionCardMetricsDesc}>{t('followers')}</div>
         <div>{card.followers}</div>
       </div>
       <div className={styles.nftCollectionCardMetrics}>
-        <div className={styles.nftCollectionCardMetricsDesc}>{'Floor'}</div>
+        <div className={styles.nftCollectionCardMetricsDesc}>{t('floor')}</div>
         <div>{card.floor}</div>
       </div>
       <div className={styles.nftCollectionCardMetrics}>
-        <div className={styles.nftCollectionCardMetricsDesc}>{'24h Volume'}</div>
+        <div className={styles.nftCollectionCardMetricsDesc}>{t('24hVolume')}</div>
         <div>{card.lastDayVolume}</div>
       </div>
       <div className={styles.nftCollectionCardMetrics}>
-        <div className={styles.nftCollectionCardMetricsDesc}>{'24h Change'}</div>
+        <div className={styles.nftCollectionCardMetricsDesc}>{t('24hChange')}</div>
         <div>{card.lastDayChange}</div>
       </div>
     </div>;

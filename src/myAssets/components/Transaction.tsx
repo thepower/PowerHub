@@ -5,6 +5,7 @@ import { Collapse } from '@mui/material';
 import { CopyButton, Divider } from 'common';
 import { connect, ConnectedProps } from 'react-redux';
 import { isArray } from 'lodash';
+import { t } from 'i18next';
 import { FaucetSvg, SendSvg } from '../../common/icons';
 import { RootState } from '../../application/store';
 import { getWalletAddress } from '../../account/selectors/accountSelectors';
@@ -58,16 +59,16 @@ class Transaction extends React.PureComponent<TransactionProps, TransactionState
     const { trx } = this.props;
 
     const rows = [
-      { Icon: <SuccessIcon />, key: 'Tx', value: trx.id },
-      { Icon: <FromArrowIcon />, key: 'From', value: trx.from },
-      { Icon: <ToArrowIcon />, key: 'To', value: trx.to },
-      { Icon: <CoinIcon />, key: 'Amount', value: trx.amount },
-      { Icon: <LogoIcon />, key: 'Cur', value: trx.cur },
-      { Icon: <WatchIcon />, key: 'Timestamp', value: format(trx.timestamp, 'MMMM dd, yyyy, \'at\' p') },
-      { Icon: <BarCodeIcon />, key: 'Seq', value: trx.seq },
-      { Icon: <KeyIcon />, key: 'Public key', value: trx?.sigverify?.pubkeys?.[0] },
-      { Icon: <FingerPrintIcon />, key: 'Signature', value: trx.sig[trx.sigverify?.pubkeys?.[0]] },
-      { Icon: <CubeIcon />, key: 'In block', value: trx.inBlock },
+      { Icon: <SuccessIcon />, key: t('tx'), value: trx.id },
+      { Icon: <FromArrowIcon />, key: t('from'), value: trx.from },
+      { Icon: <ToArrowIcon />, key: t('to'), value: trx.to },
+      { Icon: <CoinIcon />, key: t('amount'), value: trx.amount },
+      { Icon: <LogoIcon />, key: t('cur'), value: trx.cur },
+      { Icon: <WatchIcon />, key: t('timestamp'), value: format(trx.timestamp, 'MMMM dd, yyyy, \'at\' p') },
+      { Icon: <BarCodeIcon />, key: t('seq'), value: trx.seq },
+      { Icon: <KeyIcon />, key: t('publicKey'), value: trx?.sigverify?.pubkeys?.[0] },
+      { Icon: <FingerPrintIcon />, key: t('signature'), value: trx.sig[trx.sigverify?.pubkeys?.[0]] },
+      { Icon: <CubeIcon />, key: t('inBlock'), value: trx.inBlock },
     ];
 
     return (
@@ -105,7 +106,7 @@ class Transaction extends React.PureComponent<TransactionProps, TransactionState
                   : <SendSvg className={styles.sendIcon} />}
               </div>
               <div className={styles.info}>
-                <span className={styles.name}>My wallet</span>
+                <span className={styles.name}>{t('myWallet')}</span>
                 <span className={cn(styles.date, styles.fullDate)}>
                   {format(trx.timestamp, 'dd MMM yyyy \'at\' p')}
                 </span>
@@ -120,7 +121,7 @@ class Transaction extends React.PureComponent<TransactionProps, TransactionState
             {!isArray(trx.txext) && (
               <div className={styles.comment}>
                 <div className={styles.commentTitle}>
-                  Comment
+                  {t('comment')}
                 </div>
                 <div className={styles.msg}>
                   {trx.txext.msg}
@@ -138,12 +139,12 @@ class Transaction extends React.PureComponent<TransactionProps, TransactionState
                 onKeyDown={this.handleKeyDown}
               >
                 <span className={styles.title}>
-                  {`Transaction #${trx.timestamp}`}
+                  {`${t('transaction')} #${trx.timestamp}`}
                 </span>
                 <MinimizeIcon className={cn(styles.minimizedIcon, expanded && styles.expandMinimizedIcon)} />
               </div>
               {this.renderGrid()}
-              <CopyButton textButton="Copy" copyInfo={trx.id} />
+              <CopyButton textButton={t('copy')} copyInfo={trx.id} />
             </div>
           </Collapse>
         </div>

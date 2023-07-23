@@ -2,6 +2,7 @@ import React from 'react';
 import classnames from 'classnames';
 import { Button } from '@mui/material';
 import { connect, ConnectedProps } from 'react-redux';
+import { t } from 'i18next';
 import { Modal, OutlinedInput } from '../../../../common';
 import styles from '../../Registration.module.scss';
 import { compareTwoStrings } from '../../../utils/registrationUtils';
@@ -96,18 +97,18 @@ class ExportAccountModalComponent extends React.PureComponent<ExportAccountModal
     >
       <div className={styles.exportModalTitleHolder}>
         <div className={styles.exportModalTitle}>
-          {'Export Wallet'}
+          {t('exportWallet')}
         </div>
         <div className={styles.exportModalTitle}>
-          {'Export your wallet so that you can restore it later'}
+          {t('exportYourWallet')}
         </div>
         <div className={styles.exportModalTitle}>
-          {'Export file encrypted. Important! It impossible to recover your password if you lose it!'}
+          {t('exportFileEncrypted')}
         </div>
       </div>
       <OutlinedInput
         inputRef={(input) => input && input.focus()}
-        placeholder={'Password'}
+        placeholder={t('password')!}
         className={classnames(styles.passwordInput, styles.passwordInputPadded)}
         value={password}
         onChange={this.onChangePassword}
@@ -115,19 +116,19 @@ class ExportAccountModalComponent extends React.PureComponent<ExportAccountModal
         autoFocus
       />
       <OutlinedInput
-        placeholder={'Repeated password'}
+        placeholder={t('repeatedPassword')!}
         className={styles.passwordInput}
         value={confirmedPassword}
         onChange={this.onChangeConfirmedPassword}
         error={passwordsNotEqual}
-        errorMessage={'oops, passwords didn\'t match, try again'}
+        errorMessage={t('oopsPasswordsDidntMatch')!}
         type={'password'}
       />
       <div className={styles.exportModalHintDesc}>
-        {'Hint for a password (optional)'}
+        {t('hintForPassword')}
       </div>
       <OutlinedInput
-        placeholder={'Hint'}
+        placeholder={t('hint')!}
         className={styles.exportModalHintTextArea}
         value={hint}
         onChange={this.onChangeHint}
@@ -140,7 +141,7 @@ class ExportAccountModalComponent extends React.PureComponent<ExportAccountModal
         onClick={this.handleSubmitExportModal}
       >
         <span className={styles.registrationNextButtonText}>
-          {'Next'}
+          {t('next')}
         </span>
       </Button>
     </Modal>;

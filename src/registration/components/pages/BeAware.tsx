@@ -1,5 +1,6 @@
 import React from 'react';
 import { WizardComponentProps, Button } from 'common';
+import { t } from 'i18next';
 import { RegistrationBackground } from '../common/RegistrationBackground';
 import { RegistrationStatement } from '../common/RegistrationStatement';
 import styles from '../Registration.module.scss';
@@ -9,14 +10,13 @@ type BeAwareProps = WizardComponentProps;
 export const BeAware: React.FC<BeAwareProps> = (props: BeAwareProps) => (
   <>
     <RegistrationBackground>
-      <div className={styles.registrationPageTitle}>{'Important rules!'}</div>
-      <RegistrationStatement title={'Be responsible'} description={'Only you are responsible for your security. We’ll not refund your tokens if your keys get stolen'} />
-      <RegistrationStatement title={'Do not share'} description={'If you send your seed phrase to someone = they have full control of your account'} />
-      <RegistrationStatement title={'Make a backup'} description={'We don’t keep track of your personal information, seed phrases and funds'} />
+      <div className={styles.registrationPageTitle}>{t('importantRules')}</div>
+      <RegistrationStatement title={t('beResponsible')!} description={t('onlyYouAreResponsible')} />
+      <RegistrationStatement title={t('doNotShare')!} description={t('IfYouSendYourSeedPhrase')} />
+      <RegistrationStatement title={t('makeBackup')!} description={t('weDontKeepTrack')} />
       <RegistrationStatement
-        title={'Only you have access'}
-        description={'We never transmit or store your seed phrases or other account information\n' +
-          'We can’t restore it or freeze it'}
+        title={t('onlyYouHaveAccess')!}
+        description={t('weNeverTransmit')}
       />
     </RegistrationBackground>
     <div className={styles.registrationButtonsHolder}>
@@ -26,7 +26,7 @@ export const BeAware: React.FC<BeAwareProps> = (props: BeAwareProps) => (
         type="button"
         onClick={props.setPrevStep}
       >
-        {'Back'}
+        {t('back')}
       </Button>
       <Button
         size="medium"
@@ -34,7 +34,7 @@ export const BeAware: React.FC<BeAwareProps> = (props: BeAwareProps) => (
         type="button"
         onClick={props.setNextStep}
       >
-        {'Next'}
+        {t('next')}
       </Button>
     </div>
   </>

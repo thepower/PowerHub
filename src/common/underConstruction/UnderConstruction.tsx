@@ -2,6 +2,7 @@ import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { Button } from '@mui/material';
 import { push } from 'connected-react-router';
+import { t } from 'i18next';
 import { setShowUnderConstruction } from '../../application/slice/applicationSlice';
 import { Modal } from '../modal/Modal';
 import { WalletRoutesEnum } from '../../application/typings/routes';
@@ -45,13 +46,13 @@ const UnderConstructionComponent: React.FC<UnderConstructionProps> = (props: Und
   >
     <div className={styles.underConstructionTitleHolder}>
       <div className={styles.underConstructionTitle}>
-        {'Good job!'}
+        {t('goodJob')}
       </div>
       <div className={styles.underConstructionTitle}>
-        {'This feature is currently under construction. But your actions make us better'}
+        {t('thisFeatureIsCurrentlyUnderConstruction')}
       </div>
       <div className={styles.underConstructionTitle}>
-        {'Thank you, it\'s very important to us!'}
+        {t('thankYouImportantToUs')}
       </div>
     </div>
     <Button
@@ -60,7 +61,7 @@ const UnderConstructionComponent: React.FC<UnderConstructionProps> = (props: Und
       size="large"
       onClick={handleProceedToHome}
     >
-      {'To home'}
+      {t('toHome')}
     </Button>
   </Modal>;
 };

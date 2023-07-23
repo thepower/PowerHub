@@ -12,6 +12,7 @@ import { TokenType, addTokenTrigger, toggleTokenShow } from 'myAssets/slices/tok
 import Asset from 'myAssets/components/Asset';
 import { OutlinedInput } from '@mui/material';
 import { getTokens } from 'myAssets/selectors/tokensSelectors';
+import { t } from 'i18next';
 import styles from './AddAssetsPage.module.scss';
 import SearchInput from '../../../common/searchInput/SearchInput';
 
@@ -64,13 +65,13 @@ class AddAssetsPageComponent extends React.PureComponent<AddAssetsPageProps, Add
     if (!assets.length && this.state.search) {
       return (
         <div className={styles.noTokens}>
-          Asset not found
+          {t('assetNotFound')}
         </div>);
     }
     if (!assets.length) {
       return (
         <div className={styles.noTokens}>
-          Your tokens will be here
+          {t('yourTokensWillBeHere')}
         </div>);
     }
     return (
@@ -95,12 +96,11 @@ class AddAssetsPageComponent extends React.PureComponent<AddAssetsPageProps, Add
     return (
       <div className={styles.addAssetsPageForm}>
         <div className={styles.addAssetsPageFormTip}>
-          You can add any standard token or standard asset....................................................
-          Enter the address, scan the code and click &quot;add asset&quot;
+          {t('youCanAddAnyStandardToken')}
         </div>
 
         <OutlinedInput
-          placeholder="Assets adress"
+          placeholder={t('assetsAddress')!}
           fullWidth
           size="small"
           className={styles.addAssetsPageFormInput}
@@ -113,7 +113,7 @@ class AddAssetsPageComponent extends React.PureComponent<AddAssetsPageProps, Add
           variant="filled"
           disabled={!address}
         >
-          Add assets
+          {t('addAssets')}
         </Button>
       </div>);
   };
@@ -137,7 +137,7 @@ class AddAssetsPageComponent extends React.PureComponent<AddAssetsPageProps, Add
     });
 
     return (
-      <DeepPageTemplate topBarTitle="Add assets" backUrl="/my-assets" backUrlText="My assets">
+      <DeepPageTemplate topBarTitle={t('addAssets')} backUrl="/my-assets" backUrlText={t('myAssets')!}>
         <div className={styles.addAssetsPage}>
           <SearchInput
             className={styles.addAssetsPageSearchInput}

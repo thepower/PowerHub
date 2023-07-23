@@ -1,4 +1,5 @@
 import React from 'react';
+import { t } from 'i18next';
 import { RegistrationBackground } from '../common/RegistrationBackground';
 import { RegistrationStatement } from '../common/RegistrationStatement';
 import { WizardComponentProps, Button } from '../../../common';
@@ -9,21 +10,18 @@ type QuickGuideProps = WizardComponentProps;
 export const QuickGuide: React.FC<QuickGuideProps> = (props: QuickGuideProps) => (
   <>
     <RegistrationBackground>
-      <div className={styles.registrationPageTitle}>{'What is Power Hub?'}</div>
+      <div className={styles.registrationPageTitle}>{t('whatIsPowerHub')}</div>
       <RegistrationStatement
-        title={'Discover DApps'}
-        description={'Power Hub gives people around the world a safe and trusted place to discover dapps that\n' +
-          'are secured by blockchain with high standards of privacy and security'}
+        title={t('discoverDApps')!}
+        description={t('powerHubGivesPeople')}
       />
       <RegistrationStatement
-        title={'Build & Publish'}
-        description={'Build Dapp where everything is in one place:  decentralized infrastructure\n' +
-          'and services. Make developer’s life easier -  the real full-stack dapps '}
+        title={t('buildPublish')!}
+        description={t('buildDappWhereEverything')}
       />
       <RegistrationStatement
-        title={'Contribute'}
-        description={'Community input is valuable and essential to ongoing growth ' +
-          'and improvement. Contributions and involvement help shape DAO\'s direction and development.'}
+        title={t('contribute')!}
+        description={t('communityInputIsValuable')}
       />
     </RegistrationBackground>
     <div className={styles.registrationButtonsHolder}>
@@ -33,7 +31,7 @@ export const QuickGuide: React.FC<QuickGuideProps> = (props: QuickGuideProps) =>
         type="button"
         onClick={props.setNextStep}
       >
-        {'Next'}
+        {t('next')}
       </Button>
     </div>
   </>

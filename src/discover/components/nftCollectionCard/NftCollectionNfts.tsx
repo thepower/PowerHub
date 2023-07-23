@@ -4,6 +4,7 @@ import { IconButton, PaginationList } from 'common';
 import classnames from 'classnames';
 import { FavIcon } from 'common/icons';
 import { HubRoutesEnum } from 'application/typings/routes';
+import { t } from 'i18next';
 import styles from './NftCollectionCard.module.scss';
 
 interface NftCollectionsNftsProps {
@@ -64,14 +65,14 @@ export class NftCollectionsNfts extends React.PureComponent<NftCollectionsNftsPr
           {
             count &&
             <div className={styles.nftCollectionNftCount}>
-              <span className={styles.nftCollectionNftCountLabel}>{'Last'}</span>
+              <span className={styles.nftCollectionNftCountLabel}>{t('last')}</span>
               <span>{count}</span>
             </div>
           }
         </div>
         <div className={styles.nftCollectionNftInfoSecondLine}>
           <div className={styles.nftCollectionNftPriceHolder}>
-            <div className={styles.nftCollectionNftPriceLabel}>{'Est.Value'}</div>
+            <div className={styles.nftCollectionNftPriceLabel}>{t('estValue')}</div>
             <div className={styles.nftCollectionNftPrice}>{estValue}</div>
           </div>
           {
@@ -97,7 +98,7 @@ export class NftCollectionsNfts extends React.PureComponent<NftCollectionsNftsPr
 
     return <div className={styles.nftCollectionNftHolder}>
       <div className={styles.nftCollectionNftHolderTitle}>
-        {'NFT in the collection'}
+        {t('nftInCollection')}
       </div>
       <div className={styles.nftCollectionNftDivider} />
       <PaginationList

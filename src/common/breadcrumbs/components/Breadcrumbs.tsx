@@ -1,6 +1,6 @@
 import React from 'react';
 import cn from 'classnames';
-import ChevronRight from '@mui/icons-material/ChevronRight'
+import ChevronRight from '@mui/icons-material/ChevronRight';
 import styles from './Breadcrumbs.module.scss';
 import { BreadcrumbsDataType, BreadcrumbsTypeEnum } from '../typings/breadcrumbsTypings';
 

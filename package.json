@@ -11,7 +11,8 @@
     "prepare": "yarn run build && husky install",
     "prod": "serve -s build",
     "eject": "react-scripts eject",
-    "cm": "git add . && git commit"
+    "cm": "git add . && git commit",
+    "loadLocales": "node --experimental-modules --es-module-specifier-resolution=node src/loadLocales.mjs "
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": "eslint --fix",
@@ -102,6 +103,8 @@
     "assert": "^2.0.0",
     "buffer": "^6.0.3",
     "crypto-browserify": "^3.12.0",
+    "csv-parse": "^4.16.3",
+    "googleapis": "^120.0.0",
     "https-browserify": "^1.0.0",
     "os-browserify": "^0.3.0",
     "process": "^0.11.10",

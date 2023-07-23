@@ -6,6 +6,7 @@ import { connect, ConnectedProps } from 'react-redux';
 import { ArrowLink, CardLink, CopyButton } from 'common';
 import { isHub } from 'application/components/AppRoutes';
 import { faucetThePowerUrl, walletThePowerUrl } from 'appConstants';
+import { t } from 'i18next';
 import { getWalletAddress } from '../../account/selectors/accountSelectors';
 import { getWalletNativeTokensAmounts } from '../../myAssets/selectors/walletSelectors';
 import { setShowUnderConstruction } from '../../application/slice/applicationSlice';
@@ -42,13 +43,13 @@ const AssetsSection = ({ walletAddress, setShowUnderConstruction, amounts }: Ass
         direction="right"
         to="my-assets"
       >
-        {'My assets'}
+        {t('myAssets')}
       </ArrowLink>
       <div className={styles.box}>
         <div className={styles.majorWallet}>
           <p className={styles.total}>
             <LogoIcon className={styles.icon} />
-            {!amounts?.SK || amounts?.SK === '0' ? <span className={styles.emptyTitle}>Your tokens will be here</span> : amounts.SK}
+            {!amounts?.SK || amounts?.SK === '0' ? <span className={styles.emptyTitle}>{t('yourTokensWillBeHere')}</span> : amounts.SK}
           </p>
           {walletAddress && <CopyButton
             textButton={walletAddress}
@@ -64,7 +65,7 @@ const AssetsSection = ({ walletAddress, setShowUnderConstruction, amounts }: Ass
           >
             <WalletsSvg />
           </CardLink>
-          <CardLink label="Faucet" isAnchor to={faucetThePowerUrl} target="_blank" rel="noreferrer">
+          <CardLink label={t('faucet')} isAnchor to={faucetThePowerUrl} target="_blank" rel="noreferrer">
             <FaucetSvg />
           </CardLink>
           <CardLink
@@ -72,7 +73,7 @@ const AssetsSection = ({ walletAddress, setShowUnderConstruction, amounts }: Ass
             to={isHub
               ? `${walletThePowerUrl}${WalletRoutesEnum.myAssets}${WalletRoutesEnum.assetSelection}`
               : `${WalletRoutesEnum.myAssets}${WalletRoutesEnum.assetSelection}`}
-            label="Send"
+            label={t('send')}
             target={isHub ? '_blank' : '_self'}
           >
             <SendSvg />
@@ -82,7 +83,7 @@ const AssetsSection = ({ walletAddress, setShowUnderConstruction, amounts }: Ass
             to={isHub
               ? `${walletThePowerUrl}${WalletRoutesEnum.buy}`
               : WalletRoutesEnum.buy}
-            label="Buy"
+            label={t('buy')}
             target={isHub ? '_blank' : '_self'}
             onClick={handleShowUnderConstruction}
           >

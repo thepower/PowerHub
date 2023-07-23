@@ -3,6 +3,7 @@ import {
   Tab, Box, Tabs as MUITabs, TabsProps as MUITabsProps,
 } from '@mui/material';
 import classnames from 'classnames';
+import { t } from 'i18next';
 import styles from './Tabs.module.scss';
 
 interface TabsProps extends MUITabsProps {
@@ -44,7 +45,7 @@ export class Tabs extends React.PureComponent<TabsProps> {
         key={key}
         className={classnames(styles.tab, tabClassName)}
         classes={this.getTabClasses()}
-        label={labels[key as keyof typeof labels]}
+        label={t(labels[key])}
         value={key}
         disableFocusRipple
         disableRipple

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { OutlinedInput } from 'common';
+import { t } from 'i18next';
 import styles from '../../Registration.module.scss';
 import {
   setLoginSeed,
@@ -54,35 +55,35 @@ class LoginToAccountComponent extends React.PureComponent<LoginToAccountProps> {
 
     return <div className={styles.registrationFormHolder}>
       <div className={styles.registrationFormDesc}>
-        {'To login, you need enter the address\nand private key or seed phrase'}
+        {t('toLoginYouNeedEnter')}
       </div>
       <OutlinedInput
-        placeholder={'Address'}
+        placeholder={t('address')!}
         className={styles.passwordInput}
         value={address}
         onChange={this.onChangeAddress}
       />
       <OutlinedInput
-        placeholder={'Seed phrase'}
+        placeholder={t('seedPhrase')!}
         className={styles.passwordInput}
         value={seed}
         type={'password'}
         onChange={this.onChangeSeed}
       />
       <OutlinedInput
-        placeholder={'Password'}
+        placeholder={t('password')!}
         className={styles.passwordInput}
         value={password}
         type={'password'}
         onChange={this.onChangePassword}
       />
       <OutlinedInput
-        placeholder={'Repeated password'}
+        placeholder={t('repeatedPassword')!}
         className={styles.passwordInput}
         value={confirmedPassword}
         type={'password'}
         error={passwordsNotEqual}
-        errorMessage={'oops, passwords didn\'t match, try again'}
+        errorMessage={t('oopsPasswordsDidntMatch')!}
         onChange={this.onChangeConfirmedPassword}
       />
     </div>;

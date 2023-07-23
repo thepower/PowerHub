@@ -1,9 +1,9 @@
 import React from 'react';
 import classnames from 'classnames';
+import { Button } from '@mui/material';
 import { branchCallFunction } from '../utils/common';
 import styles from './Linkblock.module.scss';
 import { UnknownFunctionType } from '../typings/common';
-import { Button } from '@mui/material';
 
 interface LinkBlockProps {
   className?: string;
@@ -30,23 +30,22 @@ export const LinkBlock: React.FC<LinkBlockProps> = (props) => {
     hideButton,
   } = props;
 
-  const renderLink = React.useCallback(() => {
-    return <>
-      <div className={classnames(styles.title, titleClassName)}>{title}</div>
-      <div className={classnames(styles.description, descriptionClassName)}>{description}</div>
-      {
+  const renderLink = React.useCallback(() => <>
+    <div className={classnames(styles.title, titleClassName)}>{title}</div>
+    <div className={classnames(styles.description, descriptionClassName)}>{description}</div>
+    {
         !hideButton &&
         <Button
           color={'primary'}
           variant="contained"
-          className={styles.linkButton}>
+          className={styles.linkButton}
+        >
           {buttonTitle}
         </Button>
       }
-    </>
-  }, [buttonTitle, description, descriptionClassName, title, titleClassName, hideButton]);
+  </>, [buttonTitle, description, descriptionClassName, title, titleClassName, hideButton]);
 
   return <div className={classnames(styles.linkBlock, className)} onClick={onClick}>
     {branchCallFunction(contentRenderer, renderLink)}
-  </div>
+  </div>;
 };

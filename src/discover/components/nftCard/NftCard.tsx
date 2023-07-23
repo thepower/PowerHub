@@ -14,6 +14,7 @@ import { IconButton } from 'common';
 import { NftCardInfoRecordType, NtfOwnershipType } from 'discover/typings/discoverTypings';
 import { setBackUrl } from 'application/slice/applicationSlice';
 import { HubRoutesEnum } from 'application/typings/routes';
+import { t } from 'i18next';
 import styles from './NftCard.module.scss';
 
 type OwnProps = RouteComponentProps<{ id: string }>;
@@ -62,21 +63,21 @@ class NftCardComponent extends React.PureComponent<NftCardProps, never> {
       <div className={styles.nftOwnersInfoPart}>
         <div className={styles.nftOwnerPartImg} style={{ backgroundImage: `url(${collectionImg})` }} />
         <div className={styles.nftOwnersInfoTextPart}>
-          <div>{'Collection'}</div>
+          <div>{t('collection')}</div>
           <div>{collection}</div>
         </div>
       </div>
       <div className={styles.nftOwnersInfoPart}>
         <div className={styles.nftOwnerPartImg} style={{ backgroundImage: `url(${creatorImg})` }} />
         <div className={styles.nftOwnersInfoTextPart}>
-          <div>{'Creator'}</div>
+          <div>{t('creator')}</div>
           <div>{creatorAddress}</div>
         </div>
       </div>
       <div className={styles.nftOwnersInfoPart}>
         <div className={styles.nftOwnerPartImg} style={{ backgroundImage: `url(${ownerImg})` }} />
         <div className={styles.nftOwnersInfoTextPart}>
-          <div>{'Owner'}</div>
+          <div>{t('owner')}</div>
           <div>{ownerAddress}</div>
         </div>
       </div>
@@ -150,7 +151,7 @@ class NftCardComponent extends React.PureComponent<NftCardProps, never> {
         {this.renderNftButtons()}
       </div>
       <div className={styles.nftOwnershipHistory}>
-        <div className={styles.nftOwnershipHistoryLabel}>{'Ownership history'}</div>
+        <div className={styles.nftOwnershipHistoryLabel}>{t('ownershipHistory')}</div>
         <div>{ownershipHistory?.map(this.renderOwnershipRecord)}</div>
       </div>
     </div>;

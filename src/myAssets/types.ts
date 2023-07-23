@@ -43,11 +43,11 @@ export enum MyAssetsTabs {
   // NFT = 'NFT',
 }
 
-export enum MyAssetsTabsLabels {
-  PowerNativeTokens = 'Power native tokens',
-  Erc20 = 'Erc_20',
-  // NFT = 'NFT',
-}
+export const MyAssetsTabsLabels = {
+  PowerNativeTokens: 'powerNativeTokens',
+  Erc20: 'Erc_20',
+  // NFT : 'NFT',
+} as const;
 
 export enum AddAssetsTabs {
   Erc20 = 'Erc20',
@@ -55,11 +55,11 @@ export enum AddAssetsTabs {
   AddAssets = 'AddAssets',
 }
 
-export enum AddAssetsTabsLabels {
-  Erc20 = 'Erc_20',
-  // NFT = 'NFT',
-  AddAssets = 'Add other assets',
-}
+export const AddAssetsTabsLabels = {
+  Erc20: 'Erc_20',
+  // NFT :'NFT',
+  AddAssets: 'addOtherAssets',
+} as const;
 
 export type TokenKind = 'nft' | 'erc20' | 'native';
 

@@ -17,6 +17,7 @@ import {
 import { CheckedIcon, ChevronDown, UnCheckedIcon } from 'common/icons';
 import { checkIfLoading } from 'network/selectors';
 import classnames from 'classnames';
+import { t } from 'i18next';
 import styles from '../../Registration.module.scss';
 import {
   setCreatingCurrentShard,
@@ -225,7 +226,7 @@ class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProp
     }
 
     return <div className={styles.loginRegisterAccountShardPlaceholder}>
-      {'select a chain'}
+      {t('selectChain')}
     </div>;
   };
 
@@ -256,11 +257,11 @@ class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProp
     return <>
       <div className={styles.registrationFormHolder}>
         <div className={styles.registrationFormDesc}>
-          {'The wallet is still in alpha-testing phase. \nWallet creation may take a couple of minutes'}
+          {t('theWalletAlphaTestingPhase')}
         </div>
         <Collapse in={!randomChain}>
           <div className={styles.loginRegisterAccountShardTitle}>
-            {'Selected chain:'}
+            {t('selectedChain')}
           </div>
           <Select
             value={currentShard!}
@@ -283,7 +284,7 @@ class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProp
       </div>
       <FormControlLabel
         control={this.renderRandomChainCheckbox()}
-        label="If you need a specific chain, check the box and select the chain"
+        label={t('IfYouNeedSpecificChain')}
         classes={this.selectChainCheckboxClasses}
       />
     </>;
@@ -322,15 +323,15 @@ class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProp
 
     return <RegistrationBackground className={styles.rememberBackground}>
       <div className={classnames(styles.loginRegisterAccountTitle, styles.rememberTitle)}>
-        {'Remember'}
+        {t('remember')}
       </div>
-      <RegistrationStatement description={'Enter a seed phrase or use the one we provide'} />
-      <RegistrationStatement description={'If you specify your own seed phrase it is up to you to make sure it is valid'} />
-      <RegistrationStatement description={'Write down your seed phrase and store is somewhere safe'} />
-      <RegistrationStatement description={'Seed phrase is the only way to restore your private key'} />
+      <RegistrationStatement description={t('enterSeedPhrase')} />
+      <RegistrationStatement description={t('IfYouSpecifyYourOwnSeedPhrase')} />
+      <RegistrationStatement description={t('writeDownYourSeedPhraseAndStore')} />
+      <RegistrationStatement description={t('seedPhraseIsTheOnlyWay')} />
       <div className={styles.setSeedPhraseHolder}>
         <div className={styles.seedPhraseTitle}>
-          {'Seed phrase'}
+          {t('seedPhrase')}
         </div>
         <OutlinedInput
           placeholder={generatedSeedPhrase!}
@@ -353,7 +354,7 @@ class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProp
 
     return <RegistrationBackground className={styles.confirmSeedPhraseHolder}>
       <div className={styles.confirmSeedPhraseTitle}>
-        {'Repeat seed phrase'}
+        {t('repeatSeedPhrase')}
       </div>
       <OutlinedInput
         placeholder={generatedSeedPhrase!}
@@ -363,7 +364,7 @@ class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProp
         onChange={this.onChangeConfirmedSeedPhrase}
         error={seedsNotEqual}
         fullWidth
-        errorMessage={'Oh:( the seed phrase is incorrect, please try again'}
+        errorMessage={t('ohSeedPhraseIncorrect')!}
       />
     </RegistrationBackground>;
   };
@@ -373,24 +374,24 @@ class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProp
 
     return <RegistrationBackground className={styles.enterPasswordBackground}>
       <div className={styles.loginRegisterAccountTitle}>
-        {'Enter password to encrypt your private key'}
+        {t('enterPasswordEncryptYour')}
       </div>
       <div className={styles.encryptKeyHolder}>
         <OutlinedInput
-          placeholder={'Password'}
+          placeholder={t('password')!}
           className={styles.passwordInput}
           value={password}
           onChange={this.onChangePassword}
           type={'password'}
         />
         <OutlinedInput
-          placeholder={'Repeat password'}
+          placeholder={t('repeatPassword')!}
           className={styles.passwordInput}
           value={confirmedPassword}
           onChange={this.onChangeConfirmedPassword}
           type={'password'}
           error={passwordsNotEqual}
-          errorMessage={'oops, passwords didn\'t match, try again'}
+          errorMessage={t('oopsPasswordsDidntMatch')!}
         />
       </div>
     </RegistrationBackground>;
@@ -422,7 +423,7 @@ class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProp
     const { creatingStep, loading } = this.props;
     return <>
       <ModalLoader
-        loadingTitle={'Processing\nvery soon everything will happen'}
+        loadingTitle={t('processingVerySoonEverythingWillHappen')}
         open={loading}
         hideIcon
       />
@@ -436,7 +437,7 @@ class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProp
             type="button"
             onClick={this.handleBackClick}
           >
-            {'Back'}
+            {t('back')}
           </Button>
           <Button
             size="medium"
@@ -445,7 +446,7 @@ class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProp
             onClick={this.submitForm}
             disabled={this.getSubmitButtonDisabled()}
           >
-            {'Next'}
+            {t('next')}
           </Button>
         </div>
       }

@@ -4,6 +4,7 @@ import { connect, ConnectedProps } from 'react-redux';
 import { HubRoutesEnum } from 'application/typings/routes';
 import classnames from 'classnames';
 import { nftListData } from 'discover/utils/dappsData';
+import { t } from 'i18next';
 import styles from './Nft.module.scss';
 import { NftItemType } from '../../typings/discoverTypings';
 import { IconButton } from '../../../common';
@@ -69,11 +70,11 @@ class NftListComponent extends React.PureComponent<NftListProps, NftListState> {
         </div>
         <div className={styles.nftInfoHolderSecondLine}>
           <div className={styles.nftTotalVolume}>
-            <div>{'Total volume:'}</div>
+            <div>{t('totalVolume')}</div>
             <div>{totalVolume}</div>
           </div>
           <div className={styles.nftFloorPrice}>
-            <div>{'Floor price:'}</div>
+            <div>{t('floorPrice')}</div>
             <div>{floorPrice}</div>
           </div>
         </div>

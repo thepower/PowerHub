@@ -1,6 +1,5 @@
 import React from 'react';
 import { push } from 'connected-react-router';
-import { Trans } from 'react-i18next';
 import { connect, ConnectedProps } from 'react-redux';
 import {
   BreadcrumbsDataType,
@@ -9,7 +8,8 @@ import {
   Wizard,
   Button,
 } from 'common';
-import { RegistrationTabsEnum } from '../typings/registrationTypes';
+import { t } from 'i18next';
+import { RegistrationTabs } from '../typings/registrationTypes';
 import { QuickGuide } from './pages/QuickGuide';
 import { BeAware } from './pages/BeAware';
 import { RegisterPage } from './pages/loginRegisterAccount/RegisterPage';
@@ -31,19 +31,19 @@ interface RegistrationPageState {
 class RegistrationPageComponent extends React.PureComponent<RegistrationPageProps, RegistrationPageState> {
   private registrationBreadcrumbs: BreadcrumbsDataType[] = [
     {
-      label: RegistrationTabsEnum.quickGuide,
+      label: RegistrationTabs.quickGuide,
       component: QuickGuide,
     },
     {
-      label: RegistrationTabsEnum.beAware,
+      label: RegistrationTabs.beAware,
       component: BeAware,
     },
     {
-      label: RegistrationTabsEnum.loginRegister,
+      label: RegistrationTabs.loginRegister,
       component: RegisterPage,
     },
     {
-      label: RegistrationTabsEnum.backup,
+      label: RegistrationTabs.backup,
       component: Backup,
     },
   ];
@@ -67,7 +67,7 @@ class RegistrationPageComponent extends React.PureComponent<RegistrationPageProp
     <>
       <div className={styles.registrationTitle}>{'Power Hub'}</div>
       <div className={styles.registrationDesc}>
-        <Trans i18nKey={'registrationPageDesc'} />
+        {t('registrationPageDesc')}
       </div>
       <div className={styles.buttonsHolder}>
         <Button
@@ -77,7 +77,7 @@ class RegistrationPageComponent extends React.PureComponent<RegistrationPageProp
           type="button"
           onClick={this.handleProceedToRegistration}
         >
-          <Trans i18nKey={'registrationPageJoinButton'} />
+          {t('registrationPageJoinButton')}
         </Button>
         <Button
           size="large"
@@ -86,7 +86,7 @@ class RegistrationPageComponent extends React.PureComponent<RegistrationPageProp
           type="button"
           onClick={this.handleProceedToLogin}
         >
-          <Trans i18nKey={'registrationPageImportAccountButton'} />
+          {t('registrationPageImportAccountButton')}
         </Button>
       </div>
     </>

@@ -8,6 +8,7 @@ import {
 import React, { MouseEvent } from 'react';
 import { NavLink } from 'react-router-dom';
 import { isHub } from 'application/components/AppRoutes';
+import { t } from 'i18next';
 import { WalletRoutesEnum, HubRoutesEnum } from '../../application/typings/routes';
 import styles from './NavList.module.scss';
 import { setShowUnderConstruction } from '../../application/slice/applicationSlice';
@@ -16,38 +17,38 @@ import { useAppDispatch } from '../../application/store';
 
 const routes = isHub ? [
   {
-    name: 'Home',
+    name: 'home',
     link: HubRoutesEnum.root,
     Icon: HomeIcon,
     disabled: false,
   },
   {
-    name: 'Discover',
+    name: 'discover',
     link: HubRoutesEnum.discover,
     Icon: DiscoverIcon,
     disabled: true,
   },
   {
-    name: 'MyPlace',
+    name: 'myPlace',
     link: HubRoutesEnum.myPlace,
     Icon: MyPlaceIcon,
     disabled: true,
   },
   {
-    name: 'Build',
+    name: 'build',
     link: HubRoutesEnum.build,
     Icon: BuildIcon,
     disabled: true,
   },
   {
-    name: 'Contribute',
+    name: 'contribute',
     link: HubRoutesEnum.contribute,
     Icon: ContributeIcon,
     disabled: true,
   },
 ] : [
   {
-    name: 'Home',
+    name: 'home',
     link: WalletRoutesEnum.root,
     Icon: HomeIcon,
     disabled: false,
@@ -79,7 +80,7 @@ const NavList = React.memo(() => {
           onClick={disabled ? handleShowUnderConstruction : undefined}
         >
           <Icon className={styles.icon} />
-          <span className={styles.text}>{name}</span>
+          <span className={styles.text}>{t(name)}</span>
         </NavLink>
       ))}
     </ul>

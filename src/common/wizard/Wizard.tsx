@@ -27,7 +27,7 @@ export interface WizardState {
 export type WizardComponentProps = {
   setNextStep: () => void;
   setPrevStep: () => void;
-}
+};
 
 export class Wizard extends React.Component<WizardProps, WizardState> {
   constructor(props: WizardProps) {

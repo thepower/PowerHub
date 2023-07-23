@@ -12,6 +12,7 @@ import { TxBody, TxPurpose } from 'sign-and-send/typing';
 import { getWalletAddress } from 'account/selectors/accountSelectors';
 import { correctAmount } from '@thepowereco/tssdk/dist/utils/numbers';
 import { cloneDeep } from 'lodash';
+import { t } from 'i18next';
 import {
   sendTokenTrxTrigger, sendTrxTrigger, setSentData, signAndSendTrxTrigger,
 } from '../slices/sendSlice';
@@ -35,7 +36,7 @@ export function* sendTrxSaga({
 
     yield loadBalanceSaga();
   } catch (error: any) {
-    toast.error(`An error occurred while sending the asset. Code: ${error?.code}`);
+    toast.error(`${t('anErrorOccurredAsset')} ${error?.code}`);
   }
 }
 
@@ -62,7 +63,7 @@ export function* sendTokenTrxSaga({
 
     yield updateTokenAmountSaga({ address });
   } catch (error: any) {
-    toast.error(`An error occurred while sending the asset. Code: ${error?.code}`);
+    toast.error(`${t('anErrorOccurredAsset')} ${error?.code}`);
   }
 }
 
@@ -112,6 +113,6 @@ export function* singAndSendTrxSaga({
     }));
   } catch (error: any) {
     console.error(error);
-    toast.error(`Something went wrong when sending the transaction. Code: ${error?.code}`);
+    toast.error(`${t('somethingWentWrongTransaction')} ${error?.code}`);
   }
 }
