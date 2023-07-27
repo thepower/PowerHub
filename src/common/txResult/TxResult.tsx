@@ -34,7 +34,7 @@ const TxResult: React.FC<TxResultProps> = ({
   const chainID = useAppSelector(getNetworkChainID);
   const txExplorerLink = `${explorerThePowerUrl}/${chainID}/transaction/${sentData.txId}`;
 
-  const handleCopyClick = () => {
+  const onCopyClick = () => {
     navigator.clipboard.writeText(txExplorerLink);
     toast.info(t('linkTransactionCopied'));
   };
@@ -74,7 +74,7 @@ const TxResult: React.FC<TxResultProps> = ({
         {socialLinks.map(({ Icon, url }) => <Icon className={styles.socialsIcon} />)}
       </div> */}
       <div className={styles.buttons}>
-        <Button onClick={handleCopyClick} variant="outlined" fullWidth>{t('share')}</Button>
+        <Button onClick={onCopyClick} variant="outlined" fullWidth>{t('share')}</Button>
         <a target="_blank" href={txExplorerLink} style={{ width: '100%' }} rel="noreferrer">
           <Button variant="filled" fullWidth>{t('explorer')}</Button>
         </a>

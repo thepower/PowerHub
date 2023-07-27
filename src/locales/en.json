@@ -79,7 +79,7 @@
     "transaction": "Transaction",
     "copy": "Copy",
     "assetNotFound": "Asset not found",
-    "youCanAddAnyStandardToken": "You can add any standard token or standard asset....................................................\nEnter the address, scan the code and click \"add asset\"",
+    "youCanAddAnyStandardToken": "You can add any standard token or standard asset.\nEnter the address, scan the code and click \"add asset\"",
     "assetsAddress": "Assets address",
     "assetSelection": "Asset selection",
     "somethingWentWrongCode": "Something went wrong when adding a token. Code:",
@@ -158,6 +158,13 @@
     "extraData": "Extra data",
     "signAndSend": "Sign and send",
     "cancel": "Cancel",
-    "networkError": "Network error"
+    "networkError": "Network error",
+    "registrationCompleted": "Registration is completed",
+    "toLogInItIsMoreConvenientToUseKeyFile": "To log in, it is more convenient to use a key file, but to reserve, be sure to write down the keyword and account number for an alternative login",
+    "yourSeedPhrase": "Your seed phrase",
+    "yourAccount": "Your account",
+    "yourKeyFile": "Your key file",
+    "logInToTheApp": "Log in to the app",
+    "savedToDisk": "saved to disk"
   }
 }

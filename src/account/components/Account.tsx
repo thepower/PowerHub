@@ -19,7 +19,9 @@ import { Maybe } from '../../typings/common';
 import { AccountActionsList } from './AccountActionsList';
 import { AccountActionType } from '../typings/accountTypings';
 import { ImportAccountModal } from '../../registration/components/pages/loginRegisterAccount/import/ImportAccountModal';
-import { clearAccountData, importAccountFromFile, toggleOpenedAccountMenu } from '../slice/accountSlice';
+import {
+  clearAccountData, exportAccount, importAccountFromFile, resetAccount, toggleOpenedAccountMenu,
+} from '../slice/accountSlice';
 import { ExportAccountModal } from '../../registration/components/pages/backup/ExportAccountModal';
 import { ResetAccountModal } from './ResetAccountModal';
 import { setShowUnderConstruction } from '../../application/slice/applicationSlice';
@@ -36,6 +38,8 @@ const mapDispatchToProps = {
   setShowUnderConstruction,
   toggleOpenedAccountMenu,
   clearAccountData,
+  resetAccount,
+  exportAccount,
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
@@ -79,7 +83,13 @@ class AccountComponent extends React.PureComponent<AccountProps, AccountState> {
   };
 
   handleExportAccount = () => {
-    this.setState({ openedExportAccountModal: true });
+    const { exportAccount } = this.props;
+    exportAccount({
+      password: '',
+      additionalActionOnError: () => {
+        this.setState({ openedExportAccountModal: true });
+      },
+    });
   };
 
   closeImportAccountModal = () => {
@@ -107,9 +117,15 @@ class AccountComponent extends React.PureComponent<AccountProps, AccountState> {
   };
 
   setAccountFile = (event: ChangeEvent<HTMLInputElement>) => {
-    this.setState({
-      accountFile: event?.target?.files?.[0]!,
-      openedImportAccountModal: true,
+    const accountFile = event?.target?.files?.[0]!;
+
+    importAccountFromFile({
+      password: '',
+      accountFile,
+      additionalActionOnError: () => this.setState({
+        accountFile,
+        openedImportAccountModal: true,
+      }),
     });
 
     this.props.toggleOpenedAccountMenu();
@@ -120,8 +136,12 @@ class AccountComponent extends React.PureComponent<AccountProps, AccountState> {
   };
 
   handleResetAccount = () => {
+    const { resetAccount } = this.props;
     if (isWallet) {
-      this.setState({ openedResetAccountModal: true });
+      resetAccount({
+        password: '',
+        additionalActionOnError: () => this.setState({ openedResetAccountModal: true }),
+      });
     } else if (isHub) {
       clearApplicationStorage();
       window.location.reload();

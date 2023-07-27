@@ -1,18 +1,18 @@
 import React, { useCallback, useMemo } from 'react';
 import { Form, Formik, FormikHelpers } from 'formik';
-import { CryptoApi } from '@thepowereco/tssdk';
 import { connect, ConnectedProps } from 'react-redux';
 import { TokenType } from 'myAssets/slices/tokensSlice';
 import { t } from 'i18next';
 import { Button, Modal, OutlinedInput } from '../../common';
 import styles from './ConfirmSendModal.module.scss';
 import { RootState } from '../../application/store';
-import { getWalletAddress, getWalletData } from '../../account/selectors/accountSelectors';
-import { sendTokenTrxTrigger, sendTrxTrigger } from '../slices/sendSlice';
+import { getWalletAddress } from '../../account/selectors/accountSelectors';
+import { FormValues } from './Send';
 
 interface OwnProps {
   open: boolean;
   onClose: () => void;
+  onSubmit: (values: FormValues, password: string) => Promise<void>;
   token?: TokenType;
   trxValues: {
     amount: string;
@@ -26,46 +26,23 @@ type Values = typeof initialValues;
 
 const connector = connect(
   (state: RootState) => ({
-    wif: getWalletData(state).wif,
     from: getWalletAddress(state),
   }),
-  {
-    sendTrxTrigger,
-    sendTokenTrxTrigger,
-  },
 );
 
 type ConfirmSendModalProps = ConnectedProps<typeof connector> & OwnProps;
 
 const ConfirmSendModal: React.FC<ConfirmSendModalProps> = ({
-  onClose, open, trxValues, wif, from, sendTrxTrigger, token, sendTokenTrxTrigger,
+  onClose, open, trxValues, from, token, onSubmit,
 }) => {
   const handleSubmit = useCallback(async (values: Values, formikHelpers: FormikHelpers<Values>) => {
     try {
-      const decryptedWif = await CryptoApi.decryptWif(wif, values.password);
-      if (!token) {
-        sendTrxTrigger({
-          from,
-          to: trxValues.address!,
-          comment: trxValues.comment,
-          amount: Number(trxValues.amount)!,
-          wif: decryptedWif,
-        });
-      } else {
-        sendTokenTrxTrigger({
-          address: token.address,
-          amount: Number(trxValues.amount),
-          decimals: token.decimals,
-          from,
-          to: trxValues.address!,
-          wif: decryptedWif,
-        });
-      }
+      await onSubmit(trxValues, values.password);
       onClose();
     } catch (e) {
       formikHelpers.setFieldError('password', t('invalidPasswordError')!);
     }
-  }, [from, onClose, sendTrxTrigger, sendTokenTrxTrigger, trxValues, wif, token]);
+  }, [onSubmit, trxValues, onClose]);
 
   const fields = useMemo(() => [
     { key: t('from'), value: from },

@@ -1,5 +1,5 @@
 import { createSlice, createAction, PayloadAction } from '@reduxjs/toolkit';
-import { Maybe } from '../../typings/common';
+import { AddActionOnErrorType, Maybe } from '../../typings/common';
 import { ExportAccountInputType, ImportAccountInputType, LoginToWalletSagaInput } from '../typings/accountTypings';
 
 export type WalletData = {
@@ -16,9 +16,9 @@ export interface AccountState {
 
 const SLICE_NAME = 'account';
 const loginToWallet = createAction<LoginToWalletSagaInput>(`${SLICE_NAME}/loginToWallet`);
-const resetAccount = createAction<string>(`${SLICE_NAME}/resetAccount`);
-const exportAccount = createAction<ExportAccountInputType>(`${SLICE_NAME}/exportAccount`);
-const importAccountFromFile = createAction<ImportAccountInputType>(`${SLICE_NAME}/importAccount`);
+const resetAccount = createAction<AddActionOnErrorType<{ password: string }>>(`${SLICE_NAME}/resetAccount`);
+const exportAccount = createAction<AddActionOnErrorType<ExportAccountInputType>>(`${SLICE_NAME}/exportAccount`);
+const importAccountFromFile = createAction<AddActionOnErrorType<ImportAccountInputType>>(`${SLICE_NAME}/importAccount`);
 
 const initialState: AccountState = {
   walletData: {

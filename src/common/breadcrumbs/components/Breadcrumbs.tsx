@@ -71,16 +71,19 @@ export class Breadcrumbs extends React.PureComponent<BreadcrumbsProps, any> {
       return null;
     }
 
-    return <div
-      className={cn(
-        className,
-        styles.breadcrumbsHolder,
-        breadCrumbHasBorder && styles.breadcrumbsHolderBordered,
-        notDirectionMode && styles.tabsBreadcrumbsHolder,
-        styles[`tabsBreadcrumbsHolder_${type}`],
-      )}
-    >
-      {breadcrumbsData.map(this.renderBreadcrumb)}
-    </div>;
+    return (
+      <div className={cn(styles.breadcrumbs, breadCrumbHasBorder && styles.breadcrumbsHolderBordered)}>
+        <div
+          className={cn(
+            className,
+            styles.breadcrumbsHolder,
+            notDirectionMode && styles.tabsBreadcrumbsHolder,
+            styles[`tabsBreadcrumbsHolder_${type}`],
+          )}
+        >
+          {breadcrumbsData.map(this.renderBreadcrumb)}
+        </div>
+      </div>
+    );
   }
 }

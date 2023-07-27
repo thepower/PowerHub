@@ -8,14 +8,15 @@ import { isWallet } from 'application/components/AppRoutes';
 import { t } from 'i18next';
 import {
   clearAccountData,
+  exportAccount,
+  importAccountFromFile,
+  resetAccount,
   setWalletData,
 } from '../slice/accountSlice';
 import { getWalletData } from '../selectors/accountSelectors';
 import {
-  ExportAccountInputType,
   GetChainResultType,
   LoginToWalletSagaInput,
-  ImportAccountInputType,
 } from '../typings/accountTypings';
 import { clearApplicationStorage, setKeyToApplicationStorage } from '../../application/utils/localStorageUtils';
 import { getNetworkApi, getWalletApi } from '../../application/selectors';
@@ -65,8 +66,8 @@ export function* loginToWalletSaga({ payload }: { payload?: LoginToWalletSagaInp
   }
 }
 
-export function* importAccountFromFileSaga({ payload }: { payload: ImportAccountInputType }) {
-  const { accountFile, password } = payload;
+export function* importAccountFromFileSaga({ payload }: ReturnType<typeof importAccountFromFile>) {
+  const { accountFile, password, additionalActionOnError } = payload;
   const WalletAPI = (yield* select(getWalletApi))!;
 
   try {
@@ -77,13 +78,19 @@ export function* importAccountFromFileSaga({ payload }: { payload: ImportAccount
     yield* loginToWalletSaga({ payload: { address: walletData.address, wif } });
     yield* put(push(WalletRoutesEnum.root));
   } catch (e) {
-    toast.error(t('importAccountError'));
+    if (additionalActionOnError) {
+      additionalActionOnError?.();
+    } else {
+      toast.error(t('importAccountError'));
+    }
   }
 }
 
-export function* exportAccountSaga({ payload }: { payload: ExportAccountInputType }) {
+export function* exportAccountSaga({ payload }: ReturnType<typeof exportAccount>) {
   const { wif, address } = yield* select(getWalletData);
-  const { password, hint } = payload;
+  const {
+    password, hint, isWithoutGoHome, additionalActionOnError,
+  } = payload;
   const WalletAPI = (yield* select(getWalletApi))!;
 
   try {
@@ -94,20 +101,31 @@ export function* exportAccountSaga({ payload }: { payload: ExportAccountInputTyp
     yield fileSaver.saveAs(blob, 'power_wallet.pem', true);
 
     yield* loginToWalletSaga({ payload: { address, wif } });
-    yield put(push(WalletRoutesEnum.root));
+
+    if (!isWithoutGoHome) {
+      yield put(push(WalletRoutesEnum.root));
+    }
   } catch (e) {
-    toast.error(t('exportAccountError'));
+    if (additionalActionOnError) {
+      additionalActionOnError?.();
+    } else {
+      toast.error(t('exportAccountError'));
+    }
   }
 }
 
-export function* resetAccountSaga({ payload }: { payload: string }) {
+export function* resetAccountSaga({ payload: { password, additionalActionOnError } }: ReturnType<typeof resetAccount>) {
   const { wif } = yield select(getWalletData);
   try {
-    yield CryptoApi.decryptWif(wif, payload);
+    yield CryptoApi.decryptWif(wif, password);
     yield clearApplicationStorage();
     yield put(clearAccountData());
     yield put(push(WalletRoutesEnum.signup));
   } catch (e) {
-    toast.error(t('resetAccountError'));
+    if (additionalActionOnError) {
+      additionalActionOnError?.();
+    } else {
+      toast.error(t('resetAccountError'));
+    }
   }
 }

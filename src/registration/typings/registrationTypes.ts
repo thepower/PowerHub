@@ -1,6 +1,5 @@
 import React from 'react';
 import { WizardComponentProps } from 'common';
-import { t } from 'i18next';
 
 export enum RegistrationTabs {
   quickGuide = 'Quick guide',
@@ -16,15 +15,15 @@ export enum LoginRegisterAccountTabs {
 }
 
 export const LoginRegisterAccountTabsLabels = {
-  create: t('createNewAccount'),
-  login: t('loginToAccount'),
-  import: t('importYourAccount'),
+  create: 'createNewAccount',
+  login: 'loginToAccount',
+  import: 'importYourAccount',
 } as const;
 
 export const LoginRegisterAccountTabsLabelsShort = {
-  create: t('create'),
-  login: t('login'),
-  import: t('import'),
+  create: 'create',
+  login: 'login',
+  import: 'import',
 } as const;
 
 export enum CreateAccountStepsEnum {

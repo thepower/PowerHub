@@ -40,7 +40,8 @@ export class ResetAccountModalComponent extends React.PureComponent<ResetAccount
     const { resetAccount, onClose } = this.props;
     const { password } = this.state;
 
-    resetAccount(password);
+    resetAccount({ password });
+
     this.setState({ password: '' });
     onClose();
   };

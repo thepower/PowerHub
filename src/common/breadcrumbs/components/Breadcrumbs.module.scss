@@ -1,15 +1,20 @@
 @import '../../../styles/variables';
 @import '../../../styles/mixins';
 
-.breadcrumbsHolder {
+.breadcrumbs {
   display: flex;
   width: 100%;
-  justify-content: space-evenly;
+  justify-content: center;
   margin-bottom: 16px;
 
   @include mobile {
     margin-bottom: 28px;
   }
+}
+
+.breadcrumbsHolder {
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .breadcrumbsHolderBordered {
@@ -18,7 +23,7 @@
 
   @include mobile {
     padding-bottom: 20px;
-  };
+  }
 }
 
 .breadcrumbLabel {
@@ -102,7 +107,9 @@
       border-radius: 8px;
       border-bottom: unset !important;
       margin-bottom: $unit * 0.5;
-      box-shadow: 0 3px 8px rgb(0 0 0 / 12%), 0 3px 1px rgb(0 0 0 / 4%);
+      box-shadow:
+        0 3px 8px rgb(0 0 0 / 12%),
+        0 3px 1px rgb(0 0 0 / 4%);
     }
   }
 
