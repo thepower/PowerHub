@@ -1,31 +1,32 @@
-import React from 'react';
-import { connect, ConnectedProps } from 'react-redux';
-import { Button, Tabs, WizardComponentProps } from 'common';
+import { compose } from '@reduxjs/toolkit';
 import { RootState } from 'application/store';
-import { t } from 'i18next';
-import {
-  CreateAccountStepsEnum,
-  LoginRegisterAccountTabs,
-  LoginRegisterAccountTabsLabels, LoginRegisterAccountTabsLabelsShort,
-} from '../../../typings/registrationTypes';
-import { CreateNewAccount } from './CreateNewAccount';
-import {
-  generateSeedPhrase,
-  setCurrentRegisterCreateAccountTab,
-  setPasswordNotEqual,
-  loginToWalletFromRegistration,
-} from '../../../slice/registrationSlice';
-import { LoginToAccount } from './LoginToAccount';
+import { Button, Tabs, WizardComponentProps } from 'common';
+import React from 'react';
+import { WithTranslation } from 'react-i18next';
+import { ConnectedProps, connect } from 'react-redux';
 import {
   getCurrentCreatingStep,
   getCurrentRegistrationTab,
   getCurrentShardSelector,
   getLoginData,
 } from '../../../selectors/registrationSelectors';
-import { ImportAccount } from './import/ImportAccount';
+import {
+  generateSeedPhrase,
+  loginToWalletFromRegistration,
+  setCurrentRegisterCreateAccountTab,
+  setPasswordNotEqual,
+} from '../../../slice/registrationSlice';
+import {
+  CreateAccountStepsEnum,
+  LoginRegisterAccountTabs,
+  LoginRegisterAccountTabsLabels, LoginRegisterAccountTabsLabelsShort,
+} from '../../../typings/registrationTypes';
+import { compareTwoStrings } from '../../../utils/registrationUtils';
 import styles from '../../Registration.module.scss';
 import { RegistrationBackground } from '../../common/RegistrationBackground';
-import { compareTwoStrings } from '../../../utils/registrationUtils';
+import { CreateNewAccount } from './CreateNewAccount';
+import { LoginToAccount } from './LoginToAccount';
+import { ImportAccount } from './import/ImportAccount';
 
 const mapStateToProps = (state: RootState) => ({
   tab: getCurrentRegistrationTab(state),
@@ -42,7 +43,7 @@ const mapDispatchToProps = {
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
-type LoginRegisterAccountProps = ConnectedProps<typeof connector> & WizardComponentProps;
+type LoginRegisterAccountProps = ConnectedProps<typeof connector> & WizardComponentProps & WithTranslation;
 
 interface LoginRegisterAccountState {
   isMobile: boolean;
@@ -157,7 +158,7 @@ class LoginRegisterAccountComponent extends React.PureComponent<LoginRegisterAcc
     return <div className={styles.registrationComponent}>
       <RegistrationBackground>
         <div className={styles.loginRegisterAccountTitle}>
-          {t('createLoginImport')}
+          {this.props.t('createLoginImport')}
         </div>
         <div className={styles.loginRegisterAccountHolder}>
           <Tabs
@@ -179,7 +180,7 @@ class LoginRegisterAccountComponent extends React.PureComponent<LoginRegisterAcc
             onClick={this.handleButtonClick}
             disabled={this.getButtonDisabled()}
           >
-            {t('next')}
+            {this.props.t('next')}
           </Button>
         }
       </div>
@@ -187,4 +188,4 @@ class LoginRegisterAccountComponent extends React.PureComponent<LoginRegisterAcc
   }
 }
 
-export const RegisterPage = connector(LoginRegisterAccountComponent);
+export const RegisterPage = compose(connector(LoginRegisterAccountComponent));

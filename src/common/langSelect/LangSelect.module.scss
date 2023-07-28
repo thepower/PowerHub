@@ -1,0 +1,42 @@
+.select {
+  padding: 0 !important;
+
+  color: #6b798f;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  text-transform: capitalize;
+
+  &:focus {
+    background-color: transparent;
+  }
+}
+
+.menuList {
+  width: 64px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+
+  border-radius: 5px;
+  background: #f3f8ff;
+  box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.24);
+}
+
+.menuItemRoot {
+  height: 48px;
+
+  padding-top: 10px;
+  padding-right: 18px;
+  padding-bottom: 10px;
+  padding-left: 18px;
+
+  color: #6b798f;
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.inputBaseRoot {
+  width: 48px;
+  height: 48px;
+}

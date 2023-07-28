@@ -5,6 +5,7 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 
 import en from './en.json';
 import ru from './ru.json';
+import th from './th.json';
 
 i18n
   .use(Backend)
@@ -15,6 +16,7 @@ i18n
     resources: {
       en,
       ru,
+      th,
     },
     interpolation: {
       escapeValue: true,

@@ -1,42 +1,42 @@
-import React from 'react';
-import { connect, ConnectedProps } from 'react-redux';
 import {
-  Select,
-  MenuItem,
   Collapse,
   FormControlLabel,
+  MenuItem,
+  Select,
 } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select/SelectInput';
 import { RootState } from 'application/store';
+import classnames from 'classnames';
 import {
-  OutlinedInput,
-  ModalLoader,
   Button,
   Checkbox,
+  ModalLoader,
+  OutlinedInput,
 } from 'common';
 import { CheckedIcon, ChevronDown, UnCheckedIcon } from 'common/icons';
 import { checkIfLoading } from 'network/selectors';
-import classnames from 'classnames';
-import { t } from 'i18next';
-import styles from '../../Registration.module.scss';
+import React from 'react';
+import { WithTranslation, withTranslation } from 'react-i18next';
+import { ConnectedProps, connect } from 'react-redux';
+import { getCurrentNetworkChains } from '../../../../application/selectors';
+import { getCurrentCreatingStep, getCurrentShardSelector, getGeneratedSeedPhrase } from '../../../selectors/registrationSelectors';
 import {
-  setCreatingCurrentShard,
-  generateSeedPhrase,
-  setCreatingStep,
-  setSeedPhrase,
   createWallet,
+  generateSeedPhrase,
+  setCreatingCurrentShard,
+  setCreatingStep,
   setCurrentRegisterCreateAccountTab,
+  setSeedPhrase,
   toggleRandomChain,
 } from '../../../slice/registrationSlice';
 import {
   CreateAccountStepsEnum,
   LoginRegisterAccountTabs,
 } from '../../../typings/registrationTypes';
-import { getCurrentCreatingStep, getCurrentShardSelector, getGeneratedSeedPhrase } from '../../../selectors/registrationSelectors';
+import { compareTwoStrings } from '../../../utils/registrationUtils';
+import styles from '../../Registration.module.scss';
 import { RegistrationBackground } from '../../common/RegistrationBackground';
 import { RegistrationStatement } from '../../common/RegistrationStatement';
-import { compareTwoStrings } from '../../../utils/registrationUtils';
-import { getCurrentNetworkChains } from '../../../../application/selectors';
 
 const mapStateToProps = (state: RootState) => ({
   currentShard: getCurrentShardSelector(state),
@@ -57,7 +57,7 @@ const mapDispatchToProps = {
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
-type CreateNewAccountProps = ConnectedProps<typeof connector> & {
+type CreateNewAccountProps = ConnectedProps<typeof connector> & WithTranslation & {
   setNextStep: () => void;
   randomChain: boolean;
 };
@@ -226,7 +226,7 @@ class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProp
     }
 
     return <div className={styles.loginRegisterAccountShardPlaceholder}>
-      {t('selectChain')}
+      {this.props.t('selectChain')}
     </div>;
   };
 
@@ -257,11 +257,11 @@ class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProp
     return <>
       <div className={styles.registrationFormHolder}>
         <div className={styles.registrationFormDesc}>
-          {t('theWalletAlphaTestingPhase')}
+          {this.props.t('theWalletAlphaTestingPhase')}
         </div>
         <Collapse in={!randomChain}>
           <div className={styles.loginRegisterAccountShardTitle}>
-            {t('selectedChain')}
+            {this.props.t('selectedChain')}
           </div>
           <Select
             value={currentShard!}
@@ -284,7 +284,7 @@ class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProp
       </div>
       <FormControlLabel
         control={this.renderRandomChainCheckbox()}
-        label={t('IfYouNeedSpecificChain')}
+        label={this.props.t('IfYouNeedSpecificChain')}
         classes={this.selectChainCheckboxClasses}
       />
     </>;
@@ -323,15 +323,15 @@ class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProp
 
     return <RegistrationBackground className={styles.rememberBackground}>
       <div className={classnames(styles.loginRegisterAccountTitle, styles.rememberTitle)}>
-        {t('remember')}
+        {this.props.t('remember')}
       </div>
-      <RegistrationStatement description={t('enterSeedPhrase')} />
-      <RegistrationStatement description={t('IfYouSpecifyYourOwnSeedPhrase')} />
-      <RegistrationStatement description={t('writeDownYourSeedPhraseAndStore')} />
-      <RegistrationStatement description={t('seedPhraseIsTheOnlyWay')} />
+      <RegistrationStatement description={this.props.t('enterSeedPhrase')} />
+      <RegistrationStatement description={this.props.t('IfYouSpecifyYourOwnSeedPhrase')} />
+      <RegistrationStatement description={this.props.t('writeDownYourSeedPhraseAndStore')} />
+      <RegistrationStatement description={this.props.t('seedPhraseIsTheOnlyWay')} />
       <div className={styles.setSeedPhraseHolder}>
         <div className={styles.seedPhraseTitle}>
-          {t('seedPhrase')}
+          {this.props.t('seedPhrase')}
         </div>
         <OutlinedInput
           placeholder={generatedSeedPhrase!}
@@ -354,7 +354,7 @@ class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProp
 
     return <RegistrationBackground className={styles.confirmSeedPhraseHolder}>
       <div className={styles.confirmSeedPhraseTitle}>
-        {t('repeatSeedPhrase')}
+        {this.props.t('repeatSeedPhrase')}
       </div>
       <OutlinedInput
         placeholder={generatedSeedPhrase!}
@@ -364,7 +364,7 @@ class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProp
         onChange={this.onChangeConfirmedSeedPhrase}
         error={seedsNotEqual}
         fullWidth
-        errorMessage={t('ohSeedPhraseIncorrect')!}
+        errorMessage={this.props.t('ohSeedPhraseIncorrect')!}
       />
     </RegistrationBackground>;
   };
@@ -374,24 +374,24 @@ class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProp
 
     return <RegistrationBackground className={styles.enterPasswordBackground}>
       <div className={styles.loginRegisterAccountTitle}>
-        {t('enterPasswordEncryptYour')}
+        {this.props.t('enterPasswordEncryptYour')}
       </div>
       <div className={styles.encryptKeyHolder}>
         <OutlinedInput
-          placeholder={t('password')!}
+          placeholder={this.props.t('password')!}
           className={styles.passwordInput}
           value={password}
           onChange={this.onChangePassword}
           type={'password'}
         />
         <OutlinedInput
-          placeholder={t('repeatPassword')!}
+          placeholder={this.props.t('repeatPassword')!}
           className={styles.passwordInput}
           value={confirmedPassword}
           onChange={this.onChangeConfirmedPassword}
           type={'password'}
           error={passwordsNotEqual}
-          errorMessage={t('oopsPasswordsDidntMatch')!}
+          errorMessage={this.props.t('oopsPasswordsDidntMatch')!}
         />
       </div>
     </RegistrationBackground>;
@@ -423,7 +423,7 @@ class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProp
     const { creatingStep, loading } = this.props;
     return <>
       <ModalLoader
-        loadingTitle={t('processingVerySoonEverythingWillHappen')}
+        loadingTitle={this.props.t('processingVerySoonEverythingWillHappen')}
         open={loading}
         hideIcon
       />
@@ -437,7 +437,7 @@ class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProp
             type="button"
             onClick={this.handleBackClick}
           >
-            {t('back')}
+            {this.props.t('back')}
           </Button>
           <Button
             size="medium"
@@ -446,7 +446,7 @@ class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProp
             onClick={this.submitForm}
             disabled={this.getSubmitButtonDisabled()}
           >
-            {t('next')}
+            {this.props.t('next')}
           </Button>
         </div>
       }
@@ -454,4 +454,4 @@ class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProp
   }
 }
 
-export const CreateNewAccount = connector(CreateNewAccountComponent);
+export const CreateNewAccount = withTranslation()(connector(CreateNewAccountComponent));

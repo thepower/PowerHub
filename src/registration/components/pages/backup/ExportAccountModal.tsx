@@ -1,19 +1,19 @@
-import React from 'react';
-import classnames from 'classnames';
 import { Button } from '@mui/material';
-import { connect, ConnectedProps } from 'react-redux';
-import { t } from 'i18next';
-import { Modal, OutlinedInput } from '../../../../common';
-import styles from '../../Registration.module.scss';
-import { compareTwoStrings } from '../../../utils/registrationUtils';
+import classnames from 'classnames';
+import React from 'react';
+import { WithTranslation, withTranslation } from 'react-i18next';
+import { ConnectedProps, connect } from 'react-redux';
 import { exportAccount } from '../../../../account/slice/accountSlice';
+import { Modal, OutlinedInput } from '../../../../common';
+import { compareTwoStrings } from '../../../utils/registrationUtils';
+import styles from '../../Registration.module.scss';
 
 const mapDispatchToProps = {
   exportAccount,
 };
 
 const connector = connect(null, mapDispatchToProps);
-type ExportAccountModalProps = ConnectedProps<typeof connector> & {
+type ExportAccountModalProps = ConnectedProps<typeof connector> & WithTranslation & {
   open: boolean;
   onClose: () => void;
 };
@@ -97,18 +97,18 @@ class ExportAccountModalComponent extends React.PureComponent<ExportAccountModal
     >
       <div className={styles.exportModalTitleHolder}>
         <div className={styles.exportModalTitle}>
-          {t('exportWallet')}
+          {this.props.t('exportWallet')}
         </div>
         <div className={styles.exportModalTitle}>
-          {t('exportYourWallet')}
+          {this.props.t('exportYourWallet')}
         </div>
         <div className={styles.exportModalTitle}>
-          {t('exportFileEncrypted')}
+          {this.props.t('exportFileEncrypted')}
         </div>
       </div>
       <OutlinedInput
         inputRef={(input) => input && input.focus()}
-        placeholder={t('password')!}
+        placeholder={this.props.t('password')!}
         className={classnames(styles.passwordInput, styles.passwordInputPadded)}
         value={password}
         onChange={this.onChangePassword}
@@ -116,19 +116,19 @@ class ExportAccountModalComponent extends React.PureComponent<ExportAccountModal
         autoFocus
       />
       <OutlinedInput
-        placeholder={t('repeatedPassword')!}
+        placeholder={this.props.t('repeatedPassword')!}
         className={styles.passwordInput}
         value={confirmedPassword}
         onChange={this.onChangeConfirmedPassword}
         error={passwordsNotEqual}
-        errorMessage={t('oopsPasswordsDidntMatch')!}
+        errorMessage={this.props.t('oopsPasswordsDidntMatch')!}
         type={'password'}
       />
       <div className={styles.exportModalHintDesc}>
-        {t('hintForPassword')}
+        {this.props.t('hintForPassword')}
       </div>
       <OutlinedInput
-        placeholder={t('hint')!}
+        placeholder={this.props.t('hint')!}
         className={styles.exportModalHintTextArea}
         value={hint}
         onChange={this.onChangeHint}
@@ -141,11 +141,11 @@ class ExportAccountModalComponent extends React.PureComponent<ExportAccountModal
         onClick={this.handleSubmitExportModal}
       >
         <span className={styles.registrationNextButtonText}>
-          {t('next')}
+          {this.props.t('next')}
         </span>
       </Button>
     </Modal>;
   }
 }
 
-export const ExportAccountModal = connector(ExportAccountModalComponent);
+export const ExportAccountModal = withTranslation()(connector(ExportAccountModalComponent));

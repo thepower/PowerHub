@@ -1,29 +1,29 @@
-import React from 'react';
+import { getWalletAddress } from 'account/selectors/accountSelectors';
+import { faucetThePowerUrl, walletThePowerUrl } from 'appConstants';
+import { isHub } from 'application/components/AppRoutes';
 import {
   CardLink, DeepPageTemplate, Tabs,
 } from 'common';
 import {
   BuySvg, FaucetSvg, LogoIcon, SendSvg,
 } from 'common/icons';
-import { connect, ConnectedProps } from 'react-redux';
+import { getTokens } from 'myAssets/selectors/tokensSelectors';
+import { TokenType, updateTokensAmountsTrigger } from 'myAssets/slices/tokensSlice';
 import {
   MyAssetsTabs, MyAssetsTabsLabels, TokenPayloadType,
 } from 'myAssets/types';
-import { TokenType, updateTokensAmountsTrigger } from 'myAssets/slices/tokensSlice';
+import React from 'react';
+import { WithTranslation, withTranslation } from 'react-i18next';
+import { ConnectedProps, connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getTokens } from 'myAssets/selectors/tokensSelectors';
-import { isHub } from 'application/components/AppRoutes';
-import { faucetThePowerUrl, walletThePowerUrl } from 'appConstants';
-import { getWalletAddress } from 'account/selectors/accountSelectors';
-import { t } from 'i18next';
-import { RootState } from '../../application/store';
-import { getWalletNativeTokensAmounts } from '../selectors/walletSelectors';
-import { getGroupedWalletTransactions } from '../selectors/transactionsSelectors';
-import styles from './MyAssets.module.scss';
 import { setShowUnderConstruction } from '../../application/slice/applicationSlice';
+import { RootState } from '../../application/store';
 import { WalletRoutesEnum } from '../../application/typings/routes';
-import Asset from './Asset';
+import { getGroupedWalletTransactions } from '../selectors/transactionsSelectors';
+import { getWalletNativeTokensAmounts } from '../selectors/walletSelectors';
 import AddButton from './AddButton';
+import Asset from './Asset';
+import styles from './MyAssets.module.scss';
 
 const connector = connect(
   (state: RootState) => ({
@@ -38,7 +38,7 @@ const connector = connect(
   },
 );
 
-type MyAssetsProps = ConnectedProps<typeof connector>;
+type MyAssetsProps = ConnectedProps<typeof connector> & WithTranslation;
 
 type MyAssetsState = {
   tab: MyAssetsTabs;
@@ -64,7 +64,7 @@ class MyAssets extends React.PureComponent<MyAssetsProps, MyAssetsState> {
   renderAssetsList = (assets: TokenType[]) => {
     if (!assets.length) {
       return <div className={styles.noTokens}>
-        {t('yourTokensWillBeHere')}
+        {this.props.t('yourTokensWillBeHere')}
       </div>;
     }
 
@@ -109,18 +109,18 @@ class MyAssets extends React.PureComponent<MyAssetsProps, MyAssetsState> {
     const currentTokens = tokensMap[tab];
 
     return (
-      <DeepPageTemplate topBarTitle={t('myAssets')} backUrl="/" backUrlText={t('home')!}>
+      <DeepPageTemplate topBarTitle={this.props.t('myAssets')} backUrl="/" backUrlText={this.props.t('home')!}>
         <div className={styles.panel}>
           <div className={styles.info}>
-            <p className={styles.title}>{t('totalBalance')}</p>
+            <p className={styles.title}>{this.props.t('totalBalance')}</p>
             <p className={styles.balance}>
               <LogoIcon className={styles.icon} />
-              {!amounts?.SK || amounts?.SK === '0' ? <span className={styles.emptyTitle}>{t('yourTokensWillBeHere')}</span> : amounts?.SK}
+              {!amounts?.SK || amounts?.SK === '0' ? <span className={styles.emptyTitle}>{this.props.t('yourTokensWillBeHere')}</span> : amounts?.SK}
             </p>
           </div>
           <div className={styles.linksGroup}>
             <CardLink
-              label={t('faucet')}
+              label={this.props.t('faucet')}
               isAnchor
               to={faucetThePowerUrl}
               target="_blank"
@@ -133,7 +133,7 @@ class MyAssets extends React.PureComponent<MyAssetsProps, MyAssetsState> {
               to={isHub
                 ? `${walletThePowerUrl}${WalletRoutesEnum.myAssets}${WalletRoutesEnum.assetSelection}`
                 : `${WalletRoutesEnum.myAssets}${WalletRoutesEnum.assetSelection}`}
-              label={t('send')}
+              label={this.props.t('send')}
               target={isHub ? '_blank' : '_self'}
               rel="noreferrer"
             >
@@ -145,7 +145,7 @@ class MyAssets extends React.PureComponent<MyAssetsProps, MyAssetsState> {
               to={isHub
                 ? `${walletThePowerUrl}${WalletRoutesEnum.buy}`
                 : WalletRoutesEnum.buy}
-              label={t('buy')}
+              label={this.props.t('buy')}
               target={isHub ? '_blank' : '_self'}
             >
               <BuySvg />
@@ -153,7 +153,7 @@ class MyAssets extends React.PureComponent<MyAssetsProps, MyAssetsState> {
           </div>
         </div>
         <Link className={styles.myAssetsAddAssetsButton} to={`${WalletRoutesEnum.myAssets}${WalletRoutesEnum.add}`}>
-          <AddButton>{t('addAssets')}</AddButton>
+          <AddButton>{this.props.t('addAssets')}</AddButton>
         </Link>
         <Tabs
           tabs={MyAssetsTabs}
@@ -174,4 +174,4 @@ class MyAssets extends React.PureComponent<MyAssetsProps, MyAssetsState> {
   }
 }
 
-export default connector(MyAssets);
+export default withTranslation()(connector(MyAssets));

@@ -1,10 +1,10 @@
-import React, { ChangeEvent } from 'react';
-import { connect, ConnectedProps } from 'react-redux';
 import { AttachIcon, Button } from 'common';
-import { t } from 'i18next';
-import styles from '../../../Registration.module.scss';
-import { Maybe } from '../../../../../typings/common';
+import React, { ChangeEvent } from 'react';
+import { WithTranslation, withTranslation } from 'react-i18next';
+import { ConnectedProps, connect } from 'react-redux';
 import { importAccountFromFile } from '../../../../../account/slice/accountSlice';
+import { Maybe } from '../../../../../typings/common';
+import styles from '../../../Registration.module.scss';
 import { ImportAccountModal } from './ImportAccountModal';
 
 const mapStateToProps = () => ({});
@@ -17,7 +17,7 @@ interface ImportAccountState {
   accountFile: Maybe<File>;
 }
 const connector = connect(mapStateToProps, mapDispatchToProps);
-type ImportAccountProps = ConnectedProps<typeof connector>;
+type ImportAccountProps = ConnectedProps<typeof connector> & WithTranslation;
 
 class ImportAccountComponent extends React.PureComponent<ImportAccountProps, ImportAccountState> {
   private importAccountInput: Maybe<HTMLInputElement> = null;
@@ -73,7 +73,7 @@ class ImportAccountComponent extends React.PureComponent<ImportAccountProps, Imp
       />
       <div className={styles.importAccountFormHolder}>
         <div className={styles.importAccountFormDesc}>
-          {t('toImportAccountUpload')}
+          {this.props.t('toImportAccountUpload')}
         </div>
         <input
           ref={this.setImportAccountRef}
@@ -89,7 +89,7 @@ class ImportAccountComponent extends React.PureComponent<ImportAccountProps, Imp
         >
           <AttachIcon />
           <span className={styles.importAccountButtonLabel}>
-            {t('chooseFile')}
+            {this.props.t('chooseFile')}
           </span>
         </Button>
       </div>
@@ -97,4 +97,4 @@ class ImportAccountComponent extends React.PureComponent<ImportAccountProps, Imp
   }
 }
 
-export const ImportAccount = connector(ImportAccountComponent);
+export const ImportAccount = withTranslation()(connector(ImportAccountComponent));

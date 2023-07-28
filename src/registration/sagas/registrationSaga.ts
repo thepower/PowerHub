@@ -1,21 +1,21 @@
-import { put, select } from 'typed-redux-saga';
 import {
-  CryptoApi,
   AddressApi,
-  WalletApi,
+  CryptoApi,
   RegisteredAccount,
+  WalletApi,
 } from '@thepowereco/tssdk';
 import { push } from 'connected-react-router';
-import { toast } from 'react-toastify';
 import { t } from 'i18next';
-import { setSeedPhrase } from '../slice/registrationSlice';
-import { CreateAccountStepsEnum, LoginToWalletInputType } from '../typings/registrationTypes';
-import { loginToWallet, setWalletData } from '../../account/slice/accountSlice';
-import { getCurrentShardSelector, getGeneratedSeedPhrase } from '../selectors/registrationSelectors';
-import { AddActionType } from '../../typings/common';
+import { toast } from 'react-toastify';
+import { put, select } from 'typed-redux-saga';
 import { getWalletData } from '../../account/selectors/accountSelectors';
+import { loginToWallet, setWalletData } from '../../account/slice/accountSlice';
 import { WalletRoutesEnum } from '../../application/typings/routes';
 import { CURRENT_NETWORK } from '../../application/utils/applicationUtils';
+import { AddActionType } from '../../typings/common';
+import { getCurrentShardSelector, getGeneratedSeedPhrase } from '../selectors/registrationSelectors';
+import { setSeedPhrase } from '../slice/registrationSlice';
+import { CreateAccountStepsEnum, LoginToWalletInputType } from '../typings/registrationTypes';
 
 export function* generateSeedPhraseSaga() {
   const phrase: string = yield CryptoApi.generateSeedPhrase();

@@ -1,13 +1,13 @@
-import React from 'react';
-import { CardNftType } from 'discover/typings/discoverTypings';
-import { IconButton, PaginationList } from 'common';
-import classnames from 'classnames';
-import { FavIcon } from 'common/icons';
 import { HubRoutesEnum } from 'application/typings/routes';
-import { t } from 'i18next';
+import classnames from 'classnames';
+import { IconButton, PaginationList } from 'common';
+import { FavIcon } from 'common/icons';
+import { CardNftType } from 'discover/typings/discoverTypings';
+import React from 'react';
+import { WithTranslation, withTranslation } from 'react-i18next';
 import styles from './NftCollectionCard.module.scss';
 
-interface NftCollectionsNftsProps {
+interface NftCollectionsNftsProps extends WithTranslation {
   nfts?: CardNftType[];
   routeTo: (url: string) => void;
   setBackUrl: (url: string) => void;
@@ -17,7 +17,7 @@ interface NftCollectionsNftsState {
   currentPage: number;
 }
 
-export class NftCollectionsNfts extends React.PureComponent<NftCollectionsNftsProps, NftCollectionsNftsState> {
+class NftCollectionsNftsComponent extends React.PureComponent<NftCollectionsNftsProps, NftCollectionsNftsState> {
   constructor(props: NftCollectionsNftsProps) {
     super(props);
 
@@ -65,14 +65,14 @@ export class NftCollectionsNfts extends React.PureComponent<NftCollectionsNftsPr
           {
             count &&
             <div className={styles.nftCollectionNftCount}>
-              <span className={styles.nftCollectionNftCountLabel}>{t('last')}</span>
+              <span className={styles.nftCollectionNftCountLabel}>{this.props.t('last')}</span>
               <span>{count}</span>
             </div>
           }
         </div>
         <div className={styles.nftCollectionNftInfoSecondLine}>
           <div className={styles.nftCollectionNftPriceHolder}>
-            <div className={styles.nftCollectionNftPriceLabel}>{t('estValue')}</div>
+            <div className={styles.nftCollectionNftPriceLabel}>{this.props.t('estValue')}</div>
             <div className={styles.nftCollectionNftPrice}>{estValue}</div>
           </div>
           {
@@ -98,7 +98,7 @@ export class NftCollectionsNfts extends React.PureComponent<NftCollectionsNftsPr
 
     return <div className={styles.nftCollectionNftHolder}>
       <div className={styles.nftCollectionNftHolderTitle}>
-        {t('nftInCollection')}
+        {this.props.t('nftInCollection')}
       </div>
       <div className={styles.nftCollectionNftDivider} />
       <PaginationList
@@ -117,3 +117,5 @@ export class NftCollectionsNfts extends React.PureComponent<NftCollectionsNftsPr
     </div>;
   }
 }
+
+export const NftCollectionsNfts = withTranslation()(NftCollectionsNftsComponent);

@@ -1,20 +1,20 @@
-import React from 'react';
-import { RouteComponentProps } from 'react-router';
-import { RootState } from 'application/store';
-import { push } from 'connected-react-router';
-import { connect, ConnectedProps } from 'react-redux';
-import { nftCardData } from 'discover/utils/dappsData';
-import {
-  HeartIcon,
-  ShareIcon,
-  RefreshIcon,
-  CloseIcon,
-} from 'common/icons';
-import { IconButton } from 'common';
-import { NftCardInfoRecordType, NtfOwnershipType } from 'discover/typings/discoverTypings';
 import { setBackUrl } from 'application/slice/applicationSlice';
+import { RootState } from 'application/store';
 import { HubRoutesEnum } from 'application/typings/routes';
-import { t } from 'i18next';
+import { IconButton } from 'common';
+import {
+  CloseIcon,
+  HeartIcon,
+  RefreshIcon,
+  ShareIcon,
+} from 'common/icons';
+import { push } from 'connected-react-router';
+import { NftCardInfoRecordType, NtfOwnershipType } from 'discover/typings/discoverTypings';
+import { nftCardData } from 'discover/utils/dappsData';
+import React from 'react';
+import { WithTranslation, withTranslation } from 'react-i18next';
+import { ConnectedProps, connect } from 'react-redux';
+import { RouteComponentProps } from 'react-router';
 import styles from './NftCard.module.scss';
 
 type OwnProps = RouteComponentProps<{ id: string }>;
@@ -30,7 +30,7 @@ const mapDispatchToProps = {
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
-type NftCardProps = ConnectedProps<typeof connector> & OwnProps;
+type NftCardProps = ConnectedProps<typeof connector> & OwnProps & WithTranslation;
 
 class NftCardComponent extends React.PureComponent<NftCardProps, never> {
   handleSetFav = () => {};
@@ -63,21 +63,21 @@ class NftCardComponent extends React.PureComponent<NftCardProps, never> {
       <div className={styles.nftOwnersInfoPart}>
         <div className={styles.nftOwnerPartImg} style={{ backgroundImage: `url(${collectionImg})` }} />
         <div className={styles.nftOwnersInfoTextPart}>
-          <div>{t('collection')}</div>
+          <div>{this.props.t('collection')}</div>
           <div>{collection}</div>
         </div>
       </div>
       <div className={styles.nftOwnersInfoPart}>
         <div className={styles.nftOwnerPartImg} style={{ backgroundImage: `url(${creatorImg})` }} />
         <div className={styles.nftOwnersInfoTextPart}>
-          <div>{t('creator')}</div>
+          <div>{this.props.t('creator')}</div>
           <div>{creatorAddress}</div>
         </div>
       </div>
       <div className={styles.nftOwnersInfoPart}>
         <div className={styles.nftOwnerPartImg} style={{ backgroundImage: `url(${ownerImg})` }} />
         <div className={styles.nftOwnersInfoTextPart}>
-          <div>{t('owner')}</div>
+          <div>{this.props.t('owner')}</div>
           <div>{ownerAddress}</div>
         </div>
       </div>
@@ -151,11 +151,11 @@ class NftCardComponent extends React.PureComponent<NftCardProps, never> {
         {this.renderNftButtons()}
       </div>
       <div className={styles.nftOwnershipHistory}>
-        <div className={styles.nftOwnershipHistoryLabel}>{t('ownershipHistory')}</div>
+        <div className={styles.nftOwnershipHistoryLabel}>{this.props.t('ownershipHistory')}</div>
         <div>{ownershipHistory?.map(this.renderOwnershipRecord)}</div>
       </div>
     </div>;
   }
 }
 
-export const NftCard = connector(NftCardComponent);
+export const NftCard = withTranslation()(connector(NftCardComponent));

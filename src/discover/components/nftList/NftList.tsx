@@ -1,14 +1,14 @@
-import React from 'react';
-import { push } from 'connected-react-router';
-import { connect, ConnectedProps } from 'react-redux';
 import { HubRoutesEnum } from 'application/typings/routes';
 import classnames from 'classnames';
+import { push } from 'connected-react-router';
 import { nftListData } from 'discover/utils/dappsData';
-import { t } from 'i18next';
-import styles from './Nft.module.scss';
-import { NftItemType } from '../../typings/discoverTypings';
+import React from 'react';
+import { WithTranslation, withTranslation } from 'react-i18next';
+import { ConnectedProps, connect } from 'react-redux';
 import { IconButton } from '../../../common';
 import { FavIcon } from '../../../common/icons';
+import { NftItemType } from '../../typings/discoverTypings';
+import styles from './Nft.module.scss';
 
 const mapStateToProps = () => ({});
 
@@ -17,7 +17,7 @@ const mapDispatchToProps = {
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
-type NftListProps = ConnectedProps<typeof connector>;
+type NftListProps = ConnectedProps<typeof connector> & WithTranslation;
 
 type NftListState = {
   isMobile: boolean;
@@ -70,11 +70,11 @@ class NftListComponent extends React.PureComponent<NftListProps, NftListState> {
         </div>
         <div className={styles.nftInfoHolderSecondLine}>
           <div className={styles.nftTotalVolume}>
-            <div>{t('totalVolume')}</div>
+            <div>{this.props.t('totalVolume')}</div>
             <div>{totalVolume}</div>
           </div>
           <div className={styles.nftFloorPrice}>
-            <div>{t('floorPrice')}</div>
+            <div>{this.props.t('floorPrice')}</div>
             <div>{floorPrice}</div>
           </div>
         </div>
@@ -89,4 +89,4 @@ class NftListComponent extends React.PureComponent<NftListProps, NftListState> {
   }
 }
 
-export const NftList = connector(NftListComponent);
+export const NftList = withTranslation()(connector(NftListComponent));

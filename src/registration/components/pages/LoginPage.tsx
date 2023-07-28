@@ -1,20 +1,20 @@
-import React, { ChangeEvent } from 'react';
-import { connect, ConnectedProps } from 'react-redux';
 import classnames from 'classnames';
-import { t } from 'i18next';
-import styles from '../Registration.module.scss';
-import { RegistrationBackground } from '../common/RegistrationBackground';
+import React, { ChangeEvent } from 'react';
+import { withTranslation, WithTranslation } from 'react-i18next';
+import { connect, ConnectedProps } from 'react-redux';
+import { importAccountFromFile } from '../../../account/slice/accountSlice';
 import {
   AttachIcon,
+  Button,
   OutlinedInput,
   PELogoWithTitle,
-  Button,
 } from '../../../common';
 import { Maybe } from '../../../typings/common';
-import { importAccountFromFile } from '../../../account/slice/accountSlice';
-import { ImportAccountModal } from './loginRegisterAccount/import/ImportAccountModal';
-import { compareTwoStrings } from '../../utils/registrationUtils';
 import { loginToWalletFromRegistration } from '../../slice/registrationSlice';
+import { compareTwoStrings } from '../../utils/registrationUtils';
+import { RegistrationBackground } from '../common/RegistrationBackground';
+import styles from '../Registration.module.scss';
+import { ImportAccountModal } from './loginRegisterAccount/import/ImportAccountModal';
 
 const mapStateToProps = () => ({});
 const mapDispatchToProps = {
@@ -23,7 +23,7 @@ const mapDispatchToProps = {
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
-type LoginPageProps = ConnectedProps<typeof connector>;
+type LoginPageProps = ConnectedProps<typeof connector> & WithTranslation;
 
 interface LoginPageState {
   openedPasswordModal: boolean;
@@ -136,10 +136,10 @@ class LoginPageComponent extends React.PureComponent<LoginPageProps, LoginPageSt
       type="file"
     />
     <div className={styles.loginPagePartTitle}>
-      {t('importAccount')}
+      {this.props.t('importAccount')}
     </div>
     <div className={classnames(styles.loginPagePartDesc, styles.loginPagePartDesc_short)}>
-      {t('toImportAccountUpload')}
+      {this.props.t('toImportAccountUpload')}
     </div>
     <Button
       className={classnames(
@@ -154,7 +154,7 @@ class LoginPageComponent extends React.PureComponent<LoginPageProps, LoginPageSt
     >
       <AttachIcon />
       <span className={styles.importAccountButtonLabel}>
-        {t('chooseFile')}
+        {this.props.t('chooseFile')}
       </span>
     </Button>
   </div>;
@@ -170,38 +170,38 @@ class LoginPageComponent extends React.PureComponent<LoginPageProps, LoginPageSt
 
     return <div className={styles.loginPagePart}>
       <div className={styles.loginPagePartTitle}>
-        {t('loginToAccount')}
+        {this.props.t('loginToAccount')}
       </div>
       <div className={classnames(styles.loginPagePartDesc, styles.loginPagePartLoginDesc)}>
-        {t('toLoginYouNeedEnter')}
+        {this.props.t('toLoginYouNeedEnter')}
       </div>
       <OutlinedInput
-        placeholder={t('address')!}
+        placeholder={this.props.t('address')!}
         className={styles.passwordInput}
         value={address}
         onChange={this.onChangeAddress}
       />
       <OutlinedInput
-        placeholder={t('seedPhrase')!}
+        placeholder={this.props.t('seedPhrase')!}
         className={styles.passwordInput}
         value={seed}
         type={'password'}
         onChange={this.onChangeSeed}
       />
       <OutlinedInput
-        placeholder={t('password')!}
+        placeholder={this.props.t('password')!}
         className={styles.passwordInput}
         value={password}
         type={'password'}
         onChange={this.onChangePassword}
       />
       <OutlinedInput
-        placeholder={t('repeatedPassword')!}
+        placeholder={this.props.t('repeatedPassword')!}
         className={styles.passwordInput}
         value={confirmedPassword}
         type={'password'}
         error={passwordsNotEqual}
-        errorMessage={t('oopsPasswordsDidntMatch')!}
+        errorMessage={this.props.t('oopsPasswordsDidntMatch')!}
         onChange={this.onChangeConfirmedPassword}
       />
       <div className={styles.loginButtonHolder}>
@@ -213,7 +213,7 @@ class LoginPageComponent extends React.PureComponent<LoginPageProps, LoginPageSt
           disabled={!address || !seed || passwordsNotEqual || !password || !confirmedPassword}
           onClick={this.loginToAccount}
         >
-          {t('next')}
+          {this.props.t('next')}
         </Button>
       </div>
     </div>;
@@ -233,7 +233,7 @@ class LoginPageComponent extends React.PureComponent<LoginPageProps, LoginPageSt
         <PELogoWithTitle className={styles.registrationPageIcon} />
         <RegistrationBackground className={styles.loginPageBackground}>
           <div className={styles.loginRegisterAccountTitle}>
-            {t('registrationPageImportAccountButton')}
+            {this.props.t('registrationPageImportAccountButton')}
           </div>
           <div className={styles.loginPageFormsHolder}>
             {this.renderImportPart()}
@@ -245,4 +245,4 @@ class LoginPageComponent extends React.PureComponent<LoginPageProps, LoginPageSt
   }
 }
 
-export const LoginPage = connector(LoginPageComponent);
+export const LoginPage = withTranslation()(connector(LoginPageComponent));

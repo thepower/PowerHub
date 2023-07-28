@@ -1,13 +1,13 @@
-import React from 'react';
-import { CardNftType } from 'discover/typings/discoverTypings';
-import { IconButton, PaginationList } from 'common';
-import classnames from 'classnames';
-import { FavIcon } from 'common/icons';
 import { HubRoutesEnum } from 'application/typings/routes';
-import { t } from 'i18next';
+import classnames from 'classnames';
+import { IconButton, PaginationList } from 'common';
+import { FavIcon } from 'common/icons';
+import { CardNftType } from 'discover/typings/discoverTypings';
+import React from 'react';
+import { WithTranslation, withTranslation } from 'react-i18next';
 import styles from './DappsCard.module.scss';
 
-interface DappsCardNFTProps {
+interface DappsCardNFTProps extends WithTranslation {
   nfts?: CardNftType[];
   routeTo: (url: string) => void;
   setBackUrl: (url: string) => void;
@@ -17,7 +17,7 @@ interface DappsCardNFTState {
   currentPage: number;
 }
 
-export class DappsCardNfts extends React.PureComponent<DappsCardNFTProps, DappsCardNFTState> {
+class DappsCardNftsComponent extends React.PureComponent<DappsCardNFTProps, DappsCardNFTState> {
   constructor(props: DappsCardNFTProps) {
     super(props);
 
@@ -62,13 +62,13 @@ export class DappsCardNfts extends React.PureComponent<DappsCardNFTProps, DappsC
         <div className={styles.dappsNftInfoFirstLine}>
           <div className={styles.dappsCardNftNumber}>{number}</div>
           <div className={styles.dappsNftCount}>
-            <span className={styles.dappsCardNftCountLabel}>{t('last')}</span>
+            <span className={styles.dappsCardNftCountLabel}>{this.props.t('last')}</span>
             <span>{count}</span>
           </div>
         </div>
         <div className={styles.dappsNftInfoSecondLine}>
           <div className={styles.dappsNftPriceHolder}>
-            <div className={styles.dappsNftPriceLabel}>{t('estValue')}</div>
+            <div className={styles.dappsNftPriceLabel}>{this.props.t('estValue')}</div>
             <div className={styles.dappsNftPrice}>{estValue}</div>
           </div>
           {
@@ -94,7 +94,7 @@ export class DappsCardNfts extends React.PureComponent<DappsCardNFTProps, DappsC
 
     return <div className={styles.nftHolder}>
       <div className={styles.nftHolderTitle}>
-        {t('nftInGame')}
+        {this.props.t('nftInGame')}
       </div>
       <div className={styles.nftDivider} />
       <PaginationList
@@ -113,3 +113,5 @@ export class DappsCardNfts extends React.PureComponent<DappsCardNFTProps, DappsC
     </div>;
   }
 }
+
+export const DappsCardNfts = withTranslation()(DappsCardNftsComponent);

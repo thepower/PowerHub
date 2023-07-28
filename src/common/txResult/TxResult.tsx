@@ -1,17 +1,14 @@
-import React from 'react';
-import cn from 'classnames';
-import { SentData } from 'send/slices/sendSlice';
-import { Button } from 'common';
-import { useAppSelector } from 'application/store';
-import { getNetworkChainID } from 'application/selectors';
-import { toast } from 'react-toastify';
 import { explorerThePowerUrl } from 'appConstants';
-import { t } from 'i18next';
+import { getNetworkChainID } from 'application/selectors';
+import { useAppSelector } from 'application/store';
+import cn from 'classnames';
+import { Button } from 'common';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
+import { SentData } from 'send/slices/sendSlice';
 import styles from './TxResult.module.scss';
-import {
-  SuccessSvg,
-  // DiscordSvg, FbMessengerSvg, TelegramSvg, TwitterSvg, WechatSvg, WhatsappSvg,
-} from './icons';
+import { SuccessSvg } from './icons';
 
 type TxResultProps = {
   sentData: SentData
@@ -31,6 +28,7 @@ const TxResult: React.FC<TxResultProps> = ({
   sentData,
   className,
 }) => {
+  const { t } = useTranslation();
   const chainID = useAppSelector(getNetworkChainID);
   const txExplorerLink = `${explorerThePowerUrl}/${chainID}/transaction/${sentData.txId}`;
 

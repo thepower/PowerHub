@@ -1,28 +1,29 @@
-import React from 'react';
-import { push } from 'connected-react-router';
-import { connect, ConnectedProps } from 'react-redux';
 import {
   BreadcrumbsDataType,
   BreadcrumbsTypeEnum,
+  Button,
   PELogoWithTitle,
   Wizard,
-  Button,
 } from 'common';
+import { push } from 'connected-react-router';
 import { t } from 'i18next';
-import { RegistrationTabs } from '../typings/registrationTypes';
-import { QuickGuide } from './pages/QuickGuide';
-import { BeAware } from './pages/BeAware';
-import { RegisterPage } from './pages/loginRegisterAccount/RegisterPage';
-import { Backup } from './pages/backup/Backup';
-import styles from './Registration.module.scss';
+import React from 'react';
+import { WithTranslation, withTranslation } from 'react-i18next';
+import { ConnectedProps, connect } from 'react-redux';
 import { WalletRoutesEnum } from '../../application/typings/routes';
+import { RegistrationTabs } from '../typings/registrationTypes';
+import styles from './Registration.module.scss';
+import { BeAware } from './pages/BeAware';
+import { QuickGuide } from './pages/QuickGuide';
+import { Backup } from './pages/backup/Backup';
+import { RegisterPage } from './pages/loginRegisterAccount/RegisterPage';
 
 const mapDispatchToProps = {
   routeTo: push,
 };
 
 const connector = connect(null, mapDispatchToProps);
-type RegistrationPageProps = ConnectedProps<typeof connector>;
+type RegistrationPageProps = ConnectedProps<typeof connector> & WithTranslation;
 
 interface RegistrationPageState {
   enterButtonPressed: boolean;
@@ -116,4 +117,4 @@ class RegistrationPageComponent extends React.PureComponent<RegistrationPageProp
   }
 }
 
-export const RegistrationPage = connector(RegistrationPageComponent);
+export const RegistrationPage = withTranslation()(connector(RegistrationPageComponent));

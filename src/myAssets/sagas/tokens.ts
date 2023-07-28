@@ -1,20 +1,19 @@
 import {
   Evm20Contract, EvmContract, EvmCore, NetworkApi,
-
 } from '@thepowereco/tssdk';
 import { getWalletAddress } from 'account/selectors/accountSelectors';
 
+import { BigNumber } from '@ethersproject/bignumber';
 import { getNetworkApi } from 'application/selectors';
 import { WalletRoutesEnum } from 'application/typings/routes';
 import { push } from 'connected-react-router';
+import i18n from 'locales/initTranslation';
+import { getTokens } from 'myAssets/selectors/tokensSelectors';
 import {
   addToken, addTokenTrigger, updateTokenAmount,
 } from 'myAssets/slices/tokensSlice';
-import { all, put, select } from 'typed-redux-saga';
-import { BigNumber } from '@ethersproject/bignumber';
-import { getTokens } from 'myAssets/selectors/tokensSelectors';
 import { toast } from 'react-toastify';
-import { t } from 'i18next';
+import { all, put, select } from 'typed-redux-saga';
 
 export const defaultABI = JSON.parse(
   // eslint-disable-next-line max-len
@@ -28,7 +27,7 @@ export function* addTokenSaga({ payload: address }: ReturnType<typeof addTokenTr
     const { chain }: { chain?: number } = yield networkAPI.getAddressChain(address);
 
     if (!chain) {
-      toast.error(t('addressNotFound'));
+      toast.error(i18n.t('addressNotFound'));
     }
 
     if (chain !== networkAPI.getChain()) {
@@ -53,7 +52,7 @@ export function* addTokenSaga({ payload: address }: ReturnType<typeof addTokenTr
     }));
     yield* put(push(WalletRoutesEnum.myAssets));
   } catch (error: any) {
-    toast.error(`${t('somethingWentWrongCode')} ${error?.code}`);
+    toast.error(`${i18n.t('somethingWentWrongCode')} ${error?.code}`);
   }
 }
 
@@ -63,7 +62,7 @@ export function* updateTokenAmountSaga({ address }: { address: string }) {
   const { chain }: { chain?: number } = yield networkAPI.getAddressChain(address);
 
   if (!chain) {
-    toast.error(t('addressNotFound'));
+    toast.error(i18n.t('addressNotFound'));
   }
 
   if (chain !== networkAPI.getChain()) {

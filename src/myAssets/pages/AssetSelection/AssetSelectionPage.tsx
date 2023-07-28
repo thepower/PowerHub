@@ -4,16 +4,18 @@ import { connect, ConnectedProps } from 'react-redux';
 import { Button, DeepPageTemplate } from 'common';
 
 import { RootState } from 'application/store';
+import { WalletRoutesEnum } from 'application/typings/routes';
+import Asset from 'myAssets/components/Asset';
+import { getTokenByID, getTokens } from 'myAssets/selectors/tokensSelectors';
 import { getWalletNativeTokensAmountByID, getWalletNativeTokensAmounts } from 'myAssets/selectors/walletSelectors';
 import {
-  TokenType, addTokenTrigger, toggleTokenShow, updateTokensAmountsTrigger,
+  addTokenTrigger, toggleTokenShow,
+  TokenType,
+  updateTokensAmountsTrigger,
 } from 'myAssets/slices/tokensSlice';
-import Asset from 'myAssets/components/Asset';
-import { getTokens, getTokenByID } from 'myAssets/selectors/tokensSelectors';
-import { Link } from 'react-router-dom';
-import { WalletRoutesEnum } from 'application/typings/routes';
 import { TokenPayloadType } from 'myAssets/types';
-import { t } from 'i18next';
+import { WithTranslation, withTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import styles from './AssetSelectionPage.module.scss';
 
 const mapDispatchToProps = {
@@ -34,7 +36,7 @@ interface AssetSelectionPageState {
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
-type AssetSelectionPageProps = ConnectedProps<typeof connector>;
+type AssetSelectionPageProps = ConnectedProps<typeof connector> & WithTranslation;
 
 class AssetSelectionPageComponent extends React.PureComponent<AssetSelectionPageProps, AssetSelectionPageState> {
   constructor(props: AssetSelectionPageProps) {
@@ -91,11 +93,11 @@ class AssetSelectionPageComponent extends React.PureComponent<AssetSelectionPage
     const assetIndetifier = nativeAssetAmount ? selectedAsset : asset?.address;
     const assetType = nativeAssetAmount ? 'native' : asset?.type;
     return (
-      <DeepPageTemplate topBarTitle={t('assetSelection')} backUrl="/my-assets" backUrlText={t('myAssets')!}>
+      <DeepPageTemplate topBarTitle={this.props.t('assetSelection')} backUrl="/my-assets" backUrlText={this.props.t('myAssets')!}>
         <div className={styles.assetSelection}>
           <div className={styles.tokens}>{this.renderAssetsList([...nativeTokens, ...erc20Tokens])}</div>
           <Link to={`${WalletRoutesEnum.myAssets}/${assetType}/${assetIndetifier}${WalletRoutesEnum.send}`}>
-            <Button disabled={!asset && !nativeAssetAmount} className={styles.assetSelectionFixedButton} variant="filled">{t('next')}</Button>
+            <Button disabled={!asset && !nativeAssetAmount} className={styles.assetSelectionFixedButton} variant="filled">{this.props.t('next')}</Button>
           </Link>
         </div>
       </DeepPageTemplate>
@@ -103,4 +105,4 @@ class AssetSelectionPageComponent extends React.PureComponent<AssetSelectionPage
   }
 }
 
-export const AssetSelectionPage = connector(AssetSelectionPageComponent);
+export const AssetSelectionPage = withTranslation()(connector(AssetSelectionPageComponent));

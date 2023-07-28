@@ -3,34 +3,34 @@ import { connect, ConnectedProps } from 'react-redux';
 // @ts-ignore
 import * as msgPack from '@thepowereco/msgpack';
 
-import { clearSentData, signAndSendTrxTrigger } from 'send/slices/sendSlice';
-import { getSentData } from 'send/selectors/sendSelectors';
+import { getWalletAddress } from 'account/selectors/accountSelectors';
+import { getNetworkFeeSettings, getNetworkGasSettings } from 'application/selectors';
+import { RootState } from 'application/store';
+import cn from 'classnames';
 import {
   Button,
   FullScreenLoader,
   TxResult,
 } from 'common';
-import cn from 'classnames';
-import { RootState } from 'application/store';
 import { getWalletNativeTokensAmounts } from 'myAssets/selectors/walletSelectors';
-import { getWalletAddress } from 'account/selectors/accountSelectors';
-import { getNetworkFeeSettings, getNetworkGasSettings } from 'application/selectors';
+import { getSentData } from 'send/selectors/sendSelectors';
+import { clearSentData, signAndSendTrxTrigger } from 'send/slices/sendSlice';
 
-import { checkIfLoading } from 'network/selectors';
-import { RouteComponentProps } from 'react-router';
 import { AddressApi, TransactionsApi } from '@thepowereco/tssdk';
-import { TxBody, TxKindByName, TxPurpose } from 'sign-and-send/typing';
+import { correctAmount } from '@thepowereco/tssdk/dist/utils/numbers';
+import CardTable from 'common/cardTable/CardTable';
+import CardTableKeyAccordion from 'common/cardTableKeyAccordion/CardTableKeyAccordion';
 import {
   isEmpty, isObject,
 } from 'lodash';
-import { correctAmount } from '@thepowereco/tssdk/dist/utils/numbers';
-import CardTableKeyAccordion from 'common/cardTableKeyAccordion/CardTableKeyAccordion';
-import CardTable from 'common/cardTable/CardTable';
+import { checkIfLoading } from 'network/selectors';
+import { WithTranslation, withTranslation } from 'react-i18next';
+import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
-import { t } from 'i18next';
+import { TxBody, TxKindByName, TxPurpose } from 'sign-and-send/typing';
+import ConfirmModal from '../../common/confirmModal/ConfirmModal';
 import styles from './SingAndSendPage.module.scss';
 import { ThePowerLogoIcon } from './ThePowerLogoIcon';
-import ConfirmModal from '../../common/confirmModal/ConfirmModal';
 
 const { autoAddFee, autoAddGas } = TransactionsApi;
 
@@ -59,7 +59,7 @@ const connector = connect(
   mapDispatchToProps,
 );
 
-type SignAndSendProps = ConnectedProps<typeof connector> & {
+type SignAndSendProps = ConnectedProps<typeof connector> & WithTranslation & {
   className?: string
 };
 
@@ -166,44 +166,44 @@ class SignAndSendPage extends React.Component<SignAndSendProps, SignAndSendState
 
     return (
       <div className={styles.content}>
-        <div className={styles.title}>{t('transferOfTokens')}</div>
+        <div className={styles.title}>{this.props.t('transferOfTokens')}</div>
         <div className={styles.table}>
-          <div className={styles.tableTitle}>{t('transactionType')}</div>
+          <div className={styles.tableTitle}>{this.props.t('transactionType')}</div>
           <div className={styles.tableValue}>{txKindName || '-'}</div>
 
-          <div className={styles.tableTitle}>{t('senderAddress')}</div>
+          <div className={styles.tableTitle}>{this.props.t('senderAddress')}</div>
           <div className={styles.tableValue}>{address || '-'}</div>
 
-          <div className={styles.tableTitle}>{t('addressOfTheRecipient')}</div>
+          <div className={styles.tableTitle}>{this.props.t('addressOfTheRecipient')}</div>
           <div className={styles.tableValue}>{to || '-'}</div>
 
-          <div className={styles.tableTitle}>{t('transactionSubject')}</div>
+          <div className={styles.tableTitle}>{this.props.t('transactionSubject')}</div>
           <div className={styles.tableValue}>
             {(transferAmount && transferCur) ? `${transferAmount} ${transferCur}` : '-'}
           </div>
 
-          <div className={styles.tableTitle}>{t('functionCall')}</div>
+          <div className={styles.tableTitle}>{this.props.t('functionCall')}</div>
           <div className={styles.tableValue}>{functionName || '-'}</div>
 
-          <div className={styles.tableTitle}>{t('callArguments')}</div>
+          <div className={styles.tableTitle}>{this.props.t('callArguments')}</div>
           <div className={styles.tableValue}>{functionArguments || '-'}</div>
 
-          <div className={styles.tableTitle}>{t('fee')}</div>
+          <div className={styles.tableTitle}>{this.props.t('fee')}</div>
           <div className={styles.tableValue}>{(feeAmount && feeCur) && `${feeAmount} ${feeCur}` || '-'}</div>
 
           {/* <div className={styles.tableTitle}>Details</div>
           <div className={styles.tableValue}>?</div> */}
 
-          <div className={styles.tableTitle}>{t('comment')}</div>
+          <div className={styles.tableTitle}>{this.props.t('comment')}</div>
           <div className={styles.tableValue}>{comment || '-'}</div>
 
-          {!isExtDataEmpty && <CardTableKeyAccordion valueLabel={t('extraData')}>{renderExtraDataTable()}</CardTableKeyAccordion>}
+          {!isExtDataEmpty && <CardTableKeyAccordion valueLabel={this.props.t('extraData')}>{renderExtraDataTable()}</CardTableKeyAccordion>}
 
         </div>
         <div className={styles.buttons}>
-          <Button onClick={handleClickSignAndSend} variant="filled">{t('signAndSend')}</Button>
+          <Button onClick={handleClickSignAndSend} variant="filled">{this.props.t('signAndSend')}</Button>
           <Link to="/">
-            <Button fullWidth variant="outlined">{t('cancel')}</Button>
+            <Button fullWidth variant="outlined">{this.props.t('cancel')}</Button>
           </Link>
         </div>
       </div>);
@@ -242,4 +242,4 @@ class SignAndSendPage extends React.Component<SignAndSendProps, SignAndSendState
   }
 }
 
-export default connector(SignAndSendPage);
+export default withTranslation()(connector(SignAndSendPage));

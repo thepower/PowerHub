@@ -12,7 +12,7 @@
     "prod": "serve -s build",
     "eject": "react-scripts eject",
     "cm": "git add . && git commit",
-    "loadLocales": "node --experimental-modules --es-module-specifier-resolution=node src/loadLocales.mjs "
+    "loadLocales": "node --experimental-modules --es-module-specifier-resolution=node src/loadLocales.mjs"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": "eslint --fix",

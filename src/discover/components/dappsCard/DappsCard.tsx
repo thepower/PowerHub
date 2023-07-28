@@ -1,25 +1,25 @@
-import React from 'react';
-import { push } from 'connected-react-router';
+import { Collapse } from '@mui/material';
+import { setBackUrl } from 'application/slice/applicationSlice';
+import { RootState } from 'application/store';
+import { HubRoutesEnum } from 'application/typings/routes';
+import { Button, IconButton } from 'common';
 import {
-  CloseIcon,
-  ChevronLeftIcon,
   ChevronDown,
+  ChevronLeftIcon,
   ChevronUp,
+  CloseIcon,
   HeartIcon,
   ShareIcon,
 } from 'common/icons';
-import { Button, IconButton } from 'common';
-import { DiscoverTabs } from 'discover/typings/discoverTypings';
-import { connect, ConnectedProps } from 'react-redux';
-import { RouteComponentProps } from 'react-router';
-import { setCurrentDiscoverTab } from 'discover/slice/discoverSlice';
-import { RootState } from 'application/store';
-import { Collapse } from '@mui/material';
-import { getDappsCardData } from 'discover/selectors/discoverSelectors';
-import { HubRoutesEnum } from 'application/typings/routes';
+import { push } from 'connected-react-router';
 import { DappsCardNfts } from 'discover/components/dappsCard/DappsCardNfts';
-import { setBackUrl } from 'application/slice/applicationSlice';
-import { t } from 'i18next';
+import { getDappsCardData } from 'discover/selectors/discoverSelectors';
+import { setCurrentDiscoverTab } from 'discover/slice/discoverSlice';
+import { DiscoverTabs } from 'discover/typings/discoverTypings';
+import React from 'react';
+import { WithTranslation, withTranslation } from 'react-i18next';
+import { ConnectedProps, connect } from 'react-redux';
+import { RouteComponentProps } from 'react-router';
 import styles from './DappsCard.module.scss';
 
 type OwnProps = RouteComponentProps<{ id: string }>;
@@ -35,7 +35,7 @@ const mapDispatchToProps = {
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
-type DappsCardProps = ConnectedProps<typeof connector> & OwnProps;
+type DappsCardProps = ConnectedProps<typeof connector> & OwnProps & WithTranslation;
 
 type DappsCardState = {
   showMoreInfo: boolean;
@@ -74,7 +74,7 @@ class DappsCardComponent extends React.PureComponent<DappsCardProps, DappsCardSt
     const { showMoreInfo } = this.state;
     return <div className={styles.dappsCardShowMoreButton} onClick={this.toggleShowMore}>
       <span className={styles.dappsCardShowMoreButtonLabel}>
-        {showMoreInfo ? t('showLess') : t('showMore')}
+        {showMoreInfo ? this.props.t('showLess') : this.props.t('showMore')}
       </span>
       {showMoreInfo ? <ChevronUp /> : <ChevronDown />}
     </div>;
@@ -141,7 +141,7 @@ class DappsCardComponent extends React.PureComponent<DappsCardProps, DappsCardSt
           type="button"
           onClick={this.handleJoinToCommunity}
         >
-          {t('joinTheCommunity')}
+          {this.props.t('joinTheCommunity')}
         </Button>
         <Button
           className={styles.dappsButton}
@@ -150,7 +150,7 @@ class DappsCardComponent extends React.PureComponent<DappsCardProps, DappsCardSt
           type="button"
           onClick={this.handlePlayToGame}
         >
-          {t('playToGame')}
+          {this.props.t('playToGame')}
         </Button>
       </div>
       <DappsCardNfts
@@ -162,4 +162,4 @@ class DappsCardComponent extends React.PureComponent<DappsCardProps, DappsCardSt
   }
 }
 
-export const DappsCard = connector(DappsCardComponent);
+export const DappsCard = withTranslation()(connector(DappsCardComponent));

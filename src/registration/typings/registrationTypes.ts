@@ -1,6 +1,6 @@
-import React from 'react';
 import { WizardComponentProps } from 'common';
 import { t } from 'i18next';
+import React from 'react';
 
 export enum RegistrationTabs {
   quickGuide = 'Quick guide',

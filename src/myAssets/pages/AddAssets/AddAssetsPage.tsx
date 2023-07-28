@@ -1,20 +1,20 @@
-import React from 'react';
 import { push } from 'connected-react-router';
+import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 
-import { DeepPageTemplate, Tabs, Button } from 'common';
+import { OutlinedInput } from '@mui/material';
+import { RootState } from 'application/store';
+import { Button, DeepPageTemplate, Tabs } from 'common';
+import Asset from 'myAssets/components/Asset';
+import { getTokens } from 'myAssets/selectors/tokensSelectors';
+import { getWalletNativeTokensAmounts } from 'myAssets/selectors/walletSelectors';
+import { addTokenTrigger, toggleTokenShow, TokenType } from 'myAssets/slices/tokensSlice';
 import {
   AddAssetsTabs, AddAssetsTabsLabels,
 } from 'myAssets/types';
-import { RootState } from 'application/store';
-import { getWalletNativeTokensAmounts } from 'myAssets/selectors/walletSelectors';
-import { TokenType, addTokenTrigger, toggleTokenShow } from 'myAssets/slices/tokensSlice';
-import Asset from 'myAssets/components/Asset';
-import { OutlinedInput } from '@mui/material';
-import { getTokens } from 'myAssets/selectors/tokensSelectors';
-import { t } from 'i18next';
-import styles from './AddAssetsPage.module.scss';
+import { WithTranslation, withTranslation } from 'react-i18next';
 import SearchInput from '../../../common/searchInput/SearchInput';
+import styles from './AddAssetsPage.module.scss';
 
 const mapDispatchToProps = {
   routeTo: push,
@@ -34,7 +34,7 @@ interface AddAssetsPageState {
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
-type AddAssetsPageProps = ConnectedProps<typeof connector>;
+type AddAssetsPageProps = ConnectedProps<typeof connector> & WithTranslation;
 
 class AddAssetsPageComponent extends React.PureComponent<AddAssetsPageProps, AddAssetsPageState> {
   constructor(props: AddAssetsPageProps) {
@@ -65,13 +65,13 @@ class AddAssetsPageComponent extends React.PureComponent<AddAssetsPageProps, Add
     if (!assets.length && this.state.search) {
       return (
         <div className={styles.noTokens}>
-          {t('assetNotFound')}
+          {this.props.t('assetNotFound')}
         </div>);
     }
     if (!assets.length) {
       return (
         <div className={styles.noTokens}>
-          {t('yourTokensWillBeHere')}
+          {this.props.t('yourTokensWillBeHere')}
         </div>);
     }
     return (
@@ -96,11 +96,11 @@ class AddAssetsPageComponent extends React.PureComponent<AddAssetsPageProps, Add
     return (
       <div className={styles.addAssetsPageForm}>
         <div className={styles.addAssetsPageFormTip}>
-          {t('youCanAddAnyStandardToken')}
+          {this.props.t('youCanAddAnyStandardToken')}
         </div>
 
         <OutlinedInput
-          placeholder={t('assetsAddress')!}
+          placeholder={this.props.t('assetsAddress')!}
           fullWidth
           size="small"
           className={styles.addAssetsPageFormInput}
@@ -113,7 +113,7 @@ class AddAssetsPageComponent extends React.PureComponent<AddAssetsPageProps, Add
           variant="filled"
           disabled={!address}
         >
-          {t('addAssets')}
+          {this.props.t('addAssets')}
         </Button>
       </div>);
   };
@@ -137,7 +137,7 @@ class AddAssetsPageComponent extends React.PureComponent<AddAssetsPageProps, Add
     });
 
     return (
-      <DeepPageTemplate topBarTitle={t('addAssets')} backUrl="/my-assets" backUrlText={t('myAssets')!}>
+      <DeepPageTemplate topBarTitle={this.props.t('addAssets')} backUrl="/my-assets" backUrlText={this.props.t('myAssets')!}>
         <div className={styles.addAssetsPage}>
           <SearchInput
             className={styles.addAssetsPageSearchInput}
@@ -165,4 +165,4 @@ class AddAssetsPageComponent extends React.PureComponent<AddAssetsPageProps, Add
   }
 }
 
-export const AddAssetsPage = connector(AddAssetsPageComponent);
+export const AddAssetsPage = withTranslation()(connector(AddAssetsPageComponent));

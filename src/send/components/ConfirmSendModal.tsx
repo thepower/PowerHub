@@ -1,14 +1,14 @@
-import React, { useCallback, useMemo } from 'react';
-import { Form, Formik, FormikHelpers } from 'formik';
 import { CryptoApi } from '@thepowereco/tssdk';
-import { connect, ConnectedProps } from 'react-redux';
+import { Form, Formik, FormikHelpers } from 'formik';
 import { TokenType } from 'myAssets/slices/tokensSlice';
-import { t } from 'i18next';
-import { Button, Modal, OutlinedInput } from '../../common';
-import styles from './ConfirmSendModal.module.scss';
-import { RootState } from '../../application/store';
+import React, { useCallback, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { ConnectedProps, connect } from 'react-redux';
 import { getWalletAddress, getWalletData } from '../../account/selectors/accountSelectors';
+import { RootState } from '../../application/store';
+import { Button, Modal, OutlinedInput } from '../../common';
 import { sendTokenTrxTrigger, sendTrxTrigger } from '../slices/sendSlice';
+import styles from './ConfirmSendModal.module.scss';
 
 interface OwnProps {
   open: boolean;
@@ -40,6 +40,7 @@ type ConfirmSendModalProps = ConnectedProps<typeof connector> & OwnProps;
 const ConfirmSendModal: React.FC<ConfirmSendModalProps> = ({
   onClose, open, trxValues, wif, from, sendTrxTrigger, token, sendTokenTrxTrigger,
 }) => {
+  const { t } = useTranslation();
   const handleSubmit = useCallback(async (values: Values, formikHelpers: FormikHelpers<Values>) => {
     try {
       const decryptedWif = await CryptoApi.decryptWif(wif, values.password);
@@ -65,13 +66,13 @@ const ConfirmSendModal: React.FC<ConfirmSendModalProps> = ({
     } catch (e) {
       formikHelpers.setFieldError('password', t('invalidPasswordError')!);
     }
-  }, [from, onClose, sendTrxTrigger, sendTokenTrxTrigger, trxValues, wif, token]);
+  }, [wif, token, onClose, sendTrxTrigger, from, trxValues.address, trxValues.comment, trxValues.amount, sendTokenTrxTrigger, t]);
 
   const fields = useMemo(() => [
     { key: t('from'), value: from },
     { key: t('to'), value: trxValues.address },
     { key: t('amount'), value: `${trxValues.amount} ${token ? token.symbol : 'SK'}` },
-  ], [from, trxValues, token]);
+  ], [t, from, trxValues.address, trxValues.amount, token]);
 
   return (
     <Modal open={open} onClose={onClose} contentClassName={styles.modalContent}>
