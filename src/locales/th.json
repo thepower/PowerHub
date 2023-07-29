@@ -84,7 +84,7 @@
     "assetSelection": "เลือกสินทรัพย์",
     "somethingWentWrongCode": "เกิดข้อผิดพลาดขณะเพิ่มโทเค็น รหัส:",
     "addressNotFound": "ไม่พบที่อยู่",
-    "powerNativeTokens": "thePower โทเค็นเนทีฟ",
+    "powerNativeTokens": "Power native โทเค็นเนทีฟ",
     "addOtherAssets": "เพิ่มสินทรัพย์อื่น ๆ",
     "importantRules": "กฎที่สำคัญ",
     "pleaseExportWalletData": "โปรดส่งออกข้อมูลกระเป๋าเงินเพื่อให้คุณสามารถกู้คืนกระเป๋าเงินของคุณภายหลังในกรณีฉุกเฉิน",
@@ -93,7 +93,7 @@
     "important": "สำคัญ",
     "skip": "ข้าม",
     "exportWallet": "ส่งออกกระเป๋าเงิน",
-    "exportYourWallet": "Export your wallet to restore later.",
+    "exportYourWallet": "ส่งออกกระเป๋าสตางค์ของคุณเพื่อเรียกคืนในภายหลัง",
     "exportFileEncrypted": "ส่งออกไฟล์ที่ถูกเข้ารหัส สำคัญ! หากคุณสูญเสียรหัสผ่านคุณจะไม่สามารถกู้คืนได้!",
     "repeatedPassword": "รหัสผ่านที่ซ้ำกัน",
     "oopsPasswordsDidntMatch": "รหัสผ่านไม่ตรงกัน ลองอีกครั้ง",
@@ -166,6 +166,16 @@
     "yourKeyFile": "ไฟล์กุญแจของคุณ",
     "logInToTheApp": "เข้าสู่แอปพลิเคชัน",
     "savedToDisk": "บันทึกลงในดิสก์",
-    "wallets": "กระเป๋าสตางค์"
+    "wallets": "กระเป๋าสตางค์",
+    "quickGuide": "คู่มือฉบับย่อ",
+    "beAware": "ระวัง",
+    "loginRegister": "เข้าสู่ระบบ/ลงทะเบียน",
+    "backup": "สำรองข้อมูล",
+    "moreThan": "${path} must be greater than ${more}",
+    "lessThan": "${path} must be less than ${less}",
+    "required": "${path} is a required field",
+    "max": "${path} must be at most ${max} characters",
+    "length": "${path} must be exactly ${length} characters",
+    "transactions": "การทำธุรกรรม"
   }
 }

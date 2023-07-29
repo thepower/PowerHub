@@ -3,7 +3,7 @@ import { Modal, OutlinedInput } from 'common';
 import classnames from 'classnames';
 import { connect, ConnectedProps } from 'react-redux';
 import { Button } from '@mui/material';
-import { t } from 'i18next';
+import { WithTranslation, withTranslation } from 'react-i18next';
 import styles from '../../registration/components/Registration.module.scss';
 import { resetAccount } from '../slice/accountSlice';
 
@@ -12,7 +12,7 @@ const mapDispatchToProps = {
 };
 
 const connector = connect(null, mapDispatchToProps);
-type ResetAccountModalProps = ConnectedProps<typeof connector> & {
+type ResetAccountModalProps = ConnectedProps<typeof connector> & WithTranslation & {
   open: boolean;
   onClose: () => void;
 };
@@ -60,18 +60,18 @@ export class ResetAccountModalComponent extends React.PureComponent<ResetAccount
     >
       <div className={styles.exportModalTitleHolder}>
         <div className={styles.exportModalTitle}>
-          {t('resetAccount')}
+          {this.props.t('resetAccount')}
         </div>
         <div className={styles.exportModalTitle}>
-          {t('areYouSureYouWantResetYourAccount')}
+          {this.props.t('areYouSureYouWantResetYourAccount')}
         </div>
         <div className={styles.exportModalTitle}>
-          {t('enterYourPasswordConfirmAccountReset')}
+          {this.props.t('enterYourPasswordConfirmAccountReset')}
         </div>
       </div>
       <OutlinedInput
         inputRef={(input) => input && input.focus()}
-        placeholder={t('password')!}
+        placeholder={this.props.t('password')!}
         className={classnames(styles.passwordInput, styles.importModalPasswordInput)}
         value={password}
         onChange={this.onChangePassword}
@@ -85,11 +85,11 @@ export class ResetAccountModalComponent extends React.PureComponent<ResetAccount
         onClick={this.handleSubmitImportModal}
       >
         <span className={styles.registrationNextButtonText}>
-          {t('next')}
+          {this.props.t('next')}
         </span>
       </Button>
     </Modal>;
   }
 }
 
-export const ResetAccountModal = connector(ResetAccountModalComponent);
+export const ResetAccountModal = withTranslation()(connector(ResetAccountModalComponent));

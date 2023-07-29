@@ -1,6 +1,5 @@
 import cn from 'classnames';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import i18n from 'locales/initTranslation';
 import { Account } from '../../account/components/Account';
 import { setShowUnderConstruction } from '../../application/slice/applicationSlice';
@@ -28,7 +27,6 @@ const TopBar: React.FC<TopBarProps> = ({
   disableAccount = false,
   className,
 }) => {
-  const { i18n } = useTranslation();
   const dispatch = useAppDispatch();
   const handleShowUnderConstruction = React.useCallback(() => {
     dispatch(setShowUnderConstruction(true));
@@ -62,19 +60,16 @@ const TopBar: React.FC<TopBarProps> = ({
           {children}
         </div>
       )}
-      <LangSelect
-        items={['en', 'th', 'ru']}
-        value={i18n.language}
-        onChange={(props) => {
-          i18n.changeLanguage((props.target.value as string));
-        }}
-        className={cn(!children && styles.lang)}
-      />
-      <IconButton
-        onClick={handleShowUnderConstruction}
-      >
-        <BellIcon />
-      </IconButton>
+      <div className={cn(styles.controlsSet, !children && styles.mlA)}>
+        <LangSelect
+          className={cn(!children && styles.lang)}
+        />
+        <IconButton
+          onClick={handleShowUnderConstruction}
+        >
+          <BellIcon />
+        </IconButton>
+      </div>
     </header>
     {type === 'shallow' && children && (
       <div className={styles.childrenOutsideBar}>

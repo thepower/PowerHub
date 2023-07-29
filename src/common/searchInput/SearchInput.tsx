@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { SearchIcon } from 'common/icons';
-import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 import styles from './SearchInput.module.scss';
 import MUIOutlinedInput, { OutlinedInputProps } from './OutlinedInput';
 
@@ -12,6 +12,7 @@ interface SearchInputProps extends OutlinedInputProps {
 }
 
 const SearchInput: React.FC<SearchInputProps> = ({ onClickSearch, className, ...otherProps }) => {
+  const { t } = useTranslation();
   const getEndAdornment = () => (
     <div className={styles.endAdornment} onClick={onClickSearch}>
       <SearchIcon />

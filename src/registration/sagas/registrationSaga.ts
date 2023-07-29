@@ -5,9 +5,9 @@ import {
   WalletApi,
 } from '@thepowereco/tssdk';
 import { push } from 'connected-react-router';
-import { t } from 'i18next';
 import { toast } from 'react-toastify';
 import { put, select } from 'typed-redux-saga';
+import i18n from 'locales/initTranslation';
 import { getWalletData } from '../../account/selectors/accountSelectors';
 import { loginToWallet, setWalletData } from '../../account/slice/accountSlice';
 import { WalletRoutesEnum } from '../../application/typings/routes';
@@ -48,7 +48,7 @@ export function* createWalletSaga({ payload }: { payload: AddActionType<{ passwo
 
     additionalAction?.();
   } catch (e) {
-    toast.error(t('createAccountError'));
+    toast.error(i18n.t('createAccountError'));
   }
 }
 
@@ -59,7 +59,7 @@ export function* loginToWalletSaga({ payload }: { payload: LoginToWalletInputTyp
     yield AddressApi.parseTextAddress(address);
     const isValidSeed: boolean = yield CryptoApi.validateMnemonic(seed);
     if (!isValidSeed) {
-      toast.error(t('seedPhraseIsNotValid'));
+      toast.error(i18n.t('seedPhraseIsNotValid'));
       return;
     }
   } catch (e: any) {
@@ -75,7 +75,7 @@ export function* loginToWalletSaga({ payload }: { payload: LoginToWalletInputTyp
     yield* put(loginToWallet({ address, wif }));
     yield* put(push(WalletRoutesEnum.root));
   } catch (e) {
-    toast.error(t('loginError'));
+    toast.error(i18n.t('loginError'));
   }
 }
 

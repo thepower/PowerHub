@@ -2,11 +2,11 @@ import {
   BreadcrumbsDataType,
   BreadcrumbsTypeEnum,
   Button,
+  LangSelect,
   PELogoWithTitle,
   Wizard,
 } from 'common';
 import { push } from 'connected-react-router';
-import { t } from 'i18next';
 import React from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { ConnectedProps, connect } from 'react-redux';
@@ -32,19 +32,19 @@ interface RegistrationPageState {
 class RegistrationPageComponent extends React.PureComponent<RegistrationPageProps, RegistrationPageState> {
   private registrationBreadcrumbs: BreadcrumbsDataType[] = [
     {
-      label: RegistrationTabs.quickGuide,
+      label: this.props.t(RegistrationTabs.quickGuide),
       component: QuickGuide,
     },
     {
-      label: RegistrationTabs.beAware,
+      label: this.props.t(RegistrationTabs.beAware),
       component: BeAware,
     },
     {
-      label: RegistrationTabs.loginRegister,
+      label: this.props.t(RegistrationTabs.loginRegister),
       component: RegisterPage,
     },
     {
-      label: RegistrationTabs.backup,
+      label: this.props.t(RegistrationTabs.backup),
       component: Backup,
     },
   ];
@@ -68,7 +68,7 @@ class RegistrationPageComponent extends React.PureComponent<RegistrationPageProp
     <>
       <div className={styles.registrationTitle}>{'Power Hub'}</div>
       <div className={styles.registrationDesc}>
-        {t('registrationPageDesc')}
+        {this.props.t('registrationPageDesc')}
       </div>
       <div className={styles.buttonsHolder}>
         <Button
@@ -78,7 +78,7 @@ class RegistrationPageComponent extends React.PureComponent<RegistrationPageProp
           type="button"
           onClick={this.handleProceedToRegistration}
         >
-          {t('registrationPageJoinButton')}
+          {this.props.t('registrationPageJoinButton')}
         </Button>
         <Button
           size="large"
@@ -87,7 +87,7 @@ class RegistrationPageComponent extends React.PureComponent<RegistrationPageProp
           type="button"
           onClick={this.handleProceedToLogin}
         >
-          {t('registrationPageImportAccountButton')}
+          {this.props.t('registrationPageImportAccountButton')}
         </Button>
       </div>
     </>
@@ -112,6 +112,9 @@ class RegistrationPageComponent extends React.PureComponent<RegistrationPageProp
 
     return <div className={styles.registrationPage}>
       <div className={styles.registrationPageCover} />
+      <LangSelect
+        className={styles.langSelect}
+      />
       {enterButtonPressed ? this.renderRegistration() : this.renderWelcome()}
     </div>;
   }

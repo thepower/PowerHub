@@ -4,7 +4,7 @@ import React, {
 import { Form, Formik, FormikHelpers } from 'formik';
 import { CryptoApi } from '@thepowereco/tssdk';
 import { connect, ConnectedProps } from 'react-redux';
-import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 import { Button, Modal, OutlinedInput } from '..';
 import styles from './ConfirmModal.module.scss';
 import { RootState } from '../../application/store';
@@ -30,6 +30,7 @@ type ConfirmModalProps = ConnectedProps<typeof connector> & OwnProps;
 const ConfirmModal: React.FC<ConfirmModalProps> = ({
   onClose, open, wif, callback,
 }) => {
+  const { t } = useTranslation();
   const handleSubmit = useCallback(async (values: Values, formikHelpers: FormikHelpers<Values>) => {
     try {
       const decryptedWif = await CryptoApi.decryptWif(wif, values.password);
@@ -37,7 +38,7 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
     } catch (e) {
       formikHelpers.setFieldError('password', t('invalidPasswordError')!);
     }
-  }, [callback, wif]);
+  }, [callback, t, wif]);
 
   return (
     <Modal open={open} onClose={onClose} contentClassName={styles.modalContent}>

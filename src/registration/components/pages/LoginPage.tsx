@@ -6,6 +6,7 @@ import { importAccountFromFile } from '../../../account/slice/accountSlice';
 import {
   AttachIcon,
   Button,
+  LangSelect,
   OutlinedInput,
   PELogoWithTitle,
 } from '../../../common';
@@ -227,6 +228,10 @@ class LoginPageComponent extends React.PureComponent<LoginPageProps, LoginPageSt
         open={openedPasswordModal}
         onClose={this.closePasswordModal}
         onSubmit={this.handleImportAccount}
+      />
+      <LangSelect
+        className={styles.langSelect}
+
       />
       <div className={styles.registrationPageCover} />
       <div className={styles.registrationWizardComponent}>

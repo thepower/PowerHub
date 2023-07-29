@@ -1,8 +1,7 @@
-import { compose } from '@reduxjs/toolkit';
 import { RootState } from 'application/store';
 import { Button, Tabs, WizardComponentProps } from 'common';
 import React from 'react';
-import { WithTranslation } from 'react-i18next';
+import { WithTranslation, withTranslation } from 'react-i18next';
 import { ConnectedProps, connect } from 'react-redux';
 import {
   getCurrentCreatingStep,
@@ -188,4 +187,4 @@ class LoginRegisterAccountComponent extends React.PureComponent<LoginRegisterAcc
   }
 }
 
-export const RegisterPage = compose(connector(LoginRegisterAccountComponent));
+export const RegisterPage = withTranslation()(connector(LoginRegisterAccountComponent));

@@ -81,7 +81,7 @@ class AssetTransactionsPageComponent extends React.PureComponent<AssetTransactio
     }
 
     return (
-      <DeepPageTemplate topBarTitle={`${tokenSymbol} transactions`} backUrl="/my-assets" backUrlText={this.props.t('myAssets')!}>
+      <DeepPageTemplate topBarTitle={`${tokenSymbol} ${this.props.t('transactions')}`} backUrl="/my-assets" backUrlText={this.props.t('myAssets')!}>
         <div className={styles.AssetTransactionsPage}>
           <div className={styles.transactions}>
             <ul className={styles.groupByDates}>{Object.entries(transactions).map(this.renderTransactionsList)}</ul>

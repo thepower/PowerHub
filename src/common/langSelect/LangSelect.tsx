@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback } from 'react';
 import {
   Select as MuiSelect,
   SelectProps as MuiSelectProps,
@@ -10,11 +10,11 @@ import {
   MenuItemClasses,
 } from '@mui/material';
 
+import { useTranslation } from 'react-i18next';
+import { buildYupLocale, langsKeys } from 'locales/initTranslation';
 import styles from './LangSelect.module.scss';
 
-interface SelectProps extends MuiSelectProps {
-  items: string[];
-}
+type SelectProps = MuiSelectProps;
 
 const selectClasses: Partial<SelectClasses> = {
   select: styles.select,
@@ -27,35 +27,50 @@ const inputBaseClasses: Partial<InputBaseClasses> = {
   focused: styles.inputBaseFocused,
 };
 
-const menuClasses: Partial<MenuClasses> = { list: styles.menuList, paper: styles.menuPaper };
+const menuClasses: Partial<MenuClasses> = { list: styles.menuList, paper: styles.menuPaper, root: styles.menuRoot };
 
 const menuItemClasses: Partial<MenuItemClasses> = { selected: styles.menuItemSelected, root: styles.menuItemRoot };
 
 export const LangSelect:FC<SelectProps> = ({
-  className, value, items, onChange, ...otherProps
-}) => (
-  <MuiSelect
-    className={className}
-    variant="standard"
-    input={<InputBase classes={inputBaseClasses} />}
-    classes={selectClasses}
-    MenuProps={{
-      classes: menuClasses,
-      disableScrollLock: true,
-      anchorOrigin: {
-        vertical: 64,
-        horizontal: 'center',
-      },
-    }}
-    inputProps={{ IconComponent: () => null }}
-    value={value}
-    onChange={onChange}
-    {...otherProps}
-  >
-    {items.map((rowsPerPageOption) => (
-      <MenuItem disableRipple key={rowsPerPageOption} value={rowsPerPageOption} classes={menuItemClasses}>
-        {rowsPerPageOption}
-      </MenuItem>
-    ))}
-  </MuiSelect>
-);
+  className, value, onChange, ...otherProps
+}) => {
+  const { t, i18n } = useTranslation();
+  const changeLanguage = useCallback(
+    (newLng: string): void => {
+      if (i18n.isInitialized && i18n.language !== newLng) {
+        i18n.changeLanguage(newLng);
+
+        buildYupLocale(null, t);
+      }
+    },
+    [t, i18n],
+  );
+  return (
+    <MuiSelect
+      className={className}
+      variant="standard"
+      input={<InputBase classes={inputBaseClasses} />}
+      classes={selectClasses}
+      MenuProps={{
+        classes: menuClasses,
+        disableScrollLock: true,
+        anchorOrigin: {
+          vertical: 64,
+          horizontal: 'center',
+        },
+      }}
+      inputProps={{ IconComponent: () => null }}
+      value={i18n.language}
+      onChange={(props) => {
+        changeLanguage((props.target.value as string));
+      }}
+      {...otherProps}
+    >
+      {langsKeys.map((rowsPerPageOption) => (
+        <MenuItem disableRipple key={rowsPerPageOption} value={rowsPerPageOption} classes={menuItemClasses}>
+          {rowsPerPageOption}
+        </MenuItem>
+      ))}
+    </MuiSelect>
+  );
+};

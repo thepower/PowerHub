@@ -12,7 +12,7 @@ import { connect, ConnectedProps } from 'react-redux';
 import { Drawer } from '@mui/material';
 import { isHub, isWallet } from 'application/components/AppRoutes';
 import { clearApplicationStorage } from 'application/utils/localStorageUtils';
-import { t } from 'i18next';
+import { WithTranslation, withTranslation } from 'react-i18next';
 import { getOpenedMenu, getWalletAddress } from '../selectors/accountSelectors';
 import globe from './globe.jpg';
 import { Maybe } from '../../typings/common';
@@ -39,7 +39,7 @@ const mapDispatchToProps = {
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
-type AccountProps = ConnectedProps<typeof connector> & { className?: string };
+type AccountProps = ConnectedProps<typeof connector> & WithTranslation & { className?: string };
 
 interface AccountState {
   accountFile: Maybe<File>;
@@ -135,27 +135,27 @@ class AccountComponent extends React.PureComponent<AccountProps, AccountState> {
   // eslint-disable-next-line react/sort-comp
   private accountActionsData: AccountActionType[] = isWallet ? [
     {
-      title: t('createNewAccount'),
+      title: this.props.t('createNewAccount'),
       action: this.handleCreateAccount,
       Icon: CreateIcon,
     },
     {
-      title: t('exportAccount'),
+      title: this.props.t('exportAccount'),
       action: this.handleExportAccount,
       Icon: ExportIcon,
     },
     {
-      title: t('importAccount'),
+      title: this.props.t('importAccount'),
       action: this.handleOpenImportFile,
       Icon: ImportIcon,
     },
     {
-      title: t('resetAccount'),
+      title: this.props.t('resetAccount'),
       action: this.handleResetAccount,
       Icon: ResetIcon,
     },
   ] : [{
-    title: t('resetAccount'),
+    title: this.props.t('resetAccount'),
     action: this.handleResetAccount,
     Icon: ResetIcon,
   }];
@@ -193,7 +193,7 @@ class AccountComponent extends React.PureComponent<AccountProps, AccountState> {
         classes={this.drawerPaperClasses}
       >
         <div className={styles.accountTitle}>
-          {t('myAccount')}
+          {this.props.t('myAccount')}
         </div>
         <CopyButton
           textButton={walletAddress}
@@ -236,4 +236,4 @@ class AccountComponent extends React.PureComponent<AccountProps, AccountState> {
   }
 }
 
-export const Account = connector(AccountComponent);
+export const Account = withTranslation()(connector(AccountComponent));

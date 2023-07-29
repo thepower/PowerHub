@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react';
-import { t } from 'i18next';
+import i18n from 'locales/initTranslation';
 import styles from './DeepPageTemplate.module.scss';
 import { TopBar } from '../index';
 
@@ -13,7 +13,7 @@ const DeepPageTemplate: React.FC<PropsWithChildren<DeepPageTemplateProps>> = ({
   children,
   topBarTitle,
   backUrl,
-  backUrlText = t('back')!,
+  backUrlText = i18n.t('back')!,
 }) => (
   <div className={styles.template}>
     <TopBar type="deep" backUrl={backUrl} backUrlText={backUrlText}>

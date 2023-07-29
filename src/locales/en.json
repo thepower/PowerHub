@@ -166,6 +166,16 @@
     "yourKeyFile": "Your key file",
     "logInToTheApp": "Log in to the app",
     "savedToDisk": "saved to disk",
-    "wallets": "Wallets"
+    "wallets": "Wallets",
+    "quickGuide": "Quick guide",
+    "beAware": "Be aware",
+    "loginRegister": "Login / Register",
+    "backup": "Backup",
+    "moreThan": "${path} must be greater than ${more}",
+    "lessThan": "${path} must be less than ${less}",
+    "required": "${path} is a required field",
+    "max": "${path} must be at most ${max} characters",
+    "length": "${path} must be exactly ${length} characters",
+    "transactions": "transactions"
   }
 }
