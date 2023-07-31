@@ -55,7 +55,7 @@ export const LangSelect:FC<SelectProps> = ({
         classes: menuClasses,
         disableScrollLock: true,
         anchorOrigin: {
-          vertical: 64,
+          vertical: 56,
           horizontal: 'center',
         },
       }}

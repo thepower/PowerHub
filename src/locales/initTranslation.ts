@@ -42,4 +42,8 @@ i18n
     },
   }, buildYupLocale);
 
+if (!langsKeys.includes(i18n.language)) {
+  i18n.changeLanguage('en');
+}
+
 export default i18n;
