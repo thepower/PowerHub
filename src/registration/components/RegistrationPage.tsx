@@ -30,7 +30,14 @@ interface RegistrationPageState {
 }
 
 class RegistrationPageComponent extends React.PureComponent<RegistrationPageProps, RegistrationPageState> {
-  private registrationBreadcrumbs: BreadcrumbsDataType[] = [
+  constructor(props: RegistrationPageProps) {
+    super(props);
+    this.state = {
+      enterButtonPressed: false,
+    };
+  }
+
+  getRegistrationBreadcrumbs: () => BreadcrumbsDataType[] = () => [
     {
       label: this.props.t(RegistrationTabs.quickGuide),
       component: QuickGuide,
@@ -48,13 +55,6 @@ class RegistrationPageComponent extends React.PureComponent<RegistrationPageProp
       component: Backup,
     },
   ];
-
-  constructor(props: RegistrationPageProps) {
-    super(props);
-    this.state = {
-      enterButtonPressed: false,
-    };
-  }
 
   handleProceedToRegistration = () => {
     this.setState({ enterButtonPressed: true });
@@ -99,7 +99,7 @@ class RegistrationPageComponent extends React.PureComponent<RegistrationPageProp
       <div className={styles.registrationWizardHolder}>
         <Wizard
           className={styles.registrationWizard}
-          breadcrumbs={this.registrationBreadcrumbs}
+          breadcrumbs={this.getRegistrationBreadcrumbs()}
           type={BreadcrumbsTypeEnum.direction}
           breadCrumbHasBorder
         />

@@ -133,7 +133,7 @@ class AccountComponent extends React.PureComponent<AccountProps, AccountState> {
   };
 
   // eslint-disable-next-line react/sort-comp
-  private accountActionsData: AccountActionType[] = isWallet ? [
+  getAccountActionsData:() => AccountActionType[] = () => (isWallet ? [
     {
       title: this.props.t('createNewAccount'),
       action: this.handleCreateAccount,
@@ -158,7 +158,7 @@ class AccountComponent extends React.PureComponent<AccountProps, AccountState> {
     title: this.props.t('resetAccount'),
     action: this.handleResetAccount,
     Icon: ResetIcon,
-  }];
+  }]);
 
   toggleAccountMenu = () => {
     this.props.toggleOpenedAccountMenu();
@@ -200,7 +200,7 @@ class AccountComponent extends React.PureComponent<AccountProps, AccountState> {
           className={styles.addressButton}
           iconClassName={styles.copyIcon}
         />
-        <AccountActionsList actions={this.accountActionsData} />
+        <AccountActionsList actions={this.getAccountActionsData()} />
         <a
           className={styles.supportLink}
           rel={'noreferrer'}

@@ -1,95 +1,90 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Modal, OutlinedInput } from 'common';
 import classnames from 'classnames';
 import { connect, ConnectedProps } from 'react-redux';
 import { Button } from '@mui/material';
-import { WithTranslation, withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
+import {
+  FormikHelpers, useFormik,
+} from 'formik';
 import styles from '../../registration/components/Registration.module.scss';
 import { resetAccount } from '../slice/accountSlice';
+
+const initialValues = { password: '' };
+type Values = typeof initialValues;
 
 const mapDispatchToProps = {
   resetAccount,
 };
 
 const connector = connect(null, mapDispatchToProps);
-type ResetAccountModalProps = ConnectedProps<typeof connector> & WithTranslation & {
+type ResetAccountModalProps = ConnectedProps<typeof connector> & {
   open: boolean;
   onClose: () => void;
 };
 
-interface ResetAccountModalState {
-  password: string;
-}
+const ResetAccountModalComponent: FC<ResetAccountModalProps> = ({
+  resetAccount, onClose, open,
+}) => {
+  const { t } = useTranslation();
 
-export class ResetAccountModalComponent extends React.PureComponent<ResetAccountModalProps, ResetAccountModalState> {
-  constructor(props: ResetAccountModalProps) {
-    super(props);
-
-    this.state = {
-      password: '',
-    };
-  }
-
-  onChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({
-      password: event.target.value,
-    });
-  };
-
-  handleSubmitImportModal = () => {
-    const { resetAccount, onClose } = this.props;
-    const { password } = this.state;
+  const handleSubmitImportModal = async (values: Values, formikHelpers: FormikHelpers<Values>) => {
+    const { password } = values;
 
     resetAccount(password);
-    this.setState({ password: '' });
+
+    formikHelpers.setFieldValue('password', '');
     onClose();
   };
 
-  render() {
-    const {
-      open,
-      onClose,
-    } = this.props;
+  const formik = useFormik({
+    initialValues,
+    onSubmit: handleSubmitImportModal,
+  });
 
-    const { password } = this.state;
-
-    return <Modal
-      contentClassName={styles.importModalContent}
-      onClose={onClose}
-      open={open}
-    >
+  return <Modal
+    contentClassName={styles.importModalContent}
+    onClose={onClose}
+    open={open}
+  >
+    <form className={styles.resetModalForm} onSubmit={formik.handleSubmit}>
       <div className={styles.exportModalTitleHolder}>
         <div className={styles.exportModalTitle}>
-          {this.props.t('resetAccount')}
+          {t('resetAccount')}
         </div>
         <div className={styles.exportModalTitle}>
-          {this.props.t('areYouSureYouWantResetYourAccount')}
+          {t('areYouSureYouWantResetYourAccount')}
         </div>
         <div className={styles.exportModalTitle}>
-          {this.props.t('enterYourPasswordConfirmAccountReset')}
+          {t('enterYourPasswordConfirmAccountReset')}
         </div>
       </div>
       <OutlinedInput
         inputRef={(input) => input && input.focus()}
-        placeholder={this.props.t('password')!}
+        placeholder={t('password')!}
         className={classnames(styles.passwordInput, styles.importModalPasswordInput)}
-        value={password}
-        onChange={this.onChangePassword}
+        name="password"
+        value={formik.values.password}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
         type={'password'}
+        autoComplete="new-password"
         autoFocus
+        errorMessage={formik.errors.password}
+        error={formik.touched.password && Boolean(formik.errors.password)}
       />
       <Button
         className={classnames(styles.registrationNextButton, styles.registrationNextButton_outlined)}
         variant="outlined"
         size="large"
-        onClick={this.handleSubmitImportModal}
+        type="submit"
       >
         <span className={styles.registrationNextButtonText}>
-          {this.props.t('next')}
+          {t('next')}
         </span>
       </Button>
-    </Modal>;
-  }
-}
+    </form>
+  </Modal>;
+};
 
-export const ResetAccountModal = withTranslation()(connector(ResetAccountModalComponent));
+export const ResetAccountModal = connector(ResetAccountModalComponent);

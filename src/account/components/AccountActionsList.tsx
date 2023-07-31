@@ -6,7 +6,7 @@ interface AccountActionsListProps {
   actions: AccountActionType[];
 }
 
-export class AccountActionsList extends React.PureComponent<AccountActionsListProps, {}> {
+class AccountActionsListComponent extends React.PureComponent<AccountActionsListProps, {}> {
   renderActionItem = (item: AccountActionType) => {
     const { Icon, title, action } = item;
 
@@ -26,3 +26,5 @@ export class AccountActionsList extends React.PureComponent<AccountActionsListPr
     </div>;
   }
 }
+
+export const AccountActionsList = AccountActionsListComponent;
