@@ -1,7 +1,4 @@
-// TODO create config
-// const isDev = process.env.NODE_ENV === 'development';
-export const explorerThePowerUrl = 'https://explorer.thepower.io';
-// export const walletThePowerUrl = isDev ? 'http://localhost:3001' : 'https://test.wallet.thepower.io';
-export const walletThePowerUrl = 'https://wallet.thepower.io';
-export const hubThePowerUrl = 'https://hub.thepower.io';
-export const faucetThePowerUrl = 'https://faucet.thepower.io';
+export const explorerThePowerUrl = process.env.REACT_APP_EXPLORER_URL!;
+export const walletThePowerUrl = process.env.REACT_APP_WALLET_URL!;
+export const hubThePowerUrl = process.env.REACT_APP_HUB_URL!;
+export const faucetThePowerUrl = process.env.REACT_APP_FAUCET!;
