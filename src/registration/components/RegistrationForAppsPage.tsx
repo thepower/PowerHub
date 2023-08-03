@@ -16,6 +16,7 @@ import { stringToObject } from 'sso/utils';
 import { RootState } from 'application/store';
 import { RouteComponentProps } from 'react-router';
 
+import { WithTranslation, withTranslation } from 'react-i18next';
 import { RegistrationTabs } from '../typings/registrationTypes';
 
 import styles from './Registration.module.scss';
@@ -34,7 +35,7 @@ const mapDispatchToProps = {
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
-type RegistrationForAppsPageProps = ConnectedProps<typeof connector>;
+type RegistrationForAppsPageProps = ConnectedProps<typeof connector> & WithTranslation;
 
 interface RegistrationForAppsPageState {
   enterButtonPressed: boolean;
@@ -44,11 +45,11 @@ class RegistrationForAppsPageComponent extends
   React.PureComponent<RegistrationForAppsPageProps, RegistrationForAppsPageState> {
   private registrationBreadcrumbs: BreadcrumbsDataType[] = [
     {
-      label: RegistrationTabs.loginRegister,
+      label: this.props.t(RegistrationTabs.loginRegister),
       component: RegisterForAppsPage,
     },
     {
-      label: RegistrationTabs.backup,
+      label: this.props.t(RegistrationTabs.backup),
     },
   ];
 
@@ -91,4 +92,4 @@ class RegistrationForAppsPageComponent extends
   }
 }
 
-export const RegistrationForAppsPage = connector(RegistrationForAppsPageComponent);
+export const RegistrationForAppsPage = withTranslation()(connector(RegistrationForAppsPageComponent));
