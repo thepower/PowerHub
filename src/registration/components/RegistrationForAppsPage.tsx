@@ -16,6 +16,8 @@ import { stringToObject } from 'sso/utils';
 import { RootState } from 'application/store';
 import { RouteComponentProps } from 'react-router';
 
+import { getWalletAddress } from 'account/selectors/accountSelectors';
+import { WalletRoutesEnum } from 'application/typings/routes';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { RegistrationTabs } from '../typings/registrationTypes';
 
@@ -25,7 +27,8 @@ import { RegisterForAppsPage } from './pages/loginRegisterAccount/RegisterForApp
 type OwnProps = RouteComponentProps<{ data?: string }>;
 
 const mapStateToProps = (state: RootState, props: OwnProps) => ({
-  data: props.match.params.data,
+  walletAddress: getWalletAddress(state),
+  data: props.match?.params?.data,
 });
 
 const mapDispatchToProps = {
@@ -57,10 +60,17 @@ class RegistrationForAppsPageComponent extends
     const {
       generateSeedPhrase,
       setCreatingCurrentShard,
+      data,
+      routeTo,
+      walletAddress,
     } = this.props;
 
-    generateSeedPhrase();
-    setCreatingCurrentShard(this.parsedData?.chainID || defaultChain);
+    if (walletAddress) {
+      routeTo(`${WalletRoutesEnum.sso}/${data}`);
+    } else {
+      generateSeedPhrase();
+      setCreatingCurrentShard(this.parsedData?.chainID || defaultChain);
+    }
   }
 
   get parsedData(): { chainID: number, callbackUrl?: string } | null {

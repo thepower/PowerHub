@@ -86,7 +86,7 @@ class AccountComponent extends React.PureComponent<AccountProps, AccountState> {
     const { exportAccount } = this.props;
     exportAccount({
       password: '',
-      additionalActionOnError: () => {
+      additionalActionOnDecryptError: () => {
         this.setState({ openedExportAccountModal: true });
       },
     });
@@ -122,7 +122,7 @@ class AccountComponent extends React.PureComponent<AccountProps, AccountState> {
     importAccountFromFile({
       password: '',
       accountFile,
-      additionalActionOnError: () => this.setState({
+      additionalActionOnDecryptError: () => this.setState({
         accountFile,
         openedImportAccountModal: true,
       }),
@@ -140,7 +140,7 @@ class AccountComponent extends React.PureComponent<AccountProps, AccountState> {
     if (isWallet) {
       resetAccount({
         password: '',
-        additionalActionOnError: () => this.setState({ openedResetAccountModal: true }),
+        additionalActionOnDecryptError: () => this.setState({ openedResetAccountModal: true }),
       });
     } else if (isHub) {
       clearApplicationStorage();

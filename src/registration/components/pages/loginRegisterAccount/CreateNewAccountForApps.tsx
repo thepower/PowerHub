@@ -50,12 +50,15 @@ const mapDispatchToProps = {
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
-type CreateNewAccountForAppsProps = ConnectedProps<typeof connector> & {
-  randomChain: boolean;
-};
+type CreateNewAccountForAppsProps = ConnectedProps<typeof connector>;
 
 class CreateNewAccountForAppsComponent extends React.PureComponent<CreateNewAccountForAppsProps> {
-  get parsedData(): { chainID: number, callbackUrl?: string } | null {
+  get parsedData(): {
+    chainID: number,
+    callbackUrl?: string,
+    returnUrl: string,
+    isShowSeedAfterRegistration?: boolean
+  } | null {
     const { data } = this.props;
 
     if (data) return stringToObject(data);
@@ -68,7 +71,6 @@ class CreateNewAccountForAppsComponent extends React.PureComponent<CreateNewAcco
       setSeedPhrase,
       generatedSeedPhrase,
       createWallet,
-      randomChain,
       walletAddress,
 
     } = this.props;
@@ -81,7 +83,7 @@ class CreateNewAccountForAppsComponent extends React.PureComponent<CreateNewAcco
       });
       createWallet({
         password,
-        randomChain,
+        randomChain: false,
         additionalAction: () => {
           const { exportAccount } = this.props;
           exportAccount({ password, isWithoutGoHome: true });
@@ -91,7 +93,7 @@ class CreateNewAccountForAppsComponent extends React.PureComponent<CreateNewAcco
     }
 
     if (creatingStep === CreateAccountStepsEnum.encryptPrivateKey) {
-      const stringData = objectToString({ address: walletAddress });
+      const stringData = objectToString({ address: walletAddress, returnUrl: parsedData?.returnUrl });
       if (parsedData?.callbackUrl) {
         window.location.replace(`${parsedData.callbackUrl}sso/${stringData}`);
       }
@@ -136,6 +138,7 @@ class CreateNewAccountForAppsComponent extends React.PureComponent<CreateNewAcco
   };
 
   exportKeyForApps = () => {
+    const { parsedData } = this;
     const { walletAddress, generatedSeedPhrase } = this.props;
     return (
       <RegistrationBackground className={styles.exportKeyForAppsHolder}>
@@ -151,14 +154,15 @@ class CreateNewAccountForAppsComponent extends React.PureComponent<CreateNewAcco
           <br />
           <span>{walletAddress || '-'}</span>
         </div>
-        <div className={styles.exportKeyForAppsText}>
-          {t('yourSeedPhrase')}
-          :
-          <br />
-          <span>
-            {generatedSeedPhrase || '-'}
-          </span>
-        </div>
+        {parsedData?.isShowSeedAfterRegistration === false &&
+          <div className={styles.exportKeyForAppsText}>
+            {t('yourSeedPhrase')}
+            :
+            <br />
+            <span>
+              {generatedSeedPhrase || '-'}
+            </span>
+          </div>}
         <div className={styles.exportKeyForAppsText}>
           {t('yourKeyFile')}
           {' '}

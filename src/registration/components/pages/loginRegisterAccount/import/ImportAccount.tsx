@@ -43,17 +43,17 @@ class ImportAccountComponent extends React.PureComponent<ImportAccountProps, Imp
     const { importAccountFromFile } = this.props;
 
     const accountFile = event?.target?.files?.[0]!;
-    try {
-      importAccountFromFile({
-        password: '',
-        accountFile: accountFile!,
-      });
-    } catch (error) {
-      this.setState({
-        accountFile,
-        openedPasswordModal: true,
-      });
-    }
+
+    importAccountFromFile({
+      password: '',
+      accountFile: accountFile!,
+      additionalActionOnDecryptError: () => {
+        this.setState({
+          accountFile,
+          openedPasswordModal: true,
+        });
+      },
+    });
   };
 
   closePasswordModal = () => {

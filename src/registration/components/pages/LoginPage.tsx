@@ -68,7 +68,7 @@ class LoginPageComponent extends React.PureComponent<LoginPageProps, LoginPageSt
     importAccountFromFile({
       password: '',
       accountFile: accountFile!,
-      additionalActionOnError: () => {
+      additionalActionOnDecryptError: () => {
         this.setState({
           accountFile,
           openedPasswordModal: true,

@@ -67,7 +67,7 @@ export function* loginToWalletSaga({ payload }: { payload?: LoginToWalletSagaInp
 }
 
 export function* importAccountFromFileSaga({ payload }: ReturnType<typeof importAccountFromFile>) {
-  const { accountFile, password, additionalActionOnError } = payload;
+  const { accountFile, password, additionalActionOnDecryptError } = payload;
   const WalletAPI = (yield* select(getWalletApi))!;
 
   try {
@@ -77,9 +77,9 @@ export function* importAccountFromFileSaga({ payload }: ReturnType<typeof import
 
     yield* loginToWalletSaga({ payload: { address: walletData.address, wif } });
     yield* put(push(WalletRoutesEnum.root));
-  } catch (e) {
-    if (additionalActionOnError) {
-      additionalActionOnError?.();
+  } catch (e: any) {
+    if (additionalActionOnDecryptError && e.message === 'unable to decrypt data') {
+      additionalActionOnDecryptError?.();
     } else {
       toast.error(i18n.t('importAccountError'));
     }
@@ -89,7 +89,7 @@ export function* importAccountFromFileSaga({ payload }: ReturnType<typeof import
 export function* exportAccountSaga({ payload }: ReturnType<typeof exportAccount>) {
   const { wif, address } = yield* select(getWalletData);
   const {
-    password, hint, isWithoutGoHome, additionalActionOnError,
+    password, hint, isWithoutGoHome, additionalActionOnDecryptError,
   } = payload;
   const WalletAPI = (yield* select(getWalletApi))!;
 
@@ -105,25 +105,25 @@ export function* exportAccountSaga({ payload }: ReturnType<typeof exportAccount>
     if (!isWithoutGoHome) {
       yield put(push(WalletRoutesEnum.root));
     }
-  } catch (e) {
-    if (additionalActionOnError) {
-      additionalActionOnError?.();
+  } catch (e: any) {
+    if (additionalActionOnDecryptError && e.message === 'unable to decrypt data') {
+      additionalActionOnDecryptError?.();
     } else {
       toast.error(i18n.t('exportAccountError'));
     }
   }
 }
 
-export function* resetAccountSaga({ payload: { password, additionalActionOnError } }: ReturnType<typeof resetAccount>) {
+export function* resetAccountSaga({ payload: { password, additionalActionOnDecryptError } }: ReturnType<typeof resetAccount>) {
   const { wif } = yield select(getWalletData);
   try {
     yield CryptoApi.decryptWif(wif, password);
     yield clearApplicationStorage();
     yield put(clearAccountData());
     yield put(push(WalletRoutesEnum.signup));
-  } catch (e) {
-    if (additionalActionOnError) {
-      additionalActionOnError?.();
+  } catch (e: any) {
+    if (additionalActionOnDecryptError && e.message === 'unable to decrypt data') {
+      additionalActionOnDecryptError?.();
     } else {
       toast.error(i18n.t('resetAccountError'));
     }
