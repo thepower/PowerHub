@@ -35,6 +35,18 @@
   }
 }
 
+.langSelect {
+  position: fixed;
+  z-index: 100001;
+  top: 16px;
+  right: calc(10vw + 32px);
+
+  @include mobile {
+    top: 40px;
+    right: 16px;
+  }
+}
+
 .registrationTitle {
   @include text-gradient($the-power-gradient);
   font-size: $unit * 20;
@@ -260,6 +272,7 @@
 
   margin-top: $unit * 4;
   margin-bottom: $unit * 5;
+
   color: #f5f5f7;
   font-size: 20px;
   font-weight: 500;
@@ -276,6 +289,13 @@
       margin-bottom: 0;
     }
   }
+}
+
+.resetModalForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .loginRegisterAccountTitle {

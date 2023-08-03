@@ -34,19 +34,20 @@
   }
 }
 
-@mixin text-gradient($gradient) {
+@mixin text-gradient($gradient: $the-power-gradient, $opacity: 1) {
   background: $gradient;
   background-clip: text;
+  opacity: $opacity;
   -webkit-text-fill-color: transparent;
   text-fill-color: transparent;
 }
 
 @mixin icon-colors(
   $class,
-  $defaultColor: #6B798F,
+  $defaultColor: #6b798f,
   $hoverColor: url('#hover'),
   $activeColor: url('#pressed'),
-  $disabledColor: #79789D,
+  $disabledColor: #79789d
 ) {
   @each $property in 'stroke', 'fill' {
     #{$class} :global(.#{$property}) {
@@ -57,14 +58,14 @@
       #{$property}: $hoverColor;
     }
 
-    #{$class}[aria-current='page'] :global(.#{$property}),
-    #{$class}[aria-selected='true'] :global(.#{$property}),
-    #{$class}[aria-pressed='true'] :global(.#{$property}),
+    #{$class}[aria-current="page"] :global(.#{$property}),
+    #{$class}[aria-selected="true"] :global(.#{$property}),
+    #{$class}[aria-pressed="true"] :global(.#{$property}),
     #{$class}:active :global(.#{$property}) {
       #{$property}: $activeColor;
     }
 
-    #{$class}[aria-disabled='true'] :global(.#{$property}),
+    #{$class}[aria-disabled="true"] :global(.#{$property}),
     #{$class}:disabled :global(.#{$property}) {
       #{$property}: $disabledColor;
     }

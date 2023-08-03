@@ -60,7 +60,12 @@
   }
 }
 
-.bell {
+.controlsSet {
+  display: flex;
+  align-items: center;
+}
+
+.mlA {
   margin-left: auto;
 }
 

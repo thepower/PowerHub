@@ -8,7 +8,7 @@ import {
 import React, { MouseEvent } from 'react';
 import { NavLink } from 'react-router-dom';
 import { isHub } from 'application/components/AppRoutes';
-import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 import { WalletRoutesEnum, HubRoutesEnum } from '../../application/typings/routes';
 import styles from './NavList.module.scss';
 import { setShowUnderConstruction } from '../../application/slice/applicationSlice';
@@ -56,6 +56,7 @@ const routes = isHub ? [
 ];
 
 const NavList = React.memo(() => {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const handleShowUnderConstruction = React.useCallback((event: MouseEvent) => {
     event.preventDefault();

@@ -1,59 +1,60 @@
-import React from 'react';
-import { push } from 'connected-react-router';
-import { connect, ConnectedProps } from 'react-redux';
 import {
   BreadcrumbsDataType,
   BreadcrumbsTypeEnum,
+  Button,
+  LangSelect,
   PELogoWithTitle,
   Wizard,
-  Button,
 } from 'common';
-import { t } from 'i18next';
-import { RegistrationTabs } from '../typings/registrationTypes';
-import { QuickGuide } from './pages/QuickGuide';
-import { BeAware } from './pages/BeAware';
-import { RegisterPage } from './pages/loginRegisterAccount/RegisterPage';
-import { Backup } from './pages/backup/Backup';
-import styles from './Registration.module.scss';
+import { push } from 'connected-react-router';
+import React from 'react';
+import { WithTranslation, withTranslation } from 'react-i18next';
+import { ConnectedProps, connect } from 'react-redux';
 import { WalletRoutesEnum } from '../../application/typings/routes';
+import { RegistrationTabs } from '../typings/registrationTypes';
+import styles from './Registration.module.scss';
+import { BeAware } from './pages/BeAware';
+import { QuickGuide } from './pages/QuickGuide';
+import { Backup } from './pages/backup/Backup';
+import { RegisterPage } from './pages/loginRegisterAccount/RegisterPage';
 
 const mapDispatchToProps = {
   routeTo: push,
 };
 
 const connector = connect(null, mapDispatchToProps);
-type RegistrationPageProps = ConnectedProps<typeof connector>;
+type RegistrationPageProps = ConnectedProps<typeof connector> & WithTranslation;
 
 interface RegistrationPageState {
   enterButtonPressed: boolean;
 }
 
 class RegistrationPageComponent extends React.PureComponent<RegistrationPageProps, RegistrationPageState> {
-  private registrationBreadcrumbs: BreadcrumbsDataType[] = [
-    {
-      label: RegistrationTabs.quickGuide,
-      component: QuickGuide,
-    },
-    {
-      label: RegistrationTabs.beAware,
-      component: BeAware,
-    },
-    {
-      label: RegistrationTabs.loginRegister,
-      component: RegisterPage,
-    },
-    {
-      label: RegistrationTabs.backup,
-      component: Backup,
-    },
-  ];
-
   constructor(props: RegistrationPageProps) {
     super(props);
     this.state = {
       enterButtonPressed: false,
     };
   }
+
+  getRegistrationBreadcrumbs: () => BreadcrumbsDataType[] = () => [
+    {
+      label: this.props.t(RegistrationTabs.quickGuide),
+      component: QuickGuide,
+    },
+    {
+      label: this.props.t(RegistrationTabs.beAware),
+      component: BeAware,
+    },
+    {
+      label: this.props.t(RegistrationTabs.loginRegister),
+      component: RegisterPage,
+    },
+    {
+      label: this.props.t(RegistrationTabs.backup),
+      component: Backup,
+    },
+  ];
 
   handleProceedToRegistration = () => {
     this.setState({ enterButtonPressed: true });
@@ -67,7 +68,7 @@ class RegistrationPageComponent extends React.PureComponent<RegistrationPageProp
     <>
       <div className={styles.registrationTitle}>{'Power Hub'}</div>
       <div className={styles.registrationDesc}>
-        {t('registrationPageDesc')}
+        {this.props.t('registrationPageDesc')}
       </div>
       <div className={styles.buttonsHolder}>
         <Button
@@ -77,7 +78,7 @@ class RegistrationPageComponent extends React.PureComponent<RegistrationPageProp
           type="button"
           onClick={this.handleProceedToRegistration}
         >
-          {t('registrationPageJoinButton')}
+          {this.props.t('registrationPageJoinButton')}
         </Button>
         <Button
           size="large"
@@ -86,7 +87,7 @@ class RegistrationPageComponent extends React.PureComponent<RegistrationPageProp
           type="button"
           onClick={this.handleProceedToLogin}
         >
-          {t('registrationPageImportAccountButton')}
+          {this.props.t('registrationPageImportAccountButton')}
         </Button>
       </div>
     </>
@@ -98,7 +99,7 @@ class RegistrationPageComponent extends React.PureComponent<RegistrationPageProp
       <div className={styles.registrationWizardHolder}>
         <Wizard
           className={styles.registrationWizard}
-          breadcrumbs={this.registrationBreadcrumbs}
+          breadcrumbs={this.getRegistrationBreadcrumbs()}
           type={BreadcrumbsTypeEnum.direction}
           breadCrumbHasBorder
         />
@@ -111,9 +112,12 @@ class RegistrationPageComponent extends React.PureComponent<RegistrationPageProp
 
     return <div className={styles.registrationPage}>
       <div className={styles.registrationPageCover} />
+      <LangSelect
+        className={styles.langSelect}
+      />
       {enterButtonPressed ? this.renderRegistration() : this.renderWelcome()}
     </div>;
   }
 }
 
-export const RegistrationPage = connector(RegistrationPageComponent);
+export const RegistrationPage = withTranslation()(connector(RegistrationPageComponent));

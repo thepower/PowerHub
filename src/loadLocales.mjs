@@ -32,7 +32,7 @@ async function loadLocales() {
     columns: true,
   });
   if (res.data) {
-    const langs = ['en', 'ru'];
+    const langs = ['en', 'ru', 'th'];
 
     const locales = langs.reduce((sum, value) => {
       sum[value] = parsedData.reduce((sum2, value2) => {

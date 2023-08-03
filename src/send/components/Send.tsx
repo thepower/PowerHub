@@ -1,31 +1,31 @@
-import React from 'react';
+import { BigNumber } from '@ethersproject/bignumber';
 import { InputAdornment, TextField } from '@mui/material';
-import { connect, ConnectedProps } from 'react-redux';
+import { AddressApi, CryptoApi } from '@thepowereco/tssdk';
+import cn from 'classnames';
 import {
   Form, Formik, FormikHelpers, FormikProps,
 } from 'formik';
-import * as yup from 'yup';
-import cn from 'classnames';
-import { AddressApi, CryptoApi } from '@thepowereco/tssdk';
 import { getTokenByID } from 'myAssets/selectors/tokensSelectors';
 import { getWalletNativeTokensAmountByID } from 'myAssets/selectors/walletSelectors';
-import { RouteComponentProps } from 'react-router';
 import { TokenKind } from 'myAssets/types';
-import { BigNumber } from '@ethersproject/bignumber';
-import { t } from 'i18next';
+import React from 'react';
+import { WithTranslation, withTranslation } from 'react-i18next';
+import { ConnectedProps, connect } from 'react-redux';
+import { RouteComponentProps } from 'react-router';
+import * as yup from 'yup';
+import { getWalletAddress, getWalletData } from '../../account/selectors/accountSelectors';
+import { RootState } from '../../application/store';
+import { WalletRoutesEnum } from '../../application/typings/routes';
 import {
   Button, DeepPageTemplate, Divider, FullScreenLoader,
 } from '../../common';
-import { WalletRoutesEnum } from '../../application/typings/routes';
-import { RootState } from '../../application/store';
-import { getWalletAddress, getWalletData } from '../../account/selectors/accountSelectors';
 import { LogoIcon, MoneyBugIcon } from '../../common/icons';
-import ConfirmSendModal from './ConfirmSendModal';
-import { getSentData } from '../selectors/sendSelectors';
-import { checkIfLoading } from '../../network/selectors';
-import { clearSentData, sendTokenTrxTrigger, sendTrxTrigger } from '../slices/sendSlice';
-import styles from './Send.module.scss';
 import TxResult from '../../common/txResult/TxResult';
+import { checkIfLoading } from '../../network/selectors';
+import { getSentData } from '../selectors/sendSelectors';
+import { clearSentData, sendTokenTrxTrigger, sendTrxTrigger } from '../slices/sendSlice';
+import ConfirmSendModal from './ConfirmSendModal';
+import styles from './Send.module.scss';
 
 type OwnProps = RouteComponentProps<{ type: TokenKind, address: string }>;
 
@@ -49,7 +49,7 @@ const connector = connect(
   mapDispatchToProps,
 );
 
-type SendProps = ConnectedProps<typeof connector>;
+type SendProps = ConnectedProps<typeof connector> & WithTranslation;
 
 type SendState = {
   openModal: boolean;
@@ -107,7 +107,7 @@ class Send extends React.Component<SendProps, SendState> {
         .number()
         .required()
         .moreThan(0)
-        .lessThan(Number(formattedAmount?.toString()), t('balanceExceededReduceAmount')!)
+        .lessThan(Number(formattedAmount?.toString()), this.props.t('balanceExceededReduceAmount')!)
         .nullable(),
       address: yup.string().required().length(20),
       comment: yup.string().max(1024),
@@ -118,7 +118,7 @@ class Send extends React.Component<SendProps, SendState> {
 
   handleSubmit = ({ address }: FormValues, formikHelpers: FormikHelpers<FormValues>) => {
     if (!AddressApi.isTextAddressValid(address!)) {
-      formikHelpers.setFieldError('address', t('invalidAddress')!);
+      formikHelpers.setFieldError('address', this.props.t('invalidAddress')!);
     } else {
       this.setState({ openModal: true });
     }
@@ -173,7 +173,7 @@ class Send extends React.Component<SendProps, SendState> {
         <div className={styles.fields}>
           <TextField
             variant="standard"
-            label={t('amount')}
+            label={this.props.t('amount')}
             type="number"
             placeholder="00.000"
             name="amount"
@@ -193,7 +193,7 @@ class Send extends React.Component<SendProps, SendState> {
           />
           <TextField
             variant="standard"
-            label={t('addressOfTheRecipient')}
+            label={this.props.t('addressOfTheRecipient')}
             placeholder="AA000000000000000000"
             name="address"
             value={formikProps.values.address}
@@ -205,7 +205,7 @@ class Send extends React.Component<SendProps, SendState> {
           <TextField
             disabled={!isNativeToken}
             variant="outlined"
-            placeholder={t('addComment')!}
+            placeholder={this.props.t('addComment')!}
             multiline
             minRows={2}
             name="comment"
@@ -217,7 +217,7 @@ class Send extends React.Component<SendProps, SendState> {
           />
         </div>
         <Button size="large" variant="filled" className={styles.button} type="submit" disabled={!formikProps.dirty}>
-          {t('send')}
+          {this.props.t('send')}
         </Button>
       </Form>
     </>;
@@ -239,9 +239,9 @@ class Send extends React.Component<SendProps, SendState> {
     if (sentData) {
       return (
         <DeepPageTemplate
-          topBarTitle={t('send')}
+          topBarTitle={this.props.t('send')}
           backUrl={WalletRoutesEnum.myAssets}
-          backUrlText={t('myAssets')!}
+          backUrlText={this.props.t('myAssets')!}
         >
           <TxResult sentData={{
             ...sentData,
@@ -253,14 +253,14 @@ class Send extends React.Component<SendProps, SendState> {
     }
 
     return (
-      <DeepPageTemplate topBarTitle={t('send')} backUrl={WalletRoutesEnum.myAssets} backUrlText={t('myAssets')!}>
+      <DeepPageTemplate topBarTitle={this.props.t('send')} backUrl={WalletRoutesEnum.myAssets} backUrlText={this.props.t('myAssets')!}>
         <div className={styles.content}>
           <div className={styles.walletInfo}>
-            <span className={styles.titleBalance}>{t('totalBalance')}</span>
+            <span className={styles.titleBalance}>{this.props.t('totalBalance')}</span>
             <span className={styles.address}>{address}</span>
             <span className={styles.amount}>
               {isNativeToken && <LogoIcon width={20} height={20} className={styles.totalBalanceIcon} />}
-              {formattedAmountString === '0' ? t('yourTokensWillBeHere') : `${formattedAmountString} ${assetSymbol}` }
+              {formattedAmountString === '0' ? this.props.t('yourTokensWillBeHere') : `${formattedAmountString} ${assetSymbol}` }
             </span>
           </div>
           <Divider className={styles.divider} />
@@ -277,4 +277,4 @@ class Send extends React.Component<SendProps, SendState> {
   }
 }
 
-export default connector(Send);
+export default withTranslation()(connector(Send));

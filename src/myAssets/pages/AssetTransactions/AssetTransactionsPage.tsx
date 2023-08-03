@@ -1,22 +1,22 @@
-import React from 'react';
 import { push } from 'connected-react-router';
+import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 
 import { DeepPageTemplate, FullScreenLoader } from 'common';
 
 import { RootState } from 'application/store';
 
+import { isEmpty } from 'lodash';
 import Transaction from 'myAssets/components/Transaction';
-import { TransactionType, loadTransactionsTrigger, resetTransactionsState } from 'myAssets/slices/transactionsSlice';
+import { getTokenByID } from 'myAssets/selectors/tokensSelectors';
 import { getGroupedWalletTransactions } from 'myAssets/selectors/transactionsSelectors';
+import { loadTransactionsTrigger, resetTransactionsState, TransactionType } from 'myAssets/slices/transactionsSlice';
+import { setLastBlockToInitialLastBlock } from 'myAssets/slices/walletSlice';
+import { TokenKind } from 'myAssets/types';
 import { checkIfLoading } from 'network/selectors';
+import { WithTranslation, withTranslation } from 'react-i18next';
 import { InView } from 'react-intersection-observer';
 import { RouteComponentProps } from 'react-router';
-import { TokenKind } from 'myAssets/types';
-import { getTokenByID } from 'myAssets/selectors/tokensSelectors';
-import { setLastBlockToInitialLastBlock } from 'myAssets/slices/walletSlice';
-import { isEmpty } from 'lodash';
-import { t } from 'i18next';
 import styles from './AssetTransactionsPage.module.scss';
 
 type OwnProps = RouteComponentProps<{ type: TokenKind, address: string }>;
@@ -37,7 +37,7 @@ const mapStateToProps = (state: RootState, props: OwnProps) => ({
 });
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
-type AssetTransactionsPageProps = ConnectedProps<typeof connector>;
+type AssetTransactionsPageProps = ConnectedProps<typeof connector> & WithTranslation;
 
 class AssetTransactionsPageComponent extends React.PureComponent<AssetTransactionsPageProps> {
   componentDidMount() {
@@ -81,7 +81,7 @@ class AssetTransactionsPageComponent extends React.PureComponent<AssetTransactio
     }
 
     return (
-      <DeepPageTemplate topBarTitle={`${tokenSymbol} transactions`} backUrl="/my-assets" backUrlText={t('myAssets')!}>
+      <DeepPageTemplate topBarTitle={`${tokenSymbol} ${this.props.t('transactions')}`} backUrl="/my-assets" backUrlText={this.props.t('myAssets')!}>
         <div className={styles.AssetTransactionsPage}>
           <div className={styles.transactions}>
             <ul className={styles.groupByDates}>{Object.entries(transactions).map(this.renderTransactionsList)}</ul>
@@ -95,4 +95,4 @@ class AssetTransactionsPageComponent extends React.PureComponent<AssetTransactio
   }
 }
 
-export const AssetTransactionsPage = connector(AssetTransactionsPageComponent);
+export const AssetTransactionsPage = withTranslation()(connector(AssetTransactionsPageComponent));

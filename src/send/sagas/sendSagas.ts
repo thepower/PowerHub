@@ -1,18 +1,18 @@
-import { put, select } from 'typed-redux-saga';
+import { BigNumber } from '@ethersproject/bignumber';
 import {
   AddressApi,
   Evm20Contract, EvmContract, EvmCore, NetworkApi, TransactionsApi,
 } from '@thepowereco/tssdk';
+import { correctAmount } from '@thepowereco/tssdk/dist/utils/numbers';
+import { getWalletAddress } from 'account/selectors/accountSelectors';
 import { getNetworkApi, getWalletApi } from 'application/selectors';
-import { loadBalanceSaga } from 'myAssets/sagas/wallet';
+import { cloneDeep } from 'lodash';
 import { defaultABI, updateTokenAmountSaga } from 'myAssets/sagas/tokens';
-import { BigNumber } from '@ethersproject/bignumber';
+import { loadBalanceSaga } from 'myAssets/sagas/wallet';
 import { toast } from 'react-toastify';
 import { TxBody, TxPurpose } from 'sign-and-send/typing';
-import { getWalletAddress } from 'account/selectors/accountSelectors';
-import { correctAmount } from '@thepowereco/tssdk/dist/utils/numbers';
-import { cloneDeep } from 'lodash';
-import { t } from 'i18next';
+import { put, select } from 'typed-redux-saga';
+import i18n from 'locales/initTranslation';
 import {
   sendTokenTrxTrigger, sendTrxTrigger, setSentData, signAndSendTrxTrigger,
 } from '../slices/sendSlice';
@@ -36,7 +36,7 @@ export function* sendTrxSaga({
 
     yield loadBalanceSaga();
   } catch (error: any) {
-    toast.error(`${t('anErrorOccurredAsset')} ${error?.code}`);
+    toast.error(`${i18n.t('anErrorOccurredAsset')} ${error?.code}`);
   }
 }
 
@@ -63,7 +63,7 @@ export function* sendTokenTrxSaga({
 
     yield updateTokenAmountSaga({ address });
   } catch (error: any) {
-    toast.error(`${t('anErrorOccurredAsset')} ${error?.code}`);
+    toast.error(`${i18n.t('anErrorOccurredAsset')} ${error?.code}`);
   }
 }
 
@@ -113,6 +113,6 @@ export function* singAndSendTrxSaga({
     }));
   } catch (error: any) {
     console.error(error);
-    toast.error(`${t('somethingWentWrongTransaction')} ${error?.code}`);
+    toast.error(`${i18n.t('somethingWentWrongTransaction')} ${error?.code}`);
   }
 }

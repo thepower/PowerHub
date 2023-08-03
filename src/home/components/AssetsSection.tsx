@@ -1,18 +1,18 @@
-import React from 'react';
+import { faucetThePowerUrl, walletThePowerUrl } from 'appConstants';
+import { isHub } from 'application/components/AppRoutes';
+import { ArrowLink, CardLink, CopyButton } from 'common';
 import {
   BuySvg, FaucetSvg, LogoIcon, SendSvg, WalletsSvg,
 } from 'common/icons';
-import { connect, ConnectedProps } from 'react-redux';
-import { ArrowLink, CardLink, CopyButton } from 'common';
-import { isHub } from 'application/components/AppRoutes';
-import { faucetThePowerUrl, walletThePowerUrl } from 'appConstants';
-import { t } from 'i18next';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { ConnectedProps, connect } from 'react-redux';
 import { getWalletAddress } from '../../account/selectors/accountSelectors';
-import { getWalletNativeTokensAmounts } from '../../myAssets/selectors/walletSelectors';
 import { setShowUnderConstruction } from '../../application/slice/applicationSlice';
 import { RootState } from '../../application/store';
-import styles from './AssetsSection.module.scss';
 import { WalletRoutesEnum } from '../../application/typings/routes';
+import { getWalletNativeTokensAmounts } from '../../myAssets/selectors/walletSelectors';
+import styles from './AssetsSection.module.scss';
 
 const mapStateToProps = (state: RootState) => ({
   walletAddress: getWalletAddress(state),
@@ -26,6 +26,7 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type AssetsSectionProps = ConnectedProps<typeof connector>;
 
 const AssetsSection = ({ walletAddress, setShowUnderConstruction, amounts }: AssetsSectionProps) => {
+  const { t } = useTranslation();
   const handleShowUnderConstruction = React.useCallback(
     (event: React.MouseEvent) => {
       event.preventDefault();
@@ -60,7 +61,7 @@ const AssetsSection = ({ walletAddress, setShowUnderConstruction, amounts }: Ass
         <div className={styles.cards}>
           <CardLink
             to={'/my-assets'}
-            label="Wallets"
+            label={t('wallets')}
             disabled={!walletAddress}
           >
             <WalletsSvg />

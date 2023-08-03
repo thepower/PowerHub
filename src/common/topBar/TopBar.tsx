@@ -1,13 +1,14 @@
-import React from 'react';
 import cn from 'classnames';
-import { t } from 'i18next';
-import IconButton from '../iconButton/IconButton';
+import React from 'react';
+import i18n from 'locales/initTranslation';
 import { Account } from '../../account/components/Account';
-import ArrowLink from '../arrowLink/ArrowLink';
-import { BellIcon } from '../icons';
 import { setShowUnderConstruction } from '../../application/slice/applicationSlice';
-import styles from './TopBar.module.scss';
 import { useAppDispatch } from '../../application/store';
+import ArrowLink from '../arrowLink/ArrowLink';
+import IconButton from '../iconButton/IconButton';
+import { BellIcon } from '../icons';
+import { LangSelect } from '../langSelect/LangSelect';
+import styles from './TopBar.module.scss';
 
 type TopBarProps = {
   type: 'deep' | 'shallow';
@@ -22,7 +23,7 @@ const TopBar: React.FC<TopBarProps> = ({
   children,
   type,
   backUrl,
-  backUrlText = t('back')!,
+  backUrlText = i18n.t('back')!,
   disableAccount = false,
   className,
 }) => {
@@ -59,12 +60,16 @@ const TopBar: React.FC<TopBarProps> = ({
           {children}
         </div>
       )}
-      <IconButton
-        className={cn(!children && styles.bell)}
-        onClick={handleShowUnderConstruction}
-      >
-        <BellIcon />
-      </IconButton>
+      <div className={cn(styles.controlsSet, !children && styles.mlA)}>
+        <LangSelect
+          className={cn(!children && styles.lang)}
+        />
+        <IconButton
+          onClick={handleShowUnderConstruction}
+        >
+          <BellIcon />
+        </IconButton>
+      </div>
     </header>
     {type === 'shallow' && children && (
       <div className={styles.childrenOutsideBar}>

@@ -25,6 +25,7 @@ export { Checkbox } from './checkbox/Checkbox';
 export { Switch } from './switch/Switch';
 export { Pagination } from './pagination/Pagination';
 export { PaginationList } from './pagination/PaginationList';
+export { LangSelect } from './langSelect/LangSelect';
 
 // types
 export type { UnknownFunctionType } from './typings/common';

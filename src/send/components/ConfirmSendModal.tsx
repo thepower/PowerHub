@@ -2,7 +2,7 @@ import React, { useCallback, useMemo } from 'react';
 import { Form, Formik, FormikHelpers } from 'formik';
 import { connect, ConnectedProps } from 'react-redux';
 import { TokenType } from 'myAssets/slices/tokensSlice';
-import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 import { Button, Modal, OutlinedInput } from '../../common';
 import styles from './ConfirmSendModal.module.scss';
 import { RootState } from '../../application/store';
@@ -35,6 +35,7 @@ type ConfirmSendModalProps = ConnectedProps<typeof connector> & OwnProps;
 const ConfirmSendModal: React.FC<ConfirmSendModalProps> = ({
   onClose, open, trxValues, from, token, onSubmit,
 }) => {
+  const { t } = useTranslation();
   const handleSubmit = useCallback(async (values: Values, formikHelpers: FormikHelpers<Values>) => {
     try {
       await onSubmit(trxValues, values.password);
@@ -42,13 +43,13 @@ const ConfirmSendModal: React.FC<ConfirmSendModalProps> = ({
     } catch (e) {
       formikHelpers.setFieldError('password', t('invalidPasswordError')!);
     }
-  }, [onSubmit, trxValues, onClose]);
+  }, [onSubmit, trxValues, onClose, t]);
 
   const fields = useMemo(() => [
     { key: t('from'), value: from },
     { key: t('to'), value: trxValues.address },
     { key: t('amount'), value: `${trxValues.amount} ${token ? token.symbol : 'SK'}` },
-  ], [from, trxValues, token]);
+  ], [t, from, trxValues.address, trxValues.amount, token]);
 
   return (
     <Modal open={open} onClose={onClose} contentClassName={styles.modalContent}>

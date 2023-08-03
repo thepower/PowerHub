@@ -1,15 +1,15 @@
-import { takeLatest } from 'typed-redux-saga';
 import { manageSagaState } from 'common';
+import { takeLatest } from 'typed-redux-saga';
 import {
+  createWallet,
   generateSeedPhrase,
   loginToWalletFromRegistration,
-  createWallet,
   proceedToHub,
 } from '../slice/registrationSlice';
 import {
+  createWalletSaga,
   generateSeedPhraseSaga,
   loginToWalletSaga,
-  createWalletSaga,
   proceedToHubSaga,
 } from './registrationSaga';
 

@@ -5,7 +5,7 @@ import { FileReaderType, getFileData } from 'common';
 import { push } from 'connected-react-router';
 import { toast } from 'react-toastify';
 import { isWallet } from 'application/components/AppRoutes';
-import { t } from 'i18next';
+import i18n from 'locales/initTranslation';
 import {
   clearAccountData,
   exportAccount,
@@ -41,7 +41,7 @@ export function* loginToWalletSaga({ payload }: { payload?: LoginToWalletSagaInp
 
       if (subChain.result === 'other_chain') {
         if (subChain.chain === null) {
-          toast.error(t('portationInProgress'));
+          toast.error(i18n.t('portationInProgress'));
           return;
         }
 
@@ -62,7 +62,7 @@ export function* loginToWalletSaga({ payload }: { payload?: LoginToWalletSagaInp
 
     yield* put(loadBalanceTrigger());
   } catch (e) {
-    toast.error(t('loginError'));
+    toast.error(i18n.t('loginError'));
   }
 }
 
@@ -81,7 +81,7 @@ export function* importAccountFromFileSaga({ payload }: ReturnType<typeof import
     if (additionalActionOnError) {
       additionalActionOnError?.();
     } else {
-      toast.error(t('importAccountError'));
+      toast.error(i18n.t('importAccountError'));
     }
   }
 }
@@ -109,7 +109,7 @@ export function* exportAccountSaga({ payload }: ReturnType<typeof exportAccount>
     if (additionalActionOnError) {
       additionalActionOnError?.();
     } else {
-      toast.error(t('exportAccountError'));
+      toast.error(i18n.t('exportAccountError'));
     }
   }
 }
@@ -125,7 +125,7 @@ export function* resetAccountSaga({ payload: { password, additionalActionOnError
     if (additionalActionOnError) {
       additionalActionOnError?.();
     } else {
-      toast.error(t('resetAccountError'));
+      toast.error(i18n.t('resetAccountError'));
     }
   }
 }

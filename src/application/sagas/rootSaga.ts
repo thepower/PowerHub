@@ -1,9 +1,9 @@
-import { spawn, all, call } from 'typed-redux-saga';
+import { all, call, spawn } from 'typed-redux-saga';
 import accountSaga from '../../account/sagas';
-import applicationSaga from './index';
-import registrationSaga from '../../registration/sagas';
 import assetsSaga from '../../myAssets/sagas';
+import registrationSaga from '../../registration/sagas';
 import sendSagas from '../../send/sagas';
+import applicationSaga from './index';
 
 export default function* rootSaga() {
   const sagas = [

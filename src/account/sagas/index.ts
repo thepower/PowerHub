@@ -1,16 +1,16 @@
-import { takeLatest } from 'typed-redux-saga';
 import { manageSagaState } from 'common';
+import { takeLatest } from 'typed-redux-saga';
 import {
+  exportAccount,
   importAccountFromFile,
   loginToWallet,
   resetAccount,
-  exportAccount,
 } from '../slice/accountSlice';
 import {
+  exportAccountSaga,
   importAccountFromFileSaga,
   loginToWalletSaga,
   resetAccountSaga,
-  exportAccountSaga,
 } from './accountSaga';
 
 export default function* () {

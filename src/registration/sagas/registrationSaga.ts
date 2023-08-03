@@ -1,20 +1,20 @@
-import { put, select } from 'typed-redux-saga';
 import {
-  CryptoApi,
   AddressApi,
-  WalletApi,
+  CryptoApi,
   RegisteredAccount,
+  WalletApi,
 } from '@thepowereco/tssdk';
 import { push } from 'connected-react-router';
 import { toast } from 'react-toastify';
-import { t } from 'i18next';
-import { createWallet, setSeedPhrase } from '../slice/registrationSlice';
-import { CreateAccountStepsEnum, LoginToWalletInputType } from '../typings/registrationTypes';
-import { loginToWallet, setWalletData } from '../../account/slice/accountSlice';
-import { getCurrentShardSelector, getGeneratedSeedPhrase } from '../selectors/registrationSelectors';
+import { put, select } from 'typed-redux-saga';
+import i18n from 'locales/initTranslation';
 import { getWalletData } from '../../account/selectors/accountSelectors';
+import { loginToWallet, setWalletData } from '../../account/slice/accountSlice';
 import { WalletRoutesEnum } from '../../application/typings/routes';
 import { CURRENT_NETWORK } from '../../application/utils/applicationUtils';
+import { getCurrentShardSelector, getGeneratedSeedPhrase } from '../selectors/registrationSelectors';
+import { createWallet, setSeedPhrase } from '../slice/registrationSlice';
+import { CreateAccountStepsEnum, LoginToWalletInputType } from '../typings/registrationTypes';
 
 export function* generateSeedPhraseSaga() {
   const phrase: string = yield CryptoApi.generateSeedPhrase();
@@ -47,7 +47,7 @@ export function* createWalletSaga({ payload }: ReturnType<typeof createWallet>) 
 
     additionalAction?.();
   } catch (e) {
-    toast.error(t('createAccountError'));
+    toast.error(i18n.t('createAccountError'));
   }
 }
 
@@ -58,7 +58,7 @@ export function* loginToWalletSaga({ payload }: { payload: LoginToWalletInputTyp
     yield AddressApi.parseTextAddress(address);
     const isValidSeed: boolean = yield CryptoApi.validateMnemonic(seed);
     if (!isValidSeed) {
-      toast.error(t('seedPhraseIsNotValid'));
+      toast.error(i18n.t('seedPhraseIsNotValid'));
       return;
     }
   } catch (e: any) {
@@ -74,7 +74,7 @@ export function* loginToWalletSaga({ payload }: { payload: LoginToWalletInputTyp
     yield* put(loginToWallet({ address, wif }));
     yield* put(push(WalletRoutesEnum.root));
   } catch (e) {
-    toast.error(t('loginError'));
+    toast.error(i18n.t('loginError'));
   }
 }
 

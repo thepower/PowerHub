@@ -1,15 +1,15 @@
-import React from 'react';
-import { connect, ConnectedProps } from 'react-redux';
 import { OutlinedInput } from 'common';
-import { t } from 'i18next';
-import styles from '../../Registration.module.scss';
-import {
-  setLoginSeed,
-  seLoginAddress,
-  setLoginPassword,
-  setLoginConfirmedPassword,
-} from '../../../slice/registrationSlice';
+import React from 'react';
+import { WithTranslation, withTranslation } from 'react-i18next';
+import { ConnectedProps, connect } from 'react-redux';
 import { Maybe } from '../../../../typings/common';
+import {
+  seLoginAddress,
+  setLoginConfirmedPassword,
+  setLoginPassword,
+  setLoginSeed,
+} from '../../../slice/registrationSlice';
+import styles from '../../Registration.module.scss';
 
 const mapDispatchToProps = {
   seLoginAddress,
@@ -19,7 +19,7 @@ const mapDispatchToProps = {
 };
 
 const connector = connect(null, mapDispatchToProps);
-type LoginToAccountProps = ConnectedProps<typeof connector> & {
+type LoginToAccountProps = ConnectedProps<typeof connector> & WithTranslation & {
   address: Maybe<string>;
   seed: Maybe<string>;
   password: Maybe<string>;
@@ -55,39 +55,39 @@ class LoginToAccountComponent extends React.PureComponent<LoginToAccountProps> {
 
     return <div className={styles.registrationFormHolder}>
       <div className={styles.registrationFormDesc}>
-        {t('toLoginYouNeedEnter')}
+        {this.props.t('toLoginYouNeedEnter')}
       </div>
       <OutlinedInput
-        placeholder={t('address')!}
+        placeholder={this.props.t('address')!}
         className={styles.passwordInput}
         value={address}
         onChange={this.onChangeAddress}
       />
       <OutlinedInput
-        placeholder={t('seedPhrase')!}
+        placeholder={this.props.t('seedPhrase')!}
         className={styles.passwordInput}
         value={seed}
         type={'password'}
         onChange={this.onChangeSeed}
       />
       <OutlinedInput
-        placeholder={t('password')!}
+        placeholder={this.props.t('password')!}
         className={styles.passwordInput}
         value={password}
         type={'password'}
         onChange={this.onChangePassword}
       />
       <OutlinedInput
-        placeholder={t('repeatedPassword')!}
+        placeholder={this.props.t('repeatedPassword')!}
         className={styles.passwordInput}
         value={confirmedPassword}
         type={'password'}
         error={passwordsNotEqual}
-        errorMessage={t('oopsPasswordsDidntMatch')!}
+        errorMessage={this.props.t('oopsPasswordsDidntMatch')!}
         onChange={this.onChangeConfirmedPassword}
       />
     </div>;
   }
 }
 
-export const LoginToAccount = connector(LoginToAccountComponent);
+export const LoginToAccount = withTranslation()(connector(LoginToAccountComponent));

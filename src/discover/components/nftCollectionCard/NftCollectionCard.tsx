@@ -1,9 +1,7 @@
-import React from 'react';
-import { RouteComponentProps } from 'react-router';
+import { Collapse } from '@mui/material';
+import { setBackUrl } from 'application/slice/applicationSlice';
 import { RootState } from 'application/store';
-import { getNftCollectionCardData } from 'discover/selectors/discoverSelectors';
-import { push } from 'connected-react-router';
-import { connect, ConnectedProps } from 'react-redux';
+import { HubRoutesEnum } from 'application/typings/routes';
 import { IconButton } from 'common';
 import {
   ChevronDown,
@@ -12,14 +10,16 @@ import {
   HeartIcon,
   ShareIcon,
 } from 'common/icons';
-import { HubRoutesEnum } from 'application/typings/routes';
-import { Collapse } from '@mui/material';
+import { push } from 'connected-react-router';
+import { getNftCollectionCardData } from 'discover/selectors/discoverSelectors';
 import { DiscoverTabs } from 'discover/typings/discoverTypings';
-import { setBackUrl } from 'application/slice/applicationSlice';
-import { t } from 'i18next';
+import React from 'react';
+import { WithTranslation, withTranslation } from 'react-i18next';
+import { ConnectedProps, connect } from 'react-redux';
+import { RouteComponentProps } from 'react-router';
+import { setCurrentDiscoverTab } from '../../slice/discoverSlice';
 import styles from './NftCollectionCard.module.scss';
 import { NftCollectionsNfts } from './NftCollectionNfts';
-import { setCurrentDiscoverTab } from '../../slice/discoverSlice';
 
 type OwnProps = RouteComponentProps<{ id: string }>;
 
@@ -34,7 +34,7 @@ const mapDispatchToProps = {
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
-type NftCollectionCardProps = ConnectedProps<typeof connector> & OwnProps;
+type NftCollectionCardProps = ConnectedProps<typeof connector> & OwnProps & WithTranslation;
 
 type NftCollectionCardState = {
   showMoreInfo: boolean;
@@ -70,7 +70,7 @@ class NftCollectionCardComponent extends React.PureComponent<NftCollectionCardPr
 
     return <div className={styles.nftCollectionCardShowMoreButton} onClick={this.toggleShowMore}>
       <span className={styles.nftCollectionCardShowMoreButtonLabel}>
-        {showMoreInfo ? t('showLess') : t('showMore')}
+        {showMoreInfo ? this.props.t('showLess') : this.props.t('showMore')}
       </span>
       {showMoreInfo ? <ChevronUp /> : <ChevronDown />}
     </div>;
@@ -81,23 +81,23 @@ class NftCollectionCardComponent extends React.PureComponent<NftCollectionCardPr
 
     return <div className={styles.nftCollectionCardMetricsHolder}>
       <div className={styles.nftCollectionCardMetrics}>
-        <div className={styles.nftCollectionCardMetricsDesc}>{t('holders')}</div>
+        <div className={styles.nftCollectionCardMetricsDesc}>{this.props.t('holders')}</div>
         <div>{card.holders}</div>
       </div>
       <div className={styles.nftCollectionCardMetrics}>
-        <div className={styles.nftCollectionCardMetricsDesc}>{t('followers')}</div>
+        <div className={styles.nftCollectionCardMetricsDesc}>{this.props.t('followers')}</div>
         <div>{card.followers}</div>
       </div>
       <div className={styles.nftCollectionCardMetrics}>
-        <div className={styles.nftCollectionCardMetricsDesc}>{t('floor')}</div>
+        <div className={styles.nftCollectionCardMetricsDesc}>{this.props.t('floor')}</div>
         <div>{card.floor}</div>
       </div>
       <div className={styles.nftCollectionCardMetrics}>
-        <div className={styles.nftCollectionCardMetricsDesc}>{t('24hVolume')}</div>
+        <div className={styles.nftCollectionCardMetricsDesc}>{this.props.t('24hVolume')}</div>
         <div>{card.lastDayVolume}</div>
       </div>
       <div className={styles.nftCollectionCardMetrics}>
-        <div className={styles.nftCollectionCardMetricsDesc}>{t('24hChange')}</div>
+        <div className={styles.nftCollectionCardMetricsDesc}>{this.props.t('24hChange')}</div>
         <div>{card.lastDayChange}</div>
       </div>
     </div>;
@@ -152,4 +152,4 @@ class NftCollectionCardComponent extends React.PureComponent<NftCollectionCardPr
   }
 }
 
-export const NftCollectionCard = connector(NftCollectionCardComponent);
+export const NftCollectionCard = withTranslation()(connector(NftCollectionCardComponent));

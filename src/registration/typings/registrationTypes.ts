@@ -1,11 +1,11 @@
-import React from 'react';
 import { WizardComponentProps } from 'common';
+import React from 'react';
 
 export enum RegistrationTabs {
-  quickGuide = 'Quick guide',
-  beAware = 'Be aware',
-  loginRegister = 'Login / Register',
-  backup = 'Backup',
+  quickGuide = 'quickGuide',
+  beAware = 'beAware',
+  loginRegister = 'loginRegister',
+  backup = 'backup',
 }
 
 export enum LoginRegisterAccountTabs {

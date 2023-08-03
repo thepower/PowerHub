@@ -1,8 +1,8 @@
-import React from 'react';
-import { Modal, OutlinedInput, Button } from 'common';
 import classnames from 'classnames';
+import { Button, Modal, OutlinedInput } from 'common';
 import { Form, Formik, FormikHelpers } from 'formik';
-import { t } from 'i18next';
+import React from 'react';
+import { WithTranslation, withTranslation } from 'react-i18next';
 import styles from '../../../Registration.module.scss';
 
 interface ImportAccountModalProps {
@@ -14,7 +14,7 @@ interface ImportAccountModalProps {
 const initialValues = { password: '' };
 type Values = typeof initialValues;
 
-export class ImportAccountModal extends React.PureComponent<ImportAccountModalProps> {
+class ImportAccountModalComponent extends React.PureComponent<ImportAccountModalProps & WithTranslation> {
   handleSubmitImportModal = (values: Values, formikHelpers: FormikHelpers<Values>) => {
     const { onSubmit } = this.props;
 
@@ -39,15 +39,15 @@ export class ImportAccountModal extends React.PureComponent<ImportAccountModalPr
             <Form className={styles.exportModalForm}>
               <div className={styles.exportModalTitleHolder}>
                 <div className={styles.exportModalTitle}>
-                  {t('importAccount')}
+                  {this.props.t('importAccount')}
                 </div>
                 <div className={styles.exportModalTitle}>
-                  {t('pleaseEnterYourPassword')}
+                  {this.props.t('pleaseEnterYourPassword')}
                 </div>
               </div>
               <OutlinedInput
                 inputRef={(input) => input && input.focus()}
-                placeholder={t('password')!}
+                placeholder={this.props.t('password')!}
                 className={classnames(styles.passwordInput, styles.importModalPasswordInput)}
                 name="password"
                 value={formikProps.values.password}
@@ -64,7 +64,7 @@ export class ImportAccountModal extends React.PureComponent<ImportAccountModalPr
                 type="submit"
                 disabled={!formikProps.dirty}
               >
-                {t('next')}
+                {this.props.t('next')}
               </Button>
             </Form>
           )}
@@ -74,3 +74,5 @@ export class ImportAccountModal extends React.PureComponent<ImportAccountModalPr
     );
   }
 }
+
+export const ImportAccountModal = withTranslation()(ImportAccountModalComponent);

@@ -7,12 +7,14 @@
   "scripts": {
     "start:wallet": "DISABLE_ESLINT_PLUGIN=true REACT_APP_TYPE=wallet react-app-rewired start",
     "start:hub": "DISABLE_ESLINT_PLUGIN=true REACT_APP_TYPE=hub react-app-rewired start",
-    "build": "DISABLE_ESLINT_PLUGIN=true react-app-rewired build",
+    "build": "DISABLE_ESLINT_PLUGIN=true env-cmd -f .env react-app-rewired build",
+    "build-test": "DISABLE_ESLINT_PLUGIN=true env-cmd -f .env.test react-app-rewired build",
+    "build-prod": "DISABLE_ESLINT_PLUGIN=true env-cmd -f .env.production react-app-rewired build",
     "prepare": "yarn run build && husky install",
-    "prod": "serve -s build",
+    "serve": "serve -s build",
     "eject": "react-scripts eject",
     "cm": "git add . && git commit",
-    "loadLocales": "node --experimental-modules --es-module-specifier-resolution=node src/loadLocales.mjs "
+    "loadLocales": "node --experimental-modules --es-module-specifier-resolution=node src/loadLocales.mjs"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": "eslint --fix",
@@ -104,6 +106,7 @@
     "buffer": "^6.0.3",
     "crypto-browserify": "^3.12.0",
     "csv-parse": "^4.16.3",
+    "env-cmd": "^10.1.0",
     "googleapis": "^120.0.0",
     "https-browserify": "^1.0.0",
     "os-browserify": "^0.3.0",

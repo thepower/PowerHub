@@ -1,11 +1,11 @@
 import { createAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { AddActionType, Maybe } from '../../typings/common';
 import {
   CreateAccountStepsEnum,
   LoginRegisterAccountTabs,
   LoginToWalletInputType,
   SetSeedPhraseInput,
 } from '../typings/registrationTypes';
-import { AddActionType, Maybe } from '../../typings/common';
 
 const SLICE_NAME = 'registration';
 
@@ -97,19 +97,10 @@ const {
 } = registrationSlice;
 
 export {
-  registrationReducer,
-  setCurrentRegisterCreateAccountTab,
-  setCreatingCurrentShard,
-  generateSeedPhrase,
-  setSeedPhrase,
-  setCreatingStep,
-  createWallet,
-  loginToWalletFromRegistration,
-  proceedToHub,
-  seLoginAddress,
-  setLoginSeed,
-  setLoginPassword,
-  setLoginConfirmedPassword,
-  setPasswordNotEqual,
+  createWallet, generateSeedPhrase, loginToWalletFromRegistration,
+  proceedToHub, registrationReducer,
+  seLoginAddress, setCreatingCurrentShard, setCreatingStep,
+  setCurrentRegisterCreateAccountTab, setLoginConfirmedPassword,
+  setLoginPassword, setLoginSeed, setPasswordNotEqual, setSeedPhrase,
   toggleRandomChain,
 };

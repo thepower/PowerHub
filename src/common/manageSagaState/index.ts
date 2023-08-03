@@ -2,7 +2,7 @@ import { PayloadAction } from '@reduxjs/toolkit';
 import { put } from 'typed-redux-saga';
 import { toast } from 'react-toastify';
 import { startAction, stopAction } from 'network/slice';
-import { t } from 'i18next';
+import i18n from 'locales/initTranslation';
 
 const manageSagaState = (saga: any) => (function* (action: PayloadAction<any>) {
   try {
@@ -10,7 +10,7 @@ const manageSagaState = (saga: any) => (function* (action: PayloadAction<any>) {
     yield* saga(action);
   } catch (err: any) {
     if (err.networkError) {
-      toast.error(t('networkError'));
+      toast.error(i18n.t('networkError'));
     } else {
       console.error(err);
     }

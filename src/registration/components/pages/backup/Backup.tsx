@@ -1,11 +1,11 @@
-import React from 'react';
-import { connect, ConnectedProps } from 'react-redux';
 import { Button } from 'common';
-import { t } from 'i18next';
+import React from 'react';
+import { WithTranslation, withTranslation } from 'react-i18next';
+import { ConnectedProps, connect } from 'react-redux';
+import { proceedToHub } from '../../../slice/registrationSlice';
+import styles from '../../Registration.module.scss';
 import { RegistrationBackground } from '../../common/RegistrationBackground';
 import { RegistrationStatement } from '../../common/RegistrationStatement';
-import styles from '../../Registration.module.scss';
-import { proceedToHub } from '../../../slice/registrationSlice';
 import { ExportAccountModal } from './ExportAccountModal';
 
 const mapStateToProps = () => ({});
@@ -14,7 +14,7 @@ const mapDispatchToProps = {
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
-type BackupProps = ConnectedProps<typeof connector>;
+type BackupProps = ConnectedProps<typeof connector> & WithTranslation;
 
 interface BackupState {
   openedPasswordModal: boolean;
@@ -50,9 +50,9 @@ class BackupComponent extends React.PureComponent<BackupProps, BackupState> {
         onClose={this.closePasswordModal}
       />
       <RegistrationBackground className={styles.exportBackground}>
-        <div className={styles.registrationPageTitle}>{t('importantRules')}</div>
-        <RegistrationStatement title={t('export')!} description={t('pleaseExportWalletData')} />
-        <RegistrationStatement title={t('important')!} description={t('youNeedBothYourAddress')} />
+        <div className={styles.registrationPageTitle}>{this.props.t('importantRules')}</div>
+        <RegistrationStatement title={this.props.t('export')!} description={this.props.t('pleaseExportWalletData')} />
+        <RegistrationStatement title={this.props.t('important')!} description={this.props.t('youNeedBothYourAddress')} />
       </RegistrationBackground>
       <div className={styles.registrationButtonsHolder}>
         <Button
@@ -61,7 +61,7 @@ class BackupComponent extends React.PureComponent<BackupProps, BackupState> {
           type="button"
           onClick={this.handleProceedToHub}
         >
-          {t('skip')}
+          {this.props.t('skip')}
         </Button>
         <Button
           size="medium"
@@ -69,11 +69,11 @@ class BackupComponent extends React.PureComponent<BackupProps, BackupState> {
           type="button"
           onClick={this.openPasswordModal}
         >
-          {t('export')}
+          {this.props.t('export')}
         </Button>
       </div>
     </>;
   }
 }
 
-export const Backup = connector(BackupComponent);
+export const Backup = withTranslation()(connector(BackupComponent));

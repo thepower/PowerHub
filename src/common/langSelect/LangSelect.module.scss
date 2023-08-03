@@ -1,0 +1,92 @@
+@import 'src/styles/mixins';
+
+.select {
+
+  display: flex;
+
+  height: inherit !important;
+  align-items: center;
+  justify-content: center;
+  padding: 0 !important;
+
+  border-radius: 5px;
+  background: transparent;
+
+  color: #6b798f;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  text-transform: capitalize;
+
+  &:hover {
+    border: 1px solid #6b798f;
+  }
+
+  &:focus {
+    border-radius: 5px;
+    background-color: transparent;
+  }
+}
+
+.inputBaseFocused {
+  div {
+    border: 1px solid #6b798f;
+  }
+}
+
+.menuRoot {
+  z-index: 99999999;
+}
+
+.menuList {
+  width: 48px;
+  padding-top: 0;
+  padding-bottom: 0;
+  border: 1px solid #6b798f;
+
+  border-radius: 5px;
+  background: transparent;
+}
+
+.menuPaper {
+  background-color: #121923;
+  background-image: none;
+}
+
+.menuItemRoot {
+
+  display: flex;
+  height: 48px;
+  align-items: center;
+  justify-content: center;
+
+  padding-top: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+
+  background-color: transparent;
+
+  color: #6b798f;
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: capitalize;
+
+  &:hover {
+    border-radius: 5px;
+    background-color: rgba(245, 245, 247, 0.06);
+  }
+}
+
+.inputBaseRoot {
+  width: 48px;
+  height: 48px;
+}
+
+.menuItemSelected {
+  @include text-gradient;
+
+  &:hover {
+    @include text-gradient;
+  }
+}
