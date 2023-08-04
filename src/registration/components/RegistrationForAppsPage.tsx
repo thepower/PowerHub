@@ -19,7 +19,7 @@ import { RouteComponentProps } from 'react-router';
 import { getWalletAddress } from 'account/selectors/accountSelectors';
 import { WalletRoutesEnum } from 'application/typings/routes';
 import { WithTranslation, withTranslation } from 'react-i18next';
-import { RegistrationTabs } from '../typings/registrationTypes';
+import { getRegistrationTabs } from '../typings/registrationTypes';
 
 import styles from './Registration.module.scss';
 import { RegisterForAppsPage } from './pages/loginRegisterAccount/RegisterForAppsPage';
@@ -48,11 +48,11 @@ class RegistrationForAppsPageComponent extends
   React.PureComponent<RegistrationForAppsPageProps, RegistrationForAppsPageState> {
   private registrationBreadcrumbs: BreadcrumbsDataType[] = [
     {
-      label: this.props.t(RegistrationTabs.loginRegister),
+      label: getRegistrationTabs().loginRegister,
       component: RegisterForAppsPage,
     },
     {
-      label: this.props.t(RegistrationTabs.backup),
+      label: getRegistrationTabs().backup,
     },
   ];
 

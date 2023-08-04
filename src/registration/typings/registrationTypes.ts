@@ -1,12 +1,16 @@
 import { WizardComponentProps } from 'common';
+import i18n from 'locales/initTranslation';
 import React from 'react';
 
-export enum RegistrationTabs {
-  quickGuide = 'quickGuide',
-  beAware = 'beAware',
-  loginRegister = 'loginRegister',
-  backup = 'backup',
-}
+const { t } = i18n;
+
+// i18next keys
+export const getRegistrationTabs = () => ({
+  quickGuide: t('quickGuide'),
+  beAware: t('beAware'),
+  loginRegister: t('loginRegister'),
+  backup: t('backup'),
+} as const);
 
 export enum LoginRegisterAccountTabs {
   create = 'create',
@@ -14,17 +18,19 @@ export enum LoginRegisterAccountTabs {
   import = 'import',
 }
 
-export const LoginRegisterAccountTabsLabels = {
-  create: 'createNewAccount',
-  login: 'loginToAccount',
-  import: 'importYourAccount',
-} as const;
+// i18next keys
+export const getLoginRegisterAccountTabsLabels = () => ({
+  create: t('createNewAccount'),
+  login: t('loginToAccount'),
+  import: t('importYourAccount'),
+} as const);
 
-export const LoginRegisterAccountTabsLabelsShort = {
-  create: 'create',
-  login: 'login',
-  import: 'import',
-} as const;
+// i18next keys
+export const getLoginRegisterAccountTabsLabelsShort = () => ({
+  create: t('create'),
+  login: t('login'),
+  import: t('import'),
+} as const);
 
 export enum CreateAccountStepsEnum {
   selectSubChain = 'selectSubChain',

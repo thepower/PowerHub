@@ -18,7 +18,7 @@ import {
 import {
   CreateAccountStepsEnum,
   LoginRegisterAccountTabs,
-  LoginRegisterAccountTabsLabels, LoginRegisterAccountTabsLabelsShort,
+  getLoginRegisterAccountTabsLabels, getLoginRegisterAccountTabsLabelsShort,
 } from '../../../typings/registrationTypes';
 import { compareTwoStrings } from '../../../utils/registrationUtils';
 import styles from '../../Registration.module.scss';
@@ -162,7 +162,7 @@ class LoginRegisterAccountComponent extends React.PureComponent<LoginRegisterAcc
         <div className={styles.loginRegisterAccountHolder}>
           <Tabs
             tabs={LoginRegisterAccountTabs}
-            tabsLabels={isMobile ? LoginRegisterAccountTabsLabelsShort : LoginRegisterAccountTabsLabels}
+            tabsLabels={isMobile ? getLoginRegisterAccountTabsLabelsShort() : getLoginRegisterAccountTabsLabels()}
             value={tab}
             onChange={this.onChangeTab}
           />
