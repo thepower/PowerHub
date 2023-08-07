@@ -10,7 +10,7 @@ import { getTokens } from 'myAssets/selectors/tokensSelectors';
 import { getWalletNativeTokensAmounts } from 'myAssets/selectors/walletSelectors';
 import { addTokenTrigger, toggleTokenShow, TokenType } from 'myAssets/slices/tokensSlice';
 import {
-  AddAssetsTabs, AddAssetsTabsLabels,
+  AddAssetsTabs, getAddAssetsTabsLabels,
 } from 'myAssets/types';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import SearchInput from '../../../common/searchInput/SearchInput';
@@ -147,7 +147,7 @@ class AddAssetsPageComponent extends React.PureComponent<AddAssetsPageProps, Add
           />
           <Tabs
             tabs={AddAssetsTabs}
-            tabsLabels={AddAssetsTabsLabels}
+            tabsLabels={getAddAssetsTabsLabels()}
             value={tab}
             onChange={this.onChangeTab}
             tabsRootClassName={styles.addAssetsPageTabsRoot}

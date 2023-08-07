@@ -10,7 +10,7 @@ import {
 import { getTokens } from 'myAssets/selectors/tokensSelectors';
 import { TokenType, updateTokensAmountsTrigger } from 'myAssets/slices/tokensSlice';
 import {
-  MyAssetsTabs, MyAssetsTabsLabels, TokenPayloadType,
+  MyAssetsTabs, getMyAssetsTabsLabels, TokenPayloadType,
 } from 'myAssets/types';
 import React from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
@@ -157,7 +157,7 @@ class MyAssets extends React.PureComponent<MyAssetsProps, MyAssetsState> {
         </Link>
         <Tabs
           tabs={MyAssetsTabs}
-          tabsLabels={MyAssetsTabsLabels}
+          tabsLabels={getMyAssetsTabsLabels()}
           value={tab}
           onChange={this.onChangeTab}
           tabsRootClassName={styles.myAssetsTabsRoot}
