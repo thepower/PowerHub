@@ -31,6 +31,8 @@ type OwnProps = RouteComponentProps<{ type: TokenKind, address: string }>;
 
 const mapDispatchToProps = {
   clearSentData,
+  sendTrxTrigger,
+  sendTokenTrxTrigger,
 };
 
 const mapStateToProps = (state: RootState, props: OwnProps) => ({
@@ -125,6 +127,11 @@ class Send extends React.Component<SendProps, SendState> {
   };
 
   onSubmit = async (values: FormValues, password: string) => {
+    const {
+      sendTrxTrigger,
+      sendTokenTrxTrigger,
+    } = this.props;
+
     const { address, wif, token } = this.props;
     let decryptedWif;
 
