@@ -19,6 +19,7 @@ import Discover from 'discover/components/Discover';
 import SignAndSendPage from 'sign-and-send/components/SingAndSendPage';
 import WalletSSOPage from 'sso/components/pages/WalletSSOPage';
 import HubSSOPage from 'sso/components/pages/HubSSOPage';
+import { RegistrationForAppsPage } from 'registration/components/RegistrationForAppsPage';
 import { initApplication } from '../slice/applicationSlice';
 import { WalletRoutesEnum, HubRoutesEnum } from '../typings/routes';
 import { useAppDispatch, useAppSelector } from '../store';
@@ -33,6 +34,7 @@ export const isHub = (localApp === 'hub' && isLocalHost) || [subdomain1, subdoma
 const renderWalletRoutes = () => (
   <>
     <Route exact path={WalletRoutesEnum.signup} component={RegistrationPage} />
+    <Route exact path={`${WalletRoutesEnum.registrationForApps}/:data`} component={RegistrationForAppsPage} />
     <Route exact path={WalletRoutesEnum.login} component={LoginPage} />
     <Route path={`${WalletRoutesEnum.myAssets}/:type/:address${WalletRoutesEnum.send}`} component={Send} />
     <Route exact path={`${WalletRoutesEnum.myAssets}${WalletRoutesEnum.add}`}>

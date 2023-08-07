@@ -6,4 +6,10 @@ type AdditionalActionType = {
   additionalAction?: () => void
 };
 
+type AdditionalActionOnDecryptErrorType = {
+  additionalActionOnDecryptError?: () => void
+};
+
 export type AddActionType<InputType> = InputType & AdditionalActionType;
+
+export type AddActionOnDecryptErrorType<InputType> = InputType & AdditionalActionOnDecryptErrorType;

@@ -11,7 +11,7 @@ import React from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { ConnectedProps, connect } from 'react-redux';
 import { WalletRoutesEnum } from '../../application/typings/routes';
-import { RegistrationTabs } from '../typings/registrationTypes';
+import { getRegistrationTabs } from '../typings/registrationTypes';
 import styles from './Registration.module.scss';
 import { BeAware } from './pages/BeAware';
 import { QuickGuide } from './pages/QuickGuide';
@@ -39,19 +39,19 @@ class RegistrationPageComponent extends React.PureComponent<RegistrationPageProp
 
   getRegistrationBreadcrumbs: () => BreadcrumbsDataType[] = () => [
     {
-      label: this.props.t(RegistrationTabs.quickGuide),
+      label: getRegistrationTabs().quickGuide,
       component: QuickGuide,
     },
     {
-      label: this.props.t(RegistrationTabs.beAware),
+      label: getRegistrationTabs().beAware,
       component: BeAware,
     },
     {
-      label: this.props.t(RegistrationTabs.loginRegister),
+      label: getRegistrationTabs().loginRegister,
       component: RegisterPage,
     },
     {
-      label: this.props.t(RegistrationTabs.backup),
+      label: getRegistrationTabs().backup,
       component: Backup,
     },
   ];

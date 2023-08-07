@@ -31,7 +31,7 @@ const ResetAccountModalComponent: FC<ResetAccountModalProps> = ({
   const handleSubmitImportModal = async (values: Values, formikHelpers: FormikHelpers<Values>) => {
     const { password } = values;
 
-    resetAccount(password);
+    resetAccount({ password });
 
     formikHelpers.setFieldValue('password', '');
     onClose();

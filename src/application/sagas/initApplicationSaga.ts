@@ -1,5 +1,5 @@
-import { put } from 'typed-redux-saga';
-import { push } from 'connected-react-router';
+import { put, select } from 'typed-redux-saga';
+import { push, createMatchSelector } from 'connected-react-router';
 import { NetworkApi, WalletApi } from '@thepowereco/tssdk';
 import { isHub, isWallet } from 'application/components/AppRoutes';
 import { setDynamicApis, setTestnetAvailable, setNetworkChains } from '../slice/applicationSlice';
@@ -9,7 +9,7 @@ import { loginToWalletSaga } from '../../account/sagas/accountSaga';
 import { setWalletData } from '../../account/slice/accountSlice';
 import { WalletRoutesEnum } from '../typings/routes';
 
-const defaultChain = 1025; // TODO: move to config
+export const defaultChain = 1025; // TODO: move to config
 
 export function* reInitApis({ payload }: { payload: number }) {
   const networkApi = new NetworkApi(payload || defaultChain);
@@ -46,6 +46,10 @@ export function* initApplicationSaga() {
   // if (sCAPPs) {
   //   setSCAPPs
   // }
+
+  const matchSelector = createMatchSelector({ path: WalletRoutesEnum.registrationForApps });
+  const match = yield* select(matchSelector);
+
   if (isWallet) {
     if (address && wif) {
       yield loginToWalletSaga({
@@ -62,7 +66,7 @@ export function* initApplicationSaga() {
       }));
 
       yield* put(push(window.location.pathname));
-    } else {
+    } else if (!match) {
       yield* put(push(WalletRoutesEnum.signup));
     }
   } if (isHub) {

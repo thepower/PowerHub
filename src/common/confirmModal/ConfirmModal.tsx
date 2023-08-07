@@ -33,10 +33,15 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
   const { t } = useTranslation();
   const handleSubmit = useCallback(async (values: Values, formikHelpers: FormikHelpers<Values>) => {
     try {
-      const decryptedWif = await CryptoApi.decryptWif(wif, values.password);
+      const decryptedWif = await CryptoApi.decryptWif(wif, '');
       callback(decryptedWif);
     } catch (e) {
-      formikHelpers.setFieldError('password', t('invalidPasswordError')!);
+      try {
+        const decryptedWif = await CryptoApi.decryptWif(wif, values.password);
+        callback(decryptedWif);
+      } catch (error) {
+        formikHelpers.setFieldError('password', t('invalidPasswordError')!);
+      }
     }
   }, [callback, t, wif]);
 

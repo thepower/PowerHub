@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber';
 import { InputAdornment, TextField } from '@mui/material';
-import { AddressApi } from '@thepowereco/tssdk';
+import { AddressApi, CryptoApi } from '@thepowereco/tssdk';
 import cn from 'classnames';
 import {
   Form, Formik, FormikHelpers, FormikProps,
@@ -13,7 +13,7 @@ import { WithTranslation, withTranslation } from 'react-i18next';
 import { ConnectedProps, connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import * as yup from 'yup';
-import { getWalletAddress } from '../../account/selectors/accountSelectors';
+import { getWalletAddress, getWalletData } from '../../account/selectors/accountSelectors';
 import { RootState } from '../../application/store';
 import { WalletRoutesEnum } from '../../application/typings/routes';
 import {
@@ -41,6 +41,7 @@ const mapStateToProps = (state: RootState, props: OwnProps) => ({
   tokenType: props?.match?.params?.type,
   tokenAddress: props?.match?.params?.address,
   loading: checkIfLoading(state, sendTrxTrigger.type) || checkIfLoading(state, sendTokenTrxTrigger.type),
+  wif: getWalletData(state).wif,
 });
 
 const connector = connect(
@@ -54,7 +55,7 @@ type SendState = {
   openModal: boolean;
 };
 
-type FormValues = {
+export type FormValues = {
   amount: string;
   comment: string;
   address: string;
@@ -123,16 +124,49 @@ class Send extends React.Component<SendProps, SendState> {
     }
   };
 
+  onSubmit = async (values: FormValues, password: string) => {
+    const { address, wif, token } = this.props;
+    let decryptedWif;
+
+    try {
+      decryptedWif = await CryptoApi.decryptWif(wif, '');
+    } catch (error) {
+      decryptedWif = await CryptoApi.decryptWif(wif, password);
+    }
+
+    if (!token) {
+      sendTrxTrigger({
+        from: address,
+        to: values.address!,
+        comment: values.comment,
+        amount: Number(values.amount)!,
+        wif: decryptedWif,
+      });
+    } else {
+      sendTokenTrxTrigger({
+        address: token.address,
+        amount: Number(values.amount),
+        decimals: token.decimals,
+        from: address,
+        to: values.address!,
+        wif: decryptedWif,
+      });
+    }
+  };
+
   renderForm = (formikProps: FormikProps<typeof initialValues>) => {
-    const { isNativeToken, props } = this;
+    const {
+      isNativeToken, props, onSubmit, handleClose,
+    } = this;
     const { token } = props;
 
     return <>
       <ConfirmSendModal
         open={this.state.openModal}
         trxValues={formikProps.values}
-        onClose={this.handleClose}
+        onClose={handleClose}
         token={token}
+        onSubmit={onSubmit}
 
       />
       <Form className={styles.form}>

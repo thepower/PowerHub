@@ -62,9 +62,18 @@ class LoginPageComponent extends React.PureComponent<LoginPageProps, LoginPageSt
   };
 
   setAccountFile = (event: ChangeEvent<HTMLInputElement>) => {
-    this.setState({
-      accountFile: event?.target?.files?.[0]!,
-      openedPasswordModal: true,
+    const { importAccountFromFile } = this.props;
+
+    const accountFile = event?.target?.files?.[0]!;
+    importAccountFromFile({
+      password: '',
+      accountFile: accountFile!,
+      additionalActionOnDecryptError: () => {
+        this.setState({
+          accountFile,
+          openedPasswordModal: true,
+        });
+      },
     });
   };
 

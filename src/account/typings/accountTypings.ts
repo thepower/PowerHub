@@ -15,6 +15,7 @@ export type LoginToWalletSagaInput = {
 export type ExportAccountInputType = {
   password: string;
   hint?: string;
+  isWithoutGoHome?: boolean;
 };
 
 export type ImportAccountInputType = {

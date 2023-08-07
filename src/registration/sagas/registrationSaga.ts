@@ -12,9 +12,8 @@ import { getWalletData } from '../../account/selectors/accountSelectors';
 import { loginToWallet, setWalletData } from '../../account/slice/accountSlice';
 import { WalletRoutesEnum } from '../../application/typings/routes';
 import { CURRENT_NETWORK } from '../../application/utils/applicationUtils';
-import { AddActionType } from '../../typings/common';
 import { getCurrentShardSelector, getGeneratedSeedPhrase } from '../selectors/registrationSelectors';
-import { setSeedPhrase } from '../slice/registrationSlice';
+import { createWallet, setSeedPhrase } from '../slice/registrationSlice';
 import { CreateAccountStepsEnum, LoginToWalletInputType } from '../typings/registrationTypes';
 
 export function* generateSeedPhraseSaga() {
@@ -26,7 +25,7 @@ export function* generateSeedPhraseSaga() {
   }));
 }
 
-export function* createWalletSaga({ payload }: { payload: AddActionType<{ password: string; randomChain: boolean }> }) {
+export function* createWalletSaga({ payload }: ReturnType<typeof createWallet>) {
   const { password, additionalAction, randomChain } = payload;
   const seedPhrase = yield* select(getGeneratedSeedPhrase);
   const shard = yield* select(getCurrentShardSelector);
@@ -53,7 +52,7 @@ export function* createWalletSaga({ payload }: { payload: AddActionType<{ passwo
 }
 
 export function* loginToWalletSaga({ payload }: { payload: LoginToWalletInputType }) {
-  const { address, seed } = payload;
+  const { address, seed, password } = payload;
 
   try {
     yield AddressApi.parseTextAddress(address);
@@ -70,7 +69,7 @@ export function* loginToWalletSaga({ payload }: { payload: LoginToWalletInputTyp
   try {
     // @ts-ignore
     const keyPair = yield CryptoApi.generateKeyPairFromSeedPhraseAndAddress(seed, address);
-    const wif: string = yield CryptoApi.encryptWif(keyPair.toWIF(), payload.password);
+    const wif: string = yield CryptoApi.encryptWif(keyPair.toWIF(), password);
 
     yield* put(loginToWallet({ address, wif }));
     yield* put(push(WalletRoutesEnum.root));

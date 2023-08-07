@@ -107,7 +107,6 @@ class ExportAccountModalComponent extends React.PureComponent<ExportAccountModal
         </div>
       </div>
       <OutlinedInput
-        inputRef={(input) => input && input.focus()}
         placeholder={this.props.t('password')!}
         className={classnames(styles.passwordInput, styles.passwordInputPadded)}
         value={password}
