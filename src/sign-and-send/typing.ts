@@ -40,4 +40,7 @@ export interface TxBody {
     msg?: string;
   };
   c?: [string, Buffer]
+  pa?: Buffer;
+  // return url
+  ru?: string;
 }

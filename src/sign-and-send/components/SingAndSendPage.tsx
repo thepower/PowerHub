@@ -26,7 +26,6 @@ import {
 import { checkIfLoading } from 'network/selectors';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { RouteComponentProps } from 'react-router';
-import { Link } from 'react-router-dom';
 import { TxBody, TxKindByName, TxPurpose } from 'sign-and-send/typing';
 import ConfirmModal from '../../common/confirmModal/ConfirmModal';
 import styles from './SingAndSendPage.module.scss';
@@ -65,6 +64,8 @@ type SignAndSendProps = ConnectedProps<typeof connector> & WithTranslation & {
 
 type SignAndSendState = {
   isConfirmModalOpen: boolean;
+  returnURL?: string;
+  decodedTxBody?: TxBody
 };
 
 class SignAndSendPage extends React.Component<SignAndSendProps, SignAndSendState> {
@@ -76,29 +77,44 @@ class SignAndSendPage extends React.Component<SignAndSendProps, SignAndSendState
     };
   }
 
-  componentWillUnmount() {
-    this.props.clearSentData();
+  componentDidMount(): void {
+    const {
+      txBody, address, gasSettings, feeSettings,
+    } = this.props;
+    try {
+      let decodedTxBody: TxBody = msgPack.decode(Buffer.from(txBody, 'hex'));
+      this.setState({ returnURL: decodedTxBody.ru });
+      delete decodedTxBody.ru;
+
+      const date = Date.now();
+      const srcFee = decodedTxBody?.p?.find((purpose) => purpose?.[0] === TxPurpose.SRCFEE);
+      const gas = decodedTxBody?.p?.find((purpose) => purpose?.[0] === TxPurpose.GAS);
+
+      if (!decodedTxBody?.e) {
+        decodedTxBody.e = {};
+      }
+
+      decodedTxBody.f = Buffer.from(AddressApi.parseTextAddress(address));
+      decodedTxBody.s = date;
+      decodedTxBody.t = date;
+
+      if (!gas) {
+        decodedTxBody = autoAddGas(decodedTxBody, gasSettings);
+      }
+
+      if (!srcFee) {
+        decodedTxBody = autoAddFee(decodedTxBody, feeSettings);
+      }
+      if (isObject(decodedTxBody)) {
+        this.setState({ decodedTxBody });
+      }
+    } catch {
+
+    }
   }
 
-  get decodedTxBody() {
-    const { txBody, feeSettings, gasSettings } = this.props;
-    try {
-      const decodedTxBody: TxBody = msgPack.decode(Buffer.from(txBody, 'hex'));
-      let body = decodedTxBody;
-
-      const srcFee = decodedTxBody?.p?.find((purpose) => purpose?.[0] === TxPurpose.SRCFEE);
-      const gas = body?.p?.find((purpose) => purpose?.[0] === TxPurpose.GAS);
-      if (body && !gas) {
-        body = autoAddGas(body, gasSettings);
-      }
-      if (body && !srcFee) {
-        body = autoAddFee(body, feeSettings);
-      }
-
-      return isObject(body) ? body : null;
-    } catch (error) {
-      return null;
-    }
+  componentWillUnmount() {
+    this.props.clearSentData();
   }
 
   handleClickSignAndSend = () => {
@@ -106,9 +122,11 @@ class SignAndSendPage extends React.Component<SignAndSendProps, SignAndSendState
   };
 
   signAndSendCallback = (decryptedWif: string) => {
-    const { decodedTxBody, closeModal } = this;
+    const { closeModal } = this;
+    const { decodedTxBody, returnURL } = this.state;
+
     if (decodedTxBody) {
-      this.props.signAndSendTrxTrigger({ wif: decryptedWif, decodedTxBody });
+      this.props.signAndSendTrxTrigger({ wif: decryptedWif, decodedTxBody, returnURL });
       closeModal();
     }
   };
@@ -128,7 +146,7 @@ class SignAndSendPage extends React.Component<SignAndSendProps, SignAndSendState
     </div>);
 
   renderExtraDataTable = () => {
-    const { decodedTxBody } = this;
+    const { decodedTxBody } = this.state;
 
     if (!decodedTxBody?.e || isEmpty(decodedTxBody?.e)) return null;
 
@@ -139,8 +157,9 @@ class SignAndSendPage extends React.Component<SignAndSendProps, SignAndSendState
     const {
       address,
     } = this.props;
+    const { returnURL, decodedTxBody } = this.state;
     const {
-      decodedTxBody, handleClickSignAndSend,
+      handleClickSignAndSend,
       renderExtraDataTable,
     } = this;
 
@@ -197,23 +216,29 @@ class SignAndSendPage extends React.Component<SignAndSendProps, SignAndSendState
           <div className={styles.tableTitle}>{this.props.t('comment')}</div>
           <div className={styles.tableValue}>{comment || '-'}</div>
 
+          <div className={styles.tableTitle}>{this.props.t('returnURL')}</div>
+          <div className={styles.tableValue}>{returnURL || '-'}</div>
+
           {!isExtDataEmpty && <CardTableKeyAccordion valueLabel={this.props.t('extraData')}>{renderExtraDataTable()}</CardTableKeyAccordion>}
 
         </div>
         <div className={styles.buttons}>
           <Button onClick={handleClickSignAndSend} variant="filled">{this.props.t('signAndSend')}</Button>
-          <Link to="/">
+          <a href={returnURL || '/'}>
             <Button fullWidth variant="outlined">{this.props.t('cancel')}</Button>
-          </Link>
+          </a>
         </div>
       </div>);
   };
 
   render() {
     const {
-      signAndSendCallback, renderHeader, renderContent, closeModal, decodedTxBody,
+      signAndSendCallback,
+      renderHeader,
+      renderContent,
+      closeModal,
     } = this;
-    const { isConfirmModalOpen } = this.state;
+    const { isConfirmModalOpen, decodedTxBody } = this.state;
     const {
       loading,
       className,
