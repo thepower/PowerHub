@@ -8,6 +8,7 @@ export type SentData = {
   amount: number | string;
   comment: Maybe<string>;
   txId: string;
+  returnURL?: string;
 };
 
 type InitialState = {
@@ -51,6 +52,7 @@ export const sendTokenTrxTrigger = createAction<{
 export const signAndSendTrxTrigger = createAction<{
   wif: string;
   decodedTxBody: TxBody;
+  returnURL?: string;
 }>('send/signAndSendTrxTrigger');
 
 export const { actions: { setSentData, clearSentData }, reducer: sendReducer } = sendSlice;

@@ -32,6 +32,10 @@ const TxResult: React.FC<TxResultProps> = ({
   const chainID = useAppSelector(getNetworkChainID);
   const txExplorerLink = `${explorerThePowerUrl}/${chainID}/transaction/${sentData.txId}`;
 
+  const onClickBack = () => {
+    if (sentData.returnURL) { window.location.replace(sentData.returnURL); }
+  };
+
   const onCopyClick = () => {
     navigator.clipboard.writeText(txExplorerLink);
     toast.info(t('linkTransactionCopied'));
@@ -77,6 +81,7 @@ const TxResult: React.FC<TxResultProps> = ({
           <Button variant="filled" fullWidth>{t('explorer')}</Button>
         </a>
       </div>
+      {sentData.returnURL && <Button onClick={onClickBack} variant="filled" fullWidth>{t('return')}</Button>}
       {/* </div> */}
     </div>
   );

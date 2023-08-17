@@ -176,6 +176,8 @@
     "required": "${path} is a required field",
     "max": "${path} must be at most ${max} characters",
     "length": "${path} must be exactly ${length} characters",
-    "transactions": "การทำธุรกรรม"
+    "transactions": "การทำธุรกรรม",
+    "return": "Return",
+    "returnURL": "Return URL"
   }
 }
