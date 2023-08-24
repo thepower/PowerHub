@@ -138,7 +138,7 @@ class LoginRegisterAccountComponent extends React.PureComponent<LoginRegisterAcc
 
     loginToWalletFromRegistration({
       address: address!,
-      seed: seed!,
+      seedOrPrivateKey: seed!,
       password: password!,
     });
   };

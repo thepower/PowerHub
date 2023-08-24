@@ -30,7 +30,7 @@ interface LoginPageState {
   openedPasswordModal: boolean;
   accountFile: Maybe<File>;
   address: string;
-  seed: string;
+  seedOrPrivateKey: string;
   password: string;
   confirmedPassword: string;
   passwordsNotEqual: boolean;
@@ -46,7 +46,7 @@ class LoginPageComponent extends React.PureComponent<LoginPageProps, LoginPageSt
       openedPasswordModal: false,
       accountFile: null,
       address: '',
-      seed: '',
+      seedOrPrivateKey: '',
       password: '',
       confirmedPassword: '',
       passwordsNotEqual: false,
@@ -87,9 +87,9 @@ class LoginPageComponent extends React.PureComponent<LoginPageProps, LoginPageSt
     });
   };
 
-  onChangeSeed = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+  onChangeSeedOrPrivateKey = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     this.setState({
-      seed: event.target.value,
+      seedOrPrivateKey: event.target.value,
     });
   };
 
@@ -111,7 +111,7 @@ class LoginPageComponent extends React.PureComponent<LoginPageProps, LoginPageSt
     const { loginToWalletFromRegistration } = this.props;
     const {
       address,
-      seed,
+      seedOrPrivateKey,
       password,
       confirmedPassword,
     } = this.state;
@@ -123,7 +123,7 @@ class LoginPageComponent extends React.PureComponent<LoginPageProps, LoginPageSt
       return;
     }
 
-    loginToWalletFromRegistration({ address, seed, password });
+    loginToWalletFromRegistration({ address, seedOrPrivateKey, password });
   };
 
   handleImportAccount = (password: string) => {
@@ -172,7 +172,7 @@ class LoginPageComponent extends React.PureComponent<LoginPageProps, LoginPageSt
   renderLoginPart = () => {
     const {
       address,
-      seed,
+      seedOrPrivateKey,
       password,
       confirmedPassword,
       passwordsNotEqual,
@@ -192,11 +192,11 @@ class LoginPageComponent extends React.PureComponent<LoginPageProps, LoginPageSt
         onChange={this.onChangeAddress}
       />
       <OutlinedInput
-        placeholder={this.props.t('seedPhrase')!}
+        placeholder={this.props.t('seedPhraseOrPrivateKey')!}
         className={styles.passwordInput}
-        value={seed}
+        value={seedOrPrivateKey}
         type={'password'}
-        onChange={this.onChangeSeed}
+        onChange={this.onChangeSeedOrPrivateKey}
       />
       <OutlinedInput
         placeholder={this.props.t('password')!}
@@ -220,7 +220,7 @@ class LoginPageComponent extends React.PureComponent<LoginPageProps, LoginPageSt
           variant="filled"
           className={styles.button}
           type="button"
-          disabled={!address || !seed || passwordsNotEqual || !password || !confirmedPassword}
+          disabled={!address || !seedOrPrivateKey || passwordsNotEqual || !password || !confirmedPassword}
           onClick={this.loginToAccount}
         >
           {this.props.t('next')}

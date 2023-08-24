@@ -50,7 +50,6 @@
     "bip32": "^3.0.1",
     "bip39": "^3.0.4",
     "bip44": "^0.0.1",
-    "bitcoinjs-lib": "^6.0.1",
     "classnames": "^2.3.1",
     "commitizen": "^4.2.5",
     "connected-react-router": "^6.9.3",
@@ -101,6 +100,7 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "@types/bs58": "^4.0.1",
     "add": "^2.0.6",
     "assert": "^2.0.0",
     "buffer": "^6.0.3",

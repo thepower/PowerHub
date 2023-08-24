@@ -51,6 +51,6 @@ export type SetSeedPhraseInput = {
 
 export type LoginToWalletInputType = {
   address: string;
-  seed: string;
+  seedOrPrivateKey: string;
   password: string;
 };

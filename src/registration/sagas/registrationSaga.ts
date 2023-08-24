@@ -8,6 +8,10 @@ import { push } from 'connected-react-router';
 import { toast } from 'react-toastify';
 import { put, select } from 'typed-redux-saga';
 import i18n from 'locales/initTranslation';
+import {
+  ECPairInterface,
+} from 'ecpair';
+import bs58 from 'bs58';
 import { getWalletData } from '../../account/selectors/accountSelectors';
 import { loginToWallet, setWalletData } from '../../account/slice/accountSlice';
 import { WalletRoutesEnum } from '../../application/typings/routes';
@@ -38,11 +42,11 @@ export function* createWalletSaga({ payload }: ReturnType<typeof createWallet>) 
       account = yield WalletApi.registerCertainChain(shard!, seedPhrase!);
     }
 
-    const privateKey = CryptoApi.encryptWif(account.wif, password);
+    const encryptedWif = CryptoApi.encryptWif(account.wif, password);
 
     yield put(setWalletData({
       address: account.address,
-      wif: privateKey,
+      wif: encryptedWif,
     }));
 
     additionalAction?.();
@@ -52,27 +56,48 @@ export function* createWalletSaga({ payload }: ReturnType<typeof createWallet>) 
 }
 
 export function* loginToWalletSaga({ payload }: { payload: LoginToWalletInputType }) {
-  const { address, seed, password } = payload;
+  const {
+    address, seedOrPrivateKey, password,
+  } = payload;
 
   try {
     yield AddressApi.parseTextAddress(address);
-    const isValidSeed: boolean = yield CryptoApi.validateMnemonic(seed);
-    if (!isValidSeed) {
-      toast.error(i18n.t('seedPhraseIsNotValid'));
-      return;
-    }
   } catch (e: any) {
-    toast.error(e.message);
+    toast.error(i18n.t('addressIsNotValid'));
     return;
   }
 
+  let isValidSeed = false;
   try {
-    // @ts-ignore
-    const keyPair = yield CryptoApi.generateKeyPairFromSeedPhraseAndAddress(seed, address);
-    const wif: string = yield CryptoApi.encryptWif(keyPair.toWIF(), password);
+    isValidSeed = yield CryptoApi.validateMnemonic(seedOrPrivateKey);
+  } catch (e: any) {
+  }
 
-    yield* put(loginToWallet({ address, wif }));
-    yield* put(push(WalletRoutesEnum.root));
+  let isValidPrivateKey = null;
+  if (!isValidSeed) {
+    try {
+      isValidPrivateKey = bs58.decode(seedOrPrivateKey);
+    } catch (e: any) {
+      toast.error(i18n.t('addressIsNotValid'));
+      return;
+    }
+  }
+
+  try {
+    let wif = null;
+    if (isValidSeed) {
+      const keyPair: ECPairInterface =
+        yield CryptoApi.generateKeyPairFromSeedPhraseAndAddress(seedOrPrivateKey, address);
+      wif = keyPair && CryptoApi.encryptWif(keyPair.toWIF(), password);
+    } else if (!isValidSeed && isValidPrivateKey) {
+      wif = CryptoApi.encryptWif(seedOrPrivateKey, password);
+    }
+    if (wif) {
+      yield* put(loginToWallet({ address, wif }));
+      yield* put(push(WalletRoutesEnum.root));
+    } else {
+      toast.error(i18n.t('loginError'));
+    }
   } catch (e) {
     toast.error(i18n.t('loginError'));
   }
@@ -80,7 +105,6 @@ export function* loginToWalletSaga({ payload }: { payload: LoginToWalletInputTyp
 
 export function* proceedToHubSaga() {
   const { wif, address } = yield* select(getWalletData);
-
   yield* put(loginToWallet({ address, wif }));
   yield* put(push(WalletRoutesEnum.root));
 }
