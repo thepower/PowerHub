@@ -88,17 +88,17 @@ export function* singAndSendTrxSaga({
     const gas = decodedTxBody?.p?.find((purpose) => purpose?.[0] === TxPurpose.GAS);
     const gasAmount = gas?.[2] || 0;
 
-    const totalCommissionAmount = feeAmount + gasAmount;
-    const correctedTotalCommissionAmount = totalCommissionAmount && correctAmount(totalCommissionAmount, 'SK');
+    const transfer = decodedTxBody?.p?.find((purpose) => purpose?.[0] === TxPurpose.TRANSFER);
+    const transferAmount = transfer?.[2] || 0;
+    const transferToken = transfer?.[1];
+
+    const totalAmount = feeAmount + gasAmount + transferAmount;
+    const correctedTotalCommissionAmount = totalAmount && correctAmount(totalAmount, 'SK');
 
     if (balance?.amount?.SK < correctedTotalCommissionAmount) {
       toast.error(i18n.t('insufficientFunds'));
       return;
     }
-
-    const transfer = decodedTxBody?.p?.find((purpose) => purpose?.[0] === TxPurpose.TRANSFER);
-    const transferAmount = transfer?.[2];
-    const transferToken = transfer?.[1];
 
     const amount = transferAmount && transferToken && correctAmount(transferAmount, transferToken);
 
