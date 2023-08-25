@@ -180,6 +180,7 @@
     "length": "${path} must be exactly ${length} characters",
     "transactions": "การทำธุรกรรม",
     "return": "Return",
-    "returnURL": "Return URL"
+    "returnURL": "Return URL",
+    "insufficientFunds": "เงินทุนไม่เพียงพอ"
   }
 }

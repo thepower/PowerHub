@@ -13,6 +13,7 @@ import { TxPurpose } from 'sign-and-send/typing';
 import { put, select } from 'typed-redux-saga';
 import i18n from 'locales/initTranslation';
 
+import { LoadBalancePayloadType } from 'myAssets/types';
 import {
   sendTokenTrxTrigger, sendTrxTrigger, setSentData, signAndSendTrxTrigger,
 } from '../slices/sendSlice';
@@ -77,6 +78,24 @@ export function* singAndSendTrxSaga({
 
     const walletAddress = yield* select(getWalletAddress);
 
+    const WalletAPI = (yield* select(getWalletApi))!;
+
+    const balance: LoadBalancePayloadType = yield WalletAPI.loadBalance(walletAddress!);
+
+    const fee = decodedTxBody?.p?.find((purpose) => purpose?.[0] === TxPurpose.SRCFEE);
+    const feeAmount = fee?.[2] || 0;
+
+    const gas = decodedTxBody?.p?.find((purpose) => purpose?.[0] === TxPurpose.GAS);
+    const gasAmount = gas?.[2] || 0;
+
+    const totalCommissionAmount = feeAmount + gasAmount;
+    const correctedTotalCommissionAmount = totalCommissionAmount && correctAmount(totalCommissionAmount, 'SK');
+
+    if (balance?.amount?.SK < correctedTotalCommissionAmount) {
+      toast.error(i18n.t('insufficientFunds'));
+      return;
+    }
+
     const transfer = decodedTxBody?.p?.find((purpose) => purpose?.[0] === TxPurpose.TRANSFER);
     const transferAmount = transfer?.[2];
     const transferToken = transfer?.[1];
@@ -98,6 +117,6 @@ export function* singAndSendTrxSaga({
     }));
   } catch (error: any) {
     console.error(error);
-    toast.error(`${i18n.t('somethingWentWrongTransaction')} ${error?.code}`);
+    toast.error(`${i18n.t('somethingWentWrongTransaction')} ${error?.code || error?.message}`);
   }
 }

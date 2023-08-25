@@ -180,6 +180,7 @@
     "length": "",
     "transactions": "",
     "return": "Вернуться",
-    "returnURL": "Ссылка возврата"
+    "returnURL": "Ссылка возврата",
+    "insufficientFunds": "Недостаточно средств"
   }
 }
