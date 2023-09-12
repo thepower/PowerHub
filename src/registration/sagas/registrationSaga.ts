@@ -30,7 +30,7 @@ export function* generateSeedPhraseSaga() {
 }
 
 export function* createWalletSaga({ payload }: ReturnType<typeof createWallet>) {
-  const { password, additionalAction, randomChain } = payload;
+  const { password, additionalActionOnSuccess, randomChain } = payload;
   const seedPhrase = yield* select(getGeneratedSeedPhrase);
   const shard = yield* select(getCurrentShardSelector);
   let account: RegisteredAccount;
@@ -49,7 +49,7 @@ export function* createWalletSaga({ payload }: ReturnType<typeof createWallet>) 
       wif: encryptedWif,
     }));
 
-    additionalAction?.();
+    additionalActionOnSuccess?.();
   } catch (e) {
     toast.error(i18n.t('createAccountError'));
   }

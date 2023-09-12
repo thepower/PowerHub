@@ -1,6 +1,6 @@
 import localForage from 'localforage';
 
-type ApplicationStorageKeyType = 'address' | 'wif' | 'scapps' | 'tokens';
+type ApplicationStorageKeyType = 'address' | 'wif' | 'scapps' | 'tokens' | 'allowedAutoSignTxContractsAddresses';
 
 const applicationStorage = localForage.createInstance({
   driver: localForage.LOCALSTORAGE,
@@ -8,6 +8,6 @@ const applicationStorage = localForage.createInstance({
   version: 1.0,
 });
 
-export const getKeyFromApplicationStorage = (key: ApplicationStorageKeyType) => applicationStorage.getItem(key);
+export const getKeyFromApplicationStorage = <T>(key: ApplicationStorageKeyType) => applicationStorage.getItem<T>(key);
 export const setKeyToApplicationStorage = (key: ApplicationStorageKeyType, value: any) => applicationStorage.setItem(key, value);
 export const clearApplicationStorage = () => applicationStorage.clear();

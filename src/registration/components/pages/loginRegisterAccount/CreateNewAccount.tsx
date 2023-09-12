@@ -167,7 +167,7 @@ class CreateNewAccountComponent extends React.PureComponent<CreateNewAccountProp
 
       createWallet({
         password,
-        additionalAction: setNextStep,
+        additionalActionOnSuccess: setNextStep,
         randomChain,
       });
     }

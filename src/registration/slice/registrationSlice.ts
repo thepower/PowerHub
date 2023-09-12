@@ -1,5 +1,5 @@
 import { createAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AddActionType, Maybe } from '../../typings/common';
+import { AddActionOnSuccessType, Maybe } from '../../typings/common';
 import {
   CreateAccountStepsEnum,
   LoginRegisterAccountTabs,
@@ -10,7 +10,10 @@ import {
 const SLICE_NAME = 'registration';
 
 const generateSeedPhrase = createAction(`${SLICE_NAME}/generateSeedPhrase`);
-const createWallet = createAction<AddActionType<{ password: string; randomChain: boolean }>>(`${SLICE_NAME}/createWallet`);
+const createWallet = createAction<AddActionOnSuccessType<{
+  password: string;
+  randomChain: boolean,
+}>>(`${SLICE_NAME}/createWallet`);
 const loginToWalletFromRegistration = createAction<LoginToWalletInputType>(`${SLICE_NAME}/loginToWallet`);
 const proceedToHub = createAction(`${SLICE_NAME}/proceedToHub`);
 

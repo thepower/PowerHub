@@ -1,7 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber';
 import {
-  AddressApi,
-  Evm20Contract, EvmContract, EvmCore, NetworkApi, TransactionsApi,
+  AddressApi, Evm20Contract, EvmContract, EvmCore, NetworkApi, TransactionsApi,
 } from '@thepowereco/tssdk';
 import { correctAmount } from '@thepowereco/tssdk/dist/utils/numbers';
 import { getWalletAddress } from 'account/selectors/accountSelectors';
@@ -28,12 +27,25 @@ export function* sendTrxSaga({
   try {
     const WalletAPI = (yield* select(getWalletApi))!;
 
-    const { txId }: { txId: string; status: string } =
-      yield WalletAPI.makeNewTx(wif, from, to, 'SK', amount, comment ?? '', +new Date());
+    const { txId }: { txId: string; status: string } = yield WalletAPI.makeNewTx(
+      wif,
+      from,
+      to,
+      'SK',
+      amount,
+      comment ?? '',
+      +new Date(),
+    );
 
-    yield* put(setSentData({
-      txId, comment, amount, from, to,
-    }));
+    yield* put(
+      setSentData({
+        txId,
+        comment,
+        amount,
+        from,
+        to,
+      }),
+    );
 
     yield loadBalanceSaga();
   } catch (error: any) {
@@ -58,9 +70,15 @@ export function* sendTokenTrxSaga({
     const calculatedAmount = BigNumber.from(amount).mul(BigNumber.from(10).mul(decimals)).toBigInt();
 
     const { txId } = yield contract.transfer(to, calculatedAmount, { wif, address: from });
-    yield* put(setSentData({
-      txId, comment: '', amount, from, to,
-    }));
+    yield* put(
+      setSentData({
+        txId,
+        comment: '',
+        amount,
+        from,
+        to,
+      }),
+    );
 
     yield updateTokenAmountSaga({ address });
   } catch (error: any) {
@@ -70,7 +88,7 @@ export function* sendTokenTrxSaga({
 
 export function* singAndSendTrxSaga({
   payload: {
-    wif, decodedTxBody, returnURL,
+    wif, decodedTxBody, returnURL, additionalActionOnSuccess,
   },
 }: ReturnType<typeof signAndSendTrxTrigger>) {
   try {
@@ -107,16 +125,23 @@ export function* singAndSendTrxSaga({
     const comment = decodedTxBody?.e?.msg;
     const txResponse: { txId: string } = yield networkAPI.sendTxAndWaitForResponse(packAndSignTX(decodedTxBody, wif));
 
-    yield* put(setSentData({
-      txId: txResponse.txId,
-      comment: comment || '',
-      amount: amount && transferToken ? `${amount} ${transferToken}` : '-' || 0,
-      from: walletAddress,
-      to,
-      returnURL,
-    }));
+    if (txResponse.txId) {
+      yield* put(
+        setSentData({
+          txId: txResponse.txId,
+          comment: comment || '',
+          amount: amount && transferToken ? `${amount} ${transferToken}` : '-' || 0,
+          from: walletAddress,
+          to,
+          returnURL,
+        }),
+      );
+      additionalActionOnSuccess?.();
+    } else {
+      console.error('singAndSendTrxSagaNoTxId');
+    }
   } catch (error: any) {
-    console.error(error);
+    console.error('singAndSendTrxSaga', error);
     toast.error(`${i18n.t('somethingWentWrongTransaction')} ${error?.code || error?.message}`);
   }
 }

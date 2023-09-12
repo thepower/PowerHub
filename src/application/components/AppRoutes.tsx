@@ -20,9 +20,20 @@ import SignAndSendPage from 'sign-and-send/components/SingAndSendPage';
 import WalletSSOPage from 'sso/components/pages/WalletSSOPage';
 import HubSSOPage from 'sso/components/pages/HubSSOPage';
 import { RegistrationForAppsPage } from 'registration/components/RegistrationForAppsPage';
-import { initApplication } from '../slice/applicationSlice';
-import { WalletRoutesEnum, HubRoutesEnum } from '../typings/routes';
+import appEnvs from 'appEnvs';
+import { stringToObject } from 'sso/utils';
+// import { signAndSendTrxTrigger } from 'send/slices/sendSlice';
+import { AddressApi, CryptoApi, TransactionsApi } from '@thepowereco/tssdk';
+import { TxBody, TxPurpose } from 'sign-and-send/typing';
+import { getNetworkFeeSettings } from 'application/selectors';
+import { getWalletAddress, getWalletData } from 'account/selectors/accountSelectors';
+import { getKeyFromApplicationStorage } from 'application/utils/localStorageUtils';
+
 import { useAppDispatch, useAppSelector } from '../store';
+import { WalletRoutesEnum, HubRoutesEnum } from '../typings/routes';
+import { initApplication } from '../slice/applicationSlice';
+
+const { autoAddFee, autoAddGas } = TransactionsApi;
 
 export const localApp: any = process.env.REACT_APP_TYPE;
 
@@ -30,6 +41,73 @@ export const [subdomain1, subdomain2] = window.location.hostname.split('.');
 export const isLocalHost = [subdomain1, subdomain2].includes('localhost');
 export const isWallet = (localApp === 'wallet' && isLocalHost) || [subdomain1, subdomain2].includes('wallet');
 export const isHub = (localApp === 'hub' && isLocalHost) || [subdomain1, subdomain2].includes('hub');
+
+const IFrame: React.FC = () => {
+  // const dispatch = useAppDispatch();
+  const feeSettings = useAppSelector(getNetworkFeeSettings);
+  const gasSettings = useAppSelector(getNetworkFeeSettings);
+  const address = useAppSelector(getWalletAddress);
+  const walletData = useAppSelector(getWalletData);
+
+  const handler = async (ev: MessageEvent<any>) => {
+    try {
+      if (ev.origin !== appEnvs.DOBROSITE_THEPOWER_URL) return;
+      const message = stringToObject(ev.data);
+      if (message?.type !== 'signAndSendMessage') return;
+
+      const allowedAutoSignTxContractsAddresses: string[] | null = await getKeyFromApplicationStorage('allowedAutoSignTxContractsAddresses');
+
+      if (!allowedAutoSignTxContractsAddresses?.includes(message?.data?.address)) return;
+
+      let decodedTxBody: TxBody = message.data.body;
+      delete decodedTxBody.ru;
+
+      const date = Date.now();
+      const srcFee = decodedTxBody?.p?.find((purpose) => purpose?.[0] === TxPurpose.SRCFEE);
+      const gas = decodedTxBody?.p?.find((purpose) => purpose?.[0] === TxPurpose.GAS);
+
+      if (!decodedTxBody?.e) {
+        decodedTxBody.e = {};
+      }
+
+      decodedTxBody.f = Buffer.from(AddressApi.parseTextAddress(address));
+      decodedTxBody.s = date;
+      decodedTxBody.t = date;
+
+      if (!gas) {
+        decodedTxBody = autoAddGas(decodedTxBody, gasSettings);
+      }
+
+      if (!srcFee) {
+        decodedTxBody = autoAddFee(decodedTxBody, feeSettings);
+      }
+
+      const decryptedWif = CryptoApi.decryptWif(walletData.wif, '');
+
+      // dispatch(signAndSendTrxTrigger({
+      //   decodedTxBody,
+      //   wif: decryptedWif,
+      //   additionalActionOnSuccess: () => {
+
+      //   },
+      // }));
+      console.log(decryptedWif);
+    } catch (error) {
+      console.error('IFrameTest', error);
+      window.parent.postMessage(`heheheh   ${ev.data}`, appEnvs.DOBROSITE_THEPOWER_URL);
+    }
+  };
+  useEffect(() => {
+    window.addEventListener('message', handler);
+    return () => {
+      window.removeEventListener('message', handler);
+    };
+  }, []);
+
+  return (
+    null
+  );
+};
 
 const renderWalletRoutes = () => (
   <>
@@ -54,6 +132,8 @@ const renderWalletRoutes = () => (
       <MyAssets />
     </Route>
     <Route path={`${WalletRoutesEnum.sso}/:data`} component={WalletSSOPage} />
+    <Route path={WalletRoutesEnum.iframe} component={IFrame} />
+
     <Route exact path={WalletRoutesEnum.root} component={WalletHome} />
   </>
 );

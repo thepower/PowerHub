@@ -1,5 +1,4 @@
 import { getWalletAddress } from 'account/selectors/accountSelectors';
-import { faucetThePowerUrl, walletThePowerUrl } from 'appConstants';
 import { isHub } from 'application/components/AppRoutes';
 import {
   CardLink, DeepPageTemplate, Tabs,
@@ -16,6 +15,7 @@ import React from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { ConnectedProps, connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import appEnvs from 'appEnvs';
 import { setShowUnderConstruction } from '../../application/slice/applicationSlice';
 import { RootState } from '../../application/store';
 import { WalletRoutesEnum } from '../../application/typings/routes';
@@ -122,7 +122,7 @@ class MyAssets extends React.PureComponent<MyAssetsProps, MyAssetsState> {
             <CardLink
               label={this.props.t('faucet')}
               isAnchor
-              to={faucetThePowerUrl}
+              to={appEnvs.FAUCET_THEPOWER_URL}
               target="_blank"
               rel="noreferrer"
             >
@@ -131,7 +131,7 @@ class MyAssets extends React.PureComponent<MyAssetsProps, MyAssetsState> {
             <CardLink
               isAnchor={isHub}
               to={isHub
-                ? `${walletThePowerUrl}${WalletRoutesEnum.myAssets}${WalletRoutesEnum.assetSelection}`
+                ? `${appEnvs.WALLET_THEPOWER_URL}${WalletRoutesEnum.myAssets}${WalletRoutesEnum.assetSelection}`
                 : `${WalletRoutesEnum.myAssets}${WalletRoutesEnum.assetSelection}`}
               label={this.props.t('send')}
               target={isHub ? '_blank' : '_self'}
@@ -143,7 +143,7 @@ class MyAssets extends React.PureComponent<MyAssetsProps, MyAssetsState> {
               onClick={this.handleShowUnderConstruction}
               isAnchor={isHub}
               to={isHub
-                ? `${walletThePowerUrl}${WalletRoutesEnum.buy}`
+                ? `${appEnvs.WALLET_THEPOWER_URL}${WalletRoutesEnum.buy}`
                 : WalletRoutesEnum.buy}
               label={this.props.t('buy')}
               target={isHub ? '_blank' : '_self'}

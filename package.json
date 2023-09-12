@@ -28,6 +28,7 @@
     "@mui/material": "^5.6.2",
     "@mui/styles": "^5.6.2",
     "@reduxjs/toolkit": "^1.8.6",
+    "@thepowereco/msgpack": "^1.5.3",
     "@thepowereco/tssdk": "^1.15.22",
     "@types/classnames": "^2.3.1",
     "@types/date-fns": "^2.6.0",
@@ -89,6 +90,7 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@types/bs58": "^4.0.1",
     "add": "^2.0.6",
     "assert": "^2.0.0",
@@ -103,9 +105,9 @@
     "react-app-rewired": "^2.2.1",
     "sass": "^1.50.1",
     "sass-loader": "^12.6.0",
+    "serve": "^14.0.1",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
-    "serve": "^14.0.1",
     "typescript": "^4.8.4",
     "url": "^0.11.0",
     "yarn": "^1.22.19"

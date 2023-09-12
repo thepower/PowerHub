@@ -6,6 +6,7 @@ import {
   OutlinedInput,
   ModalLoader,
   Button,
+  Checkbox,
 } from 'common';
 import { checkIfLoading } from 'network/selectors';
 import classnames from 'classnames';
@@ -14,6 +15,10 @@ import { getWalletAddress } from 'account/selectors/accountSelectors';
 import { exportAccount } from 'account/slice/accountSlice';
 import { objectToString, stringToObject } from 'sso/utils';
 import { getRouterParamsData } from 'router/selectors';
+import { CheckedIcon, UnCheckedIcon } from 'common/icons';
+import { FormControlLabel } from '@mui/material';
+import { setKeyToApplicationStorage } from 'application/utils/localStorageUtils';
+import { union } from 'lodash';
 import styles from '../../Registration.module.scss';
 import {
   setCreatingCurrentShard,
@@ -29,6 +34,7 @@ import { getCurrentCreatingStep, getCurrentShardSelector, getGeneratedSeedPhrase
 import { RegistrationBackground } from '../../common/RegistrationBackground';
 import { RegistrationStatement } from '../../common/RegistrationStatement';
 import { getCurrentNetworkChains } from '../../../../application/selectors';
+import { getKeyFromApplicationStorage } from '../../../../application/utils/localStorageUtils';
 
 const mapStateToProps = (state: RootState) => ({
   currentShard: getCurrentShardSelector(state),
@@ -52,12 +58,26 @@ const mapDispatchToProps = {
 const connector = connect(mapStateToProps, mapDispatchToProps);
 type CreateNewAccountForAppsProps = ConnectedProps<typeof connector>;
 
-class CreateNewAccountForAppsComponent extends React.PureComponent<CreateNewAccountForAppsProps> {
+type CreateNewAccountForAppsState = {
+  isAutoSignMessages: boolean
+};
+
+class CreateNewAccountForAppsComponent extends React.PureComponent<CreateNewAccountForAppsProps, CreateNewAccountForAppsState> {
+  constructor(props: CreateNewAccountForAppsProps) {
+    super(props);
+
+    this.state = {
+      isAutoSignMessages: false,
+    };
+  }
+
   get parsedData(): {
+    isAutoSignMessagesShowCheckBox?: boolean,
     chainID: number,
     callbackUrl?: string,
     returnUrl: string,
     isShowSeedAfterRegistration?: boolean
+    allowedAutoSignTxContractsAddresses?: string[]
   } | null {
     const { data } = this.props;
 
@@ -65,15 +85,21 @@ class CreateNewAccountForAppsComponent extends React.PureComponent<CreateNewAcco
     return null;
   }
 
-  submitForm = () => {
+  handleCheckAutoSign = () => {
+    const isAutoSignMessages = this.state.isAutoSignMessages;
+
+    this.setState({ isAutoSignMessages: !isAutoSignMessages });
+  };
+
+  submitForm = async () => {
     const {
       creatingStep,
       setSeedPhrase,
       generatedSeedPhrase,
       createWallet,
       walletAddress,
-
     } = this.props;
+    const { isAutoSignMessages } = this.state;
     const { parsedData } = this;
     if (creatingStep === CreateAccountStepsEnum.setSeedPhrase) {
       const password = '';
@@ -84,16 +110,36 @@ class CreateNewAccountForAppsComponent extends React.PureComponent<CreateNewAcco
       createWallet({
         password,
         randomChain: false,
-        additionalAction: () => {
+        additionalActionOnSuccess: () => {
           const { exportAccount } = this.props;
           exportAccount({ password, isWithoutGoHome: true });
         },
       });
+
+      if (isAutoSignMessages && parsedData?.allowedAutoSignTxContractsAddresses) {
+        const existedAllowedAutoSignTxContractsAddresses =
+            await getKeyFromApplicationStorage<string[]>('allowedAutoSignTxContractsAddresses');
+        if (existedAllowedAutoSignTxContractsAddresses?.length) {
+          setKeyToApplicationStorage(
+            'allowedAutoSignTxContractsAddresses',
+            union(existedAllowedAutoSignTxContractsAddresses, parsedData.allowedAutoSignTxContractsAddresses),
+          );
+        } else {
+          setKeyToApplicationStorage(
+            'allowedAutoSignTxContractsAddresses',
+            parsedData.allowedAutoSignTxContractsAddresses,
+          );
+        }
+      }
       return;
     }
 
     if (creatingStep === CreateAccountStepsEnum.encryptPrivateKey) {
-      const stringData = objectToString({ address: walletAddress, returnUrl: parsedData?.returnUrl });
+      const stringData = objectToString({
+        address: walletAddress,
+        returnUrl: parsedData?.returnUrl,
+        isAutoSignMessages,
+      });
       if (parsedData?.callbackUrl) {
         window.location.replace(`${parsedData.callbackUrl}sso/${stringData}`);
       }
@@ -114,6 +160,9 @@ class CreateNewAccountForAppsComponent extends React.PureComponent<CreateNewAcco
 
   renderSetSeedPhrase = () => {
     const { generatedSeedPhrase } = this.props;
+    const { isAutoSignMessages } = this.state;
+
+    const { parsedData, handleCheckAutoSign } = this;
 
     return <RegistrationBackground className={styles.rememberBackground}>
       <div className={classnames(styles.loginRegisterAccountTitle, styles.rememberTitle)}>
@@ -134,6 +183,19 @@ class CreateNewAccountForAppsComponent extends React.PureComponent<CreateNewAcco
           value={generatedSeedPhrase}
         />
       </div>
+
+      {parsedData?.isAutoSignMessagesShowCheckBox && (
+      <FormControlLabel
+        control={<Checkbox
+          size={'medium'}
+          checked={isAutoSignMessages}
+          onClick={handleCheckAutoSign}
+          checkedIcon={<CheckedIcon />}
+          icon={<UnCheckedIcon />}
+          disableRipple
+        />}
+        label={t('signMessagesAutomatically')}
+      />)}
     </RegistrationBackground>;
   };
 

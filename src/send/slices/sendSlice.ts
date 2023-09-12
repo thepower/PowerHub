@@ -1,6 +1,6 @@
 import { createAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TxBody } from 'sign-and-send/typing';
-import { Maybe } from '../../typings/common';
+import { AddActionOnSuccessAndErrorType, Maybe } from '../../typings/common';
 
 export type SentData = {
   from: string;
@@ -49,10 +49,10 @@ export const sendTokenTrxTrigger = createAction<{
   amount: number;
 }>('send/sendTokenTrxTrigger');
 
-export const signAndSendTrxTrigger = createAction<{
+export const signAndSendTrxTrigger = createAction<AddActionOnSuccessAndErrorType<{
   wif: string;
   decodedTxBody: TxBody;
   returnURL?: string;
-}>('send/signAndSendTrxTrigger');
+}>>('send/signAndSendTrxTrigger');
 
 export const { actions: { setSentData, clearSentData }, reducer: sendReducer } = sendSlice;

@@ -1,3 +1,5 @@
+declare module '@thepowereco/msgpack';
+
 declare module '*.svg' {
   const content: any;
   export default content;

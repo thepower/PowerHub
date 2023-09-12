@@ -1,4 +1,3 @@
-import { explorerThePowerUrl } from 'appConstants';
 import { getNetworkChainID } from 'application/selectors';
 import { useAppSelector } from 'application/store';
 import cn from 'classnames';
@@ -7,6 +6,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { SentData } from 'send/slices/sendSlice';
+import appEnvs from 'appEnvs';
 import styles from './TxResult.module.scss';
 import { SuccessSvg } from './icons';
 
@@ -30,7 +30,7 @@ const TxResult: React.FC<TxResultProps> = ({
 }) => {
   const { t } = useTranslation();
   const chainID = useAppSelector(getNetworkChainID);
-  const txExplorerLink = `${explorerThePowerUrl}/${chainID}/transaction/${sentData.txId}`;
+  const txExplorerLink = `${appEnvs.EXPLORER_THEPOWER_URL}/${chainID}/transaction/${sentData.txId}`;
 
   const onClickBack = () => {
     if (sentData.returnURL) { window.location.replace(sentData.returnURL); }

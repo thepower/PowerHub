@@ -1,4 +1,10 @@
-import base64url from 'base64url';
+import * as msgPack from '@thepowereco/msgpack';
 
-export const objectToString = (data: object) => base64url.encode(JSON.stringify(data));
-export const stringToObject = (data: string) => JSON.parse(base64url.decode(data));
+const codec = msgPack.createCodec({
+  usemap: true,
+});
+
+const options = { codec };
+
+export const objectToString = (data: object) => Buffer.from(msgPack.encode(data, options)).toString('hex');
+export const stringToObject = (data: string) => msgPack.decode(Buffer.from(data, 'hex'));
