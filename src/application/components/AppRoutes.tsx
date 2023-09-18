@@ -21,8 +21,8 @@ import WalletSSOPage from 'sso/components/pages/WalletSSOPage';
 import HubSSOPage from 'sso/components/pages/HubSSOPage';
 import { RegistrationForAppsPage } from 'registration/components/RegistrationForAppsPage';
 import appEnvs from 'appEnvs';
-import { stringToObject } from 'sso/utils';
-// import { signAndSendTrxTrigger } from 'send/slices/sendSlice';
+import { objectToString, stringToObject } from 'sso/utils';
+import { signAndSendTrxTrigger } from 'send/slices/sendSlice';
 import { AddressApi, CryptoApi, TransactionsApi } from '@thepowereco/tssdk';
 import { TxBody, TxPurpose } from 'sign-and-send/typing';
 import { getNetworkFeeSettings } from 'application/selectors';
@@ -43,58 +43,101 @@ export const isWallet = (localApp === 'wallet' && isLocalHost) || [subdomain1, s
 export const isHub = (localApp === 'hub' && isLocalHost) || [subdomain1, subdomain2].includes('hub');
 
 const IFrame: React.FC = () => {
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
   const feeSettings = useAppSelector(getNetworkFeeSettings);
   const gasSettings = useAppSelector(getNetworkFeeSettings);
-  const address = useAppSelector(getWalletAddress);
+  const walletAddress = useAppSelector(getWalletAddress);
   const walletData = useAppSelector(getWalletData);
 
   const handler = async (ev: MessageEvent<any>) => {
     try {
-      if (ev.origin !== appEnvs.DOBROSITE_THEPOWER_URL) return;
+      if (ev.origin !== appEnvs.DIRECT_HELP_THEPOWER_URL) return;
       const message = stringToObject(ev.data);
-      if (message?.type !== 'signAndSendMessage') return;
 
-      const allowedAutoSignTxContractsAddresses: string[] | null = await getKeyFromApplicationStorage('allowedAutoSignTxContractsAddresses');
+      if (message?.type === 'signAndSendMessage') {
+        const allowedAutoSignTxContractsAddresses: string[] | null = await getKeyFromApplicationStorage('allowedAutoSignTxContractsAddresses');
+        if (!allowedAutoSignTxContractsAddresses?.includes(message?.data?.address)) {
+          window.parent.postMessage?.(
+            objectToString({
+              type: 'signAndSendMessageError',
+              data: 'allowedAutoSignTxContractsAddresses !== message?.data?.address',
+            }),
+            appEnvs.DIRECT_HELP_THEPOWER_URL,
+          );
+          return;
+        }
 
-      if (!allowedAutoSignTxContractsAddresses?.includes(message?.data?.address)) return;
+        let decodedTxBody: TxBody = message.data.body;
 
-      let decodedTxBody: TxBody = message.data.body;
-      delete decodedTxBody.ru;
+        const sponsor = message.data?.sponsor;
+        const date = Date.now();
+        const srcFee = decodedTxBody?.p?.find((purpose) => purpose?.[0] === TxPurpose.SRCFEE);
+        const gas = decodedTxBody?.p?.find((purpose) => purpose?.[0] === TxPurpose.GAS);
 
-      const date = Date.now();
-      const srcFee = decodedTxBody?.p?.find((purpose) => purpose?.[0] === TxPurpose.SRCFEE);
-      const gas = decodedTxBody?.p?.find((purpose) => purpose?.[0] === TxPurpose.GAS);
+        if (!decodedTxBody?.e) {
+          decodedTxBody.e = {};
+        }
 
-      if (!decodedTxBody?.e) {
-        decodedTxBody.e = {};
+        decodedTxBody.f = Buffer.from(AddressApi.parseTextAddress(walletAddress));
+        decodedTxBody.s = date;
+        decodedTxBody.t = date;
+
+        if (sponsor) {
+          decodedTxBody.e.sponsor = [Buffer.from(AddressApi.parseTextAddress(sponsor))];
+        }
+
+        if (!gas) {
+          decodedTxBody = autoAddGas(decodedTxBody, gasSettings);
+        }
+
+        if (!srcFee) {
+          decodedTxBody = autoAddFee(decodedTxBody, feeSettings);
+        }
+
+        if (sponsor) {
+          decodedTxBody.p.forEach((item) => {
+            if (item[0] === TxPurpose.SRCFEE) {
+              item[0] = TxPurpose.SPONSOR_SRCFEE;
+            }
+            if (item[0] === TxPurpose.GAS) {
+              item[0] = TxPurpose.SPONSOR_GAS;
+            }
+          });
+        }
+
+        const decryptedWif = CryptoApi.decryptWif(walletData.wif, '');
+
+        dispatch(signAndSendTrxTrigger({
+          decodedTxBody,
+          wif: decryptedWif,
+          additionalActionOnSuccess: (txResponse) => {
+            window.parent.postMessage?.(
+              objectToString({
+                type: 'signAndSendMessageResponse',
+                data: txResponse,
+              }),
+              appEnvs.DIRECT_HELP_THEPOWER_URL,
+            );
+          },
+          additionalActionOnError(error) {
+            window.parent.postMessage?.(
+              objectToString({
+                type: 'signAndSendMessageError',
+                data: error,
+              }),
+              appEnvs.DIRECT_HELP_THEPOWER_URL,
+            );
+          },
+        }));
       }
-
-      decodedTxBody.f = Buffer.from(AddressApi.parseTextAddress(address));
-      decodedTxBody.s = date;
-      decodedTxBody.t = date;
-
-      if (!gas) {
-        decodedTxBody = autoAddGas(decodedTxBody, gasSettings);
-      }
-
-      if (!srcFee) {
-        decodedTxBody = autoAddFee(decodedTxBody, feeSettings);
-      }
-
-      const decryptedWif = CryptoApi.decryptWif(walletData.wif, '');
-
-      // dispatch(signAndSendTrxTrigger({
-      //   decodedTxBody,
-      //   wif: decryptedWif,
-      //   additionalActionOnSuccess: () => {
-
-      //   },
-      // }));
-      console.log(decryptedWif);
-    } catch (error) {
-      console.error('IFrameTest', error);
-      window.parent.postMessage(`heheheh   ${ev.data}`, appEnvs.DOBROSITE_THEPOWER_URL);
+    } catch (error: any) {
+      window.parent.postMessage?.(
+        objectToString({
+          type: 'signAndSendMessageError',
+          data: error,
+        }),
+        appEnvs.DIRECT_HELP_THEPOWER_URL,
+      );
     }
   };
   useEffect(() => {
@@ -127,7 +170,7 @@ const renderWalletRoutes = () => (
       component={AssetSelectionPage}
       exact
     />
-    <Route path={`${WalletRoutesEnum.myAssets}${WalletRoutesEnum.signAndSend}/:txBody`} component={SignAndSendPage} />
+    <Route path={`${WalletRoutesEnum.myAssets}${WalletRoutesEnum.signAndSend}/:message`} component={SignAndSendPage} />
     <Route exact path={WalletRoutesEnum.myAssets}>
       <MyAssets />
     </Route>

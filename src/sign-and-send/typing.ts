@@ -18,7 +18,9 @@ export enum TxTag {
 export enum TxPurpose {
   TRANSFER = 0x00,
   SRCFEE = 0x01,
+  SPONSOR_SRCFEE = 0x21,
   GAS = 0x03,
+  SPONSOR_GAS = 0x23,
 }
 
 export enum TxKind {
@@ -37,6 +39,7 @@ export interface TxBody {
   s: number;
   p: Array<[TxPurpose, string, number]>;
   e?: {
+    sponsor?: Buffer[],
     msg?: string;
   };
   c?: [string, Buffer]

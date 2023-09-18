@@ -88,7 +88,7 @@ export function* sendTokenTrxSaga({
 
 export function* singAndSendTrxSaga({
   payload: {
-    wif, decodedTxBody, returnURL, additionalActionOnSuccess,
+    wif, decodedTxBody, returnURL, additionalActionOnSuccess, additionalActionOnError,
   },
 }: ReturnType<typeof signAndSendTrxTrigger>) {
   try {
@@ -124,7 +124,6 @@ export function* singAndSendTrxSaga({
 
     const comment = decodedTxBody?.e?.msg;
     const txResponse: { txId: string } = yield networkAPI.sendTxAndWaitForResponse(packAndSignTX(decodedTxBody, wif));
-
     if (txResponse.txId) {
       yield* put(
         setSentData({
@@ -136,11 +135,13 @@ export function* singAndSendTrxSaga({
           returnURL,
         }),
       );
-      additionalActionOnSuccess?.();
+      additionalActionOnSuccess?.(txResponse);
     } else {
+      additionalActionOnError?.(txResponse);
       console.error('singAndSendTrxSagaNoTxId');
     }
   } catch (error: any) {
+    additionalActionOnError?.(error?.message);
     console.error('singAndSendTrxSaga', error);
     toast.error(`${i18n.t('somethingWentWrongTransaction')} ${error?.code || error?.message}`);
   }

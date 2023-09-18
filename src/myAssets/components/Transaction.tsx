@@ -114,9 +114,9 @@ class Transaction extends React.PureComponent<TransactionProps, TransactionState
                   {format(trx.timestamp, '\'at\' p')}
                 </span>
               </div>
-              <span className={styles.amount}>
-                {`${isReceived ? '+' : '-'} ${trx.amount.toFixed(2)} ${trx.cur}`}
-              </span>
+              {trx.amount && <span className={styles.amount}>
+                {`${isReceived ? '+' : '-'} ${trx.amount.toFixed?.(2) || trx.amount} ${trx.cur}`}
+              </span>}
             </div>
             {!isArray(trx.txext) && (
               <div className={styles.comment}>

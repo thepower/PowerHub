@@ -1,7 +1,5 @@
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-// @ts-ignore
-import * as msgPack from '@thepowereco/msgpack';
 
 import { getWalletAddress } from 'account/selectors/accountSelectors';
 import { getNetworkFeeSettings, getNetworkGasSettings } from 'application/selectors';
@@ -27,6 +25,7 @@ import { checkIfLoading } from 'network/selectors';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { RouteComponentProps } from 'react-router';
 import { TxBody, TxKindByName, TxPurpose } from 'sign-and-send/typing';
+import { stringToObject } from 'sso/utils';
 import ConfirmModal from '../../common/confirmModal/ConfirmModal';
 import styles from './SingAndSendPage.module.scss';
 import { ThePowerLogoIcon } from './ThePowerLogoIcon';
@@ -36,14 +35,14 @@ const { autoAddFee, autoAddGas } = TransactionsApi;
 const txKindMap: { [key: number]: string } =
   Object.entries(TxKindByName).reduce((obj, [key, value]) => (Object.assign(obj, { [key]: value })), {});
 
-type OwnProps = RouteComponentProps<{ txBody: string }>;
+type OwnProps = RouteComponentProps<{ message: string }>;
 
 const mapStateToProps = (state: RootState, props: OwnProps) => ({
   amount: getWalletNativeTokensAmounts(state),
   address: getWalletAddress(state),
   sentData: getSentData(state),
   loading: checkIfLoading(state, signAndSendTrxTrigger.type),
-  txBody: props?.match?.params?.txBody,
+  message: props?.match?.params?.message,
   feeSettings: getNetworkFeeSettings(state),
   gasSettings: getNetworkGasSettings(state),
 });
@@ -79,12 +78,13 @@ class SignAndSendPage extends React.Component<SignAndSendProps, SignAndSendState
 
   componentDidMount(): void {
     const {
-      txBody, address, gasSettings, feeSettings,
+      message, address, gasSettings, feeSettings,
     } = this.props;
     try {
-      let decodedTxBody: TxBody = msgPack.decode(Buffer.from(txBody, 'hex'));
-      this.setState({ returnURL: decodedTxBody.ru });
-      delete decodedTxBody.ru;
+      const decodedMessage = stringToObject(message);
+      let decodedTxBody: TxBody = decodedMessage?.body;
+      this.setState({ returnURL: decodedMessage?.returnUrl });
+      const sponsor = decodedMessage?.sponsor;
 
       const date = Date.now();
       const srcFee = decodedTxBody?.p?.find((purpose) => purpose?.[0] === TxPurpose.SRCFEE);
@@ -98,6 +98,10 @@ class SignAndSendPage extends React.Component<SignAndSendProps, SignAndSendState
       decodedTxBody.s = date;
       decodedTxBody.t = date;
 
+      if (sponsor) {
+        decodedTxBody.e.sponsor = [Buffer.from(AddressApi.parseTextAddress(sponsor))];
+      }
+
       if (!gas) {
         decodedTxBody = autoAddGas(decodedTxBody, gasSettings);
       }
@@ -105,11 +109,23 @@ class SignAndSendPage extends React.Component<SignAndSendProps, SignAndSendState
       if (!srcFee) {
         decodedTxBody = autoAddFee(decodedTxBody, feeSettings);
       }
+
+      if (sponsor) {
+        decodedTxBody.p.forEach((item) => {
+          if (item[0] === TxPurpose.SRCFEE) {
+            item[0] = TxPurpose.SPONSOR_SRCFEE;
+          }
+          if (item[0] === TxPurpose.GAS) {
+            item[0] = TxPurpose.SPONSOR_GAS;
+          }
+        });
+      }
+
       if (isObject(decodedTxBody)) {
         this.setState({ decodedTxBody });
       }
-    } catch {
-
+    } catch (err) {
+      console.log(err);
     }
   }
 
@@ -150,7 +166,7 @@ class SignAndSendPage extends React.Component<SignAndSendProps, SignAndSendState
 
     if (!decodedTxBody?.e || isEmpty(decodedTxBody?.e)) return null;
 
-    return <CardTable items={Object.entries(decodedTxBody?.e).map(([key, value]) => ({ key, value }))} />;
+    return <CardTable items={Object.entries(decodedTxBody?.e).map(([key, value]) => ({ key, value: value.toString() }))} />;
   };
 
   renderContent = () => {

@@ -5,15 +5,15 @@ export type NullableUndef<T> = T | undefined | null;
 export type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
 
 type AdditionalActionOnSuccessType = {
-  additionalActionOnSuccess?: () => void
+  additionalActionOnSuccess?: <T>(params?: T) => Promise<void> | void
 };
 
 type AdditionalActionOnErrorType = {
-  additionalActionOnSuccess?: () => void
+  additionalActionOnError?: <T>(params?: T) => Promise<void> | void
 };
 
 type AdditionalActionOnDecryptErrorType = {
-  additionalActionOnDecryptError?: () => void
+  additionalActionOnDecryptError?: <T>(params?: T) => Promise<void> | void
 };
 
 export type AddActionOnSuccessType<InputType> = InputType & AdditionalActionOnSuccessType;
