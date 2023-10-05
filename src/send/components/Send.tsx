@@ -1,4 +1,4 @@
-import { BigNumber } from '@ethersproject/bignumber';
+import { BigNumber, formatFixed } from '@ethersproject/bignumber';
 import { InputAdornment, TextField } from '@mui/material';
 import { AddressApi, CryptoApi } from '@thepowereco/tssdk';
 import cn from 'classnames';
@@ -98,7 +98,7 @@ class Send extends React.Component<SendProps, SendState> {
     const assetAmount = isNativeToken ? nativeTokenAmount : token?.amount;
     return typeof assetAmount === 'string'
       ? assetAmount
-      : token && BigNumber.from(assetAmount).div(BigNumber.from(10).mul(token.decimals));
+      : token && formatFixed(BigNumber.from(assetAmount), token.decimals);
   }
 
   getValidationSchema = () => {

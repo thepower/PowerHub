@@ -2,7 +2,7 @@ import React from 'react';
 import { TokenType } from 'myAssets/slices/tokensSlice';
 import cn from 'classnames';
 import { Checkbox, Divider, Switch } from 'common';
-import { BigNumber } from '@ethersproject/bignumber';
+import { BigNumber, formatFixed } from '@ethersproject/bignumber';
 
 import { Link } from 'react-router-dom';
 import { WalletRoutesEnum } from 'application/typings/routes';
@@ -22,9 +22,10 @@ class Asset extends React.PureComponent<AssetProps> {
   get formattedAmount() {
     const { asset } = this.props;
     const { amount, decimals } = asset;
+
     return typeof amount === 'string'
       ? amount
-      : BigNumber.from(amount).div(BigNumber.from(decimals).mul(10)).toString();
+      : formatFixed(BigNumber.from(amount), decimals);
   }
 
   onClickAsset = () => {

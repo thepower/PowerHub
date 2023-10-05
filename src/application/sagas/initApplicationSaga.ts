@@ -37,9 +37,7 @@ export function* initApplicationSaga() {
 
   address = yield getKeyFromApplicationStorage('address');
 
-  if (isWallet) {
-    wif = yield getKeyFromApplicationStorage('wif');
-  }
+  wif = yield getKeyFromApplicationStorage('wif');
 
   // const sCAPPs: string = yield getKeyFromApplicationStorage('scapps');
 

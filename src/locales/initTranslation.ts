@@ -5,12 +5,12 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import * as yup from 'yup';
 
 import en from './en.json';
-// import ru from './ru.json';
+import ru from './ru.json';
 import th from './th.json';
 
 const langs = {
   en,
-  // ru,
+  ru,
   th,
 };
 

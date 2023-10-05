@@ -87,7 +87,7 @@ const ConfirmSendModal: React.FC<ConfirmSendModalProps> = ({
               errorMessage={formikProps.errors.password}
               error={formikProps.touched.password && Boolean(formikProps.errors.password)}
             />
-            <Button variant="outlined" type="submit" disabled={!formikProps.dirty} className={styles.button}>
+            <Button variant="outlined" type="submit" className={styles.button}>
               {t('next')}
             </Button>
           </Form>

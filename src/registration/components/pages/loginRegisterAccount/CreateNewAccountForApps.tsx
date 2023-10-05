@@ -6,7 +6,7 @@ import {
   OutlinedInput,
   ModalLoader,
   Button,
-  Checkbox,
+  // Checkbox,
 } from 'common';
 import { checkIfLoading } from 'network/selectors';
 import classnames from 'classnames';
@@ -15,8 +15,8 @@ import { getWalletAddress } from 'account/selectors/accountSelectors';
 import { exportAccount } from 'account/slice/accountSlice';
 import { objectToString, stringToObject } from 'sso/utils';
 import { getRouterParamsData } from 'router/selectors';
-import { CheckedIcon, UnCheckedIcon } from 'common/icons';
-import { FormControlLabel } from '@mui/material';
+// import { CheckedIcon, UnCheckedIcon } from 'common/icons';
+// import { FormControlLabel } from '@mui/material';
 import { setKeyToApplicationStorage } from 'application/utils/localStorageUtils';
 import { union } from 'lodash';
 import styles from '../../Registration.module.scss';
@@ -67,7 +67,7 @@ class CreateNewAccountForAppsComponent extends React.PureComponent<CreateNewAcco
     super(props);
 
     this.state = {
-      isAutoSignMessages: false,
+      isAutoSignMessages: true,
     };
   }
 
@@ -85,11 +85,11 @@ class CreateNewAccountForAppsComponent extends React.PureComponent<CreateNewAcco
     return null;
   }
 
-  handleCheckAutoSign = () => {
-    const isAutoSignMessages = this.state.isAutoSignMessages;
+  // handleCheckAutoSign = () => {
+  //   const isAutoSignMessages = this.state.isAutoSignMessages;
 
-    this.setState({ isAutoSignMessages: !isAutoSignMessages });
-  };
+  //   this.setState({ isAutoSignMessages: !isAutoSignMessages });
+  // };
 
   submitForm = async () => {
     const {
@@ -160,9 +160,9 @@ class CreateNewAccountForAppsComponent extends React.PureComponent<CreateNewAcco
 
   renderSetSeedPhrase = () => {
     const { generatedSeedPhrase } = this.props;
-    const { isAutoSignMessages } = this.state;
+    // const { isAutoSignMessages } = this.state;
 
-    const { parsedData, handleCheckAutoSign } = this;
+    // const { parsedData, handleCheckAutoSign } = this;
 
     return <RegistrationBackground className={styles.rememberBackground}>
       <div className={classnames(styles.loginRegisterAccountTitle, styles.rememberTitle)}>
@@ -184,7 +184,7 @@ class CreateNewAccountForAppsComponent extends React.PureComponent<CreateNewAcco
         />
       </div>
 
-      {parsedData?.isAutoSignMessagesShowCheckBox && (
+      {/* {parsedData?.isAutoSignMessagesShowCheckBox && (
       <FormControlLabel
         control={<Checkbox
           size={'medium'}
@@ -195,7 +195,7 @@ class CreateNewAccountForAppsComponent extends React.PureComponent<CreateNewAcco
           disableRipple
         />}
         label={t('signMessagesAutomatically')}
-      />)}
+      />)} */}
     </RegistrationBackground>;
   };
 

@@ -1,4 +1,4 @@
-import { BigNumber } from '@ethersproject/bignumber';
+import { BigNumber, parseFixed } from '@ethersproject/bignumber';
 import {
   AddressApi, Evm20Contract, EvmContract, EvmCore, NetworkApi, TransactionsApi,
 } from '@thepowereco/tssdk';
@@ -67,7 +67,7 @@ export function* sendTokenTrxSaga({
 
     const contract = new Evm20Contract(storageSc);
 
-    const calculatedAmount = BigNumber.from(amount).mul(BigNumber.from(10).mul(decimals)).toBigInt();
+    const calculatedAmount = parseFixed(BigNumber.from(amount).toString(), decimals).toBigInt();
 
     const { txId } = yield contract.transfer(to, calculatedAmount, { wif, address: from });
     yield* put(
