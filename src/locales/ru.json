@@ -181,6 +181,7 @@
     "transactions": "транзакции",
     "return": "Вернуться",
     "returnURL": "Ссылка возврата",
-    "insufficientFunds": "Недостаточно средств"
+    "insufficientFunds": "Недостаточно средств",
+    "iOSAndIPadOSDevicesNotSupported": ""
   }
 }

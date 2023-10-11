@@ -51,6 +51,7 @@ export function* createWalletSaga({ payload }: ReturnType<typeof createWallet>) 
 
     additionalActionOnSuccess?.();
   } catch (e) {
+    console.error('createWalletSaga', e);
     toast.error(i18n.t('createAccountError'));
   }
 }
@@ -71,6 +72,7 @@ export function* loginToWalletSaga({ payload }: { payload: LoginToWalletInputTyp
   try {
     isValidSeed = yield CryptoApi.validateMnemonic(seedOrPrivateKey);
   } catch (e: any) {
+    console.error('loginToWalletSaga isValidSeed', e);
   }
 
   let isValidPrivateKey = null;
@@ -96,9 +98,11 @@ export function* loginToWalletSaga({ payload }: { payload: LoginToWalletInputTyp
       yield* put(loginToWallet({ address, wif }));
       yield* put(push(WalletRoutesEnum.root));
     } else {
+      console.error('loginToWalletSaga if (!wif)', wif);
       toast.error(i18n.t('loginError'));
     }
   } catch (e) {
+    console.error('loginToWalletSaga isValidSeed', e);
     toast.error(i18n.t('loginError'));
   }
 }

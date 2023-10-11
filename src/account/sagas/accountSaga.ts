@@ -62,7 +62,9 @@ export function* loginToWalletSaga({ payload }: { payload?: LoginToWalletSagaInp
 
     yield* put(loadBalanceTrigger());
   } catch (e) {
-    toast.error(i18n.t('loginError'));
+    console.error('loginToWalletSaga', e);
+
+    toast.error(i18n.t(`loginError${e}`));
   }
 }
 
@@ -89,7 +91,7 @@ export function* importAccountFromFileSaga({ payload }: ReturnType<typeof import
 export function* exportAccountSaga({ payload }: ReturnType<typeof exportAccount>) {
   const { wif, address } = yield* select(getWalletData);
   const {
-    password, hint, isWithoutGoHome, additionalActionOnDecryptError,
+    password, hint, isWithoutGoHome, additionalActionOnSuccess, additionalActionOnDecryptError,
   } = payload;
   const WalletAPI = (yield* select(getWalletApi))!;
 
@@ -98,14 +100,18 @@ export function* exportAccountSaga({ payload }: ReturnType<typeof exportAccount>
     const exportedData: string = yield WalletAPI.getExportData(decryptedWif, address, password, hint);
 
     const blob: Blob = yield new Blob([exportedData], { type: 'octet-stream' });
-    yield fileSaver.saveAs(blob, 'power_wallet.pem', true);
+    yield fileSaver.saveAs(blob, 'power_wallet.pem', { autoBom: true });
 
     yield* loginToWalletSaga({ payload: { address, wif } });
 
     if (!isWithoutGoHome) {
       yield put(push(WalletRoutesEnum.root));
     }
+
+    additionalActionOnSuccess?.();
   } catch (e: any) {
+    console.error('exportAccountSaga', e);
+
     if (additionalActionOnDecryptError && e.message === 'unable to decrypt data') {
       additionalActionOnDecryptError?.();
     } else {

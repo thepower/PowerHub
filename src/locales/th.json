@@ -181,6 +181,7 @@
     "transactions": "การทำธุรกรรม",
     "return": "กลับ",
     "returnURL": "URL ส่งคืน",
-    "insufficientFunds": "เงินทุนไม่เพียงพอ"
+    "insufficientFunds": "เงินทุนไม่เพียงพอ",
+    "iOSAndIPadOSDevicesNotSupported": "Извините. Устройства с ОС iOS и iPad в настоящее время не поддерживаются. Попробуйте зарегистрироваться на настольных компьютерах или устройствах Android."
   }
 }

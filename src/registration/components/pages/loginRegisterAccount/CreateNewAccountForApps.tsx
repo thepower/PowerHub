@@ -60,6 +60,7 @@ type CreateNewAccountForAppsProps = ConnectedProps<typeof connector>;
 
 type CreateNewAccountForAppsState = {
   isAutoSignMessages: boolean
+  isAccountExported: boolean
 };
 
 class CreateNewAccountForAppsComponent extends React.PureComponent<CreateNewAccountForAppsProps, CreateNewAccountForAppsState> {
@@ -68,6 +69,7 @@ class CreateNewAccountForAppsComponent extends React.PureComponent<CreateNewAcco
 
     this.state = {
       isAutoSignMessages: true,
+      isAccountExported: false,
     };
   }
 
@@ -98,8 +100,9 @@ class CreateNewAccountForAppsComponent extends React.PureComponent<CreateNewAcco
       generatedSeedPhrase,
       createWallet,
       walletAddress,
+      exportAccount,
     } = this.props;
-    const { isAutoSignMessages } = this.state;
+    const { isAutoSignMessages, isAccountExported } = this.state;
     const { parsedData } = this;
     if (creatingStep === CreateAccountStepsEnum.setSeedPhrase) {
       const password = '';
@@ -110,10 +113,6 @@ class CreateNewAccountForAppsComponent extends React.PureComponent<CreateNewAcco
       createWallet({
         password,
         randomChain: false,
-        additionalActionOnSuccess: () => {
-          const { exportAccount } = this.props;
-          exportAccount({ password, isWithoutGoHome: true });
-        },
       });
 
       if (isAutoSignMessages && parsedData?.allowedAutoSignTxContractsAddresses) {
@@ -135,13 +134,24 @@ class CreateNewAccountForAppsComponent extends React.PureComponent<CreateNewAcco
     }
 
     if (creatingStep === CreateAccountStepsEnum.encryptPrivateKey) {
-      const stringData = objectToString({
-        address: walletAddress,
-        returnUrl: parsedData?.returnUrl,
-        isAutoSignMessages,
-      });
-      if (parsedData?.callbackUrl) {
-        window.location.replace(`${parsedData.callbackUrl}sso/${stringData}`);
+      if (isAccountExported) {
+        const stringData = objectToString({
+          address: walletAddress,
+          returnUrl: parsedData?.returnUrl,
+          isAutoSignMessages,
+        });
+        if (parsedData?.callbackUrl) {
+          window.location.replace(`${parsedData.callbackUrl}sso/${stringData}`);
+        }
+      } else {
+        const password = '';
+        exportAccount({
+          password,
+          isWithoutGoHome: true,
+          additionalActionOnSuccess: () => {
+            this.setState({ isAccountExported: true });
+          },
+        });
       }
     }
   };
@@ -237,16 +247,31 @@ class CreateNewAccountForAppsComponent extends React.PureComponent<CreateNewAcco
   };
 
   getSubmitButtonDisabled = () => {
-    const { creatingStep } = this.props;
+    const { creatingStep, walletAddress } = this.props;
 
     switch (creatingStep) {
+      case CreateAccountStepsEnum.encryptPrivateKey: {
+        return !walletAddress;
+      }
       default:
         return false;
     }
   };
 
+  getSubmitButtonTitle = () => {
+    const { creatingStep } = this.props;
+    switch (creatingStep) {
+      case CreateAccountStepsEnum.setSeedPhrase:
+        return t('next');
+      case CreateAccountStepsEnum.encryptPrivateKey:
+        return this.state.isAccountExported ? t('logInToTheApp') : t('exportAccount');
+      default:
+        return null;
+    }
+  };
+
   render() {
-    const { creatingStep, loading } = this.props;
+    const { loading } = this.props;
     return <>
       <ModalLoader
         loadingTitle={t('processingVerySoonEverythingWillHappen')}
@@ -262,7 +287,7 @@ class CreateNewAccountForAppsComponent extends React.PureComponent<CreateNewAcco
           onClick={this.submitForm}
           disabled={this.getSubmitButtonDisabled()}
         >
-          {creatingStep === CreateAccountStepsEnum.encryptPrivateKey ? t('logInToTheApp') : t('next')}
+          {this.getSubmitButtonTitle()}
         </Button>
       </div>
     </>;

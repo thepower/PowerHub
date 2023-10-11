@@ -181,6 +181,7 @@
     "transactions": "transactions",
     "return": "Return",
     "returnURL": "Return URL",
-    "insufficientFunds": "Insufficient funds"
+    "insufficientFunds": "Insufficient funds",
+    "iOSAndIPadOSDevicesNotSupported": "Sorry.  iOS and iPadOS devices are currently not supported. Try registration on desktop or Android devices."
   }
 }

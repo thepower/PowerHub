@@ -71,6 +71,7 @@
     "qhistory": "^1.1.0",
     "qs": "^6.10.3",
     "react": "^18.2.0",
+    "react-device-detect": "^2.2.3",
     "react-dom": "^18.2.0",
     "react-i18next": "^12.1.1",
     "react-intersection-observer": "^9.4.0",

@@ -1,5 +1,5 @@
 import { createSlice, createAction, PayloadAction } from '@reduxjs/toolkit';
-import { AddActionOnDecryptErrorType, Maybe } from '../../typings/common';
+import { AddActionOnDecryptErrorType, AddActionOnSuccessAndErrorType } from '../../typings/common';
 import { ExportAccountInputType, ImportAccountInputType, LoginToWalletSagaInput } from '../typings/accountTypings';
 
 export type WalletData = {
@@ -9,7 +9,6 @@ export type WalletData = {
 
 export interface AccountState {
   walletData: WalletData;
-  chain: Maybe<number>;
   logged: boolean;
   openedMenu: boolean;
 }
@@ -17,7 +16,7 @@ export interface AccountState {
 const SLICE_NAME = 'account';
 const loginToWallet = createAction<LoginToWalletSagaInput>(`${SLICE_NAME}/loginToWallet`);
 const resetAccount = createAction<AddActionOnDecryptErrorType<{ password: string }>>(`${SLICE_NAME}/resetAccount`);
-const exportAccount = createAction<AddActionOnDecryptErrorType<ExportAccountInputType>>(`${SLICE_NAME}/exportAccount`);
+const exportAccount = createAction<AddActionOnSuccessAndErrorType<AddActionOnDecryptErrorType<ExportAccountInputType>>>(`${SLICE_NAME}/exportAccount`);
 const importAccountFromFile = createAction<AddActionOnDecryptErrorType<ImportAccountInputType>>(`${SLICE_NAME}/importAccount`);
 
 const initialState: AccountState = {
@@ -25,7 +24,6 @@ const initialState: AccountState = {
     address: '',
     wif: '',
   },
-  chain: null,
   logged: false,
   openedMenu: false,
 };
