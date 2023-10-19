@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 
-import { getWalletAddress } from 'account/selectors/accountSelectors';
+import { getWalletAddress, getWalletData } from 'account/selectors/accountSelectors';
 import { getNetworkFeeSettings, getNetworkGasSettings } from 'application/selectors';
 import { RootState } from 'application/store';
 import cn from 'classnames';
@@ -14,7 +14,7 @@ import { getWalletNativeTokensAmounts } from 'myAssets/selectors/walletSelectors
 import { getSentData } from 'send/selectors/sendSelectors';
 import { clearSentData, signAndSendTrxTrigger } from 'send/slices/sendSlice';
 
-import { AddressApi, TransactionsApi } from '@thepowereco/tssdk';
+import { AddressApi, CryptoApi, TransactionsApi } from '@thepowereco/tssdk';
 import { correctAmount } from '@thepowereco/tssdk/dist/utils/numbers';
 import CardTable from 'common/cardTable/CardTable';
 import CardTableKeyAccordion from 'common/cardTableKeyAccordion/CardTableKeyAccordion';
@@ -45,6 +45,7 @@ const mapStateToProps = (state: RootState, props: OwnProps) => ({
   message: props?.match?.params?.message,
   feeSettings: getNetworkFeeSettings(state),
   gasSettings: getNetworkGasSettings(state),
+  wif: getWalletData(state).wif,
 });
 
 const mapDispatchToProps = {
@@ -134,7 +135,16 @@ class SignAndSendPage extends React.Component<SignAndSendProps, SignAndSendState
   }
 
   handleClickSignAndSend = () => {
-    this.setState({ isConfirmModalOpen: true });
+    const { wif } = this.props;
+    const { decodedTxBody, returnURL } = this.state;
+    try {
+      const decryptedWif = CryptoApi.decryptWif(wif, '');
+      if (decodedTxBody) {
+        this.props.signAndSendTrxTrigger({ wif: decryptedWif, decodedTxBody, returnURL });
+      }
+    } catch {
+      this.setState({ isConfirmModalOpen: true });
+    }
   };
 
   signAndSendCallback = (decryptedWif: string) => {

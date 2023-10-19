@@ -238,7 +238,9 @@ class CreateNewAccountForAppsComponent extends React.PureComponent<CreateNewAcco
         <div className={styles.exportKeyForAppsText}>
           {t('yourKeyFile')}
           {' '}
-          <span>power_wallet.pem</span>
+          <span>
+            {`power_wallet_${walletAddress}.pem`}
+          </span>
           {' '}
           {t('savedToDisk')}
         </div>
