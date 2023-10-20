@@ -100,9 +100,10 @@ export function* exportAccountSaga({ payload }: ReturnType<typeof exportAccount>
     const exportedData: string = yield WalletAPI.getExportData(decryptedWif, address, password, hint);
 
     const blob: Blob = yield new Blob([exportedData], { type: 'octet-stream' });
-    yield fileSaver.saveAs(blob, `power_wallet_${address}.pem`, { autoBom: true });
 
     yield* loginToWalletSaga({ payload: { address, wif } });
+
+    yield fileSaver.saveAs(blob, `power_wallet_${address}.pem`, { autoBom: true });
 
     if (!isWithoutGoHome) {
       yield put(push(WalletRoutesEnum.root));

@@ -29,13 +29,13 @@ import { getNetworkFeeSettings } from 'application/selectors';
 import { getWalletAddress, getWalletData } from 'account/selectors/accountSelectors';
 import { getKeyFromApplicationStorage } from 'application/utils/localStorageUtils';
 
-import { isIOS, isMobile } from 'react-device-detect';
-import { useTranslation } from 'react-i18next';
-import { BrowserNotSupported } from '@mui/icons-material';
+// import { isIOS, isMobile } from 'react-device-detect';
+// import { useTranslation } from 'react-i18next';
+// import { BrowserNotSupported } from '@mui/icons-material';
 import { useAppDispatch, useAppSelector } from '../store';
 import { WalletRoutesEnum, HubRoutesEnum } from '../typings/routes';
 import { initApplication } from '../slice/applicationSlice';
-import styles from './AppRoutes.module.scss';
+// import styles from './AppRoutes.module.scss';
 
 const { autoAddFee, autoAddGas } = TransactionsApi;
 
@@ -211,7 +211,7 @@ const renderHubRoutes = () => (
 
 const AppRoutesComponent: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
 
   const networkApi = useAppSelector((state) => state.applicationData.networkApi);
   const walletApi = useAppSelector((state) => state.applicationData.walletApi);
@@ -221,12 +221,12 @@ const AppRoutesComponent: React.FC = () => {
     dispatch(initApplication());
   }, [dispatch]);
 
-  if (isIOS && isMobile) {
-    return <div className={styles.iOSAndIPadOSDevicesNotSupported}>
-      <BrowserNotSupported sx={{ width: '60px', height: '60px', mb: '16px' }} color="warning" />
-      {t('iOSAndIPadOSDevicesNotSupported')}
-    </div>;
-  }
+  // if (isIOS && isMobile) {
+  //   return <div className={styles.iOSAndIPadOSDevicesNotSupported}>
+  //     <BrowserNotSupported sx={{ width: '60px', height: '60px', mb: '16px' }} color="warning" />
+  //     {t('iOSAndIPadOSDevicesNotSupported')}
+  //   </div>;
+  // }
 
   if (!walletApi || !networkApi || loading) {
     return (
