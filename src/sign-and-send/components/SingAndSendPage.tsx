@@ -25,7 +25,7 @@ import { checkIfLoading } from 'network/selectors';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { RouteComponentProps } from 'react-router';
 import { TxBody, TxKindByName, TxPurpose } from 'sign-and-send/typing';
-import { stringToObject } from 'sso/utils';
+import { objectToString, stringToObject } from 'sso/utils';
 import ConfirmModal from '../../common/confirmModal/ConfirmModal';
 import styles from './SingAndSendPage.module.scss';
 import { ThePowerLogoIcon } from './ThePowerLogoIcon';
@@ -81,6 +81,7 @@ class SignAndSendPage extends React.Component<SignAndSendProps, SignAndSendState
     const {
       message, address, gasSettings, feeSettings,
     } = this.props;
+
     try {
       const decodedMessage = stringToObject(message);
       let decodedTxBody: TxBody = decodedMessage?.body;
@@ -140,11 +141,47 @@ class SignAndSendPage extends React.Component<SignAndSendProps, SignAndSendState
     try {
       const decryptedWif = CryptoApi.decryptWif(wif, '');
       if (decodedTxBody) {
-        this.props.signAndSendTrxTrigger({ wif: decryptedWif, decodedTxBody, returnURL });
+        this.props.signAndSendTrxTrigger({
+          wif: decryptedWif,
+          decodedTxBody,
+          returnURL,
+          additionalActionOnSuccess: (txResponse) => {
+            window.opener.postMessage?.(
+              objectToString({
+                type: 'signAndSendMessageResponse',
+                data: txResponse,
+              }),
+              returnURL,
+            );
+            window.close();
+          },
+          additionalActionOnError(error) {
+            window.opener.postMessage?.(
+              objectToString({
+                type: 'signAndSendMessageError',
+                data: error,
+              }),
+              returnURL,
+            );
+            window.close();
+          },
+        });
       }
     } catch {
       this.setState({ isConfirmModalOpen: true });
     }
+  };
+
+  handleClickBack = () => {
+    const { returnURL } = this.state;
+    window.opener.postMessage?.(
+      objectToString({
+        type: 'signAndSendMessageError',
+        data: 'reject',
+      }),
+      returnURL,
+    );
+    window.close();
   };
 
   signAndSendCallback = (decryptedWif: string) => {
@@ -152,7 +189,29 @@ class SignAndSendPage extends React.Component<SignAndSendProps, SignAndSendState
     const { decodedTxBody, returnURL } = this.state;
 
     if (decodedTxBody) {
-      this.props.signAndSendTrxTrigger({ wif: decryptedWif, decodedTxBody, returnURL });
+      this.props.signAndSendTrxTrigger({
+        wif: decryptedWif,
+        decodedTxBody,
+        returnURL,
+        additionalActionOnSuccess: (txResponse) => {
+          window.opener.postMessage?.(
+            objectToString({
+              type: 'signAndSendMessageResponse',
+              data: txResponse,
+            }),
+            returnURL,
+          );
+        },
+        additionalActionOnError(error) {
+          window.opener.postMessage?.(
+            objectToString({
+              type: 'signAndSendMessageError',
+              data: error,
+            }),
+            returnURL,
+          );
+        },
+      });
       closeModal();
     }
   };
@@ -186,6 +245,7 @@ class SignAndSendPage extends React.Component<SignAndSendProps, SignAndSendState
     const { returnURL, decodedTxBody } = this.state;
     const {
       handleClickSignAndSend,
+      handleClickBack,
       renderExtraDataTable,
     } = this;
 
@@ -250,9 +310,7 @@ class SignAndSendPage extends React.Component<SignAndSendProps, SignAndSendState
         </div>
         <div className={styles.buttons}>
           <Button onClick={handleClickSignAndSend} variant="filled">{this.props.t('signAndSend')}</Button>
-          <a href={returnURL || '/'}>
-            <Button fullWidth variant="outlined">{this.props.t('cancel')}</Button>
-          </a>
+          <Button onClick={handleClickBack} fullWidth variant="outlined">{this.props.t('cancel')}</Button>
         </div>
       </div>);
   };

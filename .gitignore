@@ -38,3 +38,4 @@ lerna-debug.log*
 
 src/regal-sun-332215-9c9a74b9465e.json
 .env
+.env.network

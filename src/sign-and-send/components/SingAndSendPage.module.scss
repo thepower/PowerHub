@@ -96,6 +96,10 @@ $app-bar-height: 84px;
   color: #6b798f;
 }
 
+.tableValue {
+  word-break: break-word;
+}
+
 .buttons {
   display: flex;
   justify-content: flex-end;

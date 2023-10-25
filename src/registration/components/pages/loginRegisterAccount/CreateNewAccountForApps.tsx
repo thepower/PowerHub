@@ -6,7 +6,6 @@ import {
   OutlinedInput,
   ModalLoader,
   Button,
-  // Checkbox,
 } from 'common';
 import { checkIfLoading } from 'network/selectors';
 import classnames from 'classnames';
@@ -15,10 +14,7 @@ import { getWalletAddress } from 'account/selectors/accountSelectors';
 import { exportAccount } from 'account/slice/accountSlice';
 import { objectToString, stringToObject } from 'sso/utils';
 import { getRouterParamsData } from 'router/selectors';
-// import { CheckedIcon, UnCheckedIcon } from 'common/icons';
-// import { FormControlLabel } from '@mui/material';
-import { setKeyToApplicationStorage } from 'application/utils/localStorageUtils';
-import { union } from 'lodash';
+
 import styles from '../../Registration.module.scss';
 import {
   setCreatingCurrentShard,
@@ -34,7 +30,6 @@ import { getCurrentCreatingStep, getCurrentShardSelector, getGeneratedSeedPhrase
 import { RegistrationBackground } from '../../common/RegistrationBackground';
 import { RegistrationStatement } from '../../common/RegistrationStatement';
 import { getCurrentNetworkChains } from '../../../../application/selectors';
-import { getKeyFromApplicationStorage } from '../../../../application/utils/localStorageUtils';
 
 const mapStateToProps = (state: RootState) => ({
   currentShard: getCurrentShardSelector(state),
@@ -79,7 +74,6 @@ class CreateNewAccountForAppsComponent extends React.PureComponent<CreateNewAcco
     callbackUrl?: string,
     returnUrl: string,
     isShowSeedAfterRegistration?: boolean
-    allowedAutoSignTxContractsAddresses?: string[]
   } | null {
     const { data } = this.props;
 
@@ -114,23 +108,6 @@ class CreateNewAccountForAppsComponent extends React.PureComponent<CreateNewAcco
         password,
         randomChain: false,
       });
-
-      if (isAutoSignMessages && parsedData?.allowedAutoSignTxContractsAddresses) {
-        const existedAllowedAutoSignTxContractsAddresses =
-            await getKeyFromApplicationStorage<string[]>('allowedAutoSignTxContractsAddresses');
-        if (existedAllowedAutoSignTxContractsAddresses?.length) {
-          setKeyToApplicationStorage(
-            'allowedAutoSignTxContractsAddresses',
-            union(existedAllowedAutoSignTxContractsAddresses, parsedData.allowedAutoSignTxContractsAddresses),
-          );
-        } else {
-          setKeyToApplicationStorage(
-            'allowedAutoSignTxContractsAddresses',
-            parsedData.allowedAutoSignTxContractsAddresses,
-          );
-        }
-      }
-      return;
     }
 
     if (creatingStep === CreateAccountStepsEnum.encryptPrivateKey) {

@@ -1,7 +1,7 @@
 import { isWallet } from 'application/components/AppRoutes';
 import localForage from 'localforage';
 
-type ApplicationStorageKeyType = 'address' | 'wif' | 'scapps' | 'allowedAutoSignTxContractsAddresses';
+type ApplicationStorageKeyType = 'address' | 'wif' | 'scapps' ;
 
 const applicationStorage = localForage.createInstance({
   driver: localForage.LOCALSTORAGE,
@@ -15,7 +15,6 @@ export const clearApplicationStorage = async () => {
   if (isWallet) {
     await applicationStorage.removeItem('address');
     await applicationStorage.removeItem('wif');
-    await applicationStorage.removeItem('allowedAutoSignTxContractsAddresses');
   } else {
     await applicationStorage.removeItem('address');
   }

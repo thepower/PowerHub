@@ -6,6 +6,7 @@
   "license": "ISC",
   "scripts": {
     "start:wallet": "DISABLE_ESLINT_PLUGIN=true REACT_APP_TYPE=wallet react-app-rewired start",
+    "start:wallet:network": "DISABLE_ESLINT_PLUGIN=true REACT_APP_TYPE=wallet env-cmd -f .env.network react-app-rewired start",
     "start:hub": "DISABLE_ESLINT_PLUGIN=true REACT_APP_TYPE=hub react-app-rewired start",
     "build": "DISABLE_ESLINT_PLUGIN=true env-cmd -f .env react-app-rewired build",
     "build-test": "DISABLE_ESLINT_PLUGIN=true env-cmd -f .env.test react-app-rewired build",
@@ -71,7 +72,6 @@
     "qhistory": "^1.1.0",
     "qs": "^6.10.3",
     "react": "^18.2.0",
-    "react-device-detect": "^2.2.3",
     "react-dom": "^18.2.0",
     "react-i18next": "^12.1.1",
     "react-intersection-observer": "^9.4.0",
