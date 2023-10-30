@@ -10,7 +10,6 @@ export enum WalletRoutesEnum {
   signup = '/signup',
   root = '/',
   login = '/login',
-  iframe = '/iframe',
   sso = '/sso',
 }
 

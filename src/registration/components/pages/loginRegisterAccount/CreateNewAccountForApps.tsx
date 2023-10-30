@@ -54,7 +54,6 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type CreateNewAccountForAppsProps = ConnectedProps<typeof connector>;
 
 type CreateNewAccountForAppsState = {
-  isAutoSignMessages: boolean
   isAccountExported: boolean
 };
 
@@ -63,13 +62,11 @@ class CreateNewAccountForAppsComponent extends React.PureComponent<CreateNewAcco
     super(props);
 
     this.state = {
-      isAutoSignMessages: true,
       isAccountExported: false,
     };
   }
 
   get parsedData(): {
-    isAutoSignMessagesShowCheckBox?: boolean,
     chainID: number,
     callbackUrl?: string,
     returnUrl: string,
@@ -81,12 +78,6 @@ class CreateNewAccountForAppsComponent extends React.PureComponent<CreateNewAcco
     return null;
   }
 
-  // handleCheckAutoSign = () => {
-  //   const isAutoSignMessages = this.state.isAutoSignMessages;
-
-  //   this.setState({ isAutoSignMessages: !isAutoSignMessages });
-  // };
-
   submitForm = async () => {
     const {
       creatingStep,
@@ -96,7 +87,7 @@ class CreateNewAccountForAppsComponent extends React.PureComponent<CreateNewAcco
       walletAddress,
       exportAccount,
     } = this.props;
-    const { isAutoSignMessages, isAccountExported } = this.state;
+    const { isAccountExported } = this.state;
     const { parsedData } = this;
     if (creatingStep === CreateAccountStepsEnum.setSeedPhrase) {
       const password = '';
@@ -115,7 +106,6 @@ class CreateNewAccountForAppsComponent extends React.PureComponent<CreateNewAcco
         const stringData = objectToString({
           address: walletAddress,
           returnUrl: parsedData?.returnUrl,
-          isAutoSignMessages,
         });
         if (parsedData?.callbackUrl) {
           window.location.replace(`${parsedData.callbackUrl}sso/${stringData}`);
@@ -147,9 +137,6 @@ class CreateNewAccountForAppsComponent extends React.PureComponent<CreateNewAcco
 
   renderSetSeedPhrase = () => {
     const { generatedSeedPhrase } = this.props;
-    // const { isAutoSignMessages } = this.state;
-
-    // const { parsedData, handleCheckAutoSign } = this;
 
     return <RegistrationBackground className={styles.rememberBackground}>
       <div className={classnames(styles.loginRegisterAccountTitle, styles.rememberTitle)}>
@@ -170,19 +157,6 @@ class CreateNewAccountForAppsComponent extends React.PureComponent<CreateNewAcco
           value={generatedSeedPhrase}
         />
       </div>
-
-      {/* {parsedData?.isAutoSignMessagesShowCheckBox && (
-      <FormControlLabel
-        control={<Checkbox
-          size={'medium'}
-          checked={isAutoSignMessages}
-          onClick={handleCheckAutoSign}
-          checkedIcon={<CheckedIcon />}
-          icon={<UnCheckedIcon />}
-          disableRipple
-        />}
-        label={t('signMessagesAutomatically')}
-      />)} */}
     </RegistrationBackground>;
   };
 
