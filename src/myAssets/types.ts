@@ -1,4 +1,3 @@
-import { BigNumber } from '@ethersproject/bignumber';
 import i18n from 'locales/initTranslation';
 
 export type LoadBalancePayloadType = {
@@ -70,7 +69,7 @@ export type TokenPayloadType = {
   address: string;
   symbol: string;
   decimals: number;
-  amount?: BigNumber | string
+  amount?: bigint | string
   isShow?: boolean;
 };
 

@@ -3,7 +3,6 @@ import {
 } from '@thepowereco/tssdk';
 import { getWalletAddress } from 'account/selectors/accountSelectors';
 
-import { BigNumber } from '@ethersproject/bignumber';
 import { getNetworkApi } from 'application/selectors';
 import { WalletRoutesEnum } from 'application/typings/routes';
 import { push } from 'connected-react-router';
@@ -13,7 +12,9 @@ import {
   addToken, addTokenTrigger, updateTokenAmount,
 } from 'myAssets/slices/tokensSlice';
 import { toast } from 'react-toastify';
-import { all, put, select } from 'typed-redux-saga';
+import {
+  all, put, select, call,
+} from 'typed-redux-saga';
 
 export const defaultABI = JSON.parse(
   // eslint-disable-next-line max-len
@@ -45,7 +46,7 @@ export function* addTokenSaga({ payload: address }: ReturnType<typeof addTokenTr
     const name: string = yield contract.getName();
     const symbol: string = yield contract.getSymbol();
     const decimals: number = yield contract.getDecimals();
-    const balance: BigNumber = yield contract.getBalance(walletAddress);
+    const balance = yield* call(contract.getBalance, walletAddress);
 
     yield put(addToken({
       name, symbol, address, decimals, type: 'erc20', amount: balance, isShow: true,
@@ -77,7 +78,7 @@ export function* updateTokenAmountSaga({ address }: { address: string }) {
   const contract = new Evm20Contract(storageSc);
   const walletAddress: string = yield* select(getWalletAddress);
 
-  const amount: BigNumber = yield contract.getBalance(walletAddress);
+  const amount = yield* call(contract.getBalance, walletAddress);
   yield put(updateTokenAmount({ address, amount }));
 }
 

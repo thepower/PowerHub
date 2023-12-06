@@ -182,6 +182,7 @@
     "return": "Вернуться",
     "returnURL": "Ссылка возврата",
     "insufficientFunds": "Недостаточно средств",
-    "iOSAndIPadOSDevicesNotSupported": ""
+    "iOSAndIPadOSDevicesNotSupported": "",
+    "close": "Закрыть"
   }
 }
