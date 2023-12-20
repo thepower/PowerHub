@@ -290,8 +290,7 @@ class SignAndSendPage extends React.Component<SignAndSendProps, SignAndSendState
           <div className={styles.tableTitle}>{this.props.t('functionCall')}</div>
           <div className={styles.tableValue}>{functionName || '-'}</div>
 
-          <div className={styles.tableTitle}>{this.props.t('callArguments')}</div>
-          <div className={styles.tableValue}>{functionArguments || '-'}</div>
+          <CardTableKeyAccordion valueLabel={this.props.t('callArguments')}>{functionArguments || '-'}</CardTableKeyAccordion>
 
           <div className={styles.tableTitle}>{this.props.t('fee')}</div>
           <div className={styles.tableValue}>{(feeAmount && feeCur) && `${feeAmount} ${feeCur}` || '-'}</div>
