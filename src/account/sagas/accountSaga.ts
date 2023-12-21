@@ -6,6 +6,7 @@ import { push } from 'connected-react-router';
 import { toast } from 'react-toastify';
 import { isWallet } from 'application/components/AppRoutes';
 import i18n from 'locales/initTranslation';
+import { getCurrentShardSelector } from 'registration/selectors/registrationSelectors';
 import {
   clearAccountData,
   exportAccount,
@@ -19,7 +20,7 @@ import {
   LoginToWalletSagaInput,
 } from '../typings/accountTypings';
 import { clearApplicationStorage, setKeyToApplicationStorage } from '../../application/utils/localStorageUtils';
-import { getNetworkApi, getWalletApi } from '../../application/selectors';
+import { getNetworkApi, getNetworkChainID, getWalletApi } from '../../application/selectors';
 import { WalletRoutesEnum } from '../../application/typings/routes';
 import { reInitApis } from '../../application/sagas/initApplicationSaga';
 import { loadBalanceTrigger } from '../../myAssets/slices/walletSlice';
@@ -94,7 +95,8 @@ export function* exportAccountSaga({ payload }: ReturnType<typeof exportAccount>
     password, hint, isWithoutGoHome, additionalActionOnSuccess, additionalActionOnDecryptError,
   } = payload;
   const WalletAPI = (yield* select(getWalletApi))!;
-
+  const currentNetworkChain = yield* select(getNetworkChainID);
+  const currentRegistrationChain = yield* select(getCurrentShardSelector);
   try {
     const decryptedWif: string = yield CryptoApi.decryptWif(wif, password);
     const exportedData: string = yield WalletAPI.getExportData(decryptedWif, address, password, hint);
@@ -103,7 +105,11 @@ export function* exportAccountSaga({ payload }: ReturnType<typeof exportAccount>
 
     yield* loginToWalletSaga({ payload: { address, wif } });
 
-    yield fileSaver.saveAs(blob, `power_wallet_${address}.pem`, { autoBom: true });
+    const fileName = currentNetworkChain || currentRegistrationChain ?
+      `power_wallet_${currentRegistrationChain || currentNetworkChain}_${address}.pem` :
+      `power_wallet_${address}.pem`;
+
+    yield fileSaver.saveAs(blob, fileName, { autoBom: true });
 
     if (!isWithoutGoHome) {
       yield put(push(WalletRoutesEnum.root));
