@@ -150,7 +150,7 @@
     "addComment": "Добавить комментарий",
     "anErrorOccurredAsset": "При отправке актива произошла ошибка. Код:",
     "somethingWentWrongTransaction": "Что-то пошло не так при отправке транзакции. Код:",
-    "transferOfTokens": "Отправить токены",
+    "confirmYourAction": "Подтвердить действие",
     "transactionType": "Тип транзакции",
     "senderAddress": "Адрес отправителя",
     "transactionSubject": "Описание транзакции ",
@@ -183,6 +183,7 @@
     "returnURL": "Ссылка возврата",
     "insufficientFunds": "Недостаточно средств",
     "iOSAndIPadOSDevicesNotSupported": "",
-    "close": "Закрыть"
+    "close": "Закрыть",
+    "byClickingSignAndSend": "Нажимая «Подписать и отправить», вы подтверждаете это действие."
   }
 }

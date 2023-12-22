@@ -1,5 +1,5 @@
 {
   "editor.codeActionsOnSave": {
-    "source.addMissingImports": true
+    "source.addMissingImports": "explicit"
   },
 }

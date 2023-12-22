@@ -150,7 +150,7 @@
     "addComment": "เพิ่มความคิดเห็น",
     "anErrorOccurredAsset": "เกิดข้อผิดพลาดในขณะส่งสินทรัพย์ รหัส:",
     "somethingWentWrongTransaction": "บางอย่างผิดพลาดเมื่อส่งธุรกรรม รหัส:",
-    "transferOfTokens": "โอนโทเค็น",
+    "confirmYourAction": "ยืนยันการกระทำของคุณ",
     "transactionType": "ประเภทธุรกรรม",
     "senderAddress": "ที่อยู่ของผู้ส่ง",
     "transactionSubject": "เรื่องของธุรกรรม",
@@ -183,6 +183,7 @@
     "returnURL": "URL ส่งคืน",
     "insufficientFunds": "เงินทุนไม่เพียงพอ",
     "iOSAndIPadOSDevicesNotSupported": "Извините. Устройства с ОС iOS и iPad в настоящее время не поддерживаются. Попробуйте зарегистрироваться на настольных компьютерах или устройствах Android.",
-    "close": "Close"
+    "close": "Close",
+    "byClickingSignAndSend": "โดยการคลิก\"ลงชื่อและส่ง\"คุณจะอนุมัติการดำเนินการนี้"
   }
 }

@@ -271,10 +271,18 @@ class SignAndSendPage extends React.Component<SignAndSendProps, SignAndSendState
 
     return (
       <div className={styles.content}>
-        <div className={styles.title}>{this.props.t('transferOfTokens')}</div>
+        <div className={styles.title}>{this.props.t('confirmYourAction')}</div>
+        <div className={styles.buttons}>
+          <Button onClick={handleClickBack} variant="outlined">{this.props.t('cancel')}</Button>
+          <Button onClick={handleClickSignAndSend} fullWidth variant="filled">{this.props.t('signAndSend')}</Button>
+        </div>
+        <div className={styles.text}>{this.props.t('byClickingSignAndSend')}</div>
         <div className={styles.table}>
           <div className={styles.tableTitle}>{this.props.t('transactionType')}</div>
           <div className={styles.tableValue}>{txKindName || '-'}</div>
+
+          <div className={styles.tableTitle}>{this.props.t('fee')}</div>
+          <div className={styles.tableValue}>{(feeAmount && feeCur) && `${feeAmount} ${feeCur}` || '-'}</div>
 
           <div className={styles.tableTitle}>{this.props.t('senderAddress')}</div>
           <div className={styles.tableValue}>{address || '-'}</div>
@@ -292,9 +300,6 @@ class SignAndSendPage extends React.Component<SignAndSendProps, SignAndSendState
 
           <CardTableKeyAccordion valueLabel={this.props.t('callArguments')}>{functionArguments || '-'}</CardTableKeyAccordion>
 
-          <div className={styles.tableTitle}>{this.props.t('fee')}</div>
-          <div className={styles.tableValue}>{(feeAmount && feeCur) && `${feeAmount} ${feeCur}` || '-'}</div>
-
           {/* <div className={styles.tableTitle}>Details</div>
           <div className={styles.tableValue}>?</div> */}
 
@@ -307,10 +312,7 @@ class SignAndSendPage extends React.Component<SignAndSendProps, SignAndSendState
           {!isExtDataEmpty && <CardTableKeyAccordion valueLabel={this.props.t('extraData')}>{renderExtraDataTable()}</CardTableKeyAccordion>}
 
         </div>
-        <div className={styles.buttons}>
-          <Button onClick={handleClickSignAndSend} variant="filled">{this.props.t('signAndSend')}</Button>
-          <Button onClick={handleClickBack} fullWidth variant="outlined">{this.props.t('cancel')}</Button>
-        </div>
+
       </div>);
   };
 

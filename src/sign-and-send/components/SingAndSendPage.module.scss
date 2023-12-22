@@ -73,13 +73,16 @@ $app-bar-height: 84px;
   line-height: 16px;
 }
 
+.text {
+  margin-bottom: 24px;
+}
+
 .table {
   display: grid;
   align-items: center;
   padding: 32px;
   border-radius: 5px;
 
-  margin-bottom: 40px;
   background: #1b222c;
   box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.08);
   column-gap: 16px;
@@ -103,6 +106,7 @@ $app-bar-height: 84px;
 .buttons {
   display: flex;
   justify-content: flex-end;
+  margin-bottom: 24px;
   column-gap: 32px;
 
   @include mobile {

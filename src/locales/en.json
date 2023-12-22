@@ -146,13 +146,13 @@
     "confirmTransfer": "Confirm transfer",
     "balanceExceededReduceAmount": "Balance exceeded, reduce amount",
     "invalidAddress": "invalid address",
-    "addressOfTheRecipient": "Address of the recipient",
+    "addressOfTheRecipient": "To",
     "addComment": "Add comment",
     "anErrorOccurredAsset": "An error occurred while sending the asset. Code:",
     "somethingWentWrongTransaction": "Something went wrong when sending the transaction. Code:",
-    "transferOfTokens": "Transfer of tokens",
-    "transactionType": "Transaction type",
-    "senderAddress": "Sender's address",
+    "confirmYourAction": "Confirm Your Action",
+    "transactionType": "Tx type",
+    "senderAddress": "From",
     "transactionSubject": "Transaction subject",
     "functionCall": "Function call",
     "callArguments": "Call arguments",
@@ -183,6 +183,7 @@
     "returnURL": "Return URL",
     "insufficientFunds": "Insufficient funds",
     "iOSAndIPadOSDevicesNotSupported": "Sorry.  iOS and iPadOS devices are currently not supported. Try registration on desktop or Android devices.",
-    "close": "Close"
+    "close": "Close",
+    "byClickingSignAndSend": "By clicking \"Sign and Send\", you are approve this action."
   }
 }
