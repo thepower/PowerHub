@@ -98,12 +98,13 @@ class MyAssets extends React.PureComponent<MyAssetsProps, MyAssetsState> {
       amount,
     }) as TokenPayloadType);
 
-    const erc20tokens = tokens.filter((token) => token.isShow);
+    const erc20tokens = tokens.filter((token) => token.isShow && token.type === 'erc20');
+    const erc721tokens = tokens.filter((token) => token.isShow && token.type === 'erc721');
 
     const tokensMap = {
       [MyAssetsTabs.PowerNativeTokens]: nativeTokens,
       [MyAssetsTabs.Erc20]: erc20tokens,
-      // [MyAssetsTabs.NFT]: [],/my-assets
+      [MyAssetsTabs.Erc721]: erc721tokens,
     };
 
     const currentTokens = tokensMap[tab];

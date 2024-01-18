@@ -1,11 +1,17 @@
 import { BigNumber, parseFixed } from '@ethersproject/bignumber';
 import {
-  AddressApi, Evm20Contract, EvmContract, EvmCore, NetworkApi, TransactionsApi,
+  AddressApi,
+  Evm20Contract,
+  // Evm721Contract,
+  EvmContract,
+  EvmCore,
+  NetworkApi,
+  TransactionsApi,
 } from '@thepowereco/tssdk';
 import { correctAmount } from '@thepowereco/tssdk/dist/utils/numbers';
 import { getWalletAddress } from 'account/selectors/accountSelectors';
 import { getNetworkApi, getWalletApi } from 'application/selectors';
-import { defaultABI, updateTokenAmountSaga } from 'myAssets/sagas/tokens';
+import { updateTokenAmountSaga } from 'myAssets/sagas/tokens';
 import { loadBalanceSaga } from 'myAssets/sagas/wallet';
 import { toast } from 'react-toastify';
 import { TxPurpose } from 'sign-and-send/typing';
@@ -13,6 +19,7 @@ import { put, select } from 'typed-redux-saga';
 import i18n from 'locales/initTranslation';
 
 import { LoadBalancePayloadType } from 'myAssets/types';
+import abis from 'abis';
 import {
   sendTokenTrxTrigger, sendTrxTrigger, setSentData, signAndSendTrxTrigger,
 } from '../slices/sendSlice';
@@ -63,24 +70,50 @@ export function* sendTokenTrxSaga({
 
     const EVM: EvmCore = yield EvmCore.build(networkAPI as NetworkApi);
 
-    const storageSc: EvmContract = yield EvmContract.build(EVM, address, defaultABI);
+    const storageScErc20: EvmContract = yield EvmContract.build(EVM, address, abis.erc20);
+    // const storageScErc721: EvmContract = yield EvmContract.build(EVM, address, abis.erc721);
 
-    const contract = new Evm20Contract(storageSc);
+    const erc20contract = new Evm20Contract(storageScErc20);
+    // const erc721contract = new Evm721Contract(storageScErc721);
 
-    const calculatedAmount = parseFixed(BigNumber.from(amount).toString(), decimals).toBigInt();
-
-    const { txId } = yield contract.transfer(to, calculatedAmount, { wif, address: from });
-    yield* put(
-      setSentData({
-        txId,
-        comment: '',
-        amount,
-        from,
-        to,
-      }),
+    const isErc721: boolean = yield networkAPI.executeCall(
+      AddressApi.textAddressToHex(address),
+      'supportsInterface',
+      ['0x80ac58cd'],
+      abis.erc721.abi,
     );
 
-    yield updateTokenAmountSaga({ address });
+    if (isErc721) {
+      // const calculatedAmount = parseFixed(BigNumber.from(amount).toString(), decimals).toBigInt();
+
+      // const { txId } = yield erc721contract.transfer(to, calculatedAmount, { wif, address: from });
+      // yield* put(
+      //   setSentData({
+      //     txId,
+      //     comment: '',
+      //     amount,
+      //     from,
+      //     to,
+      //   }),
+      // );
+
+      // yield updateTokenAmountSaga({ address });
+    } else {
+      const calculatedAmount = parseFixed(BigNumber.from(amount).toString(), decimals).toBigInt();
+
+      const { txId } = yield erc20contract.transfer(to, calculatedAmount, { wif, address: from });
+      yield* put(
+        setSentData({
+          txId,
+          comment: '',
+          amount,
+          from,
+          to,
+        }),
+      );
+
+      yield updateTokenAmountSaga({ address });
+    }
   } catch (error: any) {
     toast.error(`${i18n.t('anErrorOccurredAsset')} ${error?.code}`);
   }

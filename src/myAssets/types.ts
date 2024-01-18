@@ -40,28 +40,28 @@ export type TransactionPayloadType = {
 export enum MyAssetsTabs {
   PowerNativeTokens = 'PowerNativeTokens',
   Erc20 = 'Erc20',
-  // NFT = 'NFT',
+  Erc721 = 'Erc721',
 }
 
 export const getMyAssetsTabsLabels = () => ({
   PowerNativeTokens: i18n.t('powerNativeTokens'),
   Erc20: 'Erc_20',
-  // NFT : 'NFT',
+  Erc721: 'NFT',
 } as const);
 
 export enum AddAssetsTabs {
   Erc20 = 'Erc20',
-  // NFT = 'NFT',
+  Erc721 = 'Erc721',
   AddAssets = 'AddAssets',
 }
 
 export const getAddAssetsTabsLabels = () => ({
   Erc20: 'Erc_20',
-  // NFT :'NFT',
+  Erc721: 'NFT',
   AddAssets: i18n.t('addOtherAssets'),
 } as const);
 
-export type TokenKind = 'nft' | 'erc20' | 'native';
+export type TokenKind = 'erc721' | 'erc20' | 'native';
 
 export type TokenPayloadType = {
   type: TokenKind;

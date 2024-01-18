@@ -119,12 +119,14 @@ class AddAssetsPageComponent extends React.PureComponent<AddAssetsPageProps, Add
   };
 
   render() {
-    const { tokens: erc20Tokens } = this.props;
+    const { tokens } = this.props;
     const { tab, search } = this.state;
+    const erc20tokens = tokens.filter((token) => token.isShow && token.type === 'erc20');
+    const erc721tokens = tokens.filter((token) => token.isShow && token.type === 'erc721');
 
     const tokensMap = {
-      [AddAssetsTabs.Erc20]: erc20Tokens,
-      // [AddAssetsTabs.NFT]: [],
+      [AddAssetsTabs.Erc20]: erc20tokens,
+      [AddAssetsTabs.Erc721]: erc721tokens,
       [AddAssetsTabs.AddAssets]: [],
     };
 
