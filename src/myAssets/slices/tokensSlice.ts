@@ -20,7 +20,7 @@ const tokensSlice = createSlice({
     toggleTokenShow: (state, { payload }: PayloadAction<{ address: string, isShow: boolean }>) => {
       tokensAdapter.updateOne(state, { id: payload.address, changes: { isShow: payload.isShow } });
     },
-    updateTokenAmount: (state, { payload }: PayloadAction<{ address: string, amount: bigint }>) => {
+    updateTokenAmount: (state, { payload }: PayloadAction<{ address: string, amount: string }>) => {
       tokensAdapter.updateOne(state, { id: payload.address, changes: { amount: payload.amount } });
     },
   },

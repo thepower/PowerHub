@@ -1,6 +1,7 @@
 import {
   Evm20Contract, EvmContract, EvmCore, NetworkApi,
 } from '@thepowereco/tssdk';
+
 import { getWalletAddress } from 'account/selectors/accountSelectors';
 
 import { getNetworkApi } from 'application/selectors';
@@ -13,7 +14,7 @@ import {
 } from 'myAssets/slices/tokensSlice';
 import { toast } from 'react-toastify';
 import {
-  all, put, select, call,
+  all, put, select,
 } from 'typed-redux-saga';
 
 export const defaultABI = JSON.parse(
@@ -40,14 +41,15 @@ export function* addTokenSaga({ payload: address }: ReturnType<typeof addTokenTr
 
     const storageSc: EvmContract = yield EvmContract.build(EVM, address, defaultABI);
 
-    const contract = new Evm20Contract(storageSc);
+    const contract = new Evm20Contract(storageSc, defaultABI);
     const walletAddress: string = yield* select(getWalletAddress);
 
     const name: string = yield contract.getName();
     const symbol: string = yield contract.getSymbol();
-    const decimals: number = yield contract.getDecimals();
-    const balance = yield* call(contract.getBalance, walletAddress);
-
+    const decimalsBigint: bigint = yield contract.getDecimals();
+    const decimals = decimalsBigint.toString();
+    const balanceBigint: bigint = yield contract.getBalance(walletAddress);
+    const balance = balanceBigint.toString();
     yield put(addToken({
       name, symbol, address, decimals, type: 'erc20', amount: balance, isShow: true,
     }));
@@ -78,8 +80,10 @@ export function* updateTokenAmountSaga({ address }: { address: string }) {
   const contract = new Evm20Contract(storageSc);
   const walletAddress: string = yield* select(getWalletAddress);
 
-  const amount = yield* call(contract.getBalance, walletAddress);
-  yield put(updateTokenAmount({ address, amount }));
+  const balanceBigint: bigint = yield contract.getBalance(walletAddress);
+  const balance = balanceBigint.toString();
+
+  yield put(updateTokenAmount({ address, amount: balance }));
 }
 
 export function* updateTokensAmountsSaga() {

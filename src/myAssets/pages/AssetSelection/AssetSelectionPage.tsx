@@ -84,7 +84,7 @@ class AssetSelectionPageComponent extends React.PureComponent<AssetSelectionPage
       name: symbol,
       address: symbol,
       symbol,
-      decimals: 9,
+      decimals: '9',
       amount,
     }) as TokenPayloadType);
 

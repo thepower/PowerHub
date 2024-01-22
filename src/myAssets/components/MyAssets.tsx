@@ -94,7 +94,7 @@ class MyAssets extends React.PureComponent<MyAssetsProps, MyAssetsState> {
       name: symbol,
       address: symbol,
       symbol,
-      decimals: 9,
+      decimals: '9',
       amount,
     }) as TokenPayloadType);
 

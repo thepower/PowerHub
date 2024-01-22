@@ -1,12 +1,14 @@
 const webpack = require('webpack');
-module.exports = function override(config, env) {
+const customizeСra = require('customize-cra');
+
+function myOverrides(config, env) {
   config.resolve.fallback = {
-    "buffer": require.resolve('buffer'),
-    "crypto": require.resolve('crypto-browserify'),
-    "stream": require.resolve('stream-browserify'),
-    "util": require.resolve('util'),
-    "fs": false,
-    "path": false
+    buffer: require.resolve('buffer'),
+    crypto: require.resolve('crypto-browserify'),
+    stream: require.resolve('stream-browserify'),
+    util: require.resolve('util'),
+    fs: false,
+    path: false,
   };
   config.plugins.push(
     new webpack.ProvidePlugin({
@@ -16,7 +18,7 @@ module.exports = function override(config, env) {
   );
 
   config.experiments = {
-      topLevelAwait: true,
+    topLevelAwait: true,
   };
 
   config.optimization.minimizer[0].options.minimizer.options.mangle = {
@@ -25,3 +27,5 @@ module.exports = function override(config, env) {
 
   return config;
 }
+
+module.exports = customizeСra.override(myOverrides, customizeСra.addExternalBabelPlugin(['@babel/plugin-syntax-import-attributes', { deprecatedAssertSyntax: true }]));
