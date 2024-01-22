@@ -18,6 +18,20 @@ import {
   all, put, select,
 } from 'typed-redux-saga';
 
+export function* getIsErc721(network: NetworkApi, address: string) {
+  try {
+    const isErc721: boolean = yield network.executeCall(
+      AddressApi.textAddressToHex(address),
+      'supportsInterface',
+      ['0x80ac58cd'],
+      abis.erc721.abi,
+    );
+    return isErc721;
+  } catch {
+    return false;
+  }
+}
+
 export function* addTokenSaga({ payload: address }: ReturnType<typeof addTokenTrigger>) {
   try {
     const networkAPI = (yield* select(getNetworkApi))!;
@@ -32,12 +46,8 @@ export function* addTokenSaga({ payload: address }: ReturnType<typeof addTokenTr
       contractNetworkApi = new NetworkApi(chain!);
       yield contractNetworkApi.bootstrap(true);
     }
-    const isErc721: boolean = yield contractNetworkApi.executeCall(
-      AddressApi.textAddressToHex(address),
-      'supportsInterface',
-      ['0x80ac58cd'],
-      abis.erc721.abi,
-    );
+
+    const isErc721 = yield* getIsErc721(contractNetworkApi as NetworkApi, address);
 
     if (isErc721) {
       const walletAddress: string = yield* select(getWalletAddress);
@@ -48,12 +58,14 @@ export function* addTokenSaga({ payload: address }: ReturnType<typeof addTokenTr
         [],
         abis.erc721.abi,
       );
+
       const symbol: string = yield contractNetworkApi.executeCall(
         AddressApi.textAddressToHex(address),
         'symbol',
         [],
         abis.erc721.abi,
       );
+
       const balanceBigint: bigint = yield contractNetworkApi.executeCall(
         AddressApi.textAddressToHex(address),
         'balanceOf',
@@ -66,7 +78,7 @@ export function* addTokenSaga({ payload: address }: ReturnType<typeof addTokenTr
         name,
         symbol,
         address,
-        decimals: 1,
+        decimals: '1',
         type: 'erc721',
         amount: balance,
         isShow: true,
@@ -94,12 +106,14 @@ export function* addTokenSaga({ payload: address }: ReturnType<typeof addTokenTr
         abis.erc20.abi,
       );
       const balance = balanceBigint.toString();
-      const decimals: number = yield contractNetworkApi.executeCall(
+      const decimalsBigint: bigint = yield contractNetworkApi.executeCall(
         AddressApi.textAddressToHex(address),
         'decimals',
-        [AddressApi.textAddressToEvmAddress(walletAddress)],
+        [],
         abis.erc20.abi,
       );
+      const decimals = decimalsBigint.toString();
+
       yield put(addToken({
         name,
         symbol,

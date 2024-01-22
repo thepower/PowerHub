@@ -11,7 +11,7 @@ import {
 import { correctAmount } from '@thepowereco/tssdk/dist/utils/numbers';
 import { getWalletAddress } from 'account/selectors/accountSelectors';
 import { getNetworkApi, getWalletApi } from 'application/selectors';
-import { updateTokenAmountSaga } from 'myAssets/sagas/tokens';
+import { getIsErc721, updateTokenAmountSaga } from 'myAssets/sagas/tokens';
 import { loadBalanceSaga } from 'myAssets/sagas/wallet';
 import { toast } from 'react-toastify';
 import { TxPurpose } from 'sign-and-send/typing';
@@ -76,12 +76,7 @@ export function* sendTokenTrxSaga({
     const erc20contract = new Evm20Contract(storageScErc20);
     // const erc721contract = new Evm721Contract(storageScErc721);
 
-    const isErc721: boolean = yield networkAPI.executeCall(
-      AddressApi.textAddressToHex(address),
-      'supportsInterface',
-      ['0x80ac58cd'],
-      abis.erc721.abi,
-    );
+    const isErc721: boolean = yield getIsErc721(networkAPI as NetworkApi, address);
 
     if (isErc721) {
       // const calculatedAmount = parseFixed(BigNumber.from(amount).toString(), decimals).toBigInt();

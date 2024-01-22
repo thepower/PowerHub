@@ -68,7 +68,7 @@ export type TokenPayloadType = {
   name: string;
   address: string;
   symbol: string;
-  decimals: number;
+  decimals: string;
   amount?: bigint | string
   isShow?: boolean;
 };

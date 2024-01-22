@@ -45,7 +45,7 @@ export const sendTokenTrxTrigger = createAction<{
   from: string
   to: string;
   address: string,
-  decimals: number,
+  decimals: string,
   amount: number;
 }>('send/sendTokenTrxTrigger');
 
