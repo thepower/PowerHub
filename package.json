@@ -5,7 +5,7 @@
   "author": "thepower",
   "license": "ISC",
   "scripts": {
-    "start:wallet": "DISABLE_ESLINT_PLUGIN=true REACT_APP_TYPE=wallet react-app-rewired start",
+    "start:wallet": "DISABLE_ESLINT_PLUGIN=true PORT=3001 REACT_APP_TYPE=wallet react-app-rewired start",
     "start:wallet:network": "DISABLE_ESLINT_PLUGIN=true REACT_APP_TYPE=wallet env-cmd -f .env.network react-app-rewired start",
     "start:hub": "DISABLE_ESLINT_PLUGIN=true REACT_APP_TYPE=hub react-app-rewired start",
     "build": "DISABLE_ESLINT_PLUGIN=true env-cmd -f .env react-app-rewired build",

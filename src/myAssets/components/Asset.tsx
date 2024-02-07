@@ -21,11 +21,11 @@ type AssetProps = OwnProps;
 class Asset extends React.PureComponent<AssetProps> {
   get formattedAmount() {
     const { asset } = this.props;
-    const { amount, decimals } = asset;
+    const { amount, decimals, type } = asset;
 
-    return typeof amount === 'string'
-      ? amount
-      : formatFixed(BigNumber.from(amount), decimals);
+    return type === 'erc20'
+      ? formatFixed(BigNumber.from(amount), decimals)
+      : amount;
   }
 
   onClickAsset = () => {
