@@ -82,6 +82,7 @@ export function* sendTokenTrxSaga({
 
     yield updateTokenAmountSaga({ address });
   } catch (error: any) {
+    console.error(error);
     toast.error(`${i18n.t('anErrorOccurredAsset')} ${error?.code}`);
   }
 }

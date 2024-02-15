@@ -58,13 +58,13 @@ type SendState = {
 };
 
 export type FormValues = {
-  amount: string;
+  amount: number;
   comment: string;
   address: string;
 };
 
 const initialValues: FormValues = {
-  amount: '',
+  amount: 0,
   comment: '',
   address: '',
 };
@@ -95,10 +95,10 @@ class Send extends React.Component<SendProps, SendState> {
       nativeTokenAmount, token,
     } = this.props;
     const { isNativeToken } = this;
-    const assetAmount = isNativeToken ? nativeTokenAmount : token?.amount;
-    return typeof assetAmount === 'string'
-      ? assetAmount
-      : token && formatFixed(BigNumber.from(assetAmount), token.decimals);
+
+    return isNativeToken
+      ? nativeTokenAmount
+      : token && formatFixed(BigNumber.from(token.amount), token.decimals);
   }
 
   getValidationSchema = () => {
@@ -152,7 +152,7 @@ class Send extends React.Component<SendProps, SendState> {
     } else {
       sendTokenTrxTrigger({
         address: token.address,
-        amount: Number(values.amount),
+        amount: values.amount,
         decimals: token.decimals,
         from: address,
         to: values.address!,

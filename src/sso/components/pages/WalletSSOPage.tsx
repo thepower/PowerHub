@@ -22,7 +22,6 @@ const mapStateToProps = (state: RootState, props: OwnProps) => ({
 const connector = connect(
   mapStateToProps,
   mapDispatchToProps,
-
 );
 
 type WalletSSOProps = ConnectedProps<typeof connector>;
@@ -39,14 +38,14 @@ class WalletSSOPage extends React.Component<WalletSSOProps, WalletSSOState> {
     if (!address) {
       routeTo(WalletRoutesEnum.signup);
     } else {
-      const stringData = objectToString({ address });
+      const stringData = objectToString({ address, returnUrl: parsedData?.returnUrl });
       if (parsedData?.callbackUrl) {
         window.location.replace(`${parsedData.callbackUrl}sso/${stringData}`);
       }
     }
   }
 
-  get parsedData(): { callbackUrl?: string } | null {
+  get parsedData(): { callbackUrl?: string, returnUrl?: string } | null {
     const { data } = this.props;
 
     if (data) return stringToObject(data);

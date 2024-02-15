@@ -15,6 +15,7 @@ import { exportAccount } from 'account/slice/accountSlice';
 import { objectToString, stringToObject } from 'sso/utils';
 import { getRouterParamsData } from 'router/selectors';
 
+import { getCurrentNetworkChains, getNetworkChainID } from 'application/selectors';
 import styles from '../../Registration.module.scss';
 import {
   setCreatingCurrentShard,
@@ -29,7 +30,6 @@ import {
 import { getCurrentCreatingStep, getCurrentShardSelector, getGeneratedSeedPhrase } from '../../../selectors/registrationSelectors';
 import { RegistrationBackground } from '../../common/RegistrationBackground';
 import { RegistrationStatement } from '../../common/RegistrationStatement';
-import { getCurrentNetworkChains } from '../../../../application/selectors';
 
 const mapStateToProps = (state: RootState) => ({
   currentShard: getCurrentShardSelector(state),
@@ -39,6 +39,7 @@ const mapStateToProps = (state: RootState) => ({
   networkChains: getCurrentNetworkChains(state),
   walletAddress: getWalletAddress(state),
   data: getRouterParamsData(state),
+  currentNetworkChain: getNetworkChainID(state),
 });
 
 const mapDispatchToProps = {
@@ -162,7 +163,14 @@ class CreateNewAccountForAppsComponent extends React.PureComponent<CreateNewAcco
 
   exportKeyForApps = () => {
     const { parsedData } = this;
-    const { walletAddress, generatedSeedPhrase } = this.props;
+    const {
+      walletAddress, generatedSeedPhrase, currentNetworkChain, currentShard,
+    } = this.props;
+
+    const fileName = currentNetworkChain || currentShard ?
+      `power_wallet_${currentShard || currentNetworkChain}_${walletAddress}.pem` :
+      `power_wallet_${walletAddress}.pem`;
+
     return (
       <RegistrationBackground className={styles.exportKeyForAppsHolder}>
         <div className={styles.exportKeyForAppsTitle}>
@@ -190,7 +198,7 @@ class CreateNewAccountForAppsComponent extends React.PureComponent<CreateNewAcco
           {t('yourKeyFile')}
           {' '}
           <span>
-            {`power_wallet_${walletAddress}.pem`}
+            {fileName}
           </span>
           {' '}
           {t('savedToDisk')}
