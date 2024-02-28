@@ -45,11 +45,15 @@ export function* addTokenSaga({ payload: address }: ReturnType<typeof addTokenTr
     const walletAddress: string = yield* select(getWalletAddress);
 
     const name: string = yield contract.getName();
+
     const symbol: string = yield contract.getSymbol();
+
     const decimalsBigint: bigint = yield contract.getDecimals();
     const decimals = decimalsBigint.toString();
+
     const balanceBigint: bigint = yield contract.getBalance(walletAddress);
     const balance = balanceBigint.toString();
+
     yield put(addToken({
       name, symbol, address, decimals, type: 'erc20', amount: balance, isShow: true,
     }));
