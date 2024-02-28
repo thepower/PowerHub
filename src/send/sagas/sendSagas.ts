@@ -49,7 +49,7 @@ export function* sendTrxSaga({
 
     yield loadBalanceSaga();
   } catch (error: any) {
-    toast.error(`${i18n.t('anErrorOccurredAsset')} ${error?.code}`);
+    toast.error(`${i18n.t('anErrorOccurredAsset')} ${error}`);
   }
 }
 
@@ -83,7 +83,7 @@ export function* sendTokenTrxSaga({
     yield updateTokenAmountSaga({ address });
   } catch (error: any) {
     console.error(error);
-    toast.error(`${i18n.t('anErrorOccurredAsset')} ${error?.code}`);
+    toast.error(`${i18n.t('anErrorOccurredAsset')} ${error}`);
   }
 }
 
@@ -144,6 +144,6 @@ export function* singAndSendTrxSaga({
   } catch (error: any) {
     additionalActionOnError?.(error?.message);
     console.error('singAndSendTrxSaga', error);
-    toast.error(`${i18n.t('somethingWentWrongTransaction')} ${error?.code || error?.message}`);
+    toast.error(`${i18n.t('somethingWentWrongTransaction')} ${error}`);
   }
 }

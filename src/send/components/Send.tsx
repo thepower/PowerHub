@@ -118,28 +118,13 @@ class Send extends React.Component<SendProps, SendState> {
 
   handleClose = () => this.setState({ openModal: false });
 
-  handleSubmit = ({ address }: FormValues, formikHelpers: FormikHelpers<FormValues>) => {
-    if (!AddressApi.isTextAddressValid(address!)) {
-      formikHelpers.setFieldError('address', this.props.t('invalidAddress')!);
-    } else {
-      this.setState({ openModal: true });
-    }
-  };
-
-  onSubmit = async (values: FormValues, password: string) => {
+  send = async ({ values, decryptedWif }: { values: FormValues, decryptedWif: string }) => {
     const {
       sendTrxTrigger,
       sendTokenTrxTrigger,
     } = this.props;
 
-    const { address, wif, token } = this.props;
-    let decryptedWif;
-
-    try {
-      decryptedWif = await CryptoApi.decryptWif(wif, '');
-    } catch (error) {
-      decryptedWif = await CryptoApi.decryptWif(wif, password);
-    }
+    const { address, token } = this.props;
 
     if (!token) {
       sendTrxTrigger({
@@ -161,6 +146,29 @@ class Send extends React.Component<SendProps, SendState> {
     }
   };
 
+  handleSubmit = async (values: FormValues, formikHelpers: FormikHelpers<FormValues>) => {
+    if (!AddressApi.isTextAddressValid(values.address!)) {
+      formikHelpers.setFieldError('address', this.props.t('invalidAddress')!);
+    } else {
+      try {
+        const { wif } = this.props;
+        const decryptedWif = await CryptoApi.decryptWif(wif, '');
+
+        await this.send({ values, decryptedWif });
+      } catch (error) {
+        this.setState({ openModal: true });
+      }
+    }
+  };
+
+  onSubmit = async (values: FormValues, password: string) => {
+    const { wif } = this.props;
+
+    const decryptedWif = await CryptoApi.decryptWif(wif, password);
+
+    await this.send({ values, decryptedWif });
+  };
+
   renderForm = (formikProps: FormikProps<typeof initialValues>) => {
     const {
       isNativeToken, props, onSubmit, handleClose,
@@ -174,7 +182,6 @@ class Send extends React.Component<SendProps, SendState> {
         onClose={handleClose}
         token={token}
         onSubmit={onSubmit}
-
       />
       <Form className={styles.form}>
         <div className={styles.fields}>
