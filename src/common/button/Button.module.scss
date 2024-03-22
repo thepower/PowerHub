@@ -46,7 +46,9 @@
   }
 
   &:active {
-    background: linear-gradient(90deg, rgba(23, 104, 229, 0.8) 0%, rgba(0, 240, 255, 0.8) 100%);
+    background: linear-gradient(90deg,
+    rgba(23, 104, 229, 0.8) 0%,
+    rgba(0, 240, 255, 0.8) 100%);
   }
 
   &:disabled {
@@ -62,11 +64,15 @@
 @include icon-colors('.filled', #f5f5f7, #f5f5f7, #f5f5f7);
 
 .outlined {
-  @include border-gradient(linear-gradient(90deg, #1768e5 50.44%, #00f0ff 129.31%));
+  @include border-gradient(
+    linear-gradient(90deg, #1768e5 50.44%, #00f0ff 129.31%)
+  );
   background: #121923;
 
   .text {
-    @include text-gradient(linear-gradient(90deg, #1768e5 50.44%, #00f0ff 129.31%));
+    @include text-gradient(
+      linear-gradient(90deg, #1768e5 50.44%, #00f0ff 129.31%)
+    );
   }
 
   &:hover {
@@ -78,10 +84,22 @@
   }
 
   &:active {
-    @include border-gradient(linear-gradient(90deg, rgba(23, 104, 229, 0.8) 0%, rgba(0, 240, 255, 0.8) 100%));
+    @include border-gradient(
+      linear-gradient(
+        90deg,
+        rgba(23, 104, 229, 0.8) 0%,
+        rgba(0, 240, 255, 0.8) 100%
+      )
+    );
 
     .text {
-      @include text-gradient(linear-gradient(90deg, rgba(23, 104, 229, 0.8) 0%, rgba(0, 240, 255, 0.8) 100%));
+      @include text-gradient(
+        linear-gradient(
+          90deg,
+          rgba(23, 104, 229, 0.8) 0%,
+          rgba(0, 240, 255, 0.8) 100%
+        )
+      );
     }
   }
 

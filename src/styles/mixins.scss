@@ -10,14 +10,12 @@
   &::before {
     position: absolute;
     z-index: 200;
-    padding: 1px;
-    border-radius: 5px;
+    padding: 0;
+    // border-radius: 5px;
     background: $gradient;
     content: '';
     inset: 0;
-    mask:
-      linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     mask-composite: exclude;
   }
 }
@@ -58,14 +56,14 @@
       #{$property}: $hoverColor;
     }
 
-    #{$class}[aria-current="page"] :global(.#{$property}),
-    #{$class}[aria-selected="true"] :global(.#{$property}),
-    #{$class}[aria-pressed="true"] :global(.#{$property}),
+    #{$class}[aria-current='page'] :global(.#{$property}),
+    #{$class}[aria-selected='true'] :global(.#{$property}),
+    #{$class}[aria-pressed='true'] :global(.#{$property}),
     #{$class}:active :global(.#{$property}) {
       #{$property}: $activeColor;
     }
 
-    #{$class}[aria-disabled="true"] :global(.#{$property}),
+    #{$class}[aria-disabled='true'] :global(.#{$property}),
     #{$class}:disabled :global(.#{$property}) {
       #{$property}: $disabledColor;
     }

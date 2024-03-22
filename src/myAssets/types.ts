@@ -46,7 +46,7 @@ export enum MyAssetsTabs {
 
 export const getMyAssetsTabsLabels = () => ({
   PowerNativeTokens: i18n.t('powerNativeTokens'),
-  Erc20: 'Erc_20',
+  Erc20: 'ERC-20',
   // NFT : 'NFT',
 } as const);
 
@@ -57,7 +57,7 @@ export enum AddAssetsTabs {
 }
 
 export const getAddAssetsTabsLabels = () => ({
-  Erc20: 'Erc_20',
+  Erc20: 'ERC-20',
   // NFT :'NFT',
   AddAssets: i18n.t('addOtherAssets'),
 } as const);

@@ -44,15 +44,15 @@
 
 .drawerPaper {
   z-index: 250;
-  left: $aside-width;
+  // left: $aside-width;
   display: flex;
   width: $aside-width;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
   padding: 35px 24px;
-  border-left: 2px solid #212831;
-  background: #1b222c;
+  // border-left: 2px solid #212831;
+  background: #121922;
   overflow-x: hidden;
 
   @include mobile {
@@ -61,7 +61,7 @@
     width: 100vw;
     height: calc(100vh - $top-bar-mobile);
     padding: 16px;
-    border-top: 2px solid #212831;
+    // border-top: 2px solid #212831;
   }
 }
 
@@ -159,7 +159,9 @@
     background: #2e353d;
 
     .accountActionText {
-      @include text-gradient(linear-gradient(90deg, #1768e5 50.44%, #00f0ff 129.31%));
+      @include text-gradient(
+        linear-gradient(90deg, #1768e5 50.44%, #00f0ff 129.31%)
+      );
     }
   }
 }
